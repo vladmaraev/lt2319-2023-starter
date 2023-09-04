@@ -1,5 +1,6 @@
 {
     "name": "speechStateDM",
+    "license": "GPL-3.0",
     "packageManager": "yarn@3.6.3",
     "scripts": {
         "start": "parcel index.html"

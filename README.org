@@ -1,0 +1,42 @@
+#+TITLE: SpeechState starter project
+
+** Getting started
+1. Clone this project. 
+2. You need [[https://nodejs.org/en][Node.js (LTS version)]] and [[https://yarnpkg.com/getting-started/install][Yarn package manager]].
+3. Clone ~SpeechState~ (https://github.com/vladmaraev/speechstate) into
+   a sibling directory.
+4. Install the dependencies and build ~SpeechState~:
+   #+begin_src sh
+     yarn
+     tsc
+   #+end_src
+5. Link ~SpeechState~ (from current project):
+   #+begin_src sh
+     yarn link ../speechstate -A -p -r
+   #+end_src
+6. Install the dependencies and start the application:
+   #+begin_src
+     yarn
+     yarn start
+   #+end_src
+
+Some considerations:
+1. Yarn (last version and ~.yarnrc.yml~)
+2. Cleaning parcel cache (if 
+
+* Plan for today
+** Installing development environment
+** Recap
++ [ ] states
++ [ ] transition
++ [ ] actions
++ [ ] conditions (guards)
++ [ ] context
++ [ ] timers/delays (see SpeechState timers)
++ [ ] history
++ [ ] invoke
+** Xstate 5 - what's new?
++ [ ] actors
++ [ ] spawning
+** 
+
