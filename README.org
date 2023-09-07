@@ -27,6 +27,8 @@ Some considerations:
 2. Cleaning parcel cache: ~rm -rf .parcel-cache~
 
    
+* Assignments
+[[./lab1.org][Form-based dialogue management]]
 * Tutorial
 ** Recap
 + [ ] states
