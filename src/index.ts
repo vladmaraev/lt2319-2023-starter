@@ -4,7 +4,7 @@ import { speechstate, Settings, Hypothesis } from "speechstate";
 const azureCredentials = {
   endpoint:
     "https://northeurope.api.cognitive.microsoft.com/sts/v1.0/issuetoken",
-  key: "",
+  key: "7acaf819fba24847b9cc341042eea53e",
 };
 
 const settings: Settings = {
