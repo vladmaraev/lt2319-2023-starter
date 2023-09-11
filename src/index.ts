@@ -4,7 +4,7 @@ import { speechstate, Settings, Hypothesis } from "speechstate";
 const azureCredentials = {
   endpoint:
     "https://northeurope.api.cognitive.microsoft.com/sts/v1.0/issuetoken",
-  key: "",
+  key: "d281bc32d54f4bc090c53f113593a2a6",
 };
 
 const settings: Settings = {
@@ -36,6 +36,36 @@ const listen =
       type: "LISTEN",
     });
 
+interface Grammar {
+  [index: string]: {
+    entities: {
+      [index: string]: string;
+        };
+      };
+    }
+
+const grammar = {
+  "put the pink lamp on the shelf": {
+    entities: {
+      colour: "pink",
+      object: "lamp",
+      place: "shelf",
+        },
+      },
+};
+
+const getEntity = (context: DMContext, entity: string): string | false => {
+ if (context.lastResult[0].utterance.length > 0) {
+    const u = context.lastResult[0].utterance.toLowerCase().replace(/\.$/g, "");
+    if (u in grammar) {
+      if (entity in grammar[u].entities) {
+        return grammar[u].entities[entity];
+      }
+    }
+  }
+  return false;
+};
+
 // machine
 const dmMachine = createMachine(
   {
@@ -46,7 +76,7 @@ const dmMachine = createMachine(
         initial: "Prepare",
         states: {
           Prepare: {
-            on: { ASRTTS_READY: "Ready" },
+            on: { ASRTTS_READY: "Form" },
             entry: [
               assign({
                 spstRef: ({ spawn }) => {
@@ -59,39 +89,35 @@ const dmMachine = createMachine(
               }),
             ],
           },
-          Ready: {
-            initial: "Greeting",
+          Form: {
+            initial: "Prompt",
             states: {
-              Greeting: {
-                entry: "speak.greeting",
-                on: { SPEAK_COMPLETE: "HowCanIHelp" },
-              },
-              HowCanIHelp: {
-                entry: say("You can say whatever you like."),
+              Prompt: {
+                entry: "speak.prompt",
                 on: { SPEAK_COMPLETE: "Ask" },
               },
               Ask: {
                 entry: listen(),
                 on: {
                   RECOGNISED: {
-                    target: "Repeat",
+                    target: "ColourSlot",
+                    guard: ({ context }) => !!getEntity(context, "colour"),
                     actions: [
-                      ({ event }) => console.log(event),
                       assign({
-                        lastResult: ({ event }) => event.value,
+                        colour: ({ context }) => getEntity(context, "colour"),
                       }),
                     ],
                   },
                 },
               },
-              Repeat: {
+              ColourSlot: {
                 entry: ({ context }) => {
                   context.spstRef.send({
                     type: "SPEAK",
-                    value: { utterance: context.lastResult[0].utterance },
+                    value: `OK, so ${context.colour}`,
                   });
                 },
-                on: { SPEAK_COMPLETE: "Ask" },
+                on: { SPEAK_COMPLETE: "Prompt" },
               },
               IdleEnd: {},
             },
@@ -133,10 +159,10 @@ const dmMachine = createMachine(
           type: "PREPARE",
         }),
       // saveLastResult:
-      "speak.greeting": ({ context }) => {
+      "speak.prompt": ({ context }) => {
         context.spstRef.send({
           type: "SPEAK",
-          value: { utterance: "Hello world!" },
+          value: { utterance: "Hi! What is your request?" },
         });
       },
       "speak.how-can-I-help": ({ context }) =>
