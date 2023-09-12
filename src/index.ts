@@ -56,16 +56,12 @@ const grammar = {
     where: "Table",
     },
   },
-  red: {
-    intent: "None",
-    entities: {color: "Red"},
-  },
-    // Add more phrases and attributes as needed
+   
 };
 const getEntity = (context: DMContext, entity: string) => {
   // Ensure that utterance is not empty and contains recognized text
+  const u = context.utterance.toLowerCase().replace(/\.$/g, "");
   if (context.utterance) {
-    const u = context.utterance.toLowerCase().replace(/\.$/g, "");
 
     if (u in grammar) {
       const recognizedPhrase = grammar[u];
@@ -79,6 +75,9 @@ const getEntity = (context: DMContext, entity: string) => {
   return false;
 };
        
+const toLowerCase = (object: string) => {
+  return object.toLowerCase().replace(/\.$/g, "");
+}
 
   
 
@@ -122,19 +121,17 @@ const dmMachine = createMachine(
                 id: "Ask",
                 entry: listen(),
                 on: {
-                  RECOGNISED: [
-                    {
-                      target: "#Full_Answer",
-                      guard: ({ context }) => {
-                        const isColorPresent = !!getEntity(context, "color");
-                        console.log("Is 'color' present:", isColorPresent);
-                        return isColorPresent;
-                      },
-                      actions: assign({
-                        color: (context) => getEntity(context, "color"),
-                      }),
-                    },
-                  ],
+                  RECOGNISED: {
+                    target: "Full_Answer",
+                    guard: ({ event }) => !!(grammar[toLowerCase(event.value[0].utterance)] || {}).entities.color &&
+                    !!(grammar[toLowerCase(event.value[0].utterance)] || {}).entities.what &&
+                    !!(grammar[toLowerCase(event.value[0].utterance)] || {}).entities.where,
+                    actions: assign({
+                      color: ({ event }) => (grammar[toLowerCase(event.value[0].utterance)] || {}).entities.color,
+                      what: ({ event }) => (grammar[toLowerCase(event.value[0].utterance)] || {}).entities.what,
+                      where: ({ event }) => (grammar[toLowerCase(event.value[0].utterance)] || {}).entities.where,
+                    }),
+                  },
                 },
               },
               Full_Answer: {
@@ -143,7 +140,7 @@ const dmMachine = createMachine(
                   console.log("Entering Full_Answer state");
                   context.spstRef.send({
                     type: "SPEAK",
-                    value: `Ok, so you want the ${context.color} right?`,
+                    value: `Ok, so you want the ${context.color} ${context.what} on the ${context.where}, right?`,
                   });
                 },
                 on: { SPEAK_COMPLETE: "#greeting" }, 
