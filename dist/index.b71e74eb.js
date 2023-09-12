@@ -601,42 +601,32 @@ const listen = ()=>({ context })=>context.spstRef.send({
         });
 const grammar = {
     "put the red book on the table": {
-        intent: "None",
         entities: {
-            color: "Red",
-            what: "Book",
-            where: "Table"
+            color: "red",
+            object: "book",
+            place: "table"
         }
     },
-    red: {
-        intent: "None",
+    "I have a book": {
         entities: {
-            color: "Red"
+            object: "book"
         }
     }
 };
-const getEntity = (context, entity)=>{
-    // Ensure that utterance is not empty and contains recognized text
-    if (context.utterance) {
-        const u = context.utterance.toLowerCase().replace(/\.$/g, "");
-        if (u in grammar) {
-            const recognizedPhrase = grammar[u];
-            if (entity in recognizedPhrase.entities) return recognizedPhrase.entities[entity];
-        }
-    }
-    return false;
+const ToLowerCase = (object)=>{
+    return object.toLowerCase().replace(/\.$/g, "");
 };
 // machine
 const dmMachine = (0, _xstate.createMachine)({
-    /** @xstate-layout N4IgpgJg5mDOIC5QCcD2qAuA6AYgVwBsCB9AJTjwwKwAVkwAHAQ3oGIBBAZVIBUfOyAUXYARAJoBtAAwBdRKAapYASwzLUAO3kgAHogBMAZilYAnAFZDARkP6AHFfN2pAFlMA2ADQgAnoisA7C5YUqFhUu7m+i5W0QC+cd5omLiEJOSwlNTkTBA+WADi9GBqGlCsnDTCANLEAMIA8gCyNAAygjyC0nJIIIoqapraegj2JhbWAZbRhqb6+t5+CO4BJkGmG+ZWUvruDuYJSejY+ERkFFRYOXlY7LAA1qykgo0FAHIAkpyCIt3a-ap1FpeiN3DEsG55lI7PpzAE7A4AotEGCAlgAgFDC4sVYVuY3FZDiBkic0udMpdrvlTiR2BpYAB3MDICpVdi1RotdqdP69AGDYGgUHgyH6aGw+GI5EIKJo8JSRzmfGGBFEkmFACqH1oTBgrVQuUgrDqrQ+dWqvIUSkBQxBBlMaLsK0Clm2G3cVmlCMM6PMoVilkM5g2LjVx012o+GiYAGM1AA3MAcbh8ATPUSSWT-a0C4YGOw+lYeIIRWLRFzS2JWYJi6zufQWLZ2Fx2MMpApa25x5SJrAfCAEJOp4icHjsXg-S19HNAvMIaz6LDNwwBesrpV+uGVzEmezuSL4zYuKSGNvYDva9jd3v9wfJ0gjscT35Zvkz21CxALpfY1dGKZKlIW6+P49bBPCkTHnYARzKYp6JMS4YXl2CZgFgnAMGATD3MoZSsjU9TNG0HRdK+VoDLOdrzrEP4rmuAGbkiIEILiMHok69YwRsDq7GeEYoT2aGtMosAYGAGi4eUzyvJ83wvj05E2oKuhfpYEJzIEKp-pY5iVnCNZOsGBYeHYGytkSGioBAcDaCS2YUR+KkIAAtPoTFLK5oYIeqNLklk9lKXO+iesx7g+m43EWBEQTYvBRwpL5GRZLQ9DMPQAW5lRAQLMxjjjJFpgKliCL7nxiUXNkWF5BllGfsspjStiphYH6YRii27imC4XnxaSZxJZSVX5EUYAlJJNWOSMViBNKYVWEuhiLceuJGPY+hlWSA2Vbk+R3PcE3KSMLaLpYpjTTBfr7seFahS4aJTGELgrM4Uzmb1qT9RVVxDR9tL0kyyAHXOy4hPCeUIjEOmzViWCLUtCprmtfEXkDVHBdKMHuFg8yRPW9jGAihLeUhnY0LqYD6oaECo3V2VegW6K7OYHrwqYBbxMT7adlGsaoTTTnQZWVhndjJ7VhEBIqnFiFc5e15gPzoINbld3NastixKuUgwU6yOdleqF9gOCtvg5h3+DNuVwlj2KRNlwVnRs62c+e+vy+hmHYeNpuBVRWzBC4DarK1VgwtElYrIu6v2L+cwnnrcuG8Jonid7imZXV-sQkHQH+mHN1LI4KyixrONTNiCQJEAA */ id: "root",
+    /** @xstate-layout N4IgpgJg5mDOIC5QCcD2qAuA6AIgSwEMAbVKAVzAFkCA7AmZLABWTAAcDWBiAQQGUASgBUhfAPoCAojxwBNANoAGALqJQbVLDwY8qGmpAAPRACYAzIqwBOAKxmAjCYAc9xQBZnAdkVmANCABPRHtPNyxFCIiQkxMbRQA2JwBfJP80TFxCEnIqWnowRgAhTAALADE8ZFgMHhoIPjAAYz0ILAqq7BZUAFs2DC4+JmkAaTEAYQB5SiYAGUkhSSVVJBANLR09A2MEMxsncPjY93crRUd4+P8ghEPLOKi3eKszDwuUtPRsfGJSCmo6BhYYoYcqVaq1epNFptMHYHiwADWXCkkwA4gA5ACSfEkOCWBjW2l0+hW2089niWHiZxsFxMoQpDiuiBsVkpNnMj0SniccU8nneIHSXyyv1yAIKQNK7XBdQazTqWHl0K6vX6gxG4yms3mixUBM0RM2pMQu32CViFLcPIi8T8gUQTicZnCkU8ZniITMnlpguFmR+OX++SK0thEOVisjrXhCPsyMkaKxOLx+pWhI2JNAZPs+2p9lZihMCSdduZCCcnvCnLZVns9lsnhMfs+WFRAFVMcx8jNUAQIJAuGMZpixsN8enDZmtqYrJ4sJWmxEzCvzGYrG5y-XYtWXuubG4bHsnFYWxkO12eI0dAA3MBYTEQIhgLgicR8IQ8YS4ifqKfEmcdkcBc3G9VlnScRRng3Lc53sLAjysKwnE8OdINsM9sAvLAr1ve9H2fXhBDED8vwWVNlj-dYAJNICTBAsDkLMdD103B0EFzC5wlZOdkNLI9klSIVW2w3C8DvJU2DAAgETwGgoAGIYeFGSZpjmBZf1Wf9jWzU1gKcUCfSYliYPYhsTHgxQeO9DwkMOGxMLbTscOvcT7xmPBqjAGg5IUlEJgxbEfzTKijSzIxTTsLA3CsGJ63iNxErcCktxcGwEJ4kxnjcKzzGbIT-WwzE6Fcu8iOEUQJGkORNIzGjdIQZwXXiVCnh9PKbHsUCt0PdLrXiI9yRXNxIPiFIhJoVAB3gFZhQNaidIihAAFpD3LZaTDcRzvmyP48gYeawsA+1rjtBDIgiXkNw3d1ttFIN9slFh2E4MBDunWimy3TrXUiEJc2Qm67sDPaJVDEEZRqOUoTqd76qWzryw8eD7giWkBtAxRPDGgrWx2sVg0BYFQQ6CMYdaSG4cW7YkPLOIrF+20ORi2ID2B3bxRDKUIfDaGFQp2FmDQNUqfC7Yus8Om2XOt1mMS4szHZgnHvBknZUhfmYQ6HDEVFwDBqpEbDysvi2ql9kLvdAyPB8JWHrB7m1ahjXoUhtoyCIIgxFqWAAHcCj12iUPnOxTmpKDNsUXlzZliIrfl23cYyfH7a54nIbJzW3YIsBJFhycFrF4JkOiyDrTiZ0+XMctvHoi6Rs9HkPC2pORRBzmibDUm+ehaNA4a2n2P5ejUZi423Tt0G0679XoyVcmhZ6Pp+6WiXy0rSwLriCxrrZ1uAw5wnJXT3mXajBfY3sFftkQw2DMOVxYiQk7HWpRmfQpUInFiSeO+PmfnZzznkwTgOhiDexoH7AOBcjpB35AhdcCQIixRygZdeb9LadRaiNH++8LzX1MPYLcPgQ6RDrAeLKIQHJ4OciAmAvZ+yQAIQgL6ZlHDpQullbGoQfSCQ+OeZyYk7zMKeFuJc1hsbUgsJtWIfDhICMvKVfCT43owI+g1eskszIuHnN4Oy9lbIjUcqJJRklpKyXkswzqYRbLeAPIcRIoizJ1hdHOAa38cHmAMsYwRpiPJeR8pYtR8Mb5dWilwqyjwTCOKsKlKO0VJE5USFjAaPiuzFQIEo5hKEepmHov1WkIRTjOhxikIAA */ id: "root",
     type: "parallel",
     states: {
-        Full_Resutl: {
+        DialogueManager: {
             initial: "Prepare",
             states: {
                 Prepare: {
                     on: {
-                        ASRTTS_READY: "Ready"
+                        ASRTTS_READY: "#BothFirstAndSecond"
                     },
                     entry: [
                         (0, _xstate.assign)({
@@ -650,72 +640,93 @@ const dmMachine = (0, _xstate.createMachine)({
                         })
                     ]
                 },
-                Ready: {
-                    initial: "Greeting",
-                    id: "ready",
+                BothFirstAndSecond: {
+                    id: "BothFirstAndSecond",
+                    type: "parallel",
                     states: {
-                        Greeting: {
-                            id: "greeting",
-                            entry: say("Hi! What would you like me to do?"),
-                            on: {
-                                SPEAK_COMPLETE: "#Ask"
-                            }
-                        },
-                        Ask: {
-                            id: "Ask",
-                            entry: listen(),
-                            on: {
-                                RECOGNISED: [
-                                    {
-                                        target: "#Full_Answer",
-                                        guard: ({ context })=>{
-                                            const isColorPresent = !!getEntity(context, "color");
-                                            console.log("Is 'color' present:", isColorPresent);
-                                            return isColorPresent;
-                                        },
-                                        actions: (0, _xstate.assign)({
-                                            color: (context)=>getEntity(context, "color")
-                                        })
+                        First: {
+                            initial: "Prompt",
+                            states: {
+                                Prompt: {
+                                    entry: "speak.prompt",
+                                    on: {
+                                        SPEAK_COMPLETE: "Ask"
                                     }
-                                ]
+                                },
+                                Ask: {
+                                    entry: listen(),
+                                    on: {
+                                        RECOGNISED: {
+                                            target: "#Full_Answer",
+                                            guard: ({ event })=>!!(grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.color && !!(grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.object && !!(grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.place,
+                                            actions: (0, _xstate.assign)({
+                                                Color: ({ event })=>(grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.color,
+                                                Object: ({ event })=>(grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.object,
+                                                Place: ({ event })=>(grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.place
+                                            })
+                                        }
+                                    }
+                                },
+                                Full_Answer: {
+                                    id: "Full_Answer",
+                                    entry: ({ context })=>{
+                                        context.spstRef.send({
+                                            type: "SPEAK",
+                                            value: {
+                                                utterance: `OK, I put the ${context.Color} ${context.Object} on the ${context.Place}`
+                                            },
+                                            on: {
+                                                SPEAK_COMPLETE: "#IdleEnd"
+                                            }
+                                        });
+                                    }
+                                },
+                                IdleEnd: {
+                                    id: "IdleEnd"
+                                }
                             }
                         },
-                        Full_Answer: {
-                            id: "Full_Answer",
-                            entry: ({ context })=>{
-                                console.log("Entering Full_Answer state");
-                                context.spstRef.send({
-                                    type: "SPEAK",
-                                    value: `Ok, so you want the ${context.color} right?`
-                                });
-                            },
-                            on: {
-                                SPEAK_COMPLETE: "#greeting"
+                        Second: {
+                            initial: "Prompt",
+                            states: {
+                                Prompt: {
+                                    entry: "speak.prompt",
+                                    on: {
+                                        SPEAK_COMPLETE: "Ask1"
+                                    }
+                                },
+                                Ask1: {
+                                    entry: listen(),
+                                    on: {
+                                        RECOGNISED: {
+                                            target: "Partial_Answer",
+                                            guard: ({ event })=>!!(grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.object,
+                                            actions: (0, _xstate.assign)({
+                                                Object: ({ event })=>(grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.object
+                                            })
+                                        }
+                                    }
+                                },
+                                Partial_Answer: {
+                                    id: "Partial_Answer",
+                                    entry: ({ context })=>{
+                                        context.spstRef.send({
+                                            type: "SPEAK",
+                                            value: {
+                                                utterance: `OK, I have a ${context.object}. What color is it and what would you like me to do with it?`
+                                            },
+                                            on: {
+                                                SPEAK_COMPLETE: "#IdleEnd"
+                                            }
+                                        });
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
         },
-        //Partial_Answer: {
-        //initial: "Double_Check",
-        //id: "Partial_Answer",
-        //states: {
-        //Double_Check: {
-        //id: "Double_Check",
-        //entry: say("I didn't really get it"),
-        //on: {SPEAK_COMPLETE: "#Ask_Clarification"},
-        //},
-        //Ask_Clarification: {
-        //id: "Ask_Clarification",
-        //entry: listen(),
-        //on: {
-        //RECOGNISED: [
-        //],
-        //},
-        //},
-        //},
-        //},
         GUI: {
             initial: "PageLoaded",
             states: {
@@ -726,12 +737,6 @@ const dmMachine = (0, _xstate.createMachine)({
                             target: "Inactive",
                             actions: "prepare"
                         }
-                    }
-                },
-                Inactive: {
-                    entry: "gui.Inactive",
-                    on: {
-                        ASRTTS_READY: "Active"
                     }
                 },
                 Active: {
@@ -757,6 +762,12 @@ const dmMachine = (0, _xstate.createMachine)({
                             }
                         }
                     }
+                },
+                Inactive: {
+                    entry: "gui.Inactive",
+                    on: {
+                        ASRTTS_READY: "Active"
+                    }
                 }
             }
         }
@@ -769,8 +780,16 @@ const dmMachine = (0, _xstate.createMachine)({
                 type: "PREPARE"
             }),
         // saveLastResult:
+        "speak.prompt": ({ context })=>{
+            context.spstRef.send({
+                type: "SPEAK",
+                value: {
+                    utterance: "Hi! What would you like to do?"
+                }
+            });
+        },
         "gui.PageLoaded": ({})=>{
-            document.getElementById("button").innerText = "Begin your torture:)";
+            document.getElementById("button").innerText = "Click to start!";
         },
         "gui.Inactive": ({})=>{
             document.getElementById("button").innerText = "Inactive";
@@ -797,45 +816,46 @@ actor.subscribe((state)=>{
 },{"xstate":"591uE","speechstate":"bEPLs"}],"591uE":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Actor", ()=>(0, _actions5943A9DbEsmJs.M));
-parcelHelpers.export(exports, "ActorStatus", ()=>(0, _actions5943A9DbEsmJs.O));
-parcelHelpers.export(exports, "ConstantPrefix", ()=>(0, _actions5943A9DbEsmJs.a7));
-parcelHelpers.export(exports, "InterpreterStatus", ()=>(0, _actions5943A9DbEsmJs.P));
-parcelHelpers.export(exports, "SpecialTargets", ()=>(0, _actions5943A9DbEsmJs.a8));
-parcelHelpers.export(exports, "State", ()=>(0, _actions5943A9DbEsmJs.p));
-parcelHelpers.export(exports, "and", ()=>(0, _actions5943A9DbEsmJs.a5));
-parcelHelpers.export(exports, "assign", ()=>(0, _actions5943A9DbEsmJs.y));
-parcelHelpers.export(exports, "cancel", ()=>(0, _actions5943A9DbEsmJs.R));
-parcelHelpers.export(exports, "choose", ()=>(0, _actions5943A9DbEsmJs.T));
-parcelHelpers.export(exports, "createActor", ()=>(0, _actions5943A9DbEsmJs.G));
-parcelHelpers.export(exports, "doneInvoke", ()=>(0, _actions5943A9DbEsmJs.Q));
-parcelHelpers.export(exports, "forwardTo", ()=>(0, _actions5943A9DbEsmJs.K));
-parcelHelpers.export(exports, "fromCallback", ()=>(0, _actions5943A9DbEsmJs.a0));
-parcelHelpers.export(exports, "fromEventObservable", ()=>(0, _actions5943A9DbEsmJs.a1));
-parcelHelpers.export(exports, "fromObservable", ()=>(0, _actions5943A9DbEsmJs.$));
-parcelHelpers.export(exports, "fromPromise", ()=>(0, _actions5943A9DbEsmJs._));
-parcelHelpers.export(exports, "fromTransition", ()=>(0, _actions5943A9DbEsmJs.a2));
-parcelHelpers.export(exports, "getStateNodes", ()=>(0, _actions5943A9DbEsmJs.n));
-parcelHelpers.export(exports, "interpret", ()=>(0, _actions5943A9DbEsmJs.L));
-parcelHelpers.export(exports, "log", ()=>(0, _actions5943A9DbEsmJs.U));
-parcelHelpers.export(exports, "matchesState", ()=>(0, _actions5943A9DbEsmJs.H));
-parcelHelpers.export(exports, "not", ()=>(0, _actions5943A9DbEsmJs.a4));
-parcelHelpers.export(exports, "or", ()=>(0, _actions5943A9DbEsmJs.a6));
-parcelHelpers.export(exports, "pathToStateValue", ()=>(0, _actions5943A9DbEsmJs.Y));
-parcelHelpers.export(exports, "pure", ()=>(0, _actions5943A9DbEsmJs.V));
-parcelHelpers.export(exports, "raise", ()=>(0, _actions5943A9DbEsmJs.W));
-parcelHelpers.export(exports, "sendParent", ()=>(0, _actions5943A9DbEsmJs.J));
-parcelHelpers.export(exports, "sendTo", ()=>(0, _actions5943A9DbEsmJs.I));
-parcelHelpers.export(exports, "stateIn", ()=>(0, _actions5943A9DbEsmJs.a3));
-parcelHelpers.export(exports, "stop", ()=>(0, _actions5943A9DbEsmJs.X));
-parcelHelpers.export(exports, "toObserver", ()=>(0, _actions5943A9DbEsmJs.Z));
+parcelHelpers.export(exports, "Actor", ()=>(0, _actions020463E9EsmJs.G));
+parcelHelpers.export(exports, "ActorStatus", ()=>(0, _actions020463E9EsmJs.H));
+parcelHelpers.export(exports, "ConstantPrefix", ()=>(0, _actions020463E9EsmJs.a0));
+parcelHelpers.export(exports, "InterpreterStatus", ()=>(0, _actions020463E9EsmJs.K));
+parcelHelpers.export(exports, "SpecialTargets", ()=>(0, _actions020463E9EsmJs.a1));
+parcelHelpers.export(exports, "State", ()=>(0, _actions020463E9EsmJs.n));
+parcelHelpers.export(exports, "and", ()=>(0, _actions020463E9EsmJs.Y));
+parcelHelpers.export(exports, "assign", ()=>(0, _actions020463E9EsmJs.w));
+parcelHelpers.export(exports, "cancel", ()=>(0, _actions020463E9EsmJs.L));
+parcelHelpers.export(exports, "choose", ()=>(0, _actions020463E9EsmJs.M));
+parcelHelpers.export(exports, "createActor", ()=>(0, _actions020463E9EsmJs.E));
+parcelHelpers.export(exports, "doneInvoke", ()=>(0, _actions020463E9EsmJs.I));
+parcelHelpers.export(exports, "forwardTo", ()=>(0, _actions020463E9EsmJs.R));
+parcelHelpers.export(exports, "getStateNodes", ()=>(0, _actions020463E9EsmJs.k));
+parcelHelpers.export(exports, "interpret", ()=>(0, _actions020463E9EsmJs.J));
+parcelHelpers.export(exports, "log", ()=>(0, _actions020463E9EsmJs.O));
+parcelHelpers.export(exports, "matchesState", ()=>(0, _actions020463E9EsmJs.F));
+parcelHelpers.export(exports, "not", ()=>(0, _actions020463E9EsmJs.Z));
+parcelHelpers.export(exports, "or", ()=>(0, _actions020463E9EsmJs._));
+parcelHelpers.export(exports, "pathToStateValue", ()=>(0, _actions020463E9EsmJs.W));
+parcelHelpers.export(exports, "pure", ()=>(0, _actions020463E9EsmJs.P));
+parcelHelpers.export(exports, "raise", ()=>(0, _actions020463E9EsmJs.Q));
+parcelHelpers.export(exports, "sendParent", ()=>(0, _actions020463E9EsmJs.T));
+parcelHelpers.export(exports, "sendTo", ()=>(0, _actions020463E9EsmJs.U));
+parcelHelpers.export(exports, "stateIn", ()=>(0, _actions020463E9EsmJs.$));
+parcelHelpers.export(exports, "stop", ()=>(0, _actions020463E9EsmJs.V));
+parcelHelpers.export(exports, "toObserver", ()=>(0, _actions020463E9EsmJs.X));
+parcelHelpers.export(exports, "fromCallback", ()=>(0, _promise5B07C38EEsmJs.f));
+parcelHelpers.export(exports, "fromEventObservable", ()=>(0, _promise5B07C38EEsmJs.a));
+parcelHelpers.export(exports, "fromObservable", ()=>(0, _promise5B07C38EEsmJs.b));
+parcelHelpers.export(exports, "fromPromise", ()=>(0, _promise5B07C38EEsmJs.c));
+parcelHelpers.export(exports, "fromTransition", ()=>(0, _promise5B07C38EEsmJs.d));
 parcelHelpers.export(exports, "SimulatedClock", ()=>SimulatedClock);
 parcelHelpers.export(exports, "StateMachine", ()=>StateMachine);
 parcelHelpers.export(exports, "StateNode", ()=>StateNode);
 parcelHelpers.export(exports, "createMachine", ()=>createMachine);
 parcelHelpers.export(exports, "mapState", ()=>mapState);
 parcelHelpers.export(exports, "waitFor", ()=>waitFor);
-var _actions5943A9DbEsmJs = require("./actions-5943a9db.esm.js");
+var _actions020463E9EsmJs = require("./actions-020463e9.esm.js");
+var _promise5B07C38EEsmJs = require("./promise-5b07c38e.esm.js");
 var _xstateDevEsmJs = require("../dev/dist/xstate-dev.esm.js");
 const EMPTY_OBJECT = {};
 const toSerializableActon = (action)=>{
@@ -916,12 +936,12 @@ class StateNode {
         this.id = this.config.id || [
             this.machine.id,
             ...this.path
-        ].join((0, _actions5943A9DbEsmJs.S));
+        ].join((0, _actions020463E9EsmJs.S));
         this.type = this.config.type || (this.config.states && Object.keys(this.config.states).length ? "compound" : this.config.history ? "history" : "atomic");
         this.description = this.config.description;
         this.order = this.machine.idMap.size;
         this.machine.idMap.set(this.id, this);
-        this.states = this.config.states ? (0, _actions5943A9DbEsmJs.m)(this.config.states, (stateConfig, key)=>{
+        this.states = this.config.states ? (0, _actions020463E9EsmJs.m)(this.config.states, (stateConfig, key)=>{
             const stateNode = new StateNode(stateConfig, {
                 _parent: this,
                 _key: key,
@@ -932,15 +952,15 @@ class StateNode {
         if (this.type === "compound" && !this.config.initial) throw new Error(`No initial state specified for compound state node "#${this.id}". Try adding { initial: "${Object.keys(this.states)[0]}" } to the state config.`);
         // History config
         this.history = this.config.history === true ? "shallow" : this.config.history || false;
-        this.entry = (0, _actions5943A9DbEsmJs.t)(this.config.entry).slice();
-        this.exit = (0, _actions5943A9DbEsmJs.t)(this.config.exit).slice();
+        this.entry = (0, _actions020463E9EsmJs.t)(this.config.entry).slice();
+        this.exit = (0, _actions020463E9EsmJs.t)(this.config.exit).slice();
         this.meta = this.config.meta;
         this.output = this.type === "final" ? this.config.output : undefined;
-        this.tags = (0, _actions5943A9DbEsmJs.t)(config.tags).slice();
+        this.tags = (0, _actions020463E9EsmJs.t)(config.tags).slice();
     }
     _initialize() {
-        this.transitions = (0, _actions5943A9DbEsmJs.f)(this);
-        if (this.config.always) this.always = (0, _actions5943A9DbEsmJs.a)(this.config.always).map((t)=>(0, _actions5943A9DbEsmJs.b)(this, (0, _actions5943A9DbEsmJs.N), t));
+        this.transitions = (0, _actions020463E9EsmJs.f)(this);
+        if (this.config.always) this.always = (0, _actions020463E9EsmJs.a)(this.config.always).map((t)=>(0, _actions020463E9EsmJs.b)(this, (0, _actions020463E9EsmJs.N), t));
         Object.keys(this.states).forEach((key)=>{
             this.states[key]._initialize();
         });
@@ -967,7 +987,7 @@ class StateNode {
                     })
             } : undefined,
             history: this.history,
-            states: (0, _actions5943A9DbEsmJs.m)(this.states, (state)=>{
+            states: (0, _actions020463E9EsmJs.m)(this.states, (state)=>{
                 return state.definition;
             }),
             on: this.on,
@@ -993,12 +1013,9 @@ class StateNode {
     /**
    * The logic invoked as actors by this state node.
    */ get invoke() {
-        return (0, _actions5943A9DbEsmJs.c)(this, "invoke", ()=>(0, _actions5943A9DbEsmJs.t)(this.config.invoke).map((invocable, i)=>{
-                const generatedId = (0, _actions5943A9DbEsmJs.g)(this.id, i);
-                const invokeConfig = (0, _actions5943A9DbEsmJs.k)(invocable, generatedId);
-                const resolvedId = invokeConfig.id || generatedId;
-                const src = invokeConfig.src;
-                const { systemId } = invokeConfig;
+        return (0, _actions020463E9EsmJs.c)(this, "invoke", ()=>(0, _actions020463E9EsmJs.t)(this.config.invoke).map((invokeConfig, i)=>{
+                const { src, systemId } = invokeConfig;
+                const resolvedId = invokeConfig.id || (0, _actions020463E9EsmJs.d)(this.id, i);
                 // TODO: resolving should not happen here
                 const resolvedSrc = typeof src === "string" ? src : !("type" in src) ? resolvedId : src;
                 if (!this.machine.implementations.actors[resolvedId] && typeof src !== "string" && !("type" in src)) this.machine.implementations.actors = {
@@ -1026,7 +1043,7 @@ class StateNode {
     /**
    * The mapping of events to transitions.
    */ get on() {
-        return (0, _actions5943A9DbEsmJs.c)(this, "on", ()=>{
+        return (0, _actions020463E9EsmJs.c)(this, "on", ()=>{
             const transitions = this.transitions;
             return [
                 ...transitions
@@ -1041,22 +1058,22 @@ class StateNode {
         });
     }
     get after() {
-        return (0, _actions5943A9DbEsmJs.c)(this, "delayedTransitions", ()=>(0, _actions5943A9DbEsmJs.h)(this));
+        return (0, _actions020463E9EsmJs.c)(this, "delayedTransitions", ()=>(0, _actions020463E9EsmJs.g)(this));
     }
     get initial() {
-        return (0, _actions5943A9DbEsmJs.c)(this, "initial", ()=>(0, _actions5943A9DbEsmJs.i)(this, this.config.initial || []));
+        return (0, _actions020463E9EsmJs.c)(this, "initial", ()=>(0, _actions020463E9EsmJs.h)(this, this.config.initial || []));
     }
     next(state, event) {
         const eventType = event.type;
         const actions = [];
         let selectedTransition;
-        const candidates = (0, _actions5943A9DbEsmJs.c)(this, `candidates-${eventType}`, ()=>(0, _actions5943A9DbEsmJs.j)(this, eventType));
+        const candidates = (0, _actions020463E9EsmJs.c)(this, `candidates-${eventType}`, ()=>(0, _actions020463E9EsmJs.i)(this, eventType));
         for (const candidate of candidates){
             const { guard } = candidate;
             const resolvedContext = state.context;
             let guardPassed = false;
             try {
-                guardPassed = !guard || (0, _actions5943A9DbEsmJs.e)(guard, resolvedContext, event, state);
+                guardPassed = !guard || (0, _actions020463E9EsmJs.e)(guard, resolvedContext, event, state);
             } catch (err) {
                 const guardType = typeof guard === "string" ? guard : typeof guard === "object" ? guard.type : undefined;
                 throw new Error(`Unable to evaluate guard ${guardType ? `'${guardType}' ` : ""}in transition for event '${eventType}' in state node '${this.id}':\n${err.message}`);
@@ -1072,29 +1089,9 @@ class StateNode {
         ] : undefined;
     }
     /**
-   * The target state value of the history state node, if it exists. This represents the
-   * default state value to transition to if no history value exists yet.
-   */ get target() {
-        if (this.type === "history") {
-            const historyConfig = this.config;
-            return historyConfig.target;
-        }
-        return undefined;
-    }
-    /**
-   * All the state node IDs of this state node and its descendant state nodes.
-   */ get stateIds() {
-        const childStateIds = (0, _actions5943A9DbEsmJs.d)(Object.keys(this.states).map((stateKey)=>{
-            return this.states[stateKey].stateIds;
-        }));
-        return [
-            this.id
-        ].concat(childStateIds);
-    }
-    /**
    * All the event types accepted by this state node and its descendants.
    */ get events() {
-        return (0, _actions5943A9DbEsmJs.c)(this, "events", ()=>{
+        return (0, _actions020463E9EsmJs.c)(this, "events", ()=>{
             const { states } = this;
             const events = new Set(this.ownEvents);
             if (states) for (const stateId of Object.keys(states)){
@@ -1198,18 +1195,18 @@ class StateMachine {
    *
    * @param state The state to resolve
    */ resolveState(state) {
-        const configurationSet = (0, _actions5943A9DbEsmJs.l)((0, _actions5943A9DbEsmJs.n)(this.root, state.value));
+        const configurationSet = (0, _actions020463E9EsmJs.j)((0, _actions020463E9EsmJs.k)(this.root, state.value));
         const configuration = Array.from(configurationSet);
         return this.createState({
             ...state,
-            value: (0, _actions5943A9DbEsmJs.r)(this.root, state.value),
+            value: (0, _actions020463E9EsmJs.r)(this.root, state.value),
             configuration,
-            done: (0, _actions5943A9DbEsmJs.o)(configuration)
+            done: (0, _actions020463E9EsmJs.l)(configuration)
         });
     }
     resolveStateValue(stateValue, ...[context]) {
-        const resolvedStateValue = (0, _actions5943A9DbEsmJs.r)(this.root, stateValue);
-        return this.resolveState((0, _actions5943A9DbEsmJs.p).from(resolvedStateValue, context, this));
+        const resolvedStateValue = (0, _actions020463E9EsmJs.r)(this.root, stateValue);
+        return this.resolveState((0, _actions020463E9EsmJs.n).from(resolvedStateValue, context, this));
     }
     /**
    * Determines the next state given the current `state` and received `event`.
@@ -1219,10 +1216,10 @@ class StateMachine {
    * @param event The received event
    */ transition(state, event, actorCtx) {
         // TODO: handle error events in a better way
-        if ((0, _actions5943A9DbEsmJs.q)(event) && !state.nextEvents.some((nextEvent)=>nextEvent === event.type)) return (0, _actions5943A9DbEsmJs.s)(state, {
+        if ((0, _actions020463E9EsmJs.o)(event) && !state.nextEvents.some((nextEvent)=>nextEvent === event.type)) return (0, _actions020463E9EsmJs.p)(state, {
             error: event.data
         });
-        const { state: nextState } = (0, _actions5943A9DbEsmJs.u)(state, event, actorCtx);
+        const { state: nextState } = (0, _actions020463E9EsmJs.q)(state, event, actorCtx);
         return nextState;
     }
     /**
@@ -1232,10 +1229,10 @@ class StateMachine {
    * @param state The current state
    * @param event The received event
    */ microstep(state, event, actorCtx) {
-        return (0, _actions5943A9DbEsmJs.u)(state, event, actorCtx).microstates;
+        return (0, _actions020463E9EsmJs.q)(state, event, actorCtx).microstates;
     }
     getTransitionData(state, event) {
-        return (0, _actions5943A9DbEsmJs.v)(this.root, state.value, state, event) || [];
+        return (0, _actions020463E9EsmJs.s)(this.root, state.value, state, event) || [];
     }
     /**
    * The initial state _before_ evaluating any microsteps.
@@ -1247,7 +1244,7 @@ class StateMachine {
             // TODO: this is computed in state constructor
             context: typeof context !== "function" && context ? context : {},
             meta: undefined,
-            configuration: (0, _actions5943A9DbEsmJs.w)(this.root),
+            configuration: (0, _actions020463E9EsmJs.u)(this.root),
             children: {}
         }));
         if (typeof context === "function") {
@@ -1255,8 +1252,8 @@ class StateMachine {
                     spawn,
                     input: event.input
                 });
-            return (0, _actions5943A9DbEsmJs.x)([
-                (0, _actions5943A9DbEsmJs.y)(assignment)
+            return (0, _actions020463E9EsmJs.v)([
+                (0, _actions020463E9EsmJs.w)(assignment)
             ], initEvent, preInitial, actorCtx);
         }
         return preInitial;
@@ -1264,13 +1261,13 @@ class StateMachine {
     /**
    * Returns the initial `State` instance, with reference to `self` as an `ActorRef`.
    */ getInitialState(actorCtx, input) {
-        const initEvent = (0, _actions5943A9DbEsmJs.z)(input); // TODO: fix;
+        const initEvent = (0, _actions020463E9EsmJs.x)(input); // TODO: fix;
         const preInitialState = this.getPreInitialState(actorCtx, initEvent);
-        const nextState = (0, _actions5943A9DbEsmJs.A)([
+        const nextState = (0, _actions020463E9EsmJs.y)([
             {
                 target: [
                     ...preInitialState.configuration
-                ].filter((0, _actions5943A9DbEsmJs.B)),
+                ].filter((0, _actions020463E9EsmJs.z)),
                 source: this.root,
                 reenter: true,
                 actions: [],
@@ -1278,7 +1275,7 @@ class StateMachine {
                 toJSON: null // TODO: fix
             }
         ], preInitialState, actorCtx, initEvent, true);
-        const { state: macroState } = (0, _actions5943A9DbEsmJs.u)(nextState, initEvent, actorCtx);
+        const { state: macroState } = (0, _actions020463E9EsmJs.q)(nextState, initEvent, actorCtx);
         return macroState;
     }
     start(state) {
@@ -1287,12 +1284,12 @@ class StateMachine {
         });
     }
     getStateNodeById(stateId) {
-        const fullPath = stateId.split((0, _actions5943A9DbEsmJs.S));
+        const fullPath = stateId.split((0, _actions020463E9EsmJs.S));
         const relativePath = fullPath.slice(1);
-        const resolvedStateId = (0, _actions5943A9DbEsmJs.C)(fullPath[0]) ? fullPath[0].slice(STATE_IDENTIFIER.length) : fullPath[0];
+        const resolvedStateId = (0, _actions020463E9EsmJs.A)(fullPath[0]) ? fullPath[0].slice(STATE_IDENTIFIER.length) : fullPath[0];
         const stateNode = this.idMap.get(resolvedStateId);
         if (!stateNode) throw new Error(`Child state node '#${resolvedStateId}' does not exist on machine '${this.id}'`);
-        return (0, _actions5943A9DbEsmJs.D)(stateNode, relativePath);
+        return (0, _actions020463E9EsmJs.B)(stateNode, relativePath);
     }
     get definition() {
         return this.root.definition;
@@ -1301,10 +1298,10 @@ class StateMachine {
         return this.definition;
     }
     getPersistedState(state) {
-        return (0, _actions5943A9DbEsmJs.E)(state);
+        return (0, _actions020463E9EsmJs.C)(state);
     }
     createState(stateConfig) {
-        return stateConfig instanceof (0, _actions5943A9DbEsmJs.p) ? stateConfig : new (0, _actions5943A9DbEsmJs.p)(stateConfig, this);
+        return stateConfig instanceof (0, _actions020463E9EsmJs.n) ? stateConfig : new (0, _actions020463E9EsmJs.n)(stateConfig, this);
     }
     getStatus(state) {
         return state.error ? {
@@ -1323,16 +1320,16 @@ class StateMachine {
             const actorData = state.children[actorId];
             const childState = actorData.state;
             const src = actorData.src;
-            const logic = src ? (0, _actions5943A9DbEsmJs.F)(this.implementations.actors[src])?.src : undefined;
+            const logic = src ? (0, _actions020463E9EsmJs.D)(this.implementations.actors[src])?.src : undefined;
             if (!logic) return;
             const actorState = logic.restoreState?.(childState, _actorCtx);
-            const actorRef = (0, _actions5943A9DbEsmJs.G)(logic, {
+            const actorRef = (0, _actions020463E9EsmJs.E)(logic, {
                 id: actorId,
                 state: actorState
             });
             children[actorId] = actorRef;
         });
-        const restoredState = this.createState(new (0, _actions5943A9DbEsmJs.p)({
+        const restoredState = this.createState(new (0, _actions020463E9EsmJs.n)({
             ...state,
             children
         }, this));
@@ -1341,9 +1338,9 @@ class StateMachine {
             if (stateNode.invoke) stateNode.invoke.forEach((invokeConfig)=>{
                 const { id, src } = invokeConfig;
                 if (children[id]) return;
-                const referenced = (0, _actions5943A9DbEsmJs.F)(this.implementations.actors[src]);
+                const referenced = (0, _actions020463E9EsmJs.D)(this.implementations.actors[src]);
                 if (referenced) {
-                    const actorRef = (0, _actions5943A9DbEsmJs.G)(referenced.src, {
+                    const actorRef = (0, _actions020463E9EsmJs.E)(referenced.src, {
                         id,
                         parent: _actorCtx?.self,
                         input: "input" in invokeConfig ? invokeConfig.input : referenced.input
@@ -1360,7 +1357,7 @@ function createMachine(config, implementations) {
 }
 function mapState(stateMap, stateId) {
     let foundStateId;
-    for (const mappedStateId of Object.keys(stateMap))if ((0, _actions5943A9DbEsmJs.H)(mappedStateId, stateId) && (!foundStateId || stateId.length > foundStateId.length)) foundStateId = mappedStateId;
+    for (const mappedStateId of Object.keys(stateMap))if ((0, _actions020463E9EsmJs.F)(mappedStateId, stateId) && (!foundStateId || stateId.length > foundStateId.length)) foundStateId = mappedStateId;
     return stateMap[foundStateId];
 }
 class SimulatedClock {
@@ -1475,85 +1472,76 @@ const defaultWaitForOptions = {
     });
 }
 
-},{"./actions-5943a9db.esm.js":"li5aQ","../dev/dist/xstate-dev.esm.js":"2CXSV","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"li5aQ":[function(require,module,exports) {
+},{"./actions-020463e9.esm.js":"ctMkw","./promise-5b07c38e.esm.js":false,"../dev/dist/xstate-dev.esm.js":"2CXSV","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ctMkw":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "$", ()=>fromObservable);
-parcelHelpers.export(exports, "A", ()=>microstep);
-parcelHelpers.export(exports, "B", ()=>isAtomicStateNode);
-parcelHelpers.export(exports, "C", ()=>isStateId);
-parcelHelpers.export(exports, "D", ()=>getStateNodeByPath);
-parcelHelpers.export(exports, "E", ()=>getPersistedState);
-parcelHelpers.export(exports, "F", ()=>resolveReferencedActor);
-parcelHelpers.export(exports, "G", ()=>createActor);
-parcelHelpers.export(exports, "H", ()=>matchesState);
-parcelHelpers.export(exports, "I", ()=>sendTo);
-parcelHelpers.export(exports, "J", ()=>sendParent);
-parcelHelpers.export(exports, "K", ()=>forwardTo);
-parcelHelpers.export(exports, "L", ()=>interpret);
-parcelHelpers.export(exports, "M", ()=>Actor);
+parcelHelpers.export(exports, "$", ()=>stateIn);
+parcelHelpers.export(exports, "A", ()=>isStateId);
+parcelHelpers.export(exports, "B", ()=>getStateNodeByPath);
+parcelHelpers.export(exports, "C", ()=>getPersistedState);
+parcelHelpers.export(exports, "D", ()=>resolveReferencedActor);
+parcelHelpers.export(exports, "E", ()=>createActor);
+parcelHelpers.export(exports, "F", ()=>matchesState);
+parcelHelpers.export(exports, "G", ()=>Actor);
+parcelHelpers.export(exports, "H", ()=>ActorStatus);
+parcelHelpers.export(exports, "I", ()=>doneInvoke);
+parcelHelpers.export(exports, "J", ()=>interpret);
+parcelHelpers.export(exports, "K", ()=>InterpreterStatus);
+parcelHelpers.export(exports, "L", ()=>cancel);
+parcelHelpers.export(exports, "M", ()=>choose);
 parcelHelpers.export(exports, "N", ()=>NULL_EVENT);
-parcelHelpers.export(exports, "O", ()=>ActorStatus);
-parcelHelpers.export(exports, "P", ()=>InterpreterStatus);
-parcelHelpers.export(exports, "Q", ()=>doneInvoke);
-parcelHelpers.export(exports, "R", ()=>cancel);
+parcelHelpers.export(exports, "O", ()=>log);
+parcelHelpers.export(exports, "P", ()=>pure);
+parcelHelpers.export(exports, "Q", ()=>raise);
+parcelHelpers.export(exports, "R", ()=>forwardTo);
 parcelHelpers.export(exports, "S", ()=>STATE_DELIMITER);
-parcelHelpers.export(exports, "T", ()=>choose);
-parcelHelpers.export(exports, "U", ()=>log);
-parcelHelpers.export(exports, "V", ()=>pure);
-parcelHelpers.export(exports, "W", ()=>raise);
-parcelHelpers.export(exports, "X", ()=>stop);
-parcelHelpers.export(exports, "Y", ()=>pathToStateValue);
-parcelHelpers.export(exports, "Z", ()=>toObserver);
-parcelHelpers.export(exports, "_", ()=>fromPromise);
+parcelHelpers.export(exports, "T", ()=>sendParent);
+parcelHelpers.export(exports, "U", ()=>sendTo);
+parcelHelpers.export(exports, "V", ()=>stop);
+parcelHelpers.export(exports, "W", ()=>pathToStateValue);
+parcelHelpers.export(exports, "X", ()=>toObserver);
+parcelHelpers.export(exports, "Y", ()=>and);
+parcelHelpers.export(exports, "Z", ()=>not);
+parcelHelpers.export(exports, "_", ()=>or);
 parcelHelpers.export(exports, "a", ()=>toTransitionConfigArray);
-parcelHelpers.export(exports, "a0", ()=>fromCallback);
-parcelHelpers.export(exports, "a1", ()=>fromEventObservable);
-parcelHelpers.export(exports, "a2", ()=>fromTransition);
-parcelHelpers.export(exports, "a3", ()=>stateIn);
-parcelHelpers.export(exports, "a4", ()=>not);
-parcelHelpers.export(exports, "a5", ()=>and);
-parcelHelpers.export(exports, "a6", ()=>or);
-parcelHelpers.export(exports, "a7", ()=>ConstantPrefix);
-parcelHelpers.export(exports, "a8", ()=>SpecialTargets);
-parcelHelpers.export(exports, "a9", ()=>startSignalType);
-parcelHelpers.export(exports, "aa", ()=>stopSignalType);
-parcelHelpers.export(exports, "ab", ()=>startSignal);
-parcelHelpers.export(exports, "ac", ()=>stopSignal);
-parcelHelpers.export(exports, "ad", ()=>isSignal);
-parcelHelpers.export(exports, "ae", ()=>isActorRef);
-parcelHelpers.export(exports, "af", ()=>toActorRef);
-parcelHelpers.export(exports, "ag", ()=>createEmptyActor);
-parcelHelpers.export(exports, "ah", ()=>constantPrefixes);
-parcelHelpers.export(exports, "ai", ()=>after);
-parcelHelpers.export(exports, "aj", ()=>done);
-parcelHelpers.export(exports, "ak", ()=>error);
-parcelHelpers.export(exports, "al", ()=>escalate);
+parcelHelpers.export(exports, "a0", ()=>ConstantPrefix);
+parcelHelpers.export(exports, "a1", ()=>SpecialTargets);
+parcelHelpers.export(exports, "a2", ()=>XSTATE_INIT);
+parcelHelpers.export(exports, "a3", ()=>isPromiseLike);
+parcelHelpers.export(exports, "a4", ()=>error);
+parcelHelpers.export(exports, "a5", ()=>XSTATE_STOP);
+parcelHelpers.export(exports, "a6", ()=>symbolObservable);
+parcelHelpers.export(exports, "a7", ()=>constantPrefixes);
+parcelHelpers.export(exports, "a8", ()=>after);
+parcelHelpers.export(exports, "a9", ()=>done);
+parcelHelpers.export(exports, "aa", ()=>doneInvokeEventType);
+parcelHelpers.export(exports, "ab", ()=>errorEventType);
+parcelHelpers.export(exports, "ac", ()=>escalate);
 parcelHelpers.export(exports, "b", ()=>formatTransition);
 parcelHelpers.export(exports, "c", ()=>memo);
-parcelHelpers.export(exports, "d", ()=>flatten);
+parcelHelpers.export(exports, "d", ()=>createInvokeId);
 parcelHelpers.export(exports, "e", ()=>evaluateGuard);
 parcelHelpers.export(exports, "f", ()=>formatTransitions);
-parcelHelpers.export(exports, "g", ()=>createInvokeId);
-parcelHelpers.export(exports, "h", ()=>getDelayedTransitions);
-parcelHelpers.export(exports, "i", ()=>formatInitialTransition);
-parcelHelpers.export(exports, "j", ()=>getCandidates);
-parcelHelpers.export(exports, "k", ()=>toInvokeConfig);
-parcelHelpers.export(exports, "l", ()=>getConfiguration);
+parcelHelpers.export(exports, "g", ()=>getDelayedTransitions);
+parcelHelpers.export(exports, "h", ()=>formatInitialTransition);
+parcelHelpers.export(exports, "i", ()=>getCandidates);
+parcelHelpers.export(exports, "j", ()=>getConfiguration);
+parcelHelpers.export(exports, "k", ()=>getStateNodes);
+parcelHelpers.export(exports, "l", ()=>isInFinalState);
 parcelHelpers.export(exports, "m", ()=>mapValues);
-parcelHelpers.export(exports, "n", ()=>getStateNodes);
-parcelHelpers.export(exports, "o", ()=>isInFinalState);
-parcelHelpers.export(exports, "p", ()=>State);
-parcelHelpers.export(exports, "q", ()=>isErrorEvent);
+parcelHelpers.export(exports, "n", ()=>State);
+parcelHelpers.export(exports, "o", ()=>isErrorEvent);
+parcelHelpers.export(exports, "p", ()=>cloneState);
+parcelHelpers.export(exports, "q", ()=>macrostep);
 parcelHelpers.export(exports, "r", ()=>resolveStateValue);
-parcelHelpers.export(exports, "s", ()=>cloneState);
+parcelHelpers.export(exports, "s", ()=>transitionNode);
 parcelHelpers.export(exports, "t", ()=>toArray);
-parcelHelpers.export(exports, "u", ()=>macrostep);
-parcelHelpers.export(exports, "v", ()=>transitionNode);
-parcelHelpers.export(exports, "w", ()=>getInitialConfiguration);
-parcelHelpers.export(exports, "x", ()=>resolveActionsAndContext);
-parcelHelpers.export(exports, "y", ()=>assign);
-parcelHelpers.export(exports, "z", ()=>createInitEvent);
+parcelHelpers.export(exports, "u", ()=>getInitialConfiguration);
+parcelHelpers.export(exports, "v", ()=>resolveActionsAndContext);
+parcelHelpers.export(exports, "w", ()=>assign);
+parcelHelpers.export(exports, "x", ()=>createInitEvent);
+parcelHelpers.export(exports, "y", ()=>microstep);
+parcelHelpers.export(exports, "z", ()=>isAtomicStateNode);
 var _xstateDevEsmJs = require("../dev/dist/xstate-dev.esm.js");
 /**
  * `T | unknown` reduces to `unknown` and that can be problematic when it comes to contextual typing.
@@ -1611,7 +1599,8 @@ const TARGETLESS_KEY = "";
 const NULL_EVENT = "";
 const STATE_IDENTIFIER = "#";
 const WILDCARD = "*";
-const INIT_TYPE = "xstate.init";
+const XSTATE_INIT = "xstate.init";
+const XSTATE_STOP = "xstate.stop";
 function resolve$8(actorContext, state, args, { to, event: eventOrExpr, id, delay }) {
     const delaysMap = state.machine.implementations.delays;
     if (typeof eventOrExpr === "string") throw new Error(`Only event objects may be used with sendTo; use sendTo({ type: "${eventOrExpr}" }) instead`);
@@ -1799,30 +1788,48 @@ class Mailbox {
         this._last = null;
     }
 }
-const symbolObservable = (()=>typeof Symbol === "function" && Symbol.observable || "@@observable")();
 /**
- * Returns actor logic from a transition function and its initial state.
+ * This function makes sure that unhandled errors are thrown in a separate macrotask.
+ * It allows those errors to be detected by global error handlers and reported to bug tracking services
+ * without interrupting our own stack of execution.
  *
- * A transition function is a function that takes the current state and an event and returns the next state.
- *
- * @param transition The transition function that returns the next state given the current state and event.
- * @param initialState The initial state of the transition function.
- * @returns Actor logic
- */ function fromTransition(transition, initialState) {
-    return {
-        config: transition,
-        transition: (state, event, actorContext)=>{
-            return transition(state, event, actorContext);
+ * @param err error to be thrown
+ */ function reportUnhandledError(err) {
+    setTimeout(()=>{
+        throw err;
+    });
+}
+const symbolObservable = (()=>typeof Symbol === "function" && Symbol.observable || "@@observable")();
+function createSystem() {
+    let sessionIdCounter = 0;
+    const children = new Map();
+    const keyedActors = new Map();
+    const reverseKeyedActors = new WeakMap();
+    const system = {
+        _bookId: ()=>`x:${sessionIdCounter++}`,
+        _register: (sessionId, actorRef)=>{
+            children.set(sessionId, actorRef);
+            return sessionId;
         },
-        getInitialState: (_, input)=>{
-            return typeof initialState === "function" ? initialState({
-                input
-            }) : initialState;
+        _unregister: (actorRef)=>{
+            children.delete(actorRef.sessionId);
+            const systemId = reverseKeyedActors.get(actorRef);
+            if (systemId !== undefined) {
+                keyedActors.delete(systemId);
+                reverseKeyedActors.delete(actorRef);
+            }
         },
-        getSnapshot: (state)=>state,
-        getPersistedState: (state)=>state,
-        restoreState: (state)=>state
+        get: (systemId)=>{
+            return keyedActors.get(systemId);
+        },
+        _set: (systemId, actorRef)=>{
+            const existing = keyedActors.get(systemId);
+            if (existing && existing !== actorRef) throw new Error(`Actor with system ID '${systemId}' already exists.`);
+            keyedActors.set(systemId, actorRef);
+            reverseKeyedActors.set(actorRef, systemId);
+        }
     };
+    return system;
 }
 function matchesState(parentStateId, childStateId) {
     const parentStateValue = toStateValue(parentStateId);
@@ -1922,19 +1929,6 @@ function normalizeTarget(target) {
     if (target === undefined || target === TARGETLESS_KEY) return undefined;
     return toArray(target);
 }
-function toInvokeConfig(invocable, id) {
-    if (typeof invocable === "object") {
-        if ("src" in invocable) return invocable;
-        if ("transition" in invocable) return {
-            id,
-            src: invocable
-        };
-    }
-    return {
-        id,
-        src: invocable
-    };
-}
 function toObserver(nextHandler, errorHandler, completionHandler) {
     const isObserver = typeof nextHandler === "object";
     const self = isObserver ? nextHandler : undefined;
@@ -1952,411 +1946,6 @@ function resolveReferencedActor(referenced) {
         src: referenced,
         input: undefined
     } : referenced : undefined;
-}
-function fromCallback(invokeCallback) {
-    return {
-        config: invokeCallback,
-        start: (_state, { self })=>{
-            self.send({
-                type: startSignalType
-            });
-        },
-        transition: (state, event, { self, id, system })=>{
-            if (event.type === startSignalType) {
-                const sendBack = (eventForParent)=>{
-                    if (state.canceled) return;
-                    self._parent?.send(eventForParent);
-                };
-                const receive = (newListener)=>{
-                    state.receivers.add(newListener);
-                };
-                state.dispose = invokeCallback({
-                    input: state.input,
-                    system,
-                    self: self,
-                    sendBack,
-                    receive
-                });
-                if (isPromiseLike(state.dispose)) state.dispose.then((resolved)=>{
-                    self._parent?.send(doneInvoke(id, resolved));
-                    state.canceled = true;
-                }, (errorData)=>{
-                    state.canceled = true;
-                    self._parent?.send(error(id, errorData));
-                });
-                return state;
-            }
-            if (event.type === stopSignalType) {
-                state.canceled = true;
-                if (typeof state.dispose === "function") state.dispose();
-                return state;
-            }
-            if (isSignal(event)) // TODO: unrecognized signal
-            return state;
-            state.receivers.forEach((receiver)=>receiver(event));
-            return state;
-        },
-        getInitialState: (_, input)=>{
-            return {
-                canceled: false,
-                receivers: new Set(),
-                dispose: undefined,
-                input
-            };
-        },
-        getSnapshot: ()=>undefined,
-        getPersistedState: ({ input, canceled })=>({
-                input,
-                canceled
-            })
-    };
-}
-function fromObservable(observableCreator) {
-    const nextEventType = "$$xstate.next";
-    const errorEventType = "$$xstate.error";
-    const completeEventType = "$$xstate.complete";
-    return {
-        config: observableCreator,
-        transition: (state, event, { self, id, defer })=>{
-            if (state.status !== "active") return state;
-            switch(event.type){
-                case nextEventType:
-                    // match the exact timing of events sent by machines
-                    // send actions are not executed immediately
-                    defer(()=>{
-                        self._parent?.send({
-                            type: `xstate.snapshot.${id}`,
-                            data: event.data
-                        });
-                    });
-                    return {
-                        ...state,
-                        data: event.data
-                    };
-                case errorEventType:
-                    return {
-                        ...state,
-                        status: "error",
-                        input: undefined,
-                        data: event.data,
-                        // TODO: if we keep this as `data` we should reflect this in the type
-                        subscription: undefined
-                    };
-                case completeEventType:
-                    return {
-                        ...state,
-                        status: "done",
-                        input: undefined,
-                        subscription: undefined
-                    };
-                case stopSignalType:
-                    state.subscription.unsubscribe();
-                    return {
-                        ...state,
-                        status: "canceled",
-                        input: undefined,
-                        subscription: undefined
-                    };
-                default:
-                    return state;
-            }
-        },
-        getInitialState: (_, input)=>{
-            return {
-                subscription: undefined,
-                status: "active",
-                data: undefined,
-                input
-            };
-        },
-        start: (state, { self, system })=>{
-            if (state.status === "done") // Do not restart a completed observable
-            return;
-            state.subscription = observableCreator({
-                input: state.input,
-                system,
-                self
-            }).subscribe({
-                next: (value)=>{
-                    self.send({
-                        type: nextEventType,
-                        data: value
-                    });
-                },
-                error: (err)=>{
-                    self.send({
-                        type: errorEventType,
-                        data: err
-                    });
-                },
-                complete: ()=>{
-                    self.send({
-                        type: completeEventType
-                    });
-                }
-            });
-        },
-        getSnapshot: (state)=>state.data,
-        getPersistedState: ({ status, data, input })=>({
-                status,
-                data,
-                input
-            }),
-        getStatus: (state)=>state,
-        restoreState: (state)=>({
-                ...state,
-                subscription: undefined
-            })
-    };
-}
-/**
- * Creates event observable logic that listens to an observable
- * that delivers event objects.
- *
- *
- * @param lazyObservable A function that creates an observable
- * @returns Event observable logic
- */ function fromEventObservable(lazyObservable) {
-    const errorEventType = "$$xstate.error";
-    const completeEventType = "$$xstate.complete";
-    // TODO: event types
-    return {
-        config: lazyObservable,
-        transition: (state, event)=>{
-            if (state.status !== "active") return state;
-            switch(event.type){
-                case errorEventType:
-                    return {
-                        ...state,
-                        status: "error",
-                        input: undefined,
-                        data: event.data,
-                        // TODO: if we keep this as `data` we should reflect this in the type
-                        subscription: undefined
-                    };
-                case completeEventType:
-                    return {
-                        ...state,
-                        status: "done",
-                        input: undefined,
-                        subscription: undefined
-                    };
-                case stopSignalType:
-                    state.subscription.unsubscribe();
-                    return {
-                        ...state,
-                        status: "canceled",
-                        input: undefined,
-                        subscription: undefined
-                    };
-                default:
-                    return state;
-            }
-        },
-        getInitialState: (_, input)=>{
-            return {
-                subscription: undefined,
-                status: "active",
-                data: undefined,
-                input
-            };
-        },
-        start: (state, { self, system })=>{
-            if (state.status === "done") // Do not restart a completed observable
-            return;
-            state.subscription = lazyObservable({
-                input: state.input,
-                system,
-                self
-            }).subscribe({
-                next: (value)=>{
-                    self._parent?.send(value);
-                },
-                error: (err)=>{
-                    self.send({
-                        type: errorEventType,
-                        data: err
-                    });
-                },
-                complete: ()=>{
-                    self.send({
-                        type: completeEventType
-                    });
-                }
-            });
-        },
-        getSnapshot: (_)=>undefined,
-        getPersistedState: ({ status, data, input })=>({
-                status,
-                data,
-                input
-            }),
-        getStatus: (state)=>state,
-        restoreState: (state)=>({
-                ...state,
-                subscription: undefined
-            })
-    };
-}
-const resolveEventType = "$$xstate.resolve";
-const rejectEventType = "$$xstate.reject";
-function fromPromise(// TODO: add types
-promiseCreator) {
-    // TODO: add event types
-    const logic = {
-        config: promiseCreator,
-        transition: (state, event)=>{
-            if (state.status !== "active") return state;
-            switch(event.type){
-                case resolveEventType:
-                    return {
-                        ...state,
-                        status: "done",
-                        data: event.data,
-                        input: undefined
-                    };
-                case rejectEventType:
-                    return {
-                        ...state,
-                        status: "error",
-                        data: event.data,
-                        // TODO: if we keep this as `data` we should reflect this in the type
-                        input: undefined
-                    };
-                case stopSignalType:
-                    return {
-                        ...state,
-                        status: "canceled",
-                        input: undefined
-                    };
-                default:
-                    return state;
-            }
-        },
-        start: (state, { self, system })=>{
-            // TODO: determine how to allow customizing this so that promises
-            // can be restarted if necessary
-            if (state.status !== "active") return;
-            const resolvedPromise = Promise.resolve(promiseCreator({
-                input: state.input,
-                system,
-                self
-            }));
-            resolvedPromise.then((response)=>{
-                // TODO: remove this condition once dead letter queue lands
-                if (self._state.status !== "active") return;
-                self.send({
-                    type: resolveEventType,
-                    data: response
-                });
-            }, (errorData)=>{
-                // TODO: remove this condition once dead letter queue lands
-                if (self._state.status !== "active") return;
-                self.send({
-                    type: rejectEventType,
-                    data: errorData
-                });
-            });
-        },
-        getInitialState: (_, input)=>{
-            return {
-                status: "active",
-                data: undefined,
-                input
-            };
-        },
-        getSnapshot: (state)=>state.data,
-        getStatus: (state)=>state,
-        getPersistedState: (state)=>state,
-        restoreState: (state)=>state
-    };
-    return logic;
-}
-const startSignalType = "xstate.init";
-const stopSignalType = "xstate.stop";
-const startSignal = {
-    type: "xstate.init"
-};
-const stopSignal = {
-    type: "xstate.stop"
-};
-/**
- * An object that expresses the actor logic in reaction to received events,
- * as well as an optionally emitted stream of values.
- *
- * @template TReceived The received event
- * @template TSnapshot The emitted value
- */ function isSignal(event) {
-    return event.type === startSignalType || event.type === stopSignalType;
-}
-function isActorRef(item) {
-    return !!item && typeof item === "object" && typeof item.send === "function";
-}
-// TODO: refactor the return type, this could be written in a better way
-// but it's best to avoid unneccessary breaking changes now
-// @deprecated use `interpret(actorLogic)` instead
-function toActorRef(actorRefLike) {
-    return {
-        subscribe: ()=>({
-                unsubscribe: ()=>void 0
-            }),
-        id: "anonymous",
-        sessionId: "",
-        getSnapshot: ()=>undefined,
-        // TODO: this isn't safe
-        [symbolObservable]: function() {
-            return this;
-        },
-        status: ActorStatus.Running,
-        stop: ()=>void 0,
-        ...actorRefLike
-    };
-}
-const emptyLogic = fromTransition((_)=>undefined, undefined);
-function createEmptyActor() {
-    return createActor(emptyLogic);
-}
-/**
- * This function makes sure that unhandled errors are thrown in a separate macrotask.
- * It allows those errors to be detected by global error handlers and reported to bug tracking services
- * without interrupting our own stack of execution.
- *
- * @param err error to be thrown
- */ function reportUnhandledError(err) {
-    setTimeout(()=>{
-        throw err;
-    });
-}
-function createSystem() {
-    let sessionIdCounter = 0;
-    const children = new Map();
-    const keyedActors = new Map();
-    const reverseKeyedActors = new WeakMap();
-    const system = {
-        _bookId: ()=>`x:${sessionIdCounter++}`,
-        _register: (sessionId, actorRef)=>{
-            children.set(sessionId, actorRef);
-            return sessionId;
-        },
-        _unregister: (actorRef)=>{
-            children.delete(actorRef.sessionId);
-            const systemId = reverseKeyedActors.get(actorRef);
-            if (systemId !== undefined) {
-                keyedActors.delete(systemId);
-                reverseKeyedActors.delete(actorRef);
-            }
-        },
-        get: (systemId)=>{
-            return keyedActors.get(systemId);
-        },
-        _set: (systemId, actorRef)=>{
-            const existing = keyedActors.get(systemId);
-            if (existing && existing !== actorRef) throw new Error(`Actor with system ID '${systemId}' already exists.`);
-            keyedActors.set(systemId, actorRef);
-            reverseKeyedActors.set(actorRef, systemId);
-        }
-    };
-    return system;
 }
 let ActorStatus = /*#__PURE__*/ function(ActorStatus) {
     ActorStatus[ActorStatus["NotStarted"] = 0] = "NotStarted";
@@ -2557,7 +2146,7 @@ class Actor {
             return;
         }
         this.update(nextState);
-        if (event.type === stopSignalType) {
+        if (event.type === XSTATE_STOP) {
             this._stopProcedure();
             this._complete();
         }
@@ -2570,7 +2159,7 @@ class Actor {
             return this;
         }
         this.mailbox.enqueue({
-            type: stopSignalType
+            type: XSTATE_STOP
         });
         return this;
     }
@@ -2727,6 +2316,7 @@ function execute$3(actorContext, { id, actorRef }) {
         }
     });
 }
+// we don't export this since it's an internal action that is not meant to be used in the user's code
 function invoke({ id, systemId, src, input }) {
     function invoke(_) {}
     invoke.type = "xstate.invoke";
@@ -2797,6 +2387,12 @@ function evaluateGuard(guard, context, event, state) {
         event,
         guard: isInline ? undefined : typeof guard === "string" ? {
             type: guard
+        } : typeof guard.params === "function" ? {
+            type: guard.type,
+            params: guard.params({
+                context,
+                event
+            })
         } : guard
     };
     if (!("check" in resolved)) // the existing type of `.guards` assumes non-nullable `TExpressionGuard`
@@ -3059,7 +2655,7 @@ function resolveTarget(stateNode, targets) {
     });
 }
 function resolveHistoryTarget(stateNode) {
-    const normalizedTarget = normalizeTarget(stateNode.target);
+    const normalizedTarget = normalizeTarget(stateNode.config.target);
     if (!normalizedTarget) return stateNode.parent.initial.target;
     return normalizedTarget.map((t)=>typeof t === "string" ? getStateNodeByPath(stateNode.parent, t) : t);
 }
@@ -3436,7 +3032,14 @@ function resolveActionsAndContext(actions, event, currentState, actorCtx) {
             system: actorCtx?.system,
             action: isInline ? undefined : typeof action === "string" ? {
                 type: action
-            } : action
+            } : typeof action.params === "function" ? {
+                type: action.type,
+                params: action.params({
+                    context: intermediateState.context,
+                    event
+                })
+            } : // TS isn't able to narrow it down here
+            action
         };
         if (!("resolve" in resolved)) {
             if (actorCtx?.self.status === ActorStatus.Running) resolved(actionArgs);
@@ -3459,7 +3062,7 @@ function macrostep(state, event, actorCtx) {
     let nextState = state;
     const states = [];
     // Handle stop event
-    if (event.type === stopSignalType) {
+    if (event.type === XSTATE_STOP) {
         nextState = stopStep(event, nextState, actorCtx);
         states.push(nextState);
         return {
@@ -3470,7 +3073,7 @@ function macrostep(state, event, actorCtx) {
     let nextEvent = event;
     // Assume the state is at rest (no raised events)
     // Determine the next state based on the next microstep
-    if (nextEvent.type !== INIT_TYPE) {
+    if (nextEvent.type !== XSTATE_INIT) {
         const transitions = selectTransitions(nextEvent, nextState);
         nextState = microstep(transitions, state, actorCtx, nextEvent, false);
         states.push(nextState);
@@ -3942,6 +3545,9 @@ function pure(getActions) {
     eventObject.toString = ()=>type;
     return eventObject;
 }
+function doneInvokeEventType(invokeId) {
+    return `${ConstantPrefix.DoneInvoke}.${invokeId}`;
+}
 /**
  * Returns an event that represents that an invoked service has terminated.
  *
@@ -3951,7 +3557,7 @@ function pure(getActions) {
  * @param invokeId The invoked service ID
  * @param output The data to pass into the event
  */ function doneInvoke(invokeId, output) {
-    const type = `${ConstantPrefix.DoneInvoke}.${invokeId}`;
+    const type = doneInvokeEventType(invokeId);
     const eventObject = {
         type,
         output
@@ -3959,8 +3565,11 @@ function pure(getActions) {
     eventObject.toString = ()=>type;
     return eventObject;
 }
+function errorEventType(id) {
+    return `${ConstantPrefix.ErrorPlatform}.${id}`;
+}
 function error(id, data) {
-    const type = `${ConstantPrefix.ErrorPlatform}.${id}`;
+    const type = errorEventType(id);
     const eventObject = {
         type,
         data
@@ -3970,7 +3579,7 @@ function error(id, data) {
 }
 function createInitEvent(input) {
     return {
-        type: INIT_TYPE,
+        type: XSTATE_INIT,
         input
     };
 }
@@ -4297,45 +3906,46 @@ exports.speechstate = speechstate;
 },{"64a8564d1b8a963c":"1t672","bd7ed5589421c8a7":"5O6Gy","628ed9f62590f619":"cV98c"}],"1t672":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Actor", ()=>(0, _actions5943A9DbEsmJs.M));
-parcelHelpers.export(exports, "ActorStatus", ()=>(0, _actions5943A9DbEsmJs.O));
-parcelHelpers.export(exports, "ConstantPrefix", ()=>(0, _actions5943A9DbEsmJs.a7));
-parcelHelpers.export(exports, "InterpreterStatus", ()=>(0, _actions5943A9DbEsmJs.P));
-parcelHelpers.export(exports, "SpecialTargets", ()=>(0, _actions5943A9DbEsmJs.a8));
-parcelHelpers.export(exports, "State", ()=>(0, _actions5943A9DbEsmJs.p));
-parcelHelpers.export(exports, "and", ()=>(0, _actions5943A9DbEsmJs.a5));
-parcelHelpers.export(exports, "assign", ()=>(0, _actions5943A9DbEsmJs.y));
-parcelHelpers.export(exports, "cancel", ()=>(0, _actions5943A9DbEsmJs.R));
-parcelHelpers.export(exports, "choose", ()=>(0, _actions5943A9DbEsmJs.T));
-parcelHelpers.export(exports, "createActor", ()=>(0, _actions5943A9DbEsmJs.G));
-parcelHelpers.export(exports, "doneInvoke", ()=>(0, _actions5943A9DbEsmJs.Q));
-parcelHelpers.export(exports, "forwardTo", ()=>(0, _actions5943A9DbEsmJs.K));
-parcelHelpers.export(exports, "fromCallback", ()=>(0, _actions5943A9DbEsmJs.a0));
-parcelHelpers.export(exports, "fromEventObservable", ()=>(0, _actions5943A9DbEsmJs.a1));
-parcelHelpers.export(exports, "fromObservable", ()=>(0, _actions5943A9DbEsmJs.$));
-parcelHelpers.export(exports, "fromPromise", ()=>(0, _actions5943A9DbEsmJs._));
-parcelHelpers.export(exports, "fromTransition", ()=>(0, _actions5943A9DbEsmJs.a2));
-parcelHelpers.export(exports, "getStateNodes", ()=>(0, _actions5943A9DbEsmJs.n));
-parcelHelpers.export(exports, "interpret", ()=>(0, _actions5943A9DbEsmJs.L));
-parcelHelpers.export(exports, "log", ()=>(0, _actions5943A9DbEsmJs.U));
-parcelHelpers.export(exports, "matchesState", ()=>(0, _actions5943A9DbEsmJs.H));
-parcelHelpers.export(exports, "not", ()=>(0, _actions5943A9DbEsmJs.a4));
-parcelHelpers.export(exports, "or", ()=>(0, _actions5943A9DbEsmJs.a6));
-parcelHelpers.export(exports, "pathToStateValue", ()=>(0, _actions5943A9DbEsmJs.Y));
-parcelHelpers.export(exports, "pure", ()=>(0, _actions5943A9DbEsmJs.V));
-parcelHelpers.export(exports, "raise", ()=>(0, _actions5943A9DbEsmJs.W));
-parcelHelpers.export(exports, "sendParent", ()=>(0, _actions5943A9DbEsmJs.J));
-parcelHelpers.export(exports, "sendTo", ()=>(0, _actions5943A9DbEsmJs.I));
-parcelHelpers.export(exports, "stateIn", ()=>(0, _actions5943A9DbEsmJs.a3));
-parcelHelpers.export(exports, "stop", ()=>(0, _actions5943A9DbEsmJs.X));
-parcelHelpers.export(exports, "toObserver", ()=>(0, _actions5943A9DbEsmJs.Z));
+parcelHelpers.export(exports, "Actor", ()=>(0, _actions020463E9EsmJs.G));
+parcelHelpers.export(exports, "ActorStatus", ()=>(0, _actions020463E9EsmJs.H));
+parcelHelpers.export(exports, "ConstantPrefix", ()=>(0, _actions020463E9EsmJs.a0));
+parcelHelpers.export(exports, "InterpreterStatus", ()=>(0, _actions020463E9EsmJs.K));
+parcelHelpers.export(exports, "SpecialTargets", ()=>(0, _actions020463E9EsmJs.a1));
+parcelHelpers.export(exports, "State", ()=>(0, _actions020463E9EsmJs.n));
+parcelHelpers.export(exports, "and", ()=>(0, _actions020463E9EsmJs.Y));
+parcelHelpers.export(exports, "assign", ()=>(0, _actions020463E9EsmJs.w));
+parcelHelpers.export(exports, "cancel", ()=>(0, _actions020463E9EsmJs.L));
+parcelHelpers.export(exports, "choose", ()=>(0, _actions020463E9EsmJs.M));
+parcelHelpers.export(exports, "createActor", ()=>(0, _actions020463E9EsmJs.E));
+parcelHelpers.export(exports, "doneInvoke", ()=>(0, _actions020463E9EsmJs.I));
+parcelHelpers.export(exports, "forwardTo", ()=>(0, _actions020463E9EsmJs.R));
+parcelHelpers.export(exports, "getStateNodes", ()=>(0, _actions020463E9EsmJs.k));
+parcelHelpers.export(exports, "interpret", ()=>(0, _actions020463E9EsmJs.J));
+parcelHelpers.export(exports, "log", ()=>(0, _actions020463E9EsmJs.O));
+parcelHelpers.export(exports, "matchesState", ()=>(0, _actions020463E9EsmJs.F));
+parcelHelpers.export(exports, "not", ()=>(0, _actions020463E9EsmJs.Z));
+parcelHelpers.export(exports, "or", ()=>(0, _actions020463E9EsmJs._));
+parcelHelpers.export(exports, "pathToStateValue", ()=>(0, _actions020463E9EsmJs.W));
+parcelHelpers.export(exports, "pure", ()=>(0, _actions020463E9EsmJs.P));
+parcelHelpers.export(exports, "raise", ()=>(0, _actions020463E9EsmJs.Q));
+parcelHelpers.export(exports, "sendParent", ()=>(0, _actions020463E9EsmJs.T));
+parcelHelpers.export(exports, "sendTo", ()=>(0, _actions020463E9EsmJs.U));
+parcelHelpers.export(exports, "stateIn", ()=>(0, _actions020463E9EsmJs.$));
+parcelHelpers.export(exports, "stop", ()=>(0, _actions020463E9EsmJs.V));
+parcelHelpers.export(exports, "toObserver", ()=>(0, _actions020463E9EsmJs.X));
+parcelHelpers.export(exports, "fromCallback", ()=>(0, _promise5B07C38EEsmJs.f));
+parcelHelpers.export(exports, "fromEventObservable", ()=>(0, _promise5B07C38EEsmJs.a));
+parcelHelpers.export(exports, "fromObservable", ()=>(0, _promise5B07C38EEsmJs.b));
+parcelHelpers.export(exports, "fromPromise", ()=>(0, _promise5B07C38EEsmJs.c));
+parcelHelpers.export(exports, "fromTransition", ()=>(0, _promise5B07C38EEsmJs.d));
 parcelHelpers.export(exports, "SimulatedClock", ()=>SimulatedClock);
 parcelHelpers.export(exports, "StateMachine", ()=>StateMachine);
 parcelHelpers.export(exports, "StateNode", ()=>StateNode);
 parcelHelpers.export(exports, "createMachine", ()=>createMachine);
 parcelHelpers.export(exports, "mapState", ()=>mapState);
 parcelHelpers.export(exports, "waitFor", ()=>waitFor);
-var _actions5943A9DbEsmJs = require("./actions-5943a9db.esm.js");
+var _actions020463E9EsmJs = require("./actions-020463e9.esm.js");
+var _promise5B07C38EEsmJs = require("./promise-5b07c38e.esm.js");
 var _xstateDevEsmJs = require("../dev/dist/xstate-dev.esm.js");
 const EMPTY_OBJECT = {};
 const toSerializableActon = (action)=>{
@@ -4416,12 +4026,12 @@ class StateNode {
         this.id = this.config.id || [
             this.machine.id,
             ...this.path
-        ].join((0, _actions5943A9DbEsmJs.S));
+        ].join((0, _actions020463E9EsmJs.S));
         this.type = this.config.type || (this.config.states && Object.keys(this.config.states).length ? "compound" : this.config.history ? "history" : "atomic");
         this.description = this.config.description;
         this.order = this.machine.idMap.size;
         this.machine.idMap.set(this.id, this);
-        this.states = this.config.states ? (0, _actions5943A9DbEsmJs.m)(this.config.states, (stateConfig, key)=>{
+        this.states = this.config.states ? (0, _actions020463E9EsmJs.m)(this.config.states, (stateConfig, key)=>{
             const stateNode = new StateNode(stateConfig, {
                 _parent: this,
                 _key: key,
@@ -4432,15 +4042,15 @@ class StateNode {
         if (this.type === "compound" && !this.config.initial) throw new Error(`No initial state specified for compound state node "#${this.id}". Try adding { initial: "${Object.keys(this.states)[0]}" } to the state config.`);
         // History config
         this.history = this.config.history === true ? "shallow" : this.config.history || false;
-        this.entry = (0, _actions5943A9DbEsmJs.t)(this.config.entry).slice();
-        this.exit = (0, _actions5943A9DbEsmJs.t)(this.config.exit).slice();
+        this.entry = (0, _actions020463E9EsmJs.t)(this.config.entry).slice();
+        this.exit = (0, _actions020463E9EsmJs.t)(this.config.exit).slice();
         this.meta = this.config.meta;
         this.output = this.type === "final" ? this.config.output : undefined;
-        this.tags = (0, _actions5943A9DbEsmJs.t)(config.tags).slice();
+        this.tags = (0, _actions020463E9EsmJs.t)(config.tags).slice();
     }
     _initialize() {
-        this.transitions = (0, _actions5943A9DbEsmJs.f)(this);
-        if (this.config.always) this.always = (0, _actions5943A9DbEsmJs.a)(this.config.always).map((t)=>(0, _actions5943A9DbEsmJs.b)(this, (0, _actions5943A9DbEsmJs.N), t));
+        this.transitions = (0, _actions020463E9EsmJs.f)(this);
+        if (this.config.always) this.always = (0, _actions020463E9EsmJs.a)(this.config.always).map((t)=>(0, _actions020463E9EsmJs.b)(this, (0, _actions020463E9EsmJs.N), t));
         Object.keys(this.states).forEach((key)=>{
             this.states[key]._initialize();
         });
@@ -4467,7 +4077,7 @@ class StateNode {
                     })
             } : undefined,
             history: this.history,
-            states: (0, _actions5943A9DbEsmJs.m)(this.states, (state)=>{
+            states: (0, _actions020463E9EsmJs.m)(this.states, (state)=>{
                 return state.definition;
             }),
             on: this.on,
@@ -4493,12 +4103,9 @@ class StateNode {
     /**
    * The logic invoked as actors by this state node.
    */ get invoke() {
-        return (0, _actions5943A9DbEsmJs.c)(this, "invoke", ()=>(0, _actions5943A9DbEsmJs.t)(this.config.invoke).map((invocable, i)=>{
-                const generatedId = (0, _actions5943A9DbEsmJs.g)(this.id, i);
-                const invokeConfig = (0, _actions5943A9DbEsmJs.k)(invocable, generatedId);
-                const resolvedId = invokeConfig.id || generatedId;
-                const src = invokeConfig.src;
-                const { systemId } = invokeConfig;
+        return (0, _actions020463E9EsmJs.c)(this, "invoke", ()=>(0, _actions020463E9EsmJs.t)(this.config.invoke).map((invokeConfig, i)=>{
+                const { src, systemId } = invokeConfig;
+                const resolvedId = invokeConfig.id || (0, _actions020463E9EsmJs.d)(this.id, i);
                 // TODO: resolving should not happen here
                 const resolvedSrc = typeof src === "string" ? src : !("type" in src) ? resolvedId : src;
                 if (!this.machine.implementations.actors[resolvedId] && typeof src !== "string" && !("type" in src)) this.machine.implementations.actors = {
@@ -4526,7 +4133,7 @@ class StateNode {
     /**
    * The mapping of events to transitions.
    */ get on() {
-        return (0, _actions5943A9DbEsmJs.c)(this, "on", ()=>{
+        return (0, _actions020463E9EsmJs.c)(this, "on", ()=>{
             const transitions = this.transitions;
             return [
                 ...transitions
@@ -4541,22 +4148,22 @@ class StateNode {
         });
     }
     get after() {
-        return (0, _actions5943A9DbEsmJs.c)(this, "delayedTransitions", ()=>(0, _actions5943A9DbEsmJs.h)(this));
+        return (0, _actions020463E9EsmJs.c)(this, "delayedTransitions", ()=>(0, _actions020463E9EsmJs.g)(this));
     }
     get initial() {
-        return (0, _actions5943A9DbEsmJs.c)(this, "initial", ()=>(0, _actions5943A9DbEsmJs.i)(this, this.config.initial || []));
+        return (0, _actions020463E9EsmJs.c)(this, "initial", ()=>(0, _actions020463E9EsmJs.h)(this, this.config.initial || []));
     }
     next(state, event) {
         const eventType = event.type;
         const actions = [];
         let selectedTransition;
-        const candidates = (0, _actions5943A9DbEsmJs.c)(this, `candidates-${eventType}`, ()=>(0, _actions5943A9DbEsmJs.j)(this, eventType));
+        const candidates = (0, _actions020463E9EsmJs.c)(this, `candidates-${eventType}`, ()=>(0, _actions020463E9EsmJs.i)(this, eventType));
         for (const candidate of candidates){
             const { guard } = candidate;
             const resolvedContext = state.context;
             let guardPassed = false;
             try {
-                guardPassed = !guard || (0, _actions5943A9DbEsmJs.e)(guard, resolvedContext, event, state);
+                guardPassed = !guard || (0, _actions020463E9EsmJs.e)(guard, resolvedContext, event, state);
             } catch (err) {
                 const guardType = typeof guard === "string" ? guard : typeof guard === "object" ? guard.type : undefined;
                 throw new Error(`Unable to evaluate guard ${guardType ? `'${guardType}' ` : ""}in transition for event '${eventType}' in state node '${this.id}':\n${err.message}`);
@@ -4572,29 +4179,9 @@ class StateNode {
         ] : undefined;
     }
     /**
-   * The target state value of the history state node, if it exists. This represents the
-   * default state value to transition to if no history value exists yet.
-   */ get target() {
-        if (this.type === "history") {
-            const historyConfig = this.config;
-            return historyConfig.target;
-        }
-        return undefined;
-    }
-    /**
-   * All the state node IDs of this state node and its descendant state nodes.
-   */ get stateIds() {
-        const childStateIds = (0, _actions5943A9DbEsmJs.d)(Object.keys(this.states).map((stateKey)=>{
-            return this.states[stateKey].stateIds;
-        }));
-        return [
-            this.id
-        ].concat(childStateIds);
-    }
-    /**
    * All the event types accepted by this state node and its descendants.
    */ get events() {
-        return (0, _actions5943A9DbEsmJs.c)(this, "events", ()=>{
+        return (0, _actions020463E9EsmJs.c)(this, "events", ()=>{
             const { states } = this;
             const events = new Set(this.ownEvents);
             if (states) for (const stateId of Object.keys(states)){
@@ -4698,18 +4285,18 @@ class StateMachine {
    *
    * @param state The state to resolve
    */ resolveState(state) {
-        const configurationSet = (0, _actions5943A9DbEsmJs.l)((0, _actions5943A9DbEsmJs.n)(this.root, state.value));
+        const configurationSet = (0, _actions020463E9EsmJs.j)((0, _actions020463E9EsmJs.k)(this.root, state.value));
         const configuration = Array.from(configurationSet);
         return this.createState({
             ...state,
-            value: (0, _actions5943A9DbEsmJs.r)(this.root, state.value),
+            value: (0, _actions020463E9EsmJs.r)(this.root, state.value),
             configuration,
-            done: (0, _actions5943A9DbEsmJs.o)(configuration)
+            done: (0, _actions020463E9EsmJs.l)(configuration)
         });
     }
     resolveStateValue(stateValue, ...[context]) {
-        const resolvedStateValue = (0, _actions5943A9DbEsmJs.r)(this.root, stateValue);
-        return this.resolveState((0, _actions5943A9DbEsmJs.p).from(resolvedStateValue, context, this));
+        const resolvedStateValue = (0, _actions020463E9EsmJs.r)(this.root, stateValue);
+        return this.resolveState((0, _actions020463E9EsmJs.n).from(resolvedStateValue, context, this));
     }
     /**
    * Determines the next state given the current `state` and received `event`.
@@ -4719,10 +4306,10 @@ class StateMachine {
    * @param event The received event
    */ transition(state, event, actorCtx) {
         // TODO: handle error events in a better way
-        if ((0, _actions5943A9DbEsmJs.q)(event) && !state.nextEvents.some((nextEvent)=>nextEvent === event.type)) return (0, _actions5943A9DbEsmJs.s)(state, {
+        if ((0, _actions020463E9EsmJs.o)(event) && !state.nextEvents.some((nextEvent)=>nextEvent === event.type)) return (0, _actions020463E9EsmJs.p)(state, {
             error: event.data
         });
-        const { state: nextState } = (0, _actions5943A9DbEsmJs.u)(state, event, actorCtx);
+        const { state: nextState } = (0, _actions020463E9EsmJs.q)(state, event, actorCtx);
         return nextState;
     }
     /**
@@ -4732,10 +4319,10 @@ class StateMachine {
    * @param state The current state
    * @param event The received event
    */ microstep(state, event, actorCtx) {
-        return (0, _actions5943A9DbEsmJs.u)(state, event, actorCtx).microstates;
+        return (0, _actions020463E9EsmJs.q)(state, event, actorCtx).microstates;
     }
     getTransitionData(state, event) {
-        return (0, _actions5943A9DbEsmJs.v)(this.root, state.value, state, event) || [];
+        return (0, _actions020463E9EsmJs.s)(this.root, state.value, state, event) || [];
     }
     /**
    * The initial state _before_ evaluating any microsteps.
@@ -4747,7 +4334,7 @@ class StateMachine {
             // TODO: this is computed in state constructor
             context: typeof context !== "function" && context ? context : {},
             meta: undefined,
-            configuration: (0, _actions5943A9DbEsmJs.w)(this.root),
+            configuration: (0, _actions020463E9EsmJs.u)(this.root),
             children: {}
         }));
         if (typeof context === "function") {
@@ -4755,8 +4342,8 @@ class StateMachine {
                     spawn,
                     input: event.input
                 });
-            return (0, _actions5943A9DbEsmJs.x)([
-                (0, _actions5943A9DbEsmJs.y)(assignment)
+            return (0, _actions020463E9EsmJs.v)([
+                (0, _actions020463E9EsmJs.w)(assignment)
             ], initEvent, preInitial, actorCtx);
         }
         return preInitial;
@@ -4764,13 +4351,13 @@ class StateMachine {
     /**
    * Returns the initial `State` instance, with reference to `self` as an `ActorRef`.
    */ getInitialState(actorCtx, input) {
-        const initEvent = (0, _actions5943A9DbEsmJs.z)(input); // TODO: fix;
+        const initEvent = (0, _actions020463E9EsmJs.x)(input); // TODO: fix;
         const preInitialState = this.getPreInitialState(actorCtx, initEvent);
-        const nextState = (0, _actions5943A9DbEsmJs.A)([
+        const nextState = (0, _actions020463E9EsmJs.y)([
             {
                 target: [
                     ...preInitialState.configuration
-                ].filter((0, _actions5943A9DbEsmJs.B)),
+                ].filter((0, _actions020463E9EsmJs.z)),
                 source: this.root,
                 reenter: true,
                 actions: [],
@@ -4778,7 +4365,7 @@ class StateMachine {
                 toJSON: null // TODO: fix
             }
         ], preInitialState, actorCtx, initEvent, true);
-        const { state: macroState } = (0, _actions5943A9DbEsmJs.u)(nextState, initEvent, actorCtx);
+        const { state: macroState } = (0, _actions020463E9EsmJs.q)(nextState, initEvent, actorCtx);
         return macroState;
     }
     start(state) {
@@ -4787,12 +4374,12 @@ class StateMachine {
         });
     }
     getStateNodeById(stateId) {
-        const fullPath = stateId.split((0, _actions5943A9DbEsmJs.S));
+        const fullPath = stateId.split((0, _actions020463E9EsmJs.S));
         const relativePath = fullPath.slice(1);
-        const resolvedStateId = (0, _actions5943A9DbEsmJs.C)(fullPath[0]) ? fullPath[0].slice(STATE_IDENTIFIER.length) : fullPath[0];
+        const resolvedStateId = (0, _actions020463E9EsmJs.A)(fullPath[0]) ? fullPath[0].slice(STATE_IDENTIFIER.length) : fullPath[0];
         const stateNode = this.idMap.get(resolvedStateId);
         if (!stateNode) throw new Error(`Child state node '#${resolvedStateId}' does not exist on machine '${this.id}'`);
-        return (0, _actions5943A9DbEsmJs.D)(stateNode, relativePath);
+        return (0, _actions020463E9EsmJs.B)(stateNode, relativePath);
     }
     get definition() {
         return this.root.definition;
@@ -4801,10 +4388,10 @@ class StateMachine {
         return this.definition;
     }
     getPersistedState(state) {
-        return (0, _actions5943A9DbEsmJs.E)(state);
+        return (0, _actions020463E9EsmJs.C)(state);
     }
     createState(stateConfig) {
-        return stateConfig instanceof (0, _actions5943A9DbEsmJs.p) ? stateConfig : new (0, _actions5943A9DbEsmJs.p)(stateConfig, this);
+        return stateConfig instanceof (0, _actions020463E9EsmJs.n) ? stateConfig : new (0, _actions020463E9EsmJs.n)(stateConfig, this);
     }
     getStatus(state) {
         return state.error ? {
@@ -4823,16 +4410,16 @@ class StateMachine {
             const actorData = state.children[actorId];
             const childState = actorData.state;
             const src = actorData.src;
-            const logic = src ? (0, _actions5943A9DbEsmJs.F)(this.implementations.actors[src])?.src : undefined;
+            const logic = src ? (0, _actions020463E9EsmJs.D)(this.implementations.actors[src])?.src : undefined;
             if (!logic) return;
             const actorState = logic.restoreState?.(childState, _actorCtx);
-            const actorRef = (0, _actions5943A9DbEsmJs.G)(logic, {
+            const actorRef = (0, _actions020463E9EsmJs.E)(logic, {
                 id: actorId,
                 state: actorState
             });
             children[actorId] = actorRef;
         });
-        const restoredState = this.createState(new (0, _actions5943A9DbEsmJs.p)({
+        const restoredState = this.createState(new (0, _actions020463E9EsmJs.n)({
             ...state,
             children
         }, this));
@@ -4841,9 +4428,9 @@ class StateMachine {
             if (stateNode.invoke) stateNode.invoke.forEach((invokeConfig)=>{
                 const { id, src } = invokeConfig;
                 if (children[id]) return;
-                const referenced = (0, _actions5943A9DbEsmJs.F)(this.implementations.actors[src]);
+                const referenced = (0, _actions020463E9EsmJs.D)(this.implementations.actors[src]);
                 if (referenced) {
-                    const actorRef = (0, _actions5943A9DbEsmJs.G)(referenced.src, {
+                    const actorRef = (0, _actions020463E9EsmJs.E)(referenced.src, {
                         id,
                         parent: _actorCtx?.self,
                         input: "input" in invokeConfig ? invokeConfig.input : referenced.input
@@ -4860,7 +4447,7 @@ function createMachine(config, implementations) {
 }
 function mapState(stateMap, stateId) {
     let foundStateId;
-    for (const mappedStateId of Object.keys(stateMap))if ((0, _actions5943A9DbEsmJs.H)(mappedStateId, stateId) && (!foundStateId || stateId.length > foundStateId.length)) foundStateId = mappedStateId;
+    for (const mappedStateId of Object.keys(stateMap))if ((0, _actions020463E9EsmJs.F)(mappedStateId, stateId) && (!foundStateId || stateId.length > foundStateId.length)) foundStateId = mappedStateId;
     return stateMap[foundStateId];
 }
 class SimulatedClock {
@@ -4975,85 +4562,76 @@ const defaultWaitForOptions = {
     });
 }
 
-},{"./actions-5943a9db.esm.js":"hB5JW","../dev/dist/xstate-dev.esm.js":"6d38k","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hB5JW":[function(require,module,exports) {
+},{"./actions-020463e9.esm.js":"hra6v","./promise-5b07c38e.esm.js":"8zQtk","../dev/dist/xstate-dev.esm.js":"6d38k","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hra6v":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "$", ()=>fromObservable);
-parcelHelpers.export(exports, "A", ()=>microstep);
-parcelHelpers.export(exports, "B", ()=>isAtomicStateNode);
-parcelHelpers.export(exports, "C", ()=>isStateId);
-parcelHelpers.export(exports, "D", ()=>getStateNodeByPath);
-parcelHelpers.export(exports, "E", ()=>getPersistedState);
-parcelHelpers.export(exports, "F", ()=>resolveReferencedActor);
-parcelHelpers.export(exports, "G", ()=>createActor);
-parcelHelpers.export(exports, "H", ()=>matchesState);
-parcelHelpers.export(exports, "I", ()=>sendTo);
-parcelHelpers.export(exports, "J", ()=>sendParent);
-parcelHelpers.export(exports, "K", ()=>forwardTo);
-parcelHelpers.export(exports, "L", ()=>interpret);
-parcelHelpers.export(exports, "M", ()=>Actor);
+parcelHelpers.export(exports, "$", ()=>stateIn);
+parcelHelpers.export(exports, "A", ()=>isStateId);
+parcelHelpers.export(exports, "B", ()=>getStateNodeByPath);
+parcelHelpers.export(exports, "C", ()=>getPersistedState);
+parcelHelpers.export(exports, "D", ()=>resolveReferencedActor);
+parcelHelpers.export(exports, "E", ()=>createActor);
+parcelHelpers.export(exports, "F", ()=>matchesState);
+parcelHelpers.export(exports, "G", ()=>Actor);
+parcelHelpers.export(exports, "H", ()=>ActorStatus);
+parcelHelpers.export(exports, "I", ()=>doneInvoke);
+parcelHelpers.export(exports, "J", ()=>interpret);
+parcelHelpers.export(exports, "K", ()=>InterpreterStatus);
+parcelHelpers.export(exports, "L", ()=>cancel);
+parcelHelpers.export(exports, "M", ()=>choose);
 parcelHelpers.export(exports, "N", ()=>NULL_EVENT);
-parcelHelpers.export(exports, "O", ()=>ActorStatus);
-parcelHelpers.export(exports, "P", ()=>InterpreterStatus);
-parcelHelpers.export(exports, "Q", ()=>doneInvoke);
-parcelHelpers.export(exports, "R", ()=>cancel);
+parcelHelpers.export(exports, "O", ()=>log);
+parcelHelpers.export(exports, "P", ()=>pure);
+parcelHelpers.export(exports, "Q", ()=>raise);
+parcelHelpers.export(exports, "R", ()=>forwardTo);
 parcelHelpers.export(exports, "S", ()=>STATE_DELIMITER);
-parcelHelpers.export(exports, "T", ()=>choose);
-parcelHelpers.export(exports, "U", ()=>log);
-parcelHelpers.export(exports, "V", ()=>pure);
-parcelHelpers.export(exports, "W", ()=>raise);
-parcelHelpers.export(exports, "X", ()=>stop);
-parcelHelpers.export(exports, "Y", ()=>pathToStateValue);
-parcelHelpers.export(exports, "Z", ()=>toObserver);
-parcelHelpers.export(exports, "_", ()=>fromPromise);
+parcelHelpers.export(exports, "T", ()=>sendParent);
+parcelHelpers.export(exports, "U", ()=>sendTo);
+parcelHelpers.export(exports, "V", ()=>stop);
+parcelHelpers.export(exports, "W", ()=>pathToStateValue);
+parcelHelpers.export(exports, "X", ()=>toObserver);
+parcelHelpers.export(exports, "Y", ()=>and);
+parcelHelpers.export(exports, "Z", ()=>not);
+parcelHelpers.export(exports, "_", ()=>or);
 parcelHelpers.export(exports, "a", ()=>toTransitionConfigArray);
-parcelHelpers.export(exports, "a0", ()=>fromCallback);
-parcelHelpers.export(exports, "a1", ()=>fromEventObservable);
-parcelHelpers.export(exports, "a2", ()=>fromTransition);
-parcelHelpers.export(exports, "a3", ()=>stateIn);
-parcelHelpers.export(exports, "a4", ()=>not);
-parcelHelpers.export(exports, "a5", ()=>and);
-parcelHelpers.export(exports, "a6", ()=>or);
-parcelHelpers.export(exports, "a7", ()=>ConstantPrefix);
-parcelHelpers.export(exports, "a8", ()=>SpecialTargets);
-parcelHelpers.export(exports, "a9", ()=>startSignalType);
-parcelHelpers.export(exports, "aa", ()=>stopSignalType);
-parcelHelpers.export(exports, "ab", ()=>startSignal);
-parcelHelpers.export(exports, "ac", ()=>stopSignal);
-parcelHelpers.export(exports, "ad", ()=>isSignal);
-parcelHelpers.export(exports, "ae", ()=>isActorRef);
-parcelHelpers.export(exports, "af", ()=>toActorRef);
-parcelHelpers.export(exports, "ag", ()=>createEmptyActor);
-parcelHelpers.export(exports, "ah", ()=>constantPrefixes);
-parcelHelpers.export(exports, "ai", ()=>after);
-parcelHelpers.export(exports, "aj", ()=>done);
-parcelHelpers.export(exports, "ak", ()=>error);
-parcelHelpers.export(exports, "al", ()=>escalate);
+parcelHelpers.export(exports, "a0", ()=>ConstantPrefix);
+parcelHelpers.export(exports, "a1", ()=>SpecialTargets);
+parcelHelpers.export(exports, "a2", ()=>XSTATE_INIT);
+parcelHelpers.export(exports, "a3", ()=>isPromiseLike);
+parcelHelpers.export(exports, "a4", ()=>error);
+parcelHelpers.export(exports, "a5", ()=>XSTATE_STOP);
+parcelHelpers.export(exports, "a6", ()=>symbolObservable);
+parcelHelpers.export(exports, "a7", ()=>constantPrefixes);
+parcelHelpers.export(exports, "a8", ()=>after);
+parcelHelpers.export(exports, "a9", ()=>done);
+parcelHelpers.export(exports, "aa", ()=>doneInvokeEventType);
+parcelHelpers.export(exports, "ab", ()=>errorEventType);
+parcelHelpers.export(exports, "ac", ()=>escalate);
 parcelHelpers.export(exports, "b", ()=>formatTransition);
 parcelHelpers.export(exports, "c", ()=>memo);
-parcelHelpers.export(exports, "d", ()=>flatten);
+parcelHelpers.export(exports, "d", ()=>createInvokeId);
 parcelHelpers.export(exports, "e", ()=>evaluateGuard);
 parcelHelpers.export(exports, "f", ()=>formatTransitions);
-parcelHelpers.export(exports, "g", ()=>createInvokeId);
-parcelHelpers.export(exports, "h", ()=>getDelayedTransitions);
-parcelHelpers.export(exports, "i", ()=>formatInitialTransition);
-parcelHelpers.export(exports, "j", ()=>getCandidates);
-parcelHelpers.export(exports, "k", ()=>toInvokeConfig);
-parcelHelpers.export(exports, "l", ()=>getConfiguration);
+parcelHelpers.export(exports, "g", ()=>getDelayedTransitions);
+parcelHelpers.export(exports, "h", ()=>formatInitialTransition);
+parcelHelpers.export(exports, "i", ()=>getCandidates);
+parcelHelpers.export(exports, "j", ()=>getConfiguration);
+parcelHelpers.export(exports, "k", ()=>getStateNodes);
+parcelHelpers.export(exports, "l", ()=>isInFinalState);
 parcelHelpers.export(exports, "m", ()=>mapValues);
-parcelHelpers.export(exports, "n", ()=>getStateNodes);
-parcelHelpers.export(exports, "o", ()=>isInFinalState);
-parcelHelpers.export(exports, "p", ()=>State);
-parcelHelpers.export(exports, "q", ()=>isErrorEvent);
+parcelHelpers.export(exports, "n", ()=>State);
+parcelHelpers.export(exports, "o", ()=>isErrorEvent);
+parcelHelpers.export(exports, "p", ()=>cloneState);
+parcelHelpers.export(exports, "q", ()=>macrostep);
 parcelHelpers.export(exports, "r", ()=>resolveStateValue);
-parcelHelpers.export(exports, "s", ()=>cloneState);
+parcelHelpers.export(exports, "s", ()=>transitionNode);
 parcelHelpers.export(exports, "t", ()=>toArray);
-parcelHelpers.export(exports, "u", ()=>macrostep);
-parcelHelpers.export(exports, "v", ()=>transitionNode);
-parcelHelpers.export(exports, "w", ()=>getInitialConfiguration);
-parcelHelpers.export(exports, "x", ()=>resolveActionsAndContext);
-parcelHelpers.export(exports, "y", ()=>assign);
-parcelHelpers.export(exports, "z", ()=>createInitEvent);
+parcelHelpers.export(exports, "u", ()=>getInitialConfiguration);
+parcelHelpers.export(exports, "v", ()=>resolveActionsAndContext);
+parcelHelpers.export(exports, "w", ()=>assign);
+parcelHelpers.export(exports, "x", ()=>createInitEvent);
+parcelHelpers.export(exports, "y", ()=>microstep);
+parcelHelpers.export(exports, "z", ()=>isAtomicStateNode);
 var _xstateDevEsmJs = require("../dev/dist/xstate-dev.esm.js");
 /**
  * `T | unknown` reduces to `unknown` and that can be problematic when it comes to contextual typing.
@@ -5111,7 +4689,8 @@ const TARGETLESS_KEY = "";
 const NULL_EVENT = "";
 const STATE_IDENTIFIER = "#";
 const WILDCARD = "*";
-const INIT_TYPE = "xstate.init";
+const XSTATE_INIT = "xstate.init";
+const XSTATE_STOP = "xstate.stop";
 function resolve$8(actorContext, state, args, { to, event: eventOrExpr, id, delay }) {
     const delaysMap = state.machine.implementations.delays;
     if (typeof eventOrExpr === "string") throw new Error(`Only event objects may be used with sendTo; use sendTo({ type: "${eventOrExpr}" }) instead`);
@@ -5299,30 +4878,48 @@ class Mailbox {
         this._last = null;
     }
 }
-const symbolObservable = (()=>typeof Symbol === "function" && Symbol.observable || "@@observable")();
 /**
- * Returns actor logic from a transition function and its initial state.
+ * This function makes sure that unhandled errors are thrown in a separate macrotask.
+ * It allows those errors to be detected by global error handlers and reported to bug tracking services
+ * without interrupting our own stack of execution.
  *
- * A transition function is a function that takes the current state and an event and returns the next state.
- *
- * @param transition The transition function that returns the next state given the current state and event.
- * @param initialState The initial state of the transition function.
- * @returns Actor logic
- */ function fromTransition(transition, initialState) {
-    return {
-        config: transition,
-        transition: (state, event, actorContext)=>{
-            return transition(state, event, actorContext);
+ * @param err error to be thrown
+ */ function reportUnhandledError(err) {
+    setTimeout(()=>{
+        throw err;
+    });
+}
+const symbolObservable = (()=>typeof Symbol === "function" && Symbol.observable || "@@observable")();
+function createSystem() {
+    let sessionIdCounter = 0;
+    const children = new Map();
+    const keyedActors = new Map();
+    const reverseKeyedActors = new WeakMap();
+    const system = {
+        _bookId: ()=>`x:${sessionIdCounter++}`,
+        _register: (sessionId, actorRef)=>{
+            children.set(sessionId, actorRef);
+            return sessionId;
         },
-        getInitialState: (_, input)=>{
-            return typeof initialState === "function" ? initialState({
-                input
-            }) : initialState;
+        _unregister: (actorRef)=>{
+            children.delete(actorRef.sessionId);
+            const systemId = reverseKeyedActors.get(actorRef);
+            if (systemId !== undefined) {
+                keyedActors.delete(systemId);
+                reverseKeyedActors.delete(actorRef);
+            }
         },
-        getSnapshot: (state)=>state,
-        getPersistedState: (state)=>state,
-        restoreState: (state)=>state
+        get: (systemId)=>{
+            return keyedActors.get(systemId);
+        },
+        _set: (systemId, actorRef)=>{
+            const existing = keyedActors.get(systemId);
+            if (existing && existing !== actorRef) throw new Error(`Actor with system ID '${systemId}' already exists.`);
+            keyedActors.set(systemId, actorRef);
+            reverseKeyedActors.set(actorRef, systemId);
+        }
     };
+    return system;
 }
 function matchesState(parentStateId, childStateId) {
     const parentStateValue = toStateValue(parentStateId);
@@ -5422,19 +5019,6 @@ function normalizeTarget(target) {
     if (target === undefined || target === TARGETLESS_KEY) return undefined;
     return toArray(target);
 }
-function toInvokeConfig(invocable, id) {
-    if (typeof invocable === "object") {
-        if ("src" in invocable) return invocable;
-        if ("transition" in invocable) return {
-            id,
-            src: invocable
-        };
-    }
-    return {
-        id,
-        src: invocable
-    };
-}
 function toObserver(nextHandler, errorHandler, completionHandler) {
     const isObserver = typeof nextHandler === "object";
     const self = isObserver ? nextHandler : undefined;
@@ -5452,411 +5036,6 @@ function resolveReferencedActor(referenced) {
         src: referenced,
         input: undefined
     } : referenced : undefined;
-}
-function fromCallback(invokeCallback) {
-    return {
-        config: invokeCallback,
-        start: (_state, { self })=>{
-            self.send({
-                type: startSignalType
-            });
-        },
-        transition: (state, event, { self, id, system })=>{
-            if (event.type === startSignalType) {
-                const sendBack = (eventForParent)=>{
-                    if (state.canceled) return;
-                    self._parent?.send(eventForParent);
-                };
-                const receive = (newListener)=>{
-                    state.receivers.add(newListener);
-                };
-                state.dispose = invokeCallback({
-                    input: state.input,
-                    system,
-                    self: self,
-                    sendBack,
-                    receive
-                });
-                if (isPromiseLike(state.dispose)) state.dispose.then((resolved)=>{
-                    self._parent?.send(doneInvoke(id, resolved));
-                    state.canceled = true;
-                }, (errorData)=>{
-                    state.canceled = true;
-                    self._parent?.send(error(id, errorData));
-                });
-                return state;
-            }
-            if (event.type === stopSignalType) {
-                state.canceled = true;
-                if (typeof state.dispose === "function") state.dispose();
-                return state;
-            }
-            if (isSignal(event)) // TODO: unrecognized signal
-            return state;
-            state.receivers.forEach((receiver)=>receiver(event));
-            return state;
-        },
-        getInitialState: (_, input)=>{
-            return {
-                canceled: false,
-                receivers: new Set(),
-                dispose: undefined,
-                input
-            };
-        },
-        getSnapshot: ()=>undefined,
-        getPersistedState: ({ input, canceled })=>({
-                input,
-                canceled
-            })
-    };
-}
-function fromObservable(observableCreator) {
-    const nextEventType = "$$xstate.next";
-    const errorEventType = "$$xstate.error";
-    const completeEventType = "$$xstate.complete";
-    return {
-        config: observableCreator,
-        transition: (state, event, { self, id, defer })=>{
-            if (state.status !== "active") return state;
-            switch(event.type){
-                case nextEventType:
-                    // match the exact timing of events sent by machines
-                    // send actions are not executed immediately
-                    defer(()=>{
-                        self._parent?.send({
-                            type: `xstate.snapshot.${id}`,
-                            data: event.data
-                        });
-                    });
-                    return {
-                        ...state,
-                        data: event.data
-                    };
-                case errorEventType:
-                    return {
-                        ...state,
-                        status: "error",
-                        input: undefined,
-                        data: event.data,
-                        // TODO: if we keep this as `data` we should reflect this in the type
-                        subscription: undefined
-                    };
-                case completeEventType:
-                    return {
-                        ...state,
-                        status: "done",
-                        input: undefined,
-                        subscription: undefined
-                    };
-                case stopSignalType:
-                    state.subscription.unsubscribe();
-                    return {
-                        ...state,
-                        status: "canceled",
-                        input: undefined,
-                        subscription: undefined
-                    };
-                default:
-                    return state;
-            }
-        },
-        getInitialState: (_, input)=>{
-            return {
-                subscription: undefined,
-                status: "active",
-                data: undefined,
-                input
-            };
-        },
-        start: (state, { self, system })=>{
-            if (state.status === "done") // Do not restart a completed observable
-            return;
-            state.subscription = observableCreator({
-                input: state.input,
-                system,
-                self
-            }).subscribe({
-                next: (value)=>{
-                    self.send({
-                        type: nextEventType,
-                        data: value
-                    });
-                },
-                error: (err)=>{
-                    self.send({
-                        type: errorEventType,
-                        data: err
-                    });
-                },
-                complete: ()=>{
-                    self.send({
-                        type: completeEventType
-                    });
-                }
-            });
-        },
-        getSnapshot: (state)=>state.data,
-        getPersistedState: ({ status, data, input })=>({
-                status,
-                data,
-                input
-            }),
-        getStatus: (state)=>state,
-        restoreState: (state)=>({
-                ...state,
-                subscription: undefined
-            })
-    };
-}
-/**
- * Creates event observable logic that listens to an observable
- * that delivers event objects.
- *
- *
- * @param lazyObservable A function that creates an observable
- * @returns Event observable logic
- */ function fromEventObservable(lazyObservable) {
-    const errorEventType = "$$xstate.error";
-    const completeEventType = "$$xstate.complete";
-    // TODO: event types
-    return {
-        config: lazyObservable,
-        transition: (state, event)=>{
-            if (state.status !== "active") return state;
-            switch(event.type){
-                case errorEventType:
-                    return {
-                        ...state,
-                        status: "error",
-                        input: undefined,
-                        data: event.data,
-                        // TODO: if we keep this as `data` we should reflect this in the type
-                        subscription: undefined
-                    };
-                case completeEventType:
-                    return {
-                        ...state,
-                        status: "done",
-                        input: undefined,
-                        subscription: undefined
-                    };
-                case stopSignalType:
-                    state.subscription.unsubscribe();
-                    return {
-                        ...state,
-                        status: "canceled",
-                        input: undefined,
-                        subscription: undefined
-                    };
-                default:
-                    return state;
-            }
-        },
-        getInitialState: (_, input)=>{
-            return {
-                subscription: undefined,
-                status: "active",
-                data: undefined,
-                input
-            };
-        },
-        start: (state, { self, system })=>{
-            if (state.status === "done") // Do not restart a completed observable
-            return;
-            state.subscription = lazyObservable({
-                input: state.input,
-                system,
-                self
-            }).subscribe({
-                next: (value)=>{
-                    self._parent?.send(value);
-                },
-                error: (err)=>{
-                    self.send({
-                        type: errorEventType,
-                        data: err
-                    });
-                },
-                complete: ()=>{
-                    self.send({
-                        type: completeEventType
-                    });
-                }
-            });
-        },
-        getSnapshot: (_)=>undefined,
-        getPersistedState: ({ status, data, input })=>({
-                status,
-                data,
-                input
-            }),
-        getStatus: (state)=>state,
-        restoreState: (state)=>({
-                ...state,
-                subscription: undefined
-            })
-    };
-}
-const resolveEventType = "$$xstate.resolve";
-const rejectEventType = "$$xstate.reject";
-function fromPromise(// TODO: add types
-promiseCreator) {
-    // TODO: add event types
-    const logic = {
-        config: promiseCreator,
-        transition: (state, event)=>{
-            if (state.status !== "active") return state;
-            switch(event.type){
-                case resolveEventType:
-                    return {
-                        ...state,
-                        status: "done",
-                        data: event.data,
-                        input: undefined
-                    };
-                case rejectEventType:
-                    return {
-                        ...state,
-                        status: "error",
-                        data: event.data,
-                        // TODO: if we keep this as `data` we should reflect this in the type
-                        input: undefined
-                    };
-                case stopSignalType:
-                    return {
-                        ...state,
-                        status: "canceled",
-                        input: undefined
-                    };
-                default:
-                    return state;
-            }
-        },
-        start: (state, { self, system })=>{
-            // TODO: determine how to allow customizing this so that promises
-            // can be restarted if necessary
-            if (state.status !== "active") return;
-            const resolvedPromise = Promise.resolve(promiseCreator({
-                input: state.input,
-                system,
-                self
-            }));
-            resolvedPromise.then((response)=>{
-                // TODO: remove this condition once dead letter queue lands
-                if (self._state.status !== "active") return;
-                self.send({
-                    type: resolveEventType,
-                    data: response
-                });
-            }, (errorData)=>{
-                // TODO: remove this condition once dead letter queue lands
-                if (self._state.status !== "active") return;
-                self.send({
-                    type: rejectEventType,
-                    data: errorData
-                });
-            });
-        },
-        getInitialState: (_, input)=>{
-            return {
-                status: "active",
-                data: undefined,
-                input
-            };
-        },
-        getSnapshot: (state)=>state.data,
-        getStatus: (state)=>state,
-        getPersistedState: (state)=>state,
-        restoreState: (state)=>state
-    };
-    return logic;
-}
-const startSignalType = "xstate.init";
-const stopSignalType = "xstate.stop";
-const startSignal = {
-    type: "xstate.init"
-};
-const stopSignal = {
-    type: "xstate.stop"
-};
-/**
- * An object that expresses the actor logic in reaction to received events,
- * as well as an optionally emitted stream of values.
- *
- * @template TReceived The received event
- * @template TSnapshot The emitted value
- */ function isSignal(event) {
-    return event.type === startSignalType || event.type === stopSignalType;
-}
-function isActorRef(item) {
-    return !!item && typeof item === "object" && typeof item.send === "function";
-}
-// TODO: refactor the return type, this could be written in a better way
-// but it's best to avoid unneccessary breaking changes now
-// @deprecated use `interpret(actorLogic)` instead
-function toActorRef(actorRefLike) {
-    return {
-        subscribe: ()=>({
-                unsubscribe: ()=>void 0
-            }),
-        id: "anonymous",
-        sessionId: "",
-        getSnapshot: ()=>undefined,
-        // TODO: this isn't safe
-        [symbolObservable]: function() {
-            return this;
-        },
-        status: ActorStatus.Running,
-        stop: ()=>void 0,
-        ...actorRefLike
-    };
-}
-const emptyLogic = fromTransition((_)=>undefined, undefined);
-function createEmptyActor() {
-    return createActor(emptyLogic);
-}
-/**
- * This function makes sure that unhandled errors are thrown in a separate macrotask.
- * It allows those errors to be detected by global error handlers and reported to bug tracking services
- * without interrupting our own stack of execution.
- *
- * @param err error to be thrown
- */ function reportUnhandledError(err) {
-    setTimeout(()=>{
-        throw err;
-    });
-}
-function createSystem() {
-    let sessionIdCounter = 0;
-    const children = new Map();
-    const keyedActors = new Map();
-    const reverseKeyedActors = new WeakMap();
-    const system = {
-        _bookId: ()=>`x:${sessionIdCounter++}`,
-        _register: (sessionId, actorRef)=>{
-            children.set(sessionId, actorRef);
-            return sessionId;
-        },
-        _unregister: (actorRef)=>{
-            children.delete(actorRef.sessionId);
-            const systemId = reverseKeyedActors.get(actorRef);
-            if (systemId !== undefined) {
-                keyedActors.delete(systemId);
-                reverseKeyedActors.delete(actorRef);
-            }
-        },
-        get: (systemId)=>{
-            return keyedActors.get(systemId);
-        },
-        _set: (systemId, actorRef)=>{
-            const existing = keyedActors.get(systemId);
-            if (existing && existing !== actorRef) throw new Error(`Actor with system ID '${systemId}' already exists.`);
-            keyedActors.set(systemId, actorRef);
-            reverseKeyedActors.set(actorRef, systemId);
-        }
-    };
-    return system;
 }
 let ActorStatus = /*#__PURE__*/ function(ActorStatus) {
     ActorStatus[ActorStatus["NotStarted"] = 0] = "NotStarted";
@@ -6057,7 +5236,7 @@ class Actor {
             return;
         }
         this.update(nextState);
-        if (event.type === stopSignalType) {
+        if (event.type === XSTATE_STOP) {
             this._stopProcedure();
             this._complete();
         }
@@ -6070,7 +5249,7 @@ class Actor {
             return this;
         }
         this.mailbox.enqueue({
-            type: stopSignalType
+            type: XSTATE_STOP
         });
         return this;
     }
@@ -6227,6 +5406,7 @@ function execute$3(actorContext, { id, actorRef }) {
         }
     });
 }
+// we don't export this since it's an internal action that is not meant to be used in the user's code
 function invoke({ id, systemId, src, input }) {
     function invoke(_) {}
     invoke.type = "xstate.invoke";
@@ -6297,6 +5477,12 @@ function evaluateGuard(guard, context, event, state) {
         event,
         guard: isInline ? undefined : typeof guard === "string" ? {
             type: guard
+        } : typeof guard.params === "function" ? {
+            type: guard.type,
+            params: guard.params({
+                context,
+                event
+            })
         } : guard
     };
     if (!("check" in resolved)) // the existing type of `.guards` assumes non-nullable `TExpressionGuard`
@@ -6559,7 +5745,7 @@ function resolveTarget(stateNode, targets) {
     });
 }
 function resolveHistoryTarget(stateNode) {
-    const normalizedTarget = normalizeTarget(stateNode.target);
+    const normalizedTarget = normalizeTarget(stateNode.config.target);
     if (!normalizedTarget) return stateNode.parent.initial.target;
     return normalizedTarget.map((t)=>typeof t === "string" ? getStateNodeByPath(stateNode.parent, t) : t);
 }
@@ -6936,7 +6122,14 @@ function resolveActionsAndContext(actions, event, currentState, actorCtx) {
             system: actorCtx?.system,
             action: isInline ? undefined : typeof action === "string" ? {
                 type: action
-            } : action
+            } : typeof action.params === "function" ? {
+                type: action.type,
+                params: action.params({
+                    context: intermediateState.context,
+                    event
+                })
+            } : // TS isn't able to narrow it down here
+            action
         };
         if (!("resolve" in resolved)) {
             if (actorCtx?.self.status === ActorStatus.Running) resolved(actionArgs);
@@ -6959,7 +6152,7 @@ function macrostep(state, event, actorCtx) {
     let nextState = state;
     const states = [];
     // Handle stop event
-    if (event.type === stopSignalType) {
+    if (event.type === XSTATE_STOP) {
         nextState = stopStep(event, nextState, actorCtx);
         states.push(nextState);
         return {
@@ -6970,7 +6163,7 @@ function macrostep(state, event, actorCtx) {
     let nextEvent = event;
     // Assume the state is at rest (no raised events)
     // Determine the next state based on the next microstep
-    if (nextEvent.type !== INIT_TYPE) {
+    if (nextEvent.type !== XSTATE_INIT) {
         const transitions = selectTransitions(nextEvent, nextState);
         nextState = microstep(transitions, state, actorCtx, nextEvent, false);
         states.push(nextState);
@@ -7442,6 +6635,9 @@ function pure(getActions) {
     eventObject.toString = ()=>type;
     return eventObject;
 }
+function doneInvokeEventType(invokeId) {
+    return `${ConstantPrefix.DoneInvoke}.${invokeId}`;
+}
 /**
  * Returns an event that represents that an invoked service has terminated.
  *
@@ -7451,7 +6647,7 @@ function pure(getActions) {
  * @param invokeId The invoked service ID
  * @param output The data to pass into the event
  */ function doneInvoke(invokeId, output) {
-    const type = `${ConstantPrefix.DoneInvoke}.${invokeId}`;
+    const type = doneInvokeEventType(invokeId);
     const eventObject = {
         type,
         output
@@ -7459,8 +6655,11 @@ function pure(getActions) {
     eventObject.toString = ()=>type;
     return eventObject;
 }
+function errorEventType(id) {
+    return `${ConstantPrefix.ErrorPlatform}.${id}`;
+}
 function error(id, data) {
-    const type = `${ConstantPrefix.ErrorPlatform}.${id}`;
+    const type = errorEventType(id);
     const eventObject = {
         type,
         data
@@ -7470,7 +6669,7 @@ function error(id, data) {
 }
 function createInitEvent(input) {
     return {
-        type: INIT_TYPE,
+        type: XSTATE_INIT,
         input
     };
 }
@@ -7505,7 +6704,358 @@ const devToolsAdapter = (service)=>{
     if (devTools) devTools.register(service);
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5O6Gy":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8zQtk":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "a", ()=>fromEventObservable);
+parcelHelpers.export(exports, "b", ()=>fromObservable);
+parcelHelpers.export(exports, "c", ()=>fromPromise);
+parcelHelpers.export(exports, "d", ()=>fromTransition);
+parcelHelpers.export(exports, "f", ()=>fromCallback);
+var _actions020463E9EsmJs = require("./actions-020463e9.esm.js");
+/**
+ * Returns actor logic from a transition function and its initial state.
+ *
+ * A transition function is a function that takes the current state and an event and returns the next state.
+ *
+ * @param transition The transition function that returns the next state given the current state and event.
+ * @param initialState The initial state of the transition function.
+ * @returns Actor logic
+ */ function fromTransition(transition, initialState) {
+    return {
+        config: transition,
+        transition: (state, event, actorContext)=>{
+            return transition(state, event, actorContext);
+        },
+        getInitialState: (_, input)=>{
+            return typeof initialState === "function" ? initialState({
+                input
+            }) : initialState;
+        },
+        getSnapshot: (state)=>state,
+        getPersistedState: (state)=>state,
+        restoreState: (state)=>state
+    };
+}
+function fromCallback(invokeCallback) {
+    return {
+        config: invokeCallback,
+        start: (_state, { self })=>{
+            self.send({
+                type: (0, _actions020463E9EsmJs.a2)
+            });
+        },
+        transition: (state, event, { self, id, system })=>{
+            if (event.type === (0, _actions020463E9EsmJs.a2)) {
+                const sendBack = (eventForParent)=>{
+                    if (state.canceled) return;
+                    self._parent?.send(eventForParent);
+                };
+                const receive = (newListener)=>{
+                    state.receivers.add(newListener);
+                };
+                state.dispose = invokeCallback({
+                    input: state.input,
+                    system,
+                    self: self,
+                    sendBack,
+                    receive
+                });
+                if ((0, _actions020463E9EsmJs.a3)(state.dispose)) state.dispose.then((resolved)=>{
+                    self._parent?.send((0, _actions020463E9EsmJs.I)(id, resolved));
+                    state.canceled = true;
+                }, (errorData)=>{
+                    state.canceled = true;
+                    self._parent?.send((0, _actions020463E9EsmJs.a4)(id, errorData));
+                });
+                return state;
+            }
+            if (event.type === (0, _actions020463E9EsmJs.a5)) {
+                state.canceled = true;
+                if (typeof state.dispose === "function") state.dispose();
+                return state;
+            }
+            state.receivers.forEach((receiver)=>receiver(event));
+            return state;
+        },
+        getInitialState: (_, input)=>{
+            return {
+                canceled: false,
+                receivers: new Set(),
+                dispose: undefined,
+                input
+            };
+        },
+        getSnapshot: ()=>undefined,
+        getPersistedState: ({ input, canceled })=>({
+                input,
+                canceled
+            })
+    };
+}
+function fromObservable(observableCreator) {
+    const nextEventType = "$$xstate.next";
+    const errorEventType = "$$xstate.error";
+    const completeEventType = "$$xstate.complete";
+    return {
+        config: observableCreator,
+        transition: (state, event, { self, id, defer })=>{
+            if (state.status !== "active") return state;
+            switch(event.type){
+                case nextEventType:
+                    // match the exact timing of events sent by machines
+                    // send actions are not executed immediately
+                    defer(()=>{
+                        self._parent?.send({
+                            type: `xstate.snapshot.${id}`,
+                            data: event.data
+                        });
+                    });
+                    return {
+                        ...state,
+                        data: event.data
+                    };
+                case errorEventType:
+                    return {
+                        ...state,
+                        status: "error",
+                        input: undefined,
+                        data: event.data,
+                        // TODO: if we keep this as `data` we should reflect this in the type
+                        subscription: undefined
+                    };
+                case completeEventType:
+                    return {
+                        ...state,
+                        status: "done",
+                        input: undefined,
+                        subscription: undefined
+                    };
+                case 0, _actions020463E9EsmJs.a5:
+                    state.subscription.unsubscribe();
+                    return {
+                        ...state,
+                        status: "canceled",
+                        input: undefined,
+                        subscription: undefined
+                    };
+                default:
+                    return state;
+            }
+        },
+        getInitialState: (_, input)=>{
+            return {
+                subscription: undefined,
+                status: "active",
+                data: undefined,
+                input
+            };
+        },
+        start: (state, { self, system })=>{
+            if (state.status === "done") // Do not restart a completed observable
+            return;
+            state.subscription = observableCreator({
+                input: state.input,
+                system,
+                self
+            }).subscribe({
+                next: (value)=>{
+                    self.send({
+                        type: nextEventType,
+                        data: value
+                    });
+                },
+                error: (err)=>{
+                    self.send({
+                        type: errorEventType,
+                        data: err
+                    });
+                },
+                complete: ()=>{
+                    self.send({
+                        type: completeEventType
+                    });
+                }
+            });
+        },
+        getSnapshot: (state)=>state.data,
+        getPersistedState: ({ status, data, input })=>({
+                status,
+                data,
+                input
+            }),
+        getStatus: (state)=>state,
+        restoreState: (state)=>({
+                ...state,
+                subscription: undefined
+            })
+    };
+}
+/**
+ * Creates event observable logic that listens to an observable
+ * that delivers event objects.
+ *
+ *
+ * @param lazyObservable A function that creates an observable
+ * @returns Event observable logic
+ */ function fromEventObservable(lazyObservable) {
+    const errorEventType = "$$xstate.error";
+    const completeEventType = "$$xstate.complete";
+    // TODO: event types
+    return {
+        config: lazyObservable,
+        transition: (state, event)=>{
+            if (state.status !== "active") return state;
+            switch(event.type){
+                case errorEventType:
+                    return {
+                        ...state,
+                        status: "error",
+                        input: undefined,
+                        data: event.data,
+                        // TODO: if we keep this as `data` we should reflect this in the type
+                        subscription: undefined
+                    };
+                case completeEventType:
+                    return {
+                        ...state,
+                        status: "done",
+                        input: undefined,
+                        subscription: undefined
+                    };
+                case 0, _actions020463E9EsmJs.a5:
+                    state.subscription.unsubscribe();
+                    return {
+                        ...state,
+                        status: "canceled",
+                        input: undefined,
+                        subscription: undefined
+                    };
+                default:
+                    return state;
+            }
+        },
+        getInitialState: (_, input)=>{
+            return {
+                subscription: undefined,
+                status: "active",
+                data: undefined,
+                input
+            };
+        },
+        start: (state, { self, system })=>{
+            if (state.status === "done") // Do not restart a completed observable
+            return;
+            state.subscription = lazyObservable({
+                input: state.input,
+                system,
+                self
+            }).subscribe({
+                next: (value)=>{
+                    self._parent?.send(value);
+                },
+                error: (err)=>{
+                    self.send({
+                        type: errorEventType,
+                        data: err
+                    });
+                },
+                complete: ()=>{
+                    self.send({
+                        type: completeEventType
+                    });
+                }
+            });
+        },
+        getSnapshot: (_)=>undefined,
+        getPersistedState: ({ status, data, input })=>({
+                status,
+                data,
+                input
+            }),
+        getStatus: (state)=>state,
+        restoreState: (state)=>({
+                ...state,
+                subscription: undefined
+            })
+    };
+}
+const resolveEventType = "$$xstate.resolve";
+const rejectEventType = "$$xstate.reject";
+function fromPromise(// TODO: add types
+promiseCreator) {
+    // TODO: add event types
+    const logic = {
+        config: promiseCreator,
+        transition: (state, event)=>{
+            if (state.status !== "active") return state;
+            switch(event.type){
+                case resolveEventType:
+                    return {
+                        ...state,
+                        status: "done",
+                        data: event.data,
+                        input: undefined
+                    };
+                case rejectEventType:
+                    return {
+                        ...state,
+                        status: "error",
+                        data: event.data,
+                        // TODO: if we keep this as `data` we should reflect this in the type
+                        input: undefined
+                    };
+                case 0, _actions020463E9EsmJs.a5:
+                    return {
+                        ...state,
+                        status: "canceled",
+                        input: undefined
+                    };
+                default:
+                    return state;
+            }
+        },
+        start: (state, { self, system })=>{
+            // TODO: determine how to allow customizing this so that promises
+            // can be restarted if necessary
+            if (state.status !== "active") return;
+            const resolvedPromise = Promise.resolve(promiseCreator({
+                input: state.input,
+                system,
+                self
+            }));
+            resolvedPromise.then((response)=>{
+                // TODO: remove this condition once dead letter queue lands
+                if (self._state.status !== "active") return;
+                self.send({
+                    type: resolveEventType,
+                    data: response
+                });
+            }, (errorData)=>{
+                // TODO: remove this condition once dead letter queue lands
+                if (self._state.status !== "active") return;
+                self.send({
+                    type: rejectEventType,
+                    data: errorData
+                });
+            });
+        },
+        getInitialState: (_, input)=>{
+            return {
+                status: "active",
+                data: undefined,
+                input
+            };
+        },
+        getSnapshot: (state)=>state.data,
+        getStatus: (state)=>state,
+        getPersistedState: (state)=>state,
+        restoreState: (state)=>state
+    };
+    return logic;
+}
+
+},{"./actions-020463e9.esm.js":"hra6v","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5O6Gy":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -10533,10 +10083,10 @@ var store = require("6ce395d8b7d9425");
 (module.exports = function(key, value) {
     return store[key] || (store[key] = value !== undefined ? value : {});
 })("versions", []).push({
-    version: "3.32.1",
+    version: "3.32.2",
     mode: IS_PURE ? "pure" : "global",
     copyright: "\xa9 2014-2023 Denis Pushkarev (zloirock.ru)",
-    license: "https://github.com/zloirock/core-js/blob/v3.32.1/LICENSE",
+    license: "https://github.com/zloirock/core-js/blob/v3.32.2/LICENSE",
     source: "https://github.com/zloirock/core-js"
 });
 
@@ -11520,7 +11070,7 @@ module.exports = function(Iterable, NAME, IteratorConstructor, next, DEFAULT, IS
     createIteratorConstructor(IteratorConstructor, NAME, next);
     var getIterationMethod = function(KIND) {
         if (KIND === DEFAULT && defaultIterator) return defaultIterator;
-        if (!BUGGY_SAFARI_ITERATORS && KIND in IterablePrototype) return IterablePrototype[KIND];
+        if (!BUGGY_SAFARI_ITERATORS && KIND && KIND in IterablePrototype) return IterablePrototype[KIND];
         switch(KIND){
             case KEYS:
                 return function keys() {
@@ -12537,7 +12087,11 @@ try {
     });
 } catch (error) {}
 module.exports = function(exec, SKIP_CLOSING) {
-    if (!SKIP_CLOSING && !SAFE_CLOSING) return false;
+    try {
+        if (!SKIP_CLOSING && !SAFE_CLOSING) return false;
+    } catch (error) {
+        return false;
+    } // workaround of old WebKit + `eval` bug
     var ITERATION_SUPPORT = false;
     try {
         var object = {};
@@ -16170,7 +15724,7 @@ for(let i = 0; i < 256; ++i)byteToHex.push((i + 0x100).toString(16).slice(1));
 function unsafeStringify(arr, offset = 0) {
     // Note: Be careful editing this code!  It's been tuned for performance
     // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434
-    return (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + "-" + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + "-" + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + "-" + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + "-" + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase();
+    return byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + "-" + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + "-" + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + "-" + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + "-" + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]];
 }
 function stringify(arr, offset = 0) {
     const uuid = unsafeStringify(arr, offset); // Consistency check for valid UUID.  If this throws, it's likely due to one

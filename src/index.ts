@@ -1,4 +1,4 @@
-import { createMachine, createActor, assign, raise } from "xstate";
+import { createMachine, createActor, assign } from "xstate";
 import { speechstate, Settings, Hypothesis } from "speechstate";
 
 const azureCredentials = {
@@ -6,8 +6,6 @@ const azureCredentials = {
     "https://northeurope.api.cognitive.microsoft.com/sts/v1.0/issuetoken",
   key: "eedf2f3616c748c99f0d3266a102a6ba",
 };
-
-
 
 const settings: Settings = {
   azureCredentials: azureCredentials,
@@ -20,7 +18,6 @@ const settings: Settings = {
 interface DMContext {
   spstRef?: any;
   lastResult?: Hypothesis[];
-  utterance?: any;
 }
 
 // helper functions
@@ -41,59 +38,43 @@ const listen =
 
 interface Grammar {
   [index: string]: {
-    intent: string;
     entities: {
       [index: string]: string;
-    };
-  };
-}
+        };
+      };
+    }
+
 const grammar = {
   "put the red book on the table": {
-    intent: "None",
     entities: {
-    color: "Red",
-    what: "Book",
-    where: "Table",
+      color: "red",
+      object: "book",
+      place: "table",
+        },
+      },
+  "I have a book":{
+    entities: {
+      object: "book",
     },
   },
-   
 };
-const getEntity = (context: DMContext, entity: string) => {
-  // Ensure that utterance is not empty and contains recognized text
-  const u = context.utterance.toLowerCase().replace(/\.$/g, "");
-  if (context.utterance) {
 
-    if (u in grammar) {
-      const recognizedPhrase = grammar[u];
-
-      if (entity in recognizedPhrase.entities) {
-        return recognizedPhrase.entities[entity];
-      }
-    }
+const ToLowerCase = (object: string) => {
+ return object.toLowerCase().replace(/\.$/g, "");
   }
-
-  return false;
-};
-       
-const toLowerCase = (object: string) => {
-  return object.toLowerCase().replace(/\.$/g, "");
-}
-
   
-
-
 // machine
 const dmMachine = createMachine(
   {
-    /** @xstate-layout N4IgpgJg5mDOIC5QCcD2qAuA6AYgVwBsCB9AJTjwwKwAVkwAHAQ3oGIBBAZVIBUfOyAUXYARAJoBtAAwBdRKAapYASwzLUAO3kgAHogBMAZilYAnAFZDARkP6AHFfN2pAFlMA2ADQgAnoisA7C5YUqFhUu7m+i5W0QC+cd5omLiEJOSwlNTkTBA+WADi9GBqGlCsnDTCANLEAMIA8gCyNAAygjyC0nJIIIoqapraegj2JhbWAZbRhqb6+t5+CO4BJkGmG+ZWUvruDuYJSejY+ERkFFRYOXlY7LAA1qykgo0FAHIAkpyCIt3a-ap1FpeiN3DEsG55lI7PpzAE7A4AotEGCAlgAgFDC4sVYVuY3FZDiBkic0udMpdrvlTiR2BpYAB3MDICpVdi1RotdqdP69AGDYGgUHgyH6aGw+GI5EIKJo8JSRzmfGGBFEkmFACqH1oTBgrVQuUgrDqrQ+dWqvIUSkBQxBBlMaLsK0Clm2G3cVmlCMM6PMoVilkM5g2LjVx012o+GiYAGM1AA3MAcbh8ATPUSSWT-a0C4YGOw+lYeIIRWLRFzS2JWYJi6zufQWLZ2Fx2MMpApa25x5SJrAfCAEJOp4icHjsXg-S19HNAvMIaz6LDNwwBesrpV+uGVzEmezuSL4zYuKSGNvYDva9jd3v9wfJ0gjscT35Zvkz21CxALpfY1dGKZKlIW6+P49bBPCkTHnYARzKYp6JMS4YXl2CZgFgnAMGATD3MoZSsjU9TNG0HRdK+VoDLOdrzrEP4rmuAGbkiIEILiMHok69YwRsDq7GeEYoT2aGtMosAYGAGi4eUzyvJ83wvj05E2oKuhfpYEJzIEKp-pY5iVnCNZOsGBYeHYGytkSGioBAcDaCS2YUR+KkIAAtPoTFLK5oYIeqNLklk9lKXO+iesx7g+m43EWBEQTYvBRwpL5GRZLQ9DMPQAW5lRAQLMxjjjJFpgKliCL7nxiUXNkWF5BllGfsspjStiphYH6YRii27imC4XnxaSZxJZSVX5EUYAlJJNWOSMViBNKYVWEuhiLceuJGPY+hlWSA2Vbk+R3PcE3KSMLaLpYpjTTBfr7seFahS4aJTGELgrM4Uzmb1qT9RVVxDR9tL0kyyAHXOy4hPCeUIjEOmzViWCLUtCprmtfEXkDVHBdKMHuFg8yRPW9jGAihLeUhnY0LqYD6oaECo3V2VegW6K7OYHrwqYBbxMT7adlGsaoTTTnQZWVhndjJ7VhEBIqnFiFc5e15gPzoINbld3NastixKuUgwU6yOdleqF9gOCtvg5h3+DNuVwlj2KRNlwVnRs62c+e+vy+hmHYeNpuBVRWzBC4DarK1VgwtElYrIu6v2L+cwnnrcuG8Jonid7imZXV-sQkHQH+mHN1LI4KyixrONTNiCQJEAA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QCcD2qAuA6AIgSwEMAbVKAVzAFkCA7AmZLABWTAAcDWBiAQQGUASgBUhfAPoCAojxwBNANoAGALqJQbVLDwY8qGmpAAPRACYAzIqwBOAKxmAjCYAc9xQBZnAdkVmANCABPRHtPNyxFCIiQkxMbRQA2JwBfJP80TFxCEnIqWnowRgAhTAALADE8ZFgMHhoIPjAAYz0ILAqq7BZUAFs2DC4+JmkAaTEAYQB5SiYAGUkhSSVVJBANLR09A2MEMxsncPjY93crRUd4+P8ghEPLOKi3eKszDwuUtPRsfGJSCmo6BhYYoYcqVaq1epNFptMHYHiwADWXCkkwA4gA5ACSfEkOCWBjW2l0+hW2089niWHiZxsFxMoQpDiuiBsVkpNnMj0SniccU8nneIHSXyyv1yAIKQNK7XBdQazTqWHl0K6vX6gxG4yms3mixUBM0RM2pMQu32CViFLcPIi8T8gUQTicZnCkU8ZniITMnlpguFmR+OX++SK0thEOVisjrXhCPsyMkaKxOLx+pWhI2JNAZPs+2p9lZihMCSdduZCCcnvCnLZVns9lsnhMfs+WFRAFVMcx8jNUAQIJAuGMZpixsN8enDZmtqYrJ4sJWmxEzCvzGYrG5y-XYtWXuubG4bHsnFYWxkO12eI0dAA3MBYTEQIhgLgicR8IQ8YS4ifqKfEmcdkcBc3G9VlnScRRng3Lc53sLAjysKwnE8OdINsM9sAvLAr1ve9H2fXhBDED8vwWVNlj-dYAJNICTBAsDkLMdD103B0EFzC5wlZOdkNLI9klSIVW2w3C8DvJU2DAAgETwGgoAGIYeFGSZpjmBZf1Wf9jWzU1gKcUCfSYliYPYhsTHgxQeO9DwkMOGxMLbTscOvcT7xmPBqjAGg5IUlEJgxbEfzTKijSzIxTTsLA3CsGJ63iNxErcCktxcGwEJ4kxnjcKzzGbIT-WwzE6Fcu8iOEUQJGkORNIzGjdIQZwXXiVCnh9PKbHsUCt0PdLrXiI9yRXNxIPiFIhJoVAB3gFZhQNaidIihAAFpD3LZaTDcRzvmyP48gYeawsA+1rjtBDIgiXkNw3d1ttFIN9slFh2E4MBDunWimy3TrXUiEJc2Qm67sDPaJVDEEZRqOUoTqd76qWzryw8eD7giWkBtAxRPDGgrWx2sVg0BYFQQ6CMYdaSG4cW7YkPLOIrF+20ORi2ID2B3bxRDKUIfDaGFQp2FmDQNUqfC7Yus8Om2XOt1mMS4szHZgnHvBknZUhfmYQ6HDEVFwDBqpEbDysvi2ql9kLvdAyPB8JWHrB7m1ahjXoUhtoyCIIgxFqWAAHcCj12iUPnOxTmpKDNsUXlzZliIrfl23cYyfH7a54nIbJzW3YIsBJFhycFrF4JkOiyDrTiZ0+XMctvHoi6Rs9HkPC2pORRBzmibDUm+ehaNA4a2n2P5ejUZi423Tt0G0679XoyVcmhZ6Pp+6WiXy0rSwLriCxrrZ1uAw5wnJXT3mXajBfY3sFftkQw2DMOVxYiQk7HWpRmfQpUInFiSeO+PmfnZzznkwTgOhiDexoH7AOBcjpB35AhdcCQIixRygZdeb9LadRaiNH++8LzX1MPYLcPgQ6RDrAeLKIQHJ4OciAmAvZ+yQAIQgL6ZlHDpQullbGoQfSCQ+OeZyYk7zMKeFuJc1hsbUgsJtWIfDhICMvKVfCT43owI+g1eskszIuHnN4Oy9lbIjUcqJJRklpKyXkswzqYRbLeAPIcRIoizJ1hdHOAa38cHmAMsYwRpiPJeR8pYtR8Mb5dWilwqyjwTCOKsKlKO0VJE5USFjAaPiuzFQIEo5hKEepmHov1WkIRTjOhxikIAA */
     id: "root",
     type: "parallel",
     states: {
-      Full_Resutl: {
+      DialogueManager: {
         initial: "Prepare",
         states: {
           Prepare: {
-            on: { ASRTTS_READY: "Ready" },
+          on: { ASRTTS_READY: "#BothFirstAndSecond"},
             entry: [
               assign({
                 spstRef: ({ spawn }) => {
@@ -106,78 +87,130 @@ const dmMachine = createMachine(
               }),
             ],
           },
-          Ready: {
-            initial: "Greeting",
-            id: "ready",
+
+          BothFirstAndSecond: {
+            id: "BothFirstAndSecond",
+            type: "parallel",
             states: {
-              Greeting: {
-                id: "greeting",
-                entry: say("Hi! What would you like me to do?"),
-                on: {
-                  SPEAK_COMPLETE: "#Ask"
-                },
-              },
-              Ask: {
-                id: "Ask",
-                entry: listen(),
-                on: {
-                  RECOGNISED: {
-                    target: "Full_Answer",
-                    guard: ({ event }) => !!(grammar[toLowerCase(event.value[0].utterance)] || {}).entities.color &&
-                    !!(grammar[toLowerCase(event.value[0].utterance)] || {}).entities.what &&
-                    !!(grammar[toLowerCase(event.value[0].utterance)] || {}).entities.where,
-                    actions: assign({
-                      color: ({ event }) => (grammar[toLowerCase(event.value[0].utterance)] || {}).entities.color,
-                      what: ({ event }) => (grammar[toLowerCase(event.value[0].utterance)] || {}).entities.what,
-                      where: ({ event }) => (grammar[toLowerCase(event.value[0].utterance)] || {}).entities.where,
-                    }),
+              First: {
+                initial: "Prompt",
+                states: {
+                  Prompt: {
+                    entry: "speak.prompt",
+                    on: { SPEAK_COMPLETE: "Ask" },
+                  },
+                  Ask: {
+                    entry: listen(),
+                    on: {
+                      RECOGNISED: {
+                        target: "#Full_Answer",
+                        guard: ({ event }) =>
+                          !!(
+                            grammar[ToLowerCase(event.value[0].utterance)] || {}
+                          ).entities.color &&
+                          !!(
+                            grammar[ToLowerCase(event.value[0].utterance)] || {}
+                          ).entities.object &&
+                          !!(
+                            grammar[ToLowerCase(event.value[0].utterance)] || {}
+                          ).entities.place,
+                        actions: assign({
+                          Color: ({ event }) =>
+                            (
+                              grammar[
+                                ToLowerCase(event.value[0].utterance)
+                              ] || {}
+                            ).entities.color,
+                          Object: ({ event }) =>
+                            (
+                              grammar[
+                                ToLowerCase(event.value[0].utterance)
+                              ] || {}
+                            ).entities.object,
+                          Place: ({ event }) =>
+                            (
+                              grammar[
+                                ToLowerCase(event.value[0].utterance)
+                              ] || {}
+                            ).entities.place,
+                        }),
+                      },
+                    },
+                  },
+                  Full_Answer: {
+                    id: "Full_Answer",
+                    entry: ({ context }) => {
+                      context.spstRef.send({
+                        type: "SPEAK",
+                        value: {
+                          utterance: `OK, I put the ${context.Color} ${context.Object} on the ${context.Place}`,
+                        },
+                        on: { SPEAK_COMPLETE: "#IdleEnd" },
+                      });
+                    },
+                  },
+                  IdleEnd: {
+                    id: "IdleEnd",
                   },
                 },
               },
-              Full_Answer: {
-                id: "Full_Answer",
-                entry: ({ context }) => {
-                  console.log("Entering Full_Answer state");
-                  context.spstRef.send({
-                    type: "SPEAK",
-                    value: `Ok, so you want the ${context.color} ${context.what} on the ${context.where}, right?`,
-                  });
+              Second: {
+                initial: "Prompt",
+                states: {
+                  Prompt: {
+                    entry: "speak.prompt",
+                    on: { SPEAK_COMPLETE: "Ask1" },
+                  },
+                  Ask1: {
+                    entry: listen(),
+                    on: {
+                      RECOGNISED: {
+                        target: "Partial_Answer",
+                        guard: ({ event }) =>
+                          !!(
+                            grammar[ToLowerCase(event.value[0].utterance)] || {}
+                          ).entities.object,
+                        actions: assign({
+                          Object: ({ event }) =>
+                            (
+                              grammar[
+                                ToLowerCase(event.value[0].utterance)
+                              ] || {}
+                            ).entities.object,
+                        }),
+                      },
+                    },
+                  },
+                  Partial_Answer: {
+                    id: "Partial_Answer",
+                    entry: ({ context }) => {
+                      context.spstRef.send({
+                        type: "SPEAK",
+                        value: {
+                          utterance: `OK, I have a ${context.object}. What color is it and what would you like me to do with it?`,
+                        },
+                        on: { SPEAK_COMPLETE: "#IdleEnd" },
+                      });
+                    },
+                  },
                 },
-                on: { SPEAK_COMPLETE: "#greeting" }, 
               },
             },
           },
         },
       },
       
-      //Partial_Answer: {
-        //initial: "Double_Check",
-        //id: "Partial_Answer",
-        //states: {
-          //Double_Check: {
-            //id: "Double_Check",
-            //entry: say("I didn't really get it"),
-            //on: {SPEAK_COMPLETE: "#Ask_Clarification"},
-          //},
-          //Ask_Clarification: {
-            //id: "Ask_Clarification",
-            //entry: listen(),
-            //on: {
-              //RECOGNISED: [
-
-              //],
-            //},
-          //},
-        //},
-      //},
       GUI: {
         initial: "PageLoaded",
         states: {
           PageLoaded: {
             entry: "gui.PageLoaded",
-            on: { CLICK: { target: "Inactive", actions: "prepare" } },
+
+            on: {
+              CLICK: { target: "Inactive", actions: "prepare" }
+            }
           },
-          Inactive: { entry: "gui.Inactive", on: { ASRTTS_READY: "Active" } },
+
           Active: {
             initial: "Idle",
             states: {
@@ -192,6 +225,10 @@ const dmMachine = createMachine(
               Listening: { entry: "gui.Listening", on: { RECOGNISED: "Idle" } },
             },
           },
+
+          Inactive: { entry: "gui.Inactive", on: {
+            ASRTTS_READY: "Active"
+          } }
         },
       },
     },
@@ -205,8 +242,14 @@ const dmMachine = createMachine(
           type: "PREPARE",
         }),
       // saveLastResult:
+      "speak.prompt": ({ context }) => {
+        context.spstRef.send({
+          type: "SPEAK",
+          value: { utterance: "Hi! What would you like to do?" },
+        });
+      },
       "gui.PageLoaded": ({}) => {
-        document.getElementById("button").innerText = "Begin your torture:)";
+        document.getElementById("button").innerText = "Click to start!";
       },
       "gui.Inactive": ({}) => {
         document.getElementById("button").innerText = "Inactive";
