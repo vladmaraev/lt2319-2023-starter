@@ -54,18 +54,10 @@ const grammar = {
       },
 };
 
-const getEntity = (context: DMContext, entity: string): string | false => {
- if (context.lastResult[0].utterance.length > 0) {
-    const u = context.lastResult[0].utterance.toLowerCase().replace(/\.$/g, "");
-    if (u in grammar) {
-      if (entity in grammar[u].entities) {
-        return grammar[u].entities[entity];
-      }
-    }
+const ToLowerCase = (object: string) => {
+ return object.toLowerCase().replace(/\.$/g, "");
   }
-  return false;
-};
-
+  
 // machine
 const dmMachine = createMachine(
   {
@@ -101,12 +93,14 @@ const dmMachine = createMachine(
                 on: {
                   RECOGNISED: {
                     target: "ColourSlot",
-                    guard: ({ context }) => !!getEntity(context, "colour"),
-                    actions: [
-                      assign({
-                        colour: ({ context }) => getEntity(context, "colour"),
-                      }),
-                    ],
+                    guard: ({ event }) => !!(grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.colour && !!(grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.object && !!(grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.place,
+                    actions: assign({ 
+                      recognisedColour: ({ event }) =>
+                        (grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.colour,
+                        recognisedObject: ({ event }) => (grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.object,
+                       recognisedPlace: ({ event }) =>
+                            (grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.place,
+                    }),
                   },
                 },
               },
@@ -114,10 +108,9 @@ const dmMachine = createMachine(
                 entry: ({ context }) => {
                   context.spstRef.send({
                     type: "SPEAK",
-                    value: `OK, so ${context.colour}`,
+                    value: { utterance: `OK, I put the ${context.recognisedColour} ${context.recognisedObject} on the ${context.recognisedPlace}` },
                   });
                 },
-                on: { SPEAK_COMPLETE: "Prompt" },
               },
               IdleEnd: {},
             },
@@ -165,11 +158,6 @@ const dmMachine = createMachine(
           value: { utterance: "Hi! What is your request?" },
         });
       },
-      "speak.how-can-I-help": ({ context }) =>
-        context.spstRef.send({
-          type: "SPEAK",
-          value: { utterance: "How can I help you?" },
-        }),
       "gui.PageLoaded": ({}) => {
         document.getElementById("button").innerText = "Click to start!";
       },
