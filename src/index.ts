@@ -88,9 +88,12 @@ const dmMachine = createMachine(
             states: {
               Greeting: {
                 entry: "speak.greeting",
-                on: { SPEAK_COMPLETE: "HowCanIHelp" },
+                on: { SPEAK_COMPLETE: [{ target: "HowCanIHelp",
+                actions: assign({person: null, day:null, time:null })},
+              ] },
               },
               HowCanIHelp: {
+
                 entry: say("Who would you like to have a meeting with?"),
                 on: { SPEAK_COMPLETE: "Ask" },
               },
@@ -111,11 +114,16 @@ const dmMachine = createMachine(
               Repeat: {
                 entry: ({ context }) => {
                   const entities = extractEntities(context.lastResult[0].utterance);
+
+                  
                   
                   // Update context with extracted entities
                   context.person = entities.person || context.person;
                   context.day = entities.day || context.day;
                   context.time = entities.time || context.time;
+
+
+                  console.log(context.person, context.day, context.time);
               
                   // Decide what to prompt based on missing information
                   if (!context.person) {
@@ -140,7 +148,16 @@ const dmMachine = createMachine(
                     });
                   }
                 },
-                on: { SPEAK_COMPLETE: "Ask" },
+                on: { SPEAK_COMPLETE: [
+                  {
+                    target:"Greeting",
+                    guard: ({ context })=> context.person && context.day && context.time
+                  },
+                  {target:"Ask",
+                  },
+]
+                },
+                
               },
               
               IdleEnd: {},

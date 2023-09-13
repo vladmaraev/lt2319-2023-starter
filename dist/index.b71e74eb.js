@@ -656,7 +656,16 @@ const dmMachine = (0, _xstate.createMachine)({
                         Greeting: {
                             entry: "speak.greeting",
                             on: {
-                                SPEAK_COMPLETE: "HowCanIHelp"
+                                SPEAK_COMPLETE: [
+                                    {
+                                        target: "HowCanIHelp",
+                                        actions: (0, _xstate.assign)({
+                                            person: null,
+                                            day: null,
+                                            time: null
+                                        })
+                                    }
+                                ]
                             }
                         },
                         HowCanIHelp: {
@@ -686,6 +695,7 @@ const dmMachine = (0, _xstate.createMachine)({
                                 context.person = entities.person || context.person;
                                 context.day = entities.day || context.day;
                                 context.time = entities.time || context.time;
+                                console.log(context.person, context.day, context.time);
                                 // Decide what to prompt based on missing information
                                 if (!context.person) context.spstRef.send({
                                     type: "SPEAK",
@@ -715,25 +725,13 @@ const dmMachine = (0, _xstate.createMachine)({
                             on: {
                                 SPEAK_COMPLETE: [
                                     {
-                                        target: "ResetForNextInteraction",
-                                        cond: (context)=>context.person && context.day && context.time
+                                        target: "Greeting",
+                                        guard: ({ context })=>context.person && context.day && context.time
                                     },
                                     {
                                         target: "Ask"
                                     }
                                 ]
-                            }
-                        },
-                        ResetForNextInteraction: {
-                            entry: [
-                                (0, _xstate.assign)({
-                                    person: null,
-                                    day: null,
-                                    time: null
-                                })
-                            ],
-                            on: {
-                                "*": "Greeting"
                             }
                         },
                         IdleEnd: {}
@@ -785,9 +783,6 @@ const dmMachine = (0, _xstate.createMachine)({
                 }
             }
         }
-    },
-    guards: {
-        isAllSlotsFilled: (context)=>context.person && context.day && context.time
     }
 }, {
     // custom actions
