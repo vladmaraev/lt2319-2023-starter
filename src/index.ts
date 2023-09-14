@@ -35,6 +35,9 @@ const listen =
     context.spstRef.send({
       type: "LISTEN",
     });
+
+
+    // defining the slots
 const extractEntities = (utterance) => {
   const entities = {
     person: null,
@@ -44,6 +47,7 @@ const extractEntities = (utterance) => {
 
   const words = utterance.split(' ');
 
+  // hardcoding the slot detection criteria
   words.forEach((word, index) => {
     if (word === "with" && words[index + 1]) {
       entities.person = words[index + 1];
@@ -114,18 +118,15 @@ const dmMachine = createMachine(
               Repeat: {
                 entry: ({ context }) => {
                   const entities = extractEntities(context.lastResult[0].utterance);
-
                   
-                  
-                  // Update context with extracted entities
+                  // updating the context with extracted entities
                   context.person = entities.person || context.person;
                   context.day = entities.day || context.day;
                   context.time = entities.time || context.time;
 
-
                   console.log(context.person, context.day, context.time);
               
-                  // Decide what to prompt based on missing information
+                  // selecting the correct prompt based on the missing slot
                   if (!context.person) {
                     context.spstRef.send({
                       type: "SPEAK",
