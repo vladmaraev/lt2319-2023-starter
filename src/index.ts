@@ -39,7 +39,7 @@ const grammar = {
   "from home": {
     StartingPoint: "home"
   },
-  "from where I am ": {
+  "from where I am": {
     StartingPoint: "where you are"
   },
   "stop at park": {
