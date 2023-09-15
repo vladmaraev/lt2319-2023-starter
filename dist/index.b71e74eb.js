@@ -607,6 +607,13 @@ const grammar = {
             place: "table"
         }
     },
+    "put the blue book on the shelf": {
+        entities: {
+            color: "blue",
+            object: "book",
+            place: "shelf"
+        }
+    },
     "I have a book": {
         entities: {
             object: "book"
@@ -616,9 +623,32 @@ const grammar = {
 const ToLowerCase = (object)=>{
     return object.toLowerCase().replace(/\.$/g, "");
 };
+async function fetchFromChatGPT(prompt, max_tokens) {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer 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");
+    myHeaders.append("Content-Type", "application/json");
+    const raw = JSON.stringify({
+        model: "gpt-3.5-turbo",
+        messages: [
+            {
+                role: "user",
+                content: prompt
+            }
+        ],
+        temperature: 0,
+        max_tokens: max_tokens
+    });
+    const response = fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow"
+    }).then((response)=>response.json()).then((response)=>response.choices[0].message.content);
+    return response;
+}
 // machine
 const dmMachine = (0, _xstate.createMachine)({
-    /** @xstate-layout N4IgpgJg5mDOIC5QCcD2qAuA6AIgSwEMAbVKAVzAFkCA7AmZLABWTAAcDWBiAQQGUASgBUhfAPoCAojxwBNANoAGALqJQbVLDwY8qGmpAAPRACYAzIqwBOAKxmAjCYAc9xQBZnAdkVmANCABPRHtPNyxFCIiQkxMbRQA2JwBfJP80TFxCEnIqWnowRgAhTAALADE8ZFgMHhoIPjAAYz0ILAqq7BZUAFs2DC4+JmkAaTEAYQB5SiYAGUkhSSVVJBANLR09A2MEMxsncPjY93crRUd4+P8ghEPLOKi3eKszDwuUtPRsfGJSCmo6BhYYoYcqVaq1epNFptMHYHiwADWXCkkwA4gA5ACSfEkOCWBjW2l0+hW2089niWHiZxsFxMoQpDiuiBsVkpNnMj0SniccU8nneIHSXyyv1yAIKQNK7XBdQazTqWHl0K6vX6gxG4yms3mixUBM0RM2pMQu32CViFLcPIi8T8gUQTicZnCkU8ZniITMnlpguFmR+OX++SK0thEOVisjrXhCPsyMkaKxOLx+pWhI2JNAZPs+2p9lZihMCSdduZCCcnvCnLZVns9lsnhMfs+WFRAFVMcx8jNUAQIJAuGMZpixsN8enDZmtqYrJ4sJWmxEzCvzGYrG5y-XYtWXuubG4bHsnFYWxkO12eI0dAA3MBYTEQIhgLgicR8IQ8YS4ifqKfEmcdkcBc3G9VlnScRRng3Lc53sLAjysKwnE8OdINsM9sAvLAr1ve9H2fXhBDED8vwWVNlj-dYAJNICTBAsDkLMdD103B0EFzC5wlZOdkNLI9klSIVW2w3C8DvJU2DAAgETwGgoAGIYeFGSZpjmBZf1Wf9jWzU1gKcUCfSYliYPYhsTHgxQeO9DwkMOGxMLbTscOvcT7xmPBqjAGg5IUlEJgxbEfzTKijSzIxTTsLA3CsGJ63iNxErcCktxcGwEJ4kxnjcKzzGbIT-WwzE6Fcu8iOEUQJGkORNIzGjdIQZwXXiVCnh9PKbHsUCt0PdLrXiI9yRXNxIPiFIhJoVAB3gFZhQNaidIihAAFpD3LZaTDcRzvmyP48gYeawsA+1rjtBDIgiXkNw3d1ttFIN9slFh2E4MBDunWimy3TrXUiEJc2Qm67sDPaJVDEEZRqOUoTqd76qWzryw8eD7giWkBtAxRPDGgrWx2sVg0BYFQQ6CMYdaSG4cW7YkPLOIrF+20ORi2ID2B3bxRDKUIfDaGFQp2FmDQNUqfC7Yus8Om2XOt1mMS4szHZgnHvBknZUhfmYQ6HDEVFwDBqpEbDysvi2ql9kLvdAyPB8JWHrB7m1ahjXoUhtoyCIIgxFqWAAHcCj12iUPnOxTmpKDNsUXlzZliIrfl23cYyfH7a54nIbJzW3YIsBJFhycFrF4JkOiyDrTiZ0+XMctvHoi6Rs9HkPC2pORRBzmibDUm+ehaNA4a2n2P5ejUZi423Tt0G0679XoyVcmhZ6Pp+6WiXy0rSwLriCxrrZ1uAw5wnJXT3mXajBfY3sFftkQw2DMOVxYiQk7HWpRmfQpUInFiSeO+PmfnZzznkwTgOhiDexoH7AOBcjpB35AhdcCQIixRygZdeb9LadRaiNH++8LzX1MPYLcPgQ6RDrAeLKIQHJ4OciAmAvZ+yQAIQgL6ZlHDpQullbGoQfSCQ+OeZyYk7zMKeFuJc1hsbUgsJtWIfDhICMvKVfCT43owI+g1eskszIuHnN4Oy9lbIjUcqJJRklpKyXkswzqYRbLeAPIcRIoizJ1hdHOAa38cHmAMsYwRpiPJeR8pYtR8Mb5dWilwqyjwTCOKsKlKO0VJE5USFjAaPiuzFQIEo5hKEepmHov1WkIRTjOhxikIAA */ id: "root",
+    /** @xstate-layout N4IgpgJg5mDOIC5QCcD2qAuA6AIgSwEMAbVKAVzAFkCA7AmZLABWTAAcDWBiAQQGUASgBUhfAPoCAojxwBNANoAGALqJQbVLDwY8qGmpAAPRACYAzIqwBOAKxmAjDZN2bADhMB2LwBoQAT0R7DwAWLEVwiPsrADZo4ODXAF9E3zRMXEIScipaejBGACFMAAsAMTxkWAweGgg+MABjPQgscsrsFlQAWzYMLj4maQBpMQBhAHlKJgAZSSFJJVUkEA0tHT0DYwQzNzDok2CrDxN9m2CTZ18AhFdXGyxHcJNFV3DXK3tk1PRsfGJSCjUOgMLBFDBlCpVGp1RrNVqQ7A8WAAay4UgmAHEAHIAST4khwiwMq20un0yy2HjMriw0UUjleFw8VkUVjMV0QVnOYXM51iHiCJlcwS+IDSv0yAJywPyoJKbShtXqTVq8PaWCRqPR42xeIJ8nsS3UmlJGwpiCpNLpDMUTJZbI5CHsimCHiwTjM1Ne0Q+hxMovFGX+2SBeUK8oR0OVcIViJRaMkmNx+MJJiNKxN63JoEp1Np9Lcts89vZ-kQrjM0XdvLMnme0S8-pSYp+QaygNyILBEPaUdhqtjGvj2t1KfkZnTJKzmwteethbtrNL13sjjMPM9h2CsRsHltAdbf3b0rDcvBsb7Kpao2KjWRYnGACMAFaNDBiWgQMaoEiMHEQIgwC4UocWmaYHwKAApRMhCJZYpzJGcEGce5nUcQ5XGiVw92FR17GCewqyOOJogcC5FBCJtvnSI8pVDLsI17JV+2vW8GnvJgiAIBowCwf9AOA0DwJmHhRgWFRiUzRDzWQmxUILDCsJw4JHWiM4sEOKwtKpZwzEOaIDxoyUQ07WVuwvZirywG872-X8P1qMROO43j+KAkCwLGcZpnGAQ4ONNZpJzUw5IeBSrEw7CXhUssnTUoiPDU2sTjZJJm0DDEAFUcWYPJplQAgIEgLhRmmHFRiGfyM0Cs1guQo4sEw44XSw7C2XsPD3isMIIieewK2pMxDOwLKcp4BodAAN1cgCgJEcQ+CEHhhH1CT4Kk2qjEQMjGuCMxjmCF44gSaJHU8YJ7jsU4KIurwG2GrBRo1Ca8GmvjZt4QQxEW5b5kJNaAtNbMtu2ewTF2-aDiO+JMLOuJLEUSsdniOTokIh6nvGqbeL4NgwAIZE8BoKB+kGHgRgmKZZnmKqEM2rYduFSHDswmHTtilL7kR-Z4nw+xPSsDHsue7GsGmPAqjAGgiZJkdk1WycNuBhm7A0qxyJsfqmXwmwzrcbqrr0jw7lXY2DPS1snpxOgXumz7hFECRpDkWmlaQoV1wbGJhVuV0nFcM6Lm6i6LG3VxHC0mxkmbGhUCK+BlnFSSauVxAAFoLsdNODge2iTJlZBk6BpDl0QUj3V6pwYk8Vlc+MjsC+YVgOFYIvpxk448M1nqIjU8xPVeEULaM4MG9PczI0s5o26CkHNcdc57Ar3rXT2958Lr0eTwY89J5hKzYxn+nOSsR0Qm63r+ball3k3496LMxjFX3mMESb7peiP1OnVdR1MPBx49IXg2Aoj6O+dFTLhl3kxF+A436ai-khOS3U4jCk8D6Z44cYrXH-g8EBQC7igMFsPCUW8H5QJ7M-aMcD1SlDIEQIgYgaiwAAO75EQTJNC659qa0RqufkzJHRcnBr1EwXIXQtXAfnceT9qhTxoVULAWJUCjB-KgQu60U5IS4VgHhzoHCEQbII2KzpXRqy0s4H05xFBqSkWPHelC5GwJaIOZRT5XwTQ4XVHRei+GGK8KfExjhwZaUjiYKItxsIeDsdvR+0CqEsTVIo5RzkeJeJBj4jwvCDECMCTgysy8nhdUrNuGJ5CzyOMvHCGy7EHwvjfA5L8qjfzpK2FpPCngl6ujiJrC4-M1JpWoqQ++kCKkWWcdZNi953ENM-HZdR71AKtMCAKfMjgbAxA+PsQieECJum6RdDClZYjmyGW2CBjcJ4wOoaxWyMyJqNPmYwTUYhSjqLqR498czmnqOWQgAioQEh7Swojbcdg8JmDZNYRKKNEbI1dGU0ZVyElWRqdM+pDzvlqL-LNSQtQ-n4Q8BC3YxEYb7XVmIqiLYR4jMubIqpqo0VOS4mkzRxcZLtNiiAi+l89w632Kc6lwyLkyPiU4m5kzbKpJmkstl7dvGrPnBsn0hFwns2uGpUIoTtK1jsPpRFdKxUMtubU6VQ57xvOQMylyfzDqhCCEcfhLIQFnFUg4cxEUqRZKZIKwMed7FxMqfIk1HEWUyrAHiiABLf5cpiB6lkzUPhRANaKoNEymU-KtXM6VfzOUrk1l0mFAo7DuBOFSv19dYkUPGRKjN2LHlmrcgSxVBZlVbLVXhNS+zEp2AuD6akKaHE1sSXW+y2aw3mtee8zNDaw22psbSQ6pENm6UXkSkxpF1zEScOYKIzhBlCvOdIode9a1TKebOlyiyI34rlbPLYhKu4RWhX3GwsQtzOCFjiP54TOqrg0j2hI7hIWQqjiQx6wsmB5QKkVKNd7j4IE7iY94NJiJ0jESA+KX6RavTAH8n0Z0tzWCrhFE4tYuRDzOZjW24aCVBD1h8WkmEHARVZHJaJ4HqOi1xvjQmxM-ma0BWIzVmsNlRLhthYjYiTqvCCJ8Tjwssa4bFhLDAUsZYCfwhpYTZxROevXdcfd4MQ6KA9CyIBHGqPC2ttxbGfzsKBwXSHNCRwHB6WjokIAA */ id: "root",
     type: "parallel",
     states: {
         DialogueManager: {
@@ -656,15 +686,119 @@ const dmMachine = (0, _xstate.createMachine)({
                                 Ask: {
                                     entry: listen(),
                                     on: {
-                                        RECOGNISED: {
-                                            target: "#Full_Answer",
-                                            guard: ({ event })=>!!(grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.color && !!(grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.object && !!(grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.place,
+                                        RECOGNISED: [
+                                            {
+                                                target: "CHAT",
+                                                actions: [
+                                                    (0, _xstate.assign)({
+                                                        lastResult: ({ event })=>event.value
+                                                    })
+                                                ]
+                                            },
+                                            {
+                                                target: "#Full_Answer",
+                                                guard: ({ event })=>{
+                                                    const utterance = ToLowerCase(event.value[0].utterance);
+                                                    const grammarEntry = grammar[utterance] || {};
+                                                    // Check if all three properties (color, object, place) are defined
+                                                    return grammarEntry.entities && grammarEntry.entities.color && grammarEntry.entities.object && grammarEntry.entities.place;
+                                                },
+                                                actions: (0, _xstate.assign)({
+                                                    Color: ({ event })=>{
+                                                        const utterance = ToLowerCase(event.value[0].utterance);
+                                                        return grammar[utterance]?.entities?.color || null;
+                                                    },
+                                                    Object: ({ event })=>{
+                                                        const utterance = ToLowerCase(event.value[0].utterance);
+                                                        return grammar[utterance]?.entities?.object || null;
+                                                    },
+                                                    Place: ({ event })=>{
+                                                        const utterance = ToLowerCase(event.value[0].utterance);
+                                                        return grammar[utterance]?.entities?.place || null;
+                                                    }
+                                                })
+                                            },
+                                            {
+                                                //has the object but no color or place
+                                                target: "#NoColor",
+                                                guard: ({ event })=>{
+                                                    const utterance = ToLowerCase(event.value[0].utterance);
+                                                    const grammarEntry = grammar[utterance] || {};
+                                                    // Check if the 'object' property is defined
+                                                    return grammarEntry.entities && grammarEntry.entities.object !== null;
+                                                },
+                                                actions: (0, _xstate.assign)({
+                                                    Object: ({ event })=>{
+                                                        const utterance = ToLowerCase(event.value[0].utterance);
+                                                        const grammarEntry = grammar[utterance] || {};
+                                                        return grammarEntry.entities?.object || null;
+                                                    }
+                                                })
+                                            },
+                                            {
+                                                //has the color and the object but no place
+                                                target: "#NoPlace",
+                                                guard: ({ event })=>{
+                                                    const utterance = ToLowerCase(event.value[0].utterance);
+                                                    const grammarEntry = grammar[utterance] || {};
+                                                    return grammarEntry.entities && grammarEntry.entities.color && grammarEntry.entities.object;
+                                                },
+                                                actions: (0, _xstate.assign)({
+                                                    Color: ({ event })=>{
+                                                        const utterance = ToLowerCase(event.value[0].utterance);
+                                                        return grammar[utterance]?.entities?.color || null;
+                                                    },
+                                                    Object: ({ event })=>{
+                                                        const utterance = ToLowerCase(event.value[0].utterance);
+                                                        return grammar[utterance]?.entities?.object || null;
+                                                    }
+                                                })
+                                            },
+                                            {
+                                                //has the place but no color or object
+                                                target: "#NoObject",
+                                                guard: ({ event })=>{
+                                                    const utterance = ToLowerCase(event.value[0].utterance);
+                                                    const grammarEntry = grammar[utterance] || {};
+                                                    return grammarEntry.entities && grammarEntry.entities.place;
+                                                },
+                                                actions: (0, _xstate.assign)({
+                                                    Place: ({ event })=>{
+                                                        const utterance = ToLowerCase(event.value[0].utterance);
+                                                        return grammar[utterance]?.entities?.place || null;
+                                                    }
+                                                })
+                                            }
+                                        ]
+                                    }
+                                },
+                                CHAT: {
+                                    id: "CHAT",
+                                    invoke: {
+                                        src: (0, _xstate.fromPromise)(async ({ input })=>{
+                                            const data = await fetchFromChatGPT(input.lastResult[0].utterance, 40);
+                                            return data;
+                                        }),
+                                        input: ({ context, event })=>({
+                                                lastResult: context.lastResult
+                                            }),
+                                        onDone: {
+                                            target: "Answer",
                                             actions: (0, _xstate.assign)({
-                                                Color: ({ event })=>(grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.color,
-                                                Object: ({ event })=>(grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.object,
-                                                Place: ({ event })=>(grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.place
+                                                Answer: ({ event })=>event.output
                                             })
                                         }
+                                    }
+                                },
+                                Answer: {
+                                    id: "Answer",
+                                    entry: ({ context })=>{
+                                        context.spstRef.send({
+                                            type: "SPEAK",
+                                            value: {
+                                                utterance: context.Answer
+                                            }
+                                        });
                                     }
                                 },
                                 Full_Answer: {
@@ -674,6 +808,60 @@ const dmMachine = (0, _xstate.createMachine)({
                                             type: "SPEAK",
                                             value: {
                                                 utterance: `OK, I put the ${context.Color} ${context.Object} on the ${context.Place}`
+                                            },
+                                            on: {
+                                                SPEAK_COMPLETE: "#Ask"
+                                            }
+                                        });
+                                    }
+                                },
+                                NoColor: {
+                                    id: "NoColor",
+                                    entry: ({ context })=>{
+                                        context.spstRef.send({
+                                            type: "SPEAK",
+                                            value: {
+                                                utterance: `I'm gonna need additional information about the ${context.Object}`
+                                            },
+                                            on: {
+                                                SPEAK_COMPLETE: "#Second"
+                                            },
+                                            raise: {
+                                                type: "FILL_COLOR"
+                                            }
+                                        });
+                                    }
+                                },
+                                NoObject: {
+                                    id: "NoObject",
+                                    entry: (0, _xstate.raise)({
+                                        type: "FILL_OBJECT"
+                                    })
+                                },
+                                NoPlace: {
+                                    id: "NoPlace",
+                                    entry: (0, _xstate.raise)({
+                                        type: "FILL_PLACE"
+                                    })
+                                }
+                            }
+                        },
+                        Check_Object_and_Color: {
+                            id: "Forth",
+                            initial: "Idle",
+                            states: {
+                                Idle: {
+                                    on: {
+                                        FILL_OBJECT: "#Ask_For_Object_and_Color"
+                                    }
+                                },
+                                Ask_For_Object_and_Color: {
+                                    id: "Ask_For_Object_and_Color",
+                                    entry: ({ context })=>{
+                                        context.spstRef.send({
+                                            type: "SPEAK",
+                                            value: {
+                                                utterance: `So what would you like put one the ${context.Place} and what color is it?`
                                             },
                                             on: {
                                                 SPEAK_COMPLETE: "#IdleEnd"
@@ -686,40 +874,59 @@ const dmMachine = (0, _xstate.createMachine)({
                                 }
                             }
                         },
-                        Second: {
-                            initial: "Prompt",
+                        Check_Place: {
+                            id: "Third",
+                            initial: "Idle",
                             states: {
-                                Prompt: {
-                                    entry: "speak.prompt",
+                                Idle: {
                                     on: {
-                                        SPEAK_COMPLETE: "Ask1"
+                                        FILL_PLACE: "#Ask_For_Place"
                                     }
                                 },
-                                Ask1: {
-                                    entry: listen(),
-                                    on: {
-                                        RECOGNISED: {
-                                            target: "Partial_Answer",
-                                            guard: ({ event })=>!!(grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.object,
-                                            actions: (0, _xstate.assign)({
-                                                Object: ({ event })=>(grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.object
-                                            })
-                                        }
-                                    }
-                                },
-                                Partial_Answer: {
-                                    id: "Partial_Answer",
+                                Ask_For_Place: {
+                                    id: "Ask_For_Place",
                                     entry: ({ context })=>{
                                         context.spstRef.send({
                                             type: "SPEAK",
                                             value: {
-                                                utterance: `OK, I have a ${context.object}. What color is it and what would you like me to do with it?`
+                                                utterance: `So, I have a ${context.Object} ${context.Color}. Where do you want to put the ${context.Object}?`
                                             },
                                             on: {
                                                 SPEAK_COMPLETE: "#IdleEnd"
                                             }
                                         });
                                     }
+                                },
+                                IdleEnd: {
+                                    id: "IdleEnd"
+                                }
+                            }
+                        },
+                        Check_Color_and_Place: {
+                            id: "Check_Color_and_Place",
+                            initial: "Idle",
+                            states: {
+                                Idle: {
+                                    on: {
+                                        FILL_COLOR: "Ask_For_Color_and_Place"
+                                    }
+                                },
+                                Ask_For_Color_and_Place: {
+                                    id: "Ask_For_Color_and_Place",
+                                    entry: ({ context })=>{
+                                        context.spstRef.send({
+                                            type: "SPEAK",
+                                            value: {
+                                                utterance: `OK, I have a ${context.Object}. What color is it and what would you like me to do with it?`
+                                            },
+                                            on: {
+                                                SPEAK_COMPLETE: "#IdleEnd"
+                                            }
+                                        });
+                                    }
+                                },
+                                IdleEnd: {
+                                    id: "IdleEnd"
                                 }
                             }
                         }
@@ -769,8 +976,7 @@ const dmMachine = (0, _xstate.createMachine)({
                         ASRTTS_READY: "Active"
                     }
                 }
-            },
-            bjnkldxvnslök
+            }
         }
     }
 }, {
@@ -1473,7 +1679,7 @@ const defaultWaitForOptions = {
     });
 }
 
-},{"./actions-020463e9.esm.js":"ctMkw","./promise-5b07c38e.esm.js":false,"../dev/dist/xstate-dev.esm.js":"2CXSV","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ctMkw":[function(require,module,exports) {
+},{"./actions-020463e9.esm.js":"ctMkw","./promise-5b07c38e.esm.js":"e9cHm","../dev/dist/xstate-dev.esm.js":"2CXSV","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ctMkw":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "$", ()=>stateIn);
@@ -3645,7 +3851,358 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"bEPLs":[function(require,module,exports) {
+},{}],"e9cHm":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "a", ()=>fromEventObservable);
+parcelHelpers.export(exports, "b", ()=>fromObservable);
+parcelHelpers.export(exports, "c", ()=>fromPromise);
+parcelHelpers.export(exports, "d", ()=>fromTransition);
+parcelHelpers.export(exports, "f", ()=>fromCallback);
+var _actions020463E9EsmJs = require("./actions-020463e9.esm.js");
+/**
+ * Returns actor logic from a transition function and its initial state.
+ *
+ * A transition function is a function that takes the current state and an event and returns the next state.
+ *
+ * @param transition The transition function that returns the next state given the current state and event.
+ * @param initialState The initial state of the transition function.
+ * @returns Actor logic
+ */ function fromTransition(transition, initialState) {
+    return {
+        config: transition,
+        transition: (state, event, actorContext)=>{
+            return transition(state, event, actorContext);
+        },
+        getInitialState: (_, input)=>{
+            return typeof initialState === "function" ? initialState({
+                input
+            }) : initialState;
+        },
+        getSnapshot: (state)=>state,
+        getPersistedState: (state)=>state,
+        restoreState: (state)=>state
+    };
+}
+function fromCallback(invokeCallback) {
+    return {
+        config: invokeCallback,
+        start: (_state, { self })=>{
+            self.send({
+                type: (0, _actions020463E9EsmJs.a2)
+            });
+        },
+        transition: (state, event, { self, id, system })=>{
+            if (event.type === (0, _actions020463E9EsmJs.a2)) {
+                const sendBack = (eventForParent)=>{
+                    if (state.canceled) return;
+                    self._parent?.send(eventForParent);
+                };
+                const receive = (newListener)=>{
+                    state.receivers.add(newListener);
+                };
+                state.dispose = invokeCallback({
+                    input: state.input,
+                    system,
+                    self: self,
+                    sendBack,
+                    receive
+                });
+                if ((0, _actions020463E9EsmJs.a3)(state.dispose)) state.dispose.then((resolved)=>{
+                    self._parent?.send((0, _actions020463E9EsmJs.I)(id, resolved));
+                    state.canceled = true;
+                }, (errorData)=>{
+                    state.canceled = true;
+                    self._parent?.send((0, _actions020463E9EsmJs.a4)(id, errorData));
+                });
+                return state;
+            }
+            if (event.type === (0, _actions020463E9EsmJs.a5)) {
+                state.canceled = true;
+                if (typeof state.dispose === "function") state.dispose();
+                return state;
+            }
+            state.receivers.forEach((receiver)=>receiver(event));
+            return state;
+        },
+        getInitialState: (_, input)=>{
+            return {
+                canceled: false,
+                receivers: new Set(),
+                dispose: undefined,
+                input
+            };
+        },
+        getSnapshot: ()=>undefined,
+        getPersistedState: ({ input, canceled })=>({
+                input,
+                canceled
+            })
+    };
+}
+function fromObservable(observableCreator) {
+    const nextEventType = "$$xstate.next";
+    const errorEventType = "$$xstate.error";
+    const completeEventType = "$$xstate.complete";
+    return {
+        config: observableCreator,
+        transition: (state, event, { self, id, defer })=>{
+            if (state.status !== "active") return state;
+            switch(event.type){
+                case nextEventType:
+                    // match the exact timing of events sent by machines
+                    // send actions are not executed immediately
+                    defer(()=>{
+                        self._parent?.send({
+                            type: `xstate.snapshot.${id}`,
+                            data: event.data
+                        });
+                    });
+                    return {
+                        ...state,
+                        data: event.data
+                    };
+                case errorEventType:
+                    return {
+                        ...state,
+                        status: "error",
+                        input: undefined,
+                        data: event.data,
+                        // TODO: if we keep this as `data` we should reflect this in the type
+                        subscription: undefined
+                    };
+                case completeEventType:
+                    return {
+                        ...state,
+                        status: "done",
+                        input: undefined,
+                        subscription: undefined
+                    };
+                case 0, _actions020463E9EsmJs.a5:
+                    state.subscription.unsubscribe();
+                    return {
+                        ...state,
+                        status: "canceled",
+                        input: undefined,
+                        subscription: undefined
+                    };
+                default:
+                    return state;
+            }
+        },
+        getInitialState: (_, input)=>{
+            return {
+                subscription: undefined,
+                status: "active",
+                data: undefined,
+                input
+            };
+        },
+        start: (state, { self, system })=>{
+            if (state.status === "done") // Do not restart a completed observable
+            return;
+            state.subscription = observableCreator({
+                input: state.input,
+                system,
+                self
+            }).subscribe({
+                next: (value)=>{
+                    self.send({
+                        type: nextEventType,
+                        data: value
+                    });
+                },
+                error: (err)=>{
+                    self.send({
+                        type: errorEventType,
+                        data: err
+                    });
+                },
+                complete: ()=>{
+                    self.send({
+                        type: completeEventType
+                    });
+                }
+            });
+        },
+        getSnapshot: (state)=>state.data,
+        getPersistedState: ({ status, data, input })=>({
+                status,
+                data,
+                input
+            }),
+        getStatus: (state)=>state,
+        restoreState: (state)=>({
+                ...state,
+                subscription: undefined
+            })
+    };
+}
+/**
+ * Creates event observable logic that listens to an observable
+ * that delivers event objects.
+ *
+ *
+ * @param lazyObservable A function that creates an observable
+ * @returns Event observable logic
+ */ function fromEventObservable(lazyObservable) {
+    const errorEventType = "$$xstate.error";
+    const completeEventType = "$$xstate.complete";
+    // TODO: event types
+    return {
+        config: lazyObservable,
+        transition: (state, event)=>{
+            if (state.status !== "active") return state;
+            switch(event.type){
+                case errorEventType:
+                    return {
+                        ...state,
+                        status: "error",
+                        input: undefined,
+                        data: event.data,
+                        // TODO: if we keep this as `data` we should reflect this in the type
+                        subscription: undefined
+                    };
+                case completeEventType:
+                    return {
+                        ...state,
+                        status: "done",
+                        input: undefined,
+                        subscription: undefined
+                    };
+                case 0, _actions020463E9EsmJs.a5:
+                    state.subscription.unsubscribe();
+                    return {
+                        ...state,
+                        status: "canceled",
+                        input: undefined,
+                        subscription: undefined
+                    };
+                default:
+                    return state;
+            }
+        },
+        getInitialState: (_, input)=>{
+            return {
+                subscription: undefined,
+                status: "active",
+                data: undefined,
+                input
+            };
+        },
+        start: (state, { self, system })=>{
+            if (state.status === "done") // Do not restart a completed observable
+            return;
+            state.subscription = lazyObservable({
+                input: state.input,
+                system,
+                self
+            }).subscribe({
+                next: (value)=>{
+                    self._parent?.send(value);
+                },
+                error: (err)=>{
+                    self.send({
+                        type: errorEventType,
+                        data: err
+                    });
+                },
+                complete: ()=>{
+                    self.send({
+                        type: completeEventType
+                    });
+                }
+            });
+        },
+        getSnapshot: (_)=>undefined,
+        getPersistedState: ({ status, data, input })=>({
+                status,
+                data,
+                input
+            }),
+        getStatus: (state)=>state,
+        restoreState: (state)=>({
+                ...state,
+                subscription: undefined
+            })
+    };
+}
+const resolveEventType = "$$xstate.resolve";
+const rejectEventType = "$$xstate.reject";
+function fromPromise(// TODO: add types
+promiseCreator) {
+    // TODO: add event types
+    const logic = {
+        config: promiseCreator,
+        transition: (state, event)=>{
+            if (state.status !== "active") return state;
+            switch(event.type){
+                case resolveEventType:
+                    return {
+                        ...state,
+                        status: "done",
+                        data: event.data,
+                        input: undefined
+                    };
+                case rejectEventType:
+                    return {
+                        ...state,
+                        status: "error",
+                        data: event.data,
+                        // TODO: if we keep this as `data` we should reflect this in the type
+                        input: undefined
+                    };
+                case 0, _actions020463E9EsmJs.a5:
+                    return {
+                        ...state,
+                        status: "canceled",
+                        input: undefined
+                    };
+                default:
+                    return state;
+            }
+        },
+        start: (state, { self, system })=>{
+            // TODO: determine how to allow customizing this so that promises
+            // can be restarted if necessary
+            if (state.status !== "active") return;
+            const resolvedPromise = Promise.resolve(promiseCreator({
+                input: state.input,
+                system,
+                self
+            }));
+            resolvedPromise.then((response)=>{
+                // TODO: remove this condition once dead letter queue lands
+                if (self._state.status !== "active") return;
+                self.send({
+                    type: resolveEventType,
+                    data: response
+                });
+            }, (errorData)=>{
+                // TODO: remove this condition once dead letter queue lands
+                if (self._state.status !== "active") return;
+                self.send({
+                    type: rejectEventType,
+                    data: errorData
+                });
+            });
+        },
+        getInitialState: (_, input)=>{
+            return {
+                status: "active",
+                data: undefined,
+                input
+            };
+        },
+        getSnapshot: (state)=>state.data,
+        getStatus: (state)=>state,
+        getPersistedState: (state)=>state,
+        restoreState: (state)=>state
+    };
+    return logic;
+}
+
+},{"./actions-020463e9.esm.js":"ctMkw","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bEPLs":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
