@@ -21,9 +21,11 @@ interface DMContext {
   lastResult?: Hypothesis[];
   Mode?: string; 
   Switch?: string ; // on or off
-  Intensity?: string; // low, high, medium
+  Intensity?: string; // weak, strong, or medium
   Temperature?: string; // increase or decrease
-  Direction?: string; // body or 
+  Direction?: string; // body,legs or loop (which is the whole car)
+  userInput?:string;
+  
 }; 
 
 // helper functions
@@ -51,113 +53,147 @@ interface Grammar {
     };
   }
 
-const Grammar: Grammar = {
-    off: {
-      intent: "turn the air conditioner off",
-      Switch: "off",
-      entities: { Switch: "off" },
-    },
-    warm_mode: {
-      intent: "set it to warm mode",
+  const grammar = {
+   
+// here are "shortcuts", when one just want to answer one-word utterances 
+    "Legs": {
       Switch: "on",
-      Mode: "warm",
-      entities: { Switch: "on", Mode: "warm" },
+      Direction: "towards legs",
     },
-    cool_mode: {
-      intent: "turn it to cool mode",
+    "Body": {
+      Switch: "on",
+      Direction: "towards body",
+    },
+    "Loop": {
+      Switch: "on",
+      Direction: "loop",
+    },
+    "Cool": {
       Switch: "on",
       Mode: "cool",
-      entities: { Switch: "on", Mode: "cool" },
     },
-    intensity_high: {
-      intent: "turn the intensity to high",
-      Switch: "on",
-      Intensity: "high",
-      entities: { Switch: "on", Intensity: "high" },
-    },
-    intensity_low: {
-      intent: "turn the intensity to low",
-      Switch: "on",
-      Intensity: "low",
-      entities: { Switch: "on", Intensity: "low" },
-    },
-    intensity_medium: {
-      intent: "turn the intensity to medium",
-      Switch: "on",
-      Intensity: "medium",
-      entities: { Switch: "on", Intensity: "medium" },
-    },
-    raise_temp: {
-      intent: "I want to raise the temperature",
-      Switch: "on",
-      Temperature: "increase",
-      entities: { Switch: "on", Temperature: "increase" },
-    },
-    lower_temp: {
-      intent: "I want to lower the temperature",
-      Switch: "on",
-      Temperature: "decrease",
-      entities: { Switch: "on", Temperature: "decrease" },
-    },
-    air_cond_legs: {
-      intent: "point the air-conditioner towards my legs",
-      Switch: "on",
-      Direction: "down",
-      entities: { Switch: "on", Direction: "down" },
-    },
-    air_cond_body: {
-      intent: "point the air-conditioner towards my body",
-      Switch: "on",
-      Direction: "middle",
-      entities: { Switch: "on", Direction: "middle" },
-    },
-    loop: {
-      intent: "make a loop",
-      Switch: "on",
-      Direction: "middle",
-      entities: { Switch: "on", Direction: "middle" },
-    },
-    air_cond_warm: {
-      intent: "turn the air conditioner on to warm mode with high intensity",
+    "Warm": {
       Switch: "on",
       Mode: "warm",
-      Intensity: "high",
-      entities: { Switch: "on", Mode: "warm", Intensity: "high" },
     },
-    raise_temp_intensity: {
-      intent: "I feel cold, raise the temperature, and lower the intensity",
+    "Increasing": {
       Switch: "on",
-      Temperature: "increase",
-      Intensity: "low",
-      entities: { Switch: "on", Temperature: "increase", Intensity: "low" },
+      Temperature: "increasing",
     },
-    towards_body_medium_intensity: {
-      intent: "point the air-conditioner towards my body, cool air and medium intensity",
+    "Decreasing": {
       Switch: "on",
-      Direction: "body",
-      Mode: "cool",
-      Intensity: "medium",
-      entities: { Switch: "on", Direction: "body", Mode: "cool", Intensity: "medium" },
+      Temperature: "decreasing",
     },
-    air_cond_legs_warm_high_intensity: {
-      intent: "point the air-conditioner towards my legs, warm air and high intensity",
+    "Weak": {
       Switch: "on",
-      Direction: "legs",
-      Mode: "warm",
-      Intensity: "high",
-      entities: { Switch: "on", Direction: "legs", Mode: "warm", Intensity: "high" },
+      Intensity:"weak"
     },
-    air_cond_lower_temp__high_intensity: {
-      intent: "I feel hot, lower the temperature, and increase the intensity",
+    "Medium": {
       Switch: "on",
-      Temperature: "decrease",
-      Mode: "cool",
-      Intensity: "high",
-      entities: { Switch: "on", Temperature: "decrease", Mode: "cool", Intensity: "high" },
+      Intensity:"medium"
     },
-  };
+    "Strong": {
+      Switch: "on",
+      Intensity:"strong"
+    },
 
-  
+
+
+// here are longer sentences, it always starts with "Mode", so one has to start with an utterance which involves "Mode"
+
+    "Cool mode, strong intensity": {
+      Switch: "on",
+      Mode:"cool",
+      Intensity:"strong"
+    },
+    "Turn the airconditioner off": {
+      Switch: "off"
+    },
+    "Set it to warm mode": {
+      Switch: "on",
+      Mode: "warm"
+    },
+    "Turn it to cool mode": {
+      Switch: "on",
+      Mode: "cool"
+    },
+    "Turn the intensity to strong":{
+      Switch: "on",
+      Intensity: "strong"
+    },
+    "Turn the intensity to low":{
+      Switch: "on",
+      Intensity: "waek"
+    },
+    "Turn the intensity to medium":{
+      Switch: "on",
+      Intensity: "medium"
+    },
+    "Turn the intensity to high":{
+      Switch: "on",
+      Intensity: "strong"
+    },
+    "I want to raise the temperature": {
+      Switch: "on",
+      Temperature: "increasing"
+    }, 
+    "I want to lower the temperature": {
+      Switch: "on",
+      Temperature: "decreasing"
+    }, 
+    "Point the air-conditioner towards my legs ": { // legs = down
+      Switch: "on",  
+      Direction: "towards legs"
+    },
+    "Point the air-conditioner towards my body": { // body = middle 
+      Switch: "on", 
+      Direction: "middle"
+    },
+    "Turn the air conditioner on to warm mode with strong intensity": {
+      Switch: "on",
+      Mode: "warm",
+      Intensity: "strong"
+    },
+    "I feel cold, raise the temperature, and lower the intensity": {
+      Switch: "on",
+      Temperature: "increasing",
+      Mode: "warm",
+      Intensity: "weak"
+    },
+    "Please point the air-conditioner towards my body, cool air and medium intensity": {
+      Switch: "on",
+      Direction: "towards body",
+      Mode: "cool",
+      Intensity: "medium"
+    },
+    "Turn the air conditioner off": {
+      Switch: "off"
+    },
+    "Make a loop":{
+      Switch: "on",
+      Direction: "loop"
+    },
+    "Please point the air-conditioner towards my legs, warm air and high intensity": {
+      Switch: "on",
+      Direction: "towards legs",
+      Mode: "warm",
+      Intensity: "strong"
+    },
+    "I feel hot, lower the temperature, and increase the intensity": {
+      Switch: "on",
+      Temperature: "decreasing",
+      Mode: "cool",
+      Intensity: "strong"
+    },
+  }
+
+  const ToLowerCase = (object: string) => {
+    return object.toLowerCase().replace(/\.$/g, "");
+      };
+  const lowerCaseGrammar = Object.keys(grammar).reduce((acc, key) => {
+    acc[ToLowerCase(key)] = grammar[key];
+    return acc;
+  }, {});
    
 // machine
 const dmMachine = createMachine(
@@ -187,165 +223,128 @@ const dmMachine = createMachine(
             states: {
               Greeting: {
                 entry: "speak.greeting",
-                on: { SPEAK_COMPLETE: "Feel" },
+                on: { SPEAK_COMPLETE: "help" },
+              },
+              help: {
+                entry: say("How can I help you?"),
+                on: { SPEAK_COMPLETE: "Ask" },
               },
               Ask: {
                 entry: listen(),
                 on: {
                   RECOGNISED: {
-                    target: "",
                     actions: [
                       ({ event }) => console.log(event),
                       assign({
-                        lastResult: ({ event }) => event.value,
+                        userInput: ({ event }) => event.value[0].utterance,
+                        Switch: ({ context, event }) => {
+                          const userInput = ToLowerCase(event.value[0].utterance);
+                          return lowerCaseGrammar[userInput]?.Switch || context.Switch;
+                        },
+                        Mode: ({ context, event }) => {
+                          const userInput = ToLowerCase(event.value[0].utterance);
+                          return lowerCaseGrammar[userInput]?.Mode || context.Mode;
+                        },
+                        Intensity: ({ context, event }) => {
+                          const userInput = ToLowerCase(event.value[0].utterance);
+                          return lowerCaseGrammar[userInput]?.Intensity || context.Intensity;
+                        },
+                        Direction: ({ context, event }) => {
+                          const userInput = ToLowerCase(event.value[0].utterance);
+                          return lowerCaseGrammar[userInput]?.Direction || context.Direction;
+                        },
+                        Temperature: ({ context, event }) => {
+                          const userInput = ToLowerCase(event.value[0].utterance);
+                          return lowerCaseGrammar[userInput]?.Temperature || context.Temperature;
+                        },
                       }),
+                      
                     ],
-                  },
+                    target: 'CheckSlots'
+                  }
+                  
                 },
+              },  
+              CheckSlots: {
+                always: [
+                  { target: 'AskMode', guard: 'isModeMissing' },
+                  { target: 'AskDirection', guard: 'isDirectionMissing' },
+                  { target: 'AskTemperature', guard: 'isTemperatureMissing' },
+                  { target: 'AskIntensity', guard: 'isIntensityMissing' },
+                  { target: 'AskSwitch', guard: 'isSwitchMissing' },
+                  { target: 'FeedbackAndRepeat' }, 
+                ]
+                },
+              AskMode: {
+                entry: say('Which Mode would you like?'),
+                on:{ SPEAK_COMPLETE: 'Ask' }
               },
-              Feel: {
-                entry: "speak.Feel",
-                on: { SPEAK_COMPLETE: "Ask_feel" },
+              AskDirection: {
+                entry: say('Which Direction would you like?'),
+                on: { SPEAK_COMPLETE: 'Ask' }
               },
-              Ask_feel: {
-                entry: listen(),
+              AskTemperature: {
+                entry: say('Which Temperature would you like?'),
+                on: { SPEAK_COMPLETE: 'Ask' }
+              },
+              AskIntensity: {
+                entry: say('Which Temperature would you like?'),
+                on: { SPEAK_COMPLETE: 'Ask' }
+              },
+              AskSwitch: {
+                entry: say('Switch is on.'),
+                on: { SPEAK_COMPLETE: 'Ask' }
+              },
+              FeedbackAndRepeat: {
+                entry: 'navigateFeedback',
                 on: {
-                  RECOGNISED: {
-                    target: "warm_mode",
-                    target1: "Repeat",
-                    actions: [
-                      ({ event }) => console.log(event),
-                      assign({
-                        lastResult: ({ event }) => event.value,
-                      }),
-                    ],
-                  },
-                },
+                  SPEAK_COMPLETE: {actions: "prepare"}
+                }
               },
-              warm_mode: {
-                entry: "speak.warm_mode",
-                on: { SPEAK_COMPLETE: "Askwarm_mode" },
-              },
-              Askwarm_mode: {
-                entry: listen(),
-                on: {
-                  RECOGNISED: {
-                    target: "cool_mode",
-                    actions: [
-                      ({ event }) => console.log(event),
-                      assign({
-                        lastResult: ({ event }) => event.value,
-                      }),
-                    ],
-                  },
-                },
-              },
-              cool_mode: {
-                entry: "speak.cool_mode",
-                on: { SPEAK_COMPLETE: "Askcool_mode" },
-              },
-              Askcool_mode: {
-                entry: listen(),
-                on: {
-                  RECOGNISED: {
-                    target: "intensity_high",
-                    actions: [
-                      ({ event }) => console.log(event),
-                      assign({
-                        lastResult: ({ event }) => event.value,
-                      }),
-                    ],
-                  },
-                },
-              },
-              intensity_high: {
-                entry: "speak.cool_mode",
-                on: { SPEAK_COMPLETE: "Askintensity_high" },
-              },
-              Askintensity_high: {
-                entry: listen(),
-                on: {
-                  RECOGNISED: {
-                    target: "",
-                    actions: [
-                      ({ event }) => console.log(event),
-                      assign({
-                        lastResult: ({ event }) => event.value,
-                      }),
-                    ],
-                  },
-                },
-              },
-              
-              Off: {
-                entry: "speak.off",
-                on: { SPEAK_COMPLETE: "Ask_off" },
-              },
-              Ask_off: {
-                entry: listen(),
-                on: {
-                  RECOGNISED: {
-                    target: "Off",
-                    actions: [
-                      ({ event }) => console.log(event),
-                      assign({
-                        lastResult: ({ event }) => event.value,
-                      }),
-                    ],
-                  },
-                },
-              },
-
-
-
-
-              Repeat: {
-                entry: ({ context }) => {
-                  context.spstRef.send({
-                    type: "SPEAK",
-                    value: { utterance: context.lastResult[0].utterance },
-                  });
-                },
-                on: { SPEAK_COMPLETE: "Ask" },
-              },
-
-
-
-              
-              IdleEnd: {},
-            },
+            }
           },
         },
       },
-      GUI: {
-        initial: "PageLoaded",
-        states: {
-          PageLoaded: {
-            entry: "gui.PageLoaded",
-            on: { CLICK: { target: "Inactive", actions: "prepare" } },
-          },
-          Inactive: { entry: "gui.Inactive", on: { ASRTTS_READY: "Active" } },
-          Active: {
-            initial: "Idle",
+          
+          GUI: {
+            initial: "PageLoaded",
             states: {
-              Idle: {
-                entry: "gui.Idle",
-                on: { TTS_STARTED: "Speaking", ASR_STARTED: "Listening" },
+            PageLoaded: {
+                entry: "gui.PageLoaded",
+                on: { CLICK: { target: "Inactive", actions: "prepare" } },
               },
-              Speaking: {
-                entry: "gui.Speaking",
-                on: { SPEAK_COMPLETE: "Idle" },
+              Inactive: { entry: "gui.Inactive", on: { ASRTTS_READY: "Active" } },
+              Active: {
+                initial: "Idle",
+                states: {
+                  Idle: {
+                    entry: "gui.Idle",
+                    on: { TTS_STARTED: "Speaking", ASR_STARTED: "Listening" },
+                  },
+                  Speaking: {
+                    entry: "gui.Speaking",
+                    on: { SPEAK_COMPLETE: "Idle" },
+                  },
+                  Listening: { entry: "gui.Listening", on: { RECOGNISED: "Idle" } },
+                },
               },
-              Listening: { entry: "gui.Listening", on: { RECOGNISED: "Idle" } },
             },
           },
         },
       },
-    },
-  },
+  
+
+
   {
-    // custom actions
-    //
+    guards: {
+      isModeMissing: ({ context }) => !context.Mode,
+      isDirectionMissing: ({ context }) => !context.Direction,
+      isTemperatureMissing: ({ context }) => !context.Temperature,
+      isIntensityMissing: ({ context }) => !context.Intensity,
+      isSwitchMissing: ({ context }) => !context.Switch,
+    },
+    
+
     actions: {
       prepare: ({ context }) =>
         context.spstRef.send({
@@ -355,68 +354,45 @@ const dmMachine = createMachine(
       "speak.greeting": ({ context }) => {
         context.spstRef.send({
           type: "SPEAK",
-          value: { utterance: "Hello, welcome to your air-conditioner!" },
+          value: { utterance: "Hello! Welcome to your air-conditioner." },
         });
       },
-        "speak.Feel": ({ context }) =>
+      "speak.help": ({ context }) =>
         context.spstRef.send({
           type: "SPEAK",
-          value: { utterance: "How do you feel today, do you want to turn the air-conditionor on? If yes, on which mode would you like it , on which intensity, and in which direction?" },
+          value: { utterance: "How can I help you?" },
         }),
-        "speak.warm_mode": ({ context }) =>
-        context.spstRef.send({
-          type: "SPEAK",
-          value: { utterance: "Ok, I set it to warm mode" },
-        }),
-        "speak.off": ({ context }) =>
-        context.spstRef.send({
-          type: "SPEAK",
-          value: { utterance: "Ok, I will turn it off" },
-        }),
-        "speak.cool_mode": ({ context }) =>
-        context.spstRef.send({
-          type: "SPEAK",
-          value: { utterance: "Ok, I set it to cool mode" },
-        }),
-        "speak.intensity_high": ({ context }) =>
-        context.spstRef.send({
-          type: "SPEAK",
-          value: { utterance: "Ok, it is set to high intensity" },
-        }),
-
-
-
-
-
-
-
-
-
-      "gui.PageLoaded": ({}) => {
+      "gui.PageLoaded": ({ }) => {
         document.getElementById("button").innerText = "Click to start!";
       },
-      "gui.Inactive": ({}) => {
+      "gui.Inactive": ({ }) => {
         document.getElementById("button").innerText = "Inactive";
       },
-      "gui.Idle": ({}) => {
+      "gui.Idle": ({ }) => {
         document.getElementById("button").innerText = "Idle";
       },
-      "gui.Speaking": ({}) => {
+      "gui.Speaking": ({ }) => {
         document.getElementById("button").innerText = "Speaking...";
       },
-      "gui.Listening": ({}) => {
+      "gui.Listening": ({ }) => {
         document.getElementById("button").innerText = "Listening...";
+      },
+      navigateFeedback: ({ context }) => {
+        context.spstRef.send({
+          type: "SPEAK",
+          value: { utterance: `Alright, the air-corditioner is turned ${context.Switch}, on ${context.Mode} mode and on ${context.Intensity} intensity, the temperature is ${context.Temperature}, the direction is ${context.Direction}.` },
+        });
       },
     },
   },
 );
-  
-    
 
-  const actor = createActor(dmMachine).start();
 
-  document.getElementById("button").onclick = () => actor.send({ type: "CLICK" });
 
-  actor.subscribe((state) => {
+const actor = createActor(dmMachine).start();
+
+document.getElementById("button").onclick = () => actor.send({ type: "CLICK" });
+
+actor.subscribe((state) => {
   console.log(state.value);
-  }); 
+});
