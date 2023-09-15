@@ -229,7 +229,7 @@ const dmMachine = createMachine(
           Inactive: { entry: "gui.Inactive", on: {
             ASRTTS_READY: "Active"
           } }
-        },
+        },bjnkldxvnslök
       },
     },
   },
