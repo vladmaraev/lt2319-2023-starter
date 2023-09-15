@@ -1,4 +1,4 @@
-import { createMachine, createActor, assign } from "xstate";
+import { createMachine, createActor, assign, raise } from "xstate";
 import { speechstate, Settings, Hypothesis } from "speechstate";
 
 const azureCredentials = {
@@ -37,26 +37,27 @@ const listen =
     });
 
 interface Grammar {
-  [index: string]: {
     entities: {
       [index: string]: string;
         };
-      };
-    }
+      }
 
 const grammar = {
-  "put the pink lamp on the shelf": {
-    entities: {
+  entities: {
       colour: "pink",
       object: "lamp",
       place: "shelf",
         },
-      },
-};
+      };
 
-const ToLowerCase = (object: string) => {
- return object.toLowerCase().replace(/\.$/g, "");
+const modify = (word: string, sentence: string) => {
+  console.log(word, sentence.toLowerCase().replace(/\.$/g, "").split(/\s+/))
+if (sentence.toLowerCase().replace(/\.$/g, "").split(/\s+/).includes(word)) {
+  return true}
+  else {
+    return false
   }
+};
   
 // machine
 const dmMachine = createMachine(
@@ -91,20 +92,82 @@ const dmMachine = createMachine(
               Ask: {
                 entry: listen(),
                 on: {
-                  RECOGNISED: {
-                    target: "ColourSlot",
-                    guard: ({ event }) => !!(grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.colour && !!(grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.object && !!(grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.place,
+                  RECOGNISED: [{
+                    target: "All",
+                    guard: ({ event }) => modify(grammar.entities.colour, event.value[0].utterance) && modify(grammar.entities.object, event.value[0].utterance) && modify(grammar.entities.place, event.value[0].utterance),
                     actions: assign({ 
-                      recognisedColour: ({ event }) =>
-                        (grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.colour,
-                        recognisedObject: ({ event }) => (grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.object,
-                       recognisedPlace: ({ event }) =>
-                            (grammar[ToLowerCase(event.value[0].utterance)] || {}).entities.place,
+                      recognisedColour: ({ context }) =>
+                        (grammar.entities.colour),
+                        recognisedObject: ({ context }) =>
+                        (grammar.entities.object),
+                        recognisedPlace: ({ context }) =>
+                        (grammar.entities.place),
                     }),
                   },
+                  {
+                    target: "NoColour",
+                    guard: ({ event }) => !modify(grammar.entities.colour, event.value[0].utterance),
+                    actions: assign({
+                      recognisedObject: ({ event }) => {
+                        if (modify(grammar.entities.object, event.value[0].utterance)) {
+                          return grammar.entities.object;
+                        } else {
+                            {}
+                        }
+                      },
+                        recognisedPlace: ({ event }) => {
+                          if (modify(grammar.entities.place, event.value[0].utterance)) {
+                            return grammar.entities.place;
+                          } else {
+                            {}
+                          }
+                        },
+                    }),
+                  },
+                  {
+                    target: "NoObject",
+                  guard: ({ event }) => !modify(grammar.entities.object, event.value[0].utterance),
+                  actions: assign({
+                    recognisedColour: ({ event }) => {
+                      if (modify(grammar.entities.colour, event.value[0].utterance)) {
+                        return grammar.entities.colour;
+                      } else {
+                        {}
+                      }
+                    },
+                      recognisedPlace: ({ event }) => {
+                        if (modify(grammar.entities.place, event.value[0].utterance)) {
+                          return grammar.entities.place;
+                        } else {
+                          {}
+                        }
+                      },
+                  }),
+                },
+                {
+                  target: "NoPlace",
+                guard: ({ event }) => !modify(grammar.entities.place, event.value[0].utterance),
+                actions: assign({
+                  recognisedColour: ({ event }) => {
+                    if (modify(grammar.entities.colour, event.value[0].utterance)) {
+                      return grammar.entities.colour;
+                    } else {
+                      {}
+                    }
+                  },
+                    recognisedObject: ({ event }) => {
+                      if (modify(grammar.entities.object, event.value[0].utterance)) {
+                        return grammar.entities.object;
+                      } else {
+                        {}
+                      }
+                    },
+                }),
+              },
+                ],
                 },
               },
-              ColourSlot: {
+              All: {
                 entry: ({ context }) => {
                   context.spstRef.send({
                     type: "SPEAK",
@@ -112,11 +175,139 @@ const dmMachine = createMachine(
                   });
                 },
               },
+              NoColour: { entry: raise({ type: "FILL_COLOUR" }) },
+              NoObject: { entry: raise({ type: "FILL_OBJECT" }) },
+              NoPlace: { entry: raise({ type: "FILL_PLACE" }) },
               IdleEnd: {},
             },
           },
         },
       },
+      SlotColour: {
+        initial: "Idle",
+        states: {
+          Idle: { on: { FILL_COLOUR: "Prompt" } },
+          Prompt: {
+            entry: ({ context }) => {
+              context.spstRef.send({
+                type: "SPEAK",
+                value: { utterance: `Tell me the colour`},
+              });
+            },
+            on: { SPEAK_COMPLETE: "Ask" },
+          },
+          Ask: {
+            entry: listen(),
+            on: { RECOGNISED: [{
+              target: "#root.DialogueManager.Form.All",
+            guard: ({ event, context }) => modify(grammar.entities.colour, event.value[0].utterance) && !!context.recognisedObject && modify(grammar.entities.place, event.value[0].utterance),
+            actions: assign({ 
+              recognisedColour: ({ context }) =>
+                (grammar.entities.colour),
+                recognisedPlace: ({ event }) => {
+                  if (modify(grammar.entities.place, event.value[0].utterance)) {
+                    return grammar.entities.place;
+                  } else {
+                    {}
+                  }
+                },
+            }),
+          },
+          {
+          target: "#root.SlotObject.Prompt",
+          guard: ({ event, context }) => modify(grammar.entities.colour, event.value[0].utterance) && !context.recognisedObject,
+          actions: assign({ 
+            recognisedColour: ({ context }) =>
+              (grammar.entities.colour),
+          }),
+        },
+        {
+          target: "#root.SlotPlace.Prompt",
+          guard: ({ event, context }) => modify(grammar.entities.colour, event.value[0].utterance) && !context.recognisedPlace,
+          actions: assign({ 
+            recognisedColour: ({ context }) =>
+              (grammar.entities.colour),
+              recognisedObject: ({ event }) => {
+                if (modify(grammar.entities.object, event.value[0].utterance)) {
+                  return grammar.entities.object;
+                } else {
+                  {}
+                }
+              },
+          }),
+        },
+        ],
+        },
+      },
+    },
+  },
+  SlotObject: {
+    initial: "Idle",
+    states: {
+      Idle: { on: { FILL_OBJECT: "Prompt" } },
+      Prompt: {
+        entry: ({ context }) => {
+          context.spstRef.send({
+            type: "SPEAK",
+            value: { utterance: `What is the object?`},
+          });
+        },
+        on: { SPEAK_COMPLETE: "Ask" },
+      },
+      Ask: {
+        entry: listen(),
+        on: { RECOGNISED: [{
+          target: "#root.DialogueManager.Form.All",
+        guard: ({ event, context }) => modify(grammar.entities.object, event.value[0].utterance) && !!context.recognisedColour && (!!context.recognisedPlace || modify(grammar.entities.place, event.value[0].utterance)), 
+        actions: assign({
+          recognisedObject: ({ context }) => grammar.entities.object,
+          recognisedPlace: ({ event }) => {
+            if (modify(grammar.entities.place, event.value[0].utterance)) {
+              return grammar.entities.place;
+            } else {
+             {}
+            };
+            }
+        }),
+      },
+      {
+        target: "#root.SlotPlace.Prompt",
+      guard: ({ event, context }) => modify(grammar.entities.object, event.value[0].utterance) && !modify(grammar.entities.place, event.value[0].utterance), 
+      actions: assign({
+        recognisedObject: ({ context }) => grammar.entities.object,
+      }),
+    },
+    ],
+    },
+  },
+},
+},
+SlotPlace: {
+  initial: "Idle",
+  states: {
+    Idle: { on: { FILL_PLACE: "Prompt" } },
+    Prompt: {
+      entry: ({ context }) => {
+        context.spstRef.send({
+          type: "SPEAK",
+          value: { utterance: `Where should I put the ${context.recognisedColour} ${context.recognisedObject}?`},
+        });
+      },
+      on: { SPEAK_COMPLETE: "Ask" },
+    },
+    Ask: {
+      entry: listen(),
+      on: { RECOGNISED: {
+        target: "#root.DialogueManager.Form.All",
+      guard: ({ event, context }) => modify(grammar.entities.place, event.value[0].utterance) && !!context.recognisedColour && !!context.recognisedObject,
+      actions: assign({
+        recognisedPlace: ({ context }) => grammar.entities.place,
+      }),
+    },
+  },
+},
+},
+},
       GUI: {
         initial: "PageLoaded",
         states: {
