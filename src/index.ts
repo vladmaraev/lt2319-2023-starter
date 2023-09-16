@@ -110,16 +110,12 @@ const dmMachine = createMachine(
                     actions: assign({
                       recognisedObject: ({ event }) => {
                         if (modify(grammar.entities.object, event.value[0].utterance)) {
-                          return grammar.entities.object;
-                        } else {
-                            {}
+                          return grammar.entities.object
                         }
                       },
                         recognisedPlace: ({ event }) => {
                           if (modify(grammar.entities.place, event.value[0].utterance)) {
-                            return grammar.entities.place;
-                          } else {
-                            {}
+                            return grammar.entities.place
                           }
                         },
                     }),
@@ -130,16 +126,12 @@ const dmMachine = createMachine(
                   actions: assign({
                     recognisedColour: ({ event }) => {
                       if (modify(grammar.entities.colour, event.value[0].utterance)) {
-                        return grammar.entities.colour;
-                      } else {
-                        {}
+                        return grammar.entities.colour
                       }
                     },
                       recognisedPlace: ({ event }) => {
                         if (modify(grammar.entities.place, event.value[0].utterance)) {
-                          return grammar.entities.place;
-                        } else {
-                          {}
+                          return grammar.entities.place
                         }
                       },
                   }),
@@ -150,16 +142,12 @@ const dmMachine = createMachine(
                 actions: assign({
                   recognisedColour: ({ event }) => {
                     if (modify(grammar.entities.colour, event.value[0].utterance)) {
-                      return grammar.entities.colour;
-                    } else {
-                      {}
+                      return grammar.entities.colour
                     }
                   },
                     recognisedObject: ({ event }) => {
                       if (modify(grammar.entities.object, event.value[0].utterance)) {
-                        return grammar.entities.object;
-                      } else {
-                        {}
+                        return grammar.entities.object
                       }
                     },
                 }),
@@ -200,16 +188,16 @@ const dmMachine = createMachine(
             entry: listen(),
             on: { RECOGNISED: [{
               target: "#root.DialogueManager.Form.All",
-            guard: ({ event, context }) => modify(grammar.entities.colour, event.value[0].utterance) && !!context.recognisedObject && modify(grammar.entities.place, event.value[0].utterance),
+            guard: ({ event, context }) => modify(grammar.entities.colour, event.value[0].utterance) && !!context.recognisedObject && (!!context.recognisedPlace || modify(grammar.entities.place, event.value[0].utterance)),
             actions: assign({ 
               recognisedColour: ({ context }) =>
                 (grammar.entities.colour),
-                recognisedPlace: ({ event }) => {
-                  if (modify(grammar.entities.place, event.value[0].utterance)) {
+                recognisedPlace: ({ event, context }) => {
+                  if (context.recognisedPlace) {
+                    return context.recognisedPlace;
+                  } else if (modify(grammar.entities.place, event.value[0].utterance)) {
                     return grammar.entities.place;
-                  } else {
-                    {}
-                  }
+                  };
                 },
             }),
           },
@@ -227,13 +215,6 @@ const dmMachine = createMachine(
           actions: assign({ 
             recognisedColour: ({ context }) =>
               (grammar.entities.colour),
-              recognisedObject: ({ event }) => {
-                if (modify(grammar.entities.object, event.value[0].utterance)) {
-                  return grammar.entities.object;
-                } else {
-                  {}
-                }
-              },
           }),
         },
         ],
@@ -261,18 +242,18 @@ const dmMachine = createMachine(
         guard: ({ event, context }) => modify(grammar.entities.object, event.value[0].utterance) && !!context.recognisedColour && (!!context.recognisedPlace || modify(grammar.entities.place, event.value[0].utterance)), 
         actions: assign({
           recognisedObject: ({ context }) => grammar.entities.object,
-          recognisedPlace: ({ event }) => {
-            if (modify(grammar.entities.place, event.value[0].utterance)) {
+          recognisedPlace: ({ event, context }) => {
+            if (context.recognisedPlace) {
+              return context.recognisedPlace;
+            } else if (modify(grammar.entities.place, event.value[0].utterance)) {
               return grammar.entities.place;
-            } else {
-             {}
             };
             }
         }),
       },
       {
         target: "#root.SlotPlace.Prompt",
-      guard: ({ event, context }) => modify(grammar.entities.object, event.value[0].utterance) && !modify(grammar.entities.place, event.value[0].utterance), 
+      guard: ({ event }) => modify(grammar.entities.object, event.value[0].utterance) && !modify(grammar.entities.place, event.value[0].utterance), 
       actions: assign({
         recognisedObject: ({ context }) => grammar.entities.object,
       }),
