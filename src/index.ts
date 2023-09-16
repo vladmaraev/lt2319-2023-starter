@@ -1,10 +1,10 @@
-import { createMachine, createActor, assign } from "xstate";
+import { createMachine, createActor, assign, raise } from "xstate"; //raise here i think
 import { speechstate, Settings, Hypothesis } from "speechstate";
 
 const azureCredentials = {
   endpoint:
     "https://northeurope.api.cognitive.microsoft.com/sts/v1.0/issuetoken",
-  key: "",
+  key: "9cd3cbcc05da4e198c3ba6b680d52ec4",
 };
 
 const settings: Settings = {
