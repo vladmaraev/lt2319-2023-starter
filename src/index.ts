@@ -188,10 +188,17 @@ const dmMachine = createMachine(
             entry: listen(),
             on: { RECOGNISED: [{
               target: "#root.DialogueManager.Form.All",
-            guard: ({ event, context }) => modify(grammar.entities.colour, event.value[0].utterance) && !!context.recognisedObject && (!!context.recognisedPlace || modify(grammar.entities.place, event.value[0].utterance)),
+            guard: ({ event, context }) => modify(grammar.entities.colour, event.value[0].utterance) && (!!context.recognisedObject ||  modify(grammar.entities.object, event.value[0].utterance)) && (!!context.recognisedPlace || modify(grammar.entities.place, event.value[0].utterance)),
             actions: assign({ 
               recognisedColour: ({ context }) =>
                 (grammar.entities.colour),
+                recognisedObject: ({ event, context }) => {
+                  if (context.recognisedObject) {
+                    return context.recognisedObject;
+                  } else if (modify(grammar.entities.object, event.value[0].utterance)) {
+                    return grammar.entities.object;
+                  };
+                },
                 recognisedPlace: ({ event, context }) => {
                   if (context.recognisedPlace) {
                     return context.recognisedPlace;
@@ -203,7 +210,7 @@ const dmMachine = createMachine(
           },
           {
           target: "#root.SlotObject.Prompt",
-          guard: ({ event, context }) => modify(grammar.entities.colour, event.value[0].utterance) && !context.recognisedObject,
+          guard: ({ event, context }) => modify(grammar.entities.colour, event.value[0].utterance) && !context.recognisedObject && !modify(grammar.entities.object, event.value[0].utterance),
           actions: assign({ 
             recognisedColour: ({ context }) =>
               (grammar.entities.colour),
@@ -215,6 +222,13 @@ const dmMachine = createMachine(
           actions: assign({ 
             recognisedColour: ({ context }) =>
               (grammar.entities.colour),
+              recognisedObject: ({ event, context }) => {
+                if (context.recognisedObject) {
+                  return context.recognisedObject;
+                } else if (modify(grammar.entities.object, event.value[0].utterance)) {
+                  return grammar.entities.object;
+                };
+              },
           }),
         },
         ],
