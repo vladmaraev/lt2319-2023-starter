@@ -4,7 +4,7 @@ import { speechstate, Settings, Hypothesis } from "speechstate";
 const azureCredentials = {
   endpoint:
     "https://northeurope.api.cognitive.microsoft.com/sts/v1.0/issuetoken",
-  key: "",
+  key: "51a782b6273c4bebb54d1e04b0e108e0",
 };
 
 const settings: Settings = {
@@ -35,6 +35,53 @@ const listen =
     context.spstRef.send({
       type: "LISTEN",
     });
+
+interface Grammar {
+  [index: string]: {
+    entities: {
+      [index: string]: string;
+    };
+   },
+  };
+
+const grammar: Grammar = {
+  "I want to read a science-fiction book by Philip Dick on my kindle": {
+    entities: {
+      genre: "science fiction",
+      author: "philip dick",
+      media: "e-book",
+    },
+  },
+  "I want to read a Philip Dick book": {
+    entities: {
+      author: "philip dick",
+    },
+  },
+  "I want to read a science-fiction book on my kindle": {
+    entities: {
+      genre: "science fiction",
+      media: "e-book",
+    },
+  },
+  "I want to read science-fiction" : {
+    entities: {
+      genre: "science fiction",
+    },
+  },
+};
+
+const getEntities = (entity:string, sentence: string) => {
+  let u = sentence.toLowerCase().replace(/\.$/g, "");
+  const words = u.split(' ')
+  if (grammar[u]) {
+    if (words.includes(entity))
+    {
+      return true}
+      else {
+        return false
+    }
+  }
+}
 
 // machine
 const dmMachine = createMachine(
@@ -67,14 +114,15 @@ const dmMachine = createMachine(
                 on: { SPEAK_COMPLETE: "HowCanIHelp" },
               },
               HowCanIHelp: {
-                entry: say("You can say whatever you like."),
+                entry: say("What genre of book are you interested in reading today?"),
                 on: { SPEAK_COMPLETE: "Ask" },
               },
               Ask: {
                 entry: listen(),
                 on: {
                   RECOGNISED: {
-                    target: "Repeat",
+                    guard: ({ event }) => getEntities(grammar[event.value[0].utterance].entities.genre, event.value[0].utterance),
+                    target: "SuggestBook",
                     actions: [
                       ({ event }) => console.log(event),
                       assign({
@@ -84,11 +132,11 @@ const dmMachine = createMachine(
                   },
                 },
               },
-              Repeat: {
+              SuggestBook: {
                 entry: ({ context }) => {
                   context.spstRef.send({
                     type: "SPEAK",
-                    value: { utterance: context.lastResult[0].utterance },
+                    value: { utterance: "I will give you the best recommendation when I am connected to a book API or ChatGPT" },
                   });
                 },
                 on: { SPEAK_COMPLETE: "Ask" },
@@ -136,7 +184,7 @@ const dmMachine = createMachine(
       "speak.greeting": ({ context }) => {
         context.spstRef.send({
           type: "SPEAK",
-          value: { utterance: "Hello world!" },
+          value: { utterance: "Hello! I am here to help you find your next read! I can recommend you books based on your personal preferences." },
         });
       },
       "speak.how-can-I-help": ({ context }) =>
