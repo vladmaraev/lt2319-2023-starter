@@ -1,4 +1,4 @@
-import { createMachine, createActor, assign, raise } from "xstate";
+import { createMachine, createActor, assign, fromPromise } from "xstate";
 import { speechstate, Settings, Hypothesis } from "speechstate";
 
 const azureCredentials = {
@@ -36,29 +36,84 @@ const listen =
       type: "LISTEN",
     });
 
-interface Grammar {
-    entities: {
-      [index: string]: string;
+    interface Grammar {
+      [index: string]: {
+        intent: string;
+        entities: {
+          [index: string]: string;
         };
-      }
-
-const grammar = {
-  entities: {
-      colour: "pink",
-      object: "lamp",
-      place: "shelf",
-        },
       };
+    }
+    
+    const grammar: Grammar = {
+      "what is the recipe name": {
+        intent: "None",
+        entities: { recipeName: "The name of the recipe is" },
+      },
+      "what is the preparation time": {
+        intent: "None",
+        entities: { prepTime: "The preparation time is" },
+      },
+      "what is the cooking time": {
+        intent: "None",
+        entities: { cookTime: "The cooking time is" },
+      },
+      "what is the number of servings": {
+        intent: "None",
+        entities: { servings: "The number of servings is" },
+      },
+      "what are the ingredients": {
+        intent: "None",
+        entities: { ingredients: "The ingredients are" },
+      },
+      "what are the instructions": {
+        intent: "None",
+        entities: { instructions: "The instructions are" },
+      },
+    };
 
-const modify = (word: string, sentence: string) => {
-  console.log(word, sentence.toLowerCase().replace(/\.$/g, "").split(/\s+/))
-if (sentence.toLowerCase().replace(/\.$/g, "").split(/\s+/).includes(word)) {
-  return true}
-  else {
-    return false
-  }
-};
-  
+    const modify = (sentence: string, entity: string) => {
+      console.log(sentence.toLowerCase().replace(/\?$/, ''))
+    if (sentence.toLowerCase().replace(/\?$/, '') in grammar) {
+      if (entity in grammar[sentence.toLowerCase().replace(/\?$/, '')].entities) {
+        return grammar[sentence.toLowerCase().replace(/\?$/, '')].entities[entity];
+      }
+    }
+        return false;
+    };
+      
+
+    async function fetchFromChatGPT(prompt: string, max_tokens: number) {
+      const myHeaders = new Headers();
+      myHeaders.append(
+        "Authorization",
+        "Bearer",
+      );
+      myHeaders.append("Content-Type", "application/json");
+      const raw = JSON.stringify({
+        model: "gpt-3.5-turbo",
+        messages: [
+                {
+                  role: "user",
+                  content: prompt,
+                },
+              ],
+        temperature: 0,
+        max_tokens: 1000,
+      });
+    
+      const response = fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      })
+        .then((response) => response.json())
+        .then((response) => response.choices[0].message.content);
+    
+      return response;
+    }
+
 // machine
 const dmMachine = createMachine(
   {
@@ -69,7 +124,7 @@ const dmMachine = createMachine(
         initial: "Prepare",
         states: {
           Prepare: {
-            on: { ASRTTS_READY: "Form" },
+            on: { ASRTTS_READY: "Prompt" },
             entry: [
               assign({
                 spstRef: ({ spawn }) => {
@@ -82,227 +137,168 @@ const dmMachine = createMachine(
               }),
             ],
           },
-          Form: {
-            initial: "Prompt",
+          Prompt: {
+            initial: "Greeting",
             states: {
-              Prompt: {
-                entry: "speak.prompt",
+              Greeting: {
+                entry: "speak.greeting",
                 on: { SPEAK_COMPLETE: "Ask" },
               },
               Ask: {
                 entry: listen(),
                 on: {
-                  RECOGNISED: [{
-                    target: "All",
-                    guard: ({ event }) => modify(grammar.entities.colour, event.value[0].utterance) && modify(grammar.entities.object, event.value[0].utterance) && modify(grammar.entities.place, event.value[0].utterance),
-                    actions: assign({ 
-                      recognisedColour: ({ context }) =>
-                        (grammar.entities.colour),
-                        recognisedObject: ({ context }) =>
-                        (grammar.entities.object),
-                        recognisedPlace: ({ context }) =>
-                        (grammar.entities.place),
-                    }),
+                  RECOGNISED: {
+                    target: "AskChatGPT",
+                    actions: [
+                      assign({
+                        lastResult: ({ event }) => event.value,
+                      }),
+                    ],
                   },
-                  {
-                    target: "NoColour",
-                    guard: ({ event }) => !modify(grammar.entities.colour, event.value[0].utterance),
-                    actions: assign({
-                      recognisedObject: ({ event }) => {
-                        if (modify(grammar.entities.object, event.value[0].utterance)) {
-                          return grammar.entities.object
-                        }
-                      },
-                        recognisedPlace: ({ event }) => {
-                          if (modify(grammar.entities.place, event.value[0].utterance)) {
-                            return grammar.entities.place
-                          }
-                        },
+                },
+              },
+              AskChatGPT: {
+                invoke: {
+                    src: fromPromise(async ({ input }) => {
+                        const data = await fetchFromChatGPT(
+                            input.lastResult[0].utterance + "give it to me in a json format with entities: recipeName, prepTime, cookTime, servings, ingredients and instructions",
+                            40,
+                        );
+                        return data;
                     }),
-                  },
-                  {
-                    target: "NoObject",
-                  guard: ({ event }) => !modify(grammar.entities.object, event.value[0].utterance),
-                  actions: assign({
-                    recognisedColour: ({ event }) => {
-                      if (modify(grammar.entities.colour, event.value[0].utterance)) {
-                        return grammar.entities.colour
-                      }
+                    input: ({ context, event }) => ({
+                        lastResult: context.lastResult,
+                    }),
+                    onDone: {
+                        target: "SayBack",
+                        actions: [
+                          ({ event }) => console.log(JSON.parse(event.output)),
+                          assign({ recipeName: ({ event }) => JSON.parse(event.output).recipeName,
+                        prepTime: ({event}) => JSON.parse(event.output).prepTime,
+                        cookTime: ({ event }) => JSON.parse(event.output).cookTime,
+                        servings: ({ event }) => JSON.parse(event.output).servings,
+                        ingredients: ({ event }) => JSON.parse(event.output).ingredients,
+                        instructions: ({ event }) => JSON.parse(event.output).instructions,
+                      }),
+                    ],
                     },
-                      recognisedPlace: ({ event }) => {
-                        if (modify(grammar.entities.place, event.value[0].utterance)) {
-                          return grammar.entities.place
-                        }
-                      },
-                  }),
+                },
+              },
+              SayBack: {
+                entry: ({ context }) => {
+                    context.spstRef.send({
+                        type: "SPEAK",
+                        value: { utterance: "Okay the recipe is ready!" },
+                    });
+                },
+                on: { SPEAK_COMPLETE: "Questions" },
+              },
+              Questions: {
+                entry: listen(),
+                on: {
+                  RECOGNISED: [{
+                    target: "name",
+                    guard: ({ event }) => modify(event.value[0].utterance, "recipeName"),
+                    actions: assign({
+                      name: ({ event }) => modify(event.value[0].utterance, "recipeName"),
+                    }),
                 },
                 {
-                  target: "NoPlace",
-                guard: ({ event }) => !modify(grammar.entities.place, event.value[0].utterance),
+                  target: "prep",
+                  guard: ({ event }) => modify(event.value[0].utterance, "prepTime"),
+                  actions: assign({
+                    prep: ({ event }) => modify(event.value[0].utterance, "prepTime"),
+                  }),
+              },
+              {
+                target: "cook",
+                guard: ({ event }) => modify(event.value[0].utterance, "cookTime"),
                 actions: assign({
-                  recognisedColour: ({ event }) => {
-                    if (modify(grammar.entities.colour, event.value[0].utterance)) {
-                      return grammar.entities.colour
-                    }
-                  },
-                    recognisedObject: ({ event }) => {
-                      if (modify(grammar.entities.object, event.value[0].utterance)) {
-                        return grammar.entities.object
-                      }
-                    },
+                  cook: ({ event }) => modify(event.value[0].utterance, "cookTime"),
                 }),
-              },
-                ],
-                },
-              },
-              All: {
-                entry: ({ context }) => {
-                  context.spstRef.send({
-                    type: "SPEAK",
-                    value: { utterance: `OK, I put the ${context.recognisedColour} ${context.recognisedObject} on the ${context.recognisedPlace}` },
-                  });
-                },
-              },
-              NoColour: { entry: raise({ type: "FILL_COLOUR" }) },
-              NoObject: { entry: raise({ type: "FILL_OBJECT" }) },
-              NoPlace: { entry: raise({ type: "FILL_PLACE" }) },
-              IdleEnd: {},
             },
-          },
-        },
-      },
-      SlotColour: {
-        initial: "Idle",
-        states: {
-          Idle: { on: { FILL_COLOUR: "Prompt" } },
-          Prompt: {
-            entry: ({ context }) => {
-              context.spstRef.send({
-                type: "SPEAK",
-                value: { utterance: `Tell me the colour`},
-              });
-            },
-            on: { SPEAK_COMPLETE: "Ask" },
-          },
-          Ask: {
-            entry: listen(),
-            on: { RECOGNISED: [{
-              target: "#root.DialogueManager.Form.All",
-            guard: ({ event, context }) => modify(grammar.entities.colour, event.value[0].utterance) && (!!context.recognisedObject ||  modify(grammar.entities.object, event.value[0].utterance)) && (!!context.recognisedPlace || modify(grammar.entities.place, event.value[0].utterance)),
-            actions: assign({ 
-              recognisedColour: ({ context }) =>
-                (grammar.entities.colour),
-                recognisedObject: ({ event, context }) => {
-                  if (context.recognisedObject) {
-                    return context.recognisedObject;
-                  } else if (modify(grammar.entities.object, event.value[0].utterance)) {
-                    return grammar.entities.object;
-                  };
-                },
-                recognisedPlace: ({ event, context }) => {
-                  if (context.recognisedPlace) {
-                    return context.recognisedPlace;
-                  } else if (modify(grammar.entities.place, event.value[0].utterance)) {
-                    return grammar.entities.place;
-                  };
-                },
-            }),
+            {
+              target: "serve",
+              guard: ({ event }) => modify(event.value[0].utterance, "servings"),
+              actions: assign({
+                serve: ({ event }) => modify(event.value[0].utterance, "servings"),
+              }),
           },
           {
-          target: "#root.SlotObject.Prompt",
-          guard: ({ event, context }) => modify(grammar.entities.colour, event.value[0].utterance) && !context.recognisedObject && !modify(grammar.entities.object, event.value[0].utterance),
-          actions: assign({ 
-            recognisedColour: ({ context }) =>
-              (grammar.entities.colour),
-          }),
+            target: "ing",
+            guard: ({ event }) => modify(event.value[0].utterance, "ingredients"),
+            actions: assign({
+              ing: ({ event }) => modify(event.value[0].utterance, "ingredients"),
+            }),
         },
         {
-          target: "#root.SlotPlace.Prompt",
-          guard: ({ event, context }) => modify(grammar.entities.colour, event.value[0].utterance) && !context.recognisedPlace,
-          actions: assign({ 
-            recognisedColour: ({ context }) =>
-              (grammar.entities.colour),
-              recognisedObject: ({ event, context }) => {
-                if (context.recognisedObject) {
-                  return context.recognisedObject;
-                } else if (modify(grammar.entities.object, event.value[0].utterance)) {
-                  return grammar.entities.object;
-                };
-              },
+          target: "ins",
+          guard: ({ event }) => modify(event.value[0].utterance, "instructions"),
+          actions: assign({
+            ins: ({ event }) => modify(event.value[0].utterance, "instructions"),
           }),
-        },
-        ],
-        },
       },
-    },
-  },
-  SlotObject: {
-    initial: "Idle",
-    states: {
-      Idle: { on: { FILL_OBJECT: "Prompt" } },
-      Prompt: {
+              ],
+            },
+          },
+          name: {
+            entry: ({ context }) => {
+              context.spstRef.send({
+                  type: "SPEAK",
+                  value: { utterance: `${context.name} ${context.recipeName}` },
+              });
+          },
+          on: { SPEAK_COMPLETE: "Questions" },
+        },
+        prep: {
+          entry: ({ context }) => {
+            context.spstRef.send({
+                type: "SPEAK",
+                value: { utterance: `${context.prep} ${context.prepTime}` },
+            });
+        },
+        on: { SPEAK_COMPLETE: "Questions" },
+      },
+      cook: {
         entry: ({ context }) => {
           context.spstRef.send({
-            type: "SPEAK",
-            value: { utterance: `What is the object?`},
+              type: "SPEAK",
+              value: { utterance: `${context.cook} ${context.cookTime}` },
           });
-        },
-        on: { SPEAK_COMPLETE: "Ask" },
       },
-      Ask: {
-        entry: listen(),
-        on: { RECOGNISED: [{
-          target: "#root.DialogueManager.Form.All",
-        guard: ({ event, context }) => modify(grammar.entities.object, event.value[0].utterance) && !!context.recognisedColour && (!!context.recognisedPlace || modify(grammar.entities.place, event.value[0].utterance)), 
-        actions: assign({
-          recognisedObject: ({ context }) => grammar.entities.object,
-          recognisedPlace: ({ event, context }) => {
-            if (context.recognisedPlace) {
-              return context.recognisedPlace;
-            } else if (modify(grammar.entities.place, event.value[0].utterance)) {
-              return grammar.entities.place;
-            };
-            }
-        }),
-      },
-      {
-        target: "#root.SlotPlace.Prompt",
-      guard: ({ event }) => modify(grammar.entities.object, event.value[0].utterance) && !modify(grammar.entities.place, event.value[0].utterance), 
-      actions: assign({
-        recognisedObject: ({ context }) => grammar.entities.object,
-      }),
+      on: { SPEAK_COMPLETE: "Questions" },
     },
-    ],
-    },
-  },
-},
-},
-SlotPlace: {
-  initial: "Idle",
-  states: {
-    Idle: { on: { FILL_PLACE: "Prompt" } },
-    Prompt: {
+    serve: {
       entry: ({ context }) => {
         context.spstRef.send({
-          type: "SPEAK",
-          value: { utterance: `Where should I put the ${context.recognisedColour} ${context.recognisedObject}?`},
+            type: "SPEAK",
+            value: { utterance: `${context.serve} ${context.servings}` },
         });
-      },
-      on: { SPEAK_COMPLETE: "Ask" },
     },
-    Ask: {
-      entry: listen(),
-      on: { RECOGNISED: {
-        target: "#root.DialogueManager.Form.All",
-      guard: ({ event, context }) => modify(grammar.entities.place, event.value[0].utterance) && !!context.recognisedColour && !!context.recognisedObject,
-      actions: assign({
-        recognisedPlace: ({ context }) => grammar.entities.place,
-      }),
+    on: { SPEAK_COMPLETE: "Questions" },
+  },
+  ing: {
+    entry: ({ context }) => {
+      context.spstRef.send({
+          type: "SPEAK",
+          value: { utterance: `${context.ing} ${context.ingredients}` },
+      });
+  },
+  on: { SPEAK_COMPLETE: "Questions" },
+},
+ins: {
+  entry: ({ context }) => {
+    context.spstRef.send({
+        type: "SPEAK",
+        value: { utterance: `${context.ins} ${context.instructions}` },
+    });
+},
+on: { SPEAK_COMPLETE: "Questions" },
+},
+        },
+      },
     },
   },
-},
-},
-},
       GUI: {
         initial: "PageLoaded",
         states: {
@@ -338,10 +334,10 @@ SlotPlace: {
           type: "PREPARE",
         }),
       // saveLastResult:
-      "speak.prompt": ({ context }) => {
+      "speak.greeting": ({ context }) => {
         context.spstRef.send({
           type: "SPEAK",
-          value: { utterance: "Hi! What is your request?" },
+          value: { utterance: "Hi. I'm a virtual chef. Ask me for any recipe you like!" },
         });
       },
       "gui.PageLoaded": ({}) => {
