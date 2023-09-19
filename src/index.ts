@@ -4,7 +4,7 @@ import { speechstate, Settings, Hypothesis } from "speechstate";
 const azureCredentials = {
   endpoint:
     "https://northeurope.api.cognitive.microsoft.com/sts/v1.0/issuetoken",
-  key: "",
+  key: "ad818b0cdae94e4ea41aec30f7342a73",
 };
 
 const settings: Settings = {
@@ -18,7 +18,86 @@ const settings: Settings = {
 interface DMContext {
   spstRef?: any;
   lastResult?: Hypothesis[];
+  // name: any;
 }
+
+// creating a grammar for our utterances: 
+
+//what = the meal you want to prepare
+//when = the time you want the meal preperation to take or for when would you like the meal, e.g organize a meal for the whole week
+//purpose = is there a special occasion or a specific detail? e.g. create a warm meal for rainy days. 
+
+const grammar = {
+  //meal prep utterances
+  "alfredo, find a recipe that's perfect for a date night tomorrow": {
+    what: "recipe",
+    when: "tomorrow",
+    purpose: "date night",
+  },
+  "find a recipe that's perfect for date night": {
+    what: "recipe",
+    when: "",
+    purpose: "date night",
+  },
+  "create a recipe that's perfect for date night": {
+    what: "recipe",
+    when: "",
+    purpose: "date night",
+  },
+  "can you suggest an international dish for today?": {
+    what: "dish",
+    when: "today",
+    purpose: "international",
+  },
+  "can you suggest a 1O minutes smoothie for energy boost?": {
+    what: "healthy smoothie",
+    when: "10 minutes",
+    purpose: "energy boost",
+  },
+  "create a gluten-free and dairy-free meal plan for the week.": {
+    what: "weakly plan",
+    when: "a week",
+    purpose: "gluten-free and dairy-free",
+  },
+  "create a quick Sunday snack with bananas.": {
+    what: "quick snack",
+    when: "Sunday",
+    purpose: "with bananas",
+  },
+}
+
+//create a function for 3 different entities => 3 conditions
+
+const getEntityWhat = (context: DMContext, entity: string) => {
+  // lowercase the utterance and remove tailing "."
+  let u = context.lastResult[0].utterance.toLowerCase().replace(/\.$/g, "");
+  if (u in grammar) {
+    if (entity in grammar[u].what) {
+      return grammar[u].what[entity];}
+  }
+  return false;
+};
+
+const getEntityWhen = (context: DMContext, entity: string) => {
+  // lowercase the utterance and remove tailing "."
+  let u = context.lastResult[0].utterance.toLowerCase().replace(/\.$/g, "");
+  if (u in grammar) {
+    if (entity in grammar[u].when) {
+      return grammar[u].when[entity];}
+  }
+  return false;
+};
+
+const getEntityPurpose = (context: DMContext, entity: string) => {
+  // lowercase the utterance and remove tailing "."
+  let u = context.lastResult[0].utterance.toLowerCase().replace(/\.$/g, "");
+  if (u in grammar) {
+    if (entity in grammar[u].purpose) {
+      return grammar[u].purpose[entity]
+    }
+  }
+  return false;
+};
 
 // helper functions
 const say =
@@ -63,18 +142,57 @@ const dmMachine = createMachine(
             initial: "Greeting",
             states: {
               Greeting: {
-                entry: "speak.greeting",
-                on: { SPEAK_COMPLETE: "HowCanIHelp" },
+                entry: "speak.greeting", //greeting state
+                on: { SPEAK_COMPLETE: "GetName" }, //move to ask for name from here 
               },
-              HowCanIHelp: {
-                entry: say("You can say whatever you like."),
-                on: { SPEAK_COMPLETE: "Ask" },
+              //new states for lab 1
+              GetName: {
+                entry: say("If you don't mind me asking, what shall I call you?"),
+                on: { SPEAK_COMPLETE: "AskName" },
               },
-              Ask: {
+              AskName: {
                 entry: listen(),
                 on: {
                   RECOGNISED: {
-                    target: "Repeat",
+                    target: "Greet", //change state to say name. "so <name> what can i do for you today?"
+                    actions: [
+                      ({ event }) => console.log(event),
+                      assign({
+                        name: ({event}) => event.value[0].utterance.replace(/\.$/g, ""),
+                      }),
+                    ],
+                  },
+                },
+              },
+              // Ask: {
+              //   entry: listen(),
+              //   on: {
+              //     RECOGNISED: {
+              //       target: "Repeat",
+              //       actions: [
+              //         ({ event }) => console.log(event),
+              //         assign({
+              //           lastResult: ({ event }) => event.value,
+              //         }),
+              //       ],
+              //     },
+              //   },
+              // },
+              Greet: {
+                entry: ({ context }) => {
+                  context.spstRef.send({
+                    type: "SPEAK",
+                    value: { utterance: `Well ${context.name}, what can I do for you today?` },
+                  });
+                },
+                on: { SPEAK_COMPLETE: "AskMeal" },
+              },
+              AskMeal: {
+                entry: listen(),
+                on: {
+                  RECOGNISED:{
+                    target: "okay",
+                    guard: ({event}) => getEntityWhat(event.value, "what") && !!getEntityWhen(event.value, "when") && !!getEntityPurpose(event.value, "purpose"), //condition here, 
                     actions: [
                       ({ event }) => console.log(event),
                       assign({
@@ -84,15 +202,16 @@ const dmMachine = createMachine(
                   },
                 },
               },
-              Repeat: {
+              okay: {  //test state to be altered
                 entry: ({ context }) => {
                   context.spstRef.send({
                     type: "SPEAK",
-                    value: { utterance: context.lastResult[0].utterance },
+                    value: { utterance: `perfect!` },
                   });
                 },
-                on: { SPEAK_COMPLETE: "Ask" },
+                on: { SPEAK_COMPLETE: "AskMeal" },
               },
+
               IdleEnd: {},
             },
           },
@@ -136,7 +255,7 @@ const dmMachine = createMachine(
       "speak.greeting": ({ context }) => {
         context.spstRef.send({
           type: "SPEAK",
-          value: { utterance: "Hello world!" },
+          value: { utterance: "Hello and welcome to TasteTraverse. My name is Alfredo and I'm here to help you prepare your desired meal! Think of me as your personal chef." },
         });
       },
       "speak.how-can-I-help": ({ context }) =>
@@ -146,18 +265,40 @@ const dmMachine = createMachine(
         }),
       "gui.PageLoaded": ({}) => {
         document.getElementById("button").innerText = "Click to start!";
+        document.querySelector(".animation-speaking").classList.remove("active");
+        document.querySelector(".animation-listening").classList.remove("active");
+        document.querySelector(".animation-speaking").classList.add("hidden");
+        document.querySelector(".animation-listening").classList.add("hidden");
       },
       "gui.Inactive": ({}) => {
         document.getElementById("button").innerText = "Inactive";
+        document.querySelector(".animation-speaking").classList.remove("active");
+        document.querySelector(".animation-listening").classList.remove("active");
+        document.querySelector(".animation-speaking").classList.add("hidden");
+        document.querySelector(".animation-listening").classList.add("hidden");
       },
       "gui.Idle": ({}) => {
         document.getElementById("button").innerText = "Idle";
+        document.querySelector(".animation-speaking").classList.remove("active");
+        document.querySelector(".animation-listening").classList.remove("active");
+        document.querySelector(".animation-speaking").classList.add("hidden");
+        document.querySelector(".animation-listening").classList.remove("hidden");
       },
       "gui.Speaking": ({}) => {
         document.getElementById("button").innerText = "Speaking...";
+        document.getElementById("button").className = "speakWave";
+        document.querySelector(".animation-speaking").classList.add("active");
+        document.querySelector(".animation-speaking").classList.remove("hidden");
+        document.querySelector(".animation-listening").classList.remove("active");
+        document.querySelector(".animation-listening").classList.add("hidden");
       },
       "gui.Listening": ({}) => {
         document.getElementById("button").innerText = "Listening...";
+        document.getElementById("button").className = "listening";
+        document.querySelector(".animation-speaking").classList.remove("active");
+        document.querySelector(".animation-speaking").classList.add("hidden");
+        document.querySelector(".animation-listening").classList.add("active");
+        document.querySelector(".animation-listening").classList.remove("hidden");
       },
     },
   },
@@ -166,6 +307,7 @@ const dmMachine = createMachine(
 const actor = createActor(dmMachine).start();
 
 document.getElementById("button").onclick = () => actor.send({ type: "CLICK" });
+
 
 actor.subscribe((state) => {
   console.log(state.value);
