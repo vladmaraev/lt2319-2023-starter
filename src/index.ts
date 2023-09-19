@@ -64,37 +64,42 @@ const grammar = {
     when: "Sunday",
     purpose: "with bananas",
   },
+  "suggest a recipe that's low in carbs and high in protein": {
+    what: "recipe",
+    when: "",
+    purpose: "low in carbs and high in protein",
+  },
+  "create a health afternoon snack": {
+    what: "snack",
+    when: "afternoon",
+    purpose: "snack",
+  },
+  "create an italian recipe for tonight": {
+    what:"recipe",
+    when: "tonight",
+    purpose: "italian",
+  },
+  "create a fun drink": {
+    what: "drink",
+    when: "",
+    purpose: "fun",
+  },
+  "plan a weekend picnic": {
+    entities: {
+      what: "picnic",
+      when: "weekend",
+      purpose: "",
+    },
+  },
+
 }
 
-//create a function for 3 different entities => 3 conditions
-
-const getEntityWhat = (context: DMContext, entity: string) => {
+const getEntity = (context: DMContext, entity: string) => {
   // lowercase the utterance and remove tailing "."
   let u = context.lastResult[0].utterance.toLowerCase().replace(/\.$/g, "");
   if (u in grammar) {
-    if (entity in grammar[u].what) {
-      return grammar[u].what[entity];}
-  }
-  return false;
-};
-
-const getEntityWhen = (context: DMContext, entity: string) => {
-  // lowercase the utterance and remove tailing "."
-  let u = context.lastResult[0].utterance.toLowerCase().replace(/\.$/g, "");
-  if (u in grammar) {
-    if (entity in grammar[u].when) {
-      return grammar[u].when[entity];}
-  }
-  return false;
-};
-
-const getEntityPurpose = (context: DMContext, entity: string) => {
-  // lowercase the utterance and remove tailing "."
-  let u = context.lastResult[0].utterance.toLowerCase().replace(/\.$/g, "");
-  if (u in grammar) {
-    if (entity in grammar[u].purpose) {
-      return grammar[u].purpose[entity]
-    }
+    if (entity in grammar[u].entities) {
+      return grammar[u].entities[entity];}
   }
   return false;
 };
@@ -192,7 +197,7 @@ const dmMachine = createMachine(
                 on: {
                   RECOGNISED:{
                     target: "okay",
-                    guard: ({event}) => getEntityWhat(event.value, "what") && !!getEntityWhen(event.value, "when") && !!getEntityPurpose(event.value, "purpose"), //condition here, 
+                    guard: ({event}) => getEntity(event.value, "what") && !!getEntity(event.value, "when") && !!getEntity(event.value, "purpose"), //condition here,
                     actions: [
                       ({ event }) => console.log(event),
                       assign({
