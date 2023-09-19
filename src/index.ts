@@ -94,15 +94,16 @@ const grammar = {
 
 }
 
-const getEntity = (context: DMContext, entity: string) => {
-  // lowercase the utterance and remove tailing "."
-  let u = context.lastResult[0].utterance.toLowerCase().replace(/\.$/g, "");
-  if (u in grammar) {
-    if (entity in grammar[u].entities) {
-      return grammar[u].entities[entity];}
-  }
-  return false;
-};
+//transfering this function inside guard
+// const getEntity = (context: DMContext, entity: string) => {
+//   // lowercase the utterance and remove tailing "."
+//   let u = context.lastResult[0].utterance.toLowerCase().replace(/\.$/g, "");
+//   if (u in grammar) {
+//     if (entity in grammar[u].entities) {
+//       return grammar[u].entities[entity];}
+//   }
+//   return false;
+// };
 
 // helper functions
 const say =
@@ -195,23 +196,48 @@ const dmMachine = createMachine(
               AskMeal: {
                 entry: listen(),
                 on: {
-                  RECOGNISED:{
+                  RECOGNISED:[
+                  {                  
                     target: "okay",
-                    guard: ({event}) => getEntity(event.value, "what") && !!getEntity(event.value, "when") && !!getEntity(event.value, "purpose"), //condition here,
+                    guard: ({event}) => {
+                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
+                      if (u in grammar) {
+                        if ("what" in grammar[u].entities && "when" in grammar[u].entities && "purpose" in grammar[u].entities) {
+                        return true
+                      }
+                      }
+                      return false
+                    } //condition here, trying to transfer this function inside the condition: 
+                    // const getEntity = (context: DMContext, entity: string) => {
+                  // lowercase the utterance and remove tailing "."
+                //   let u = context.lastResult[0].utterance.toLowerCase().replace(/\.$/g, "");
+                //   if (u in grammar) {
+                //     if (entity in grammar[u].entities) {
+                //       return grammar[u].entities[entity];}
+                //   }
+                //   return false;
+                // }; 
+                  },
+                  {
+                    target: "noMatch",
                     actions: [
                       ({ event }) => console.log(event),
                       assign({
                         lastResult: ({ event }) => event.value,
                       }),
                     ],
-                  },
+                  }
+                  ],
                 },
+              },
+              noMatch: {
+                on: { SPEAK_COMPLETE: "AskMeal"}, 
               },
               okay: {  //test state to be altered
                 entry: ({ context }) => {
                   context.spstRef.send({
                     type: "SPEAK",
-                    value: { utterance: `perfect!` },
+                    value: { utterance: `perfect i will create a ${context.what}!` },
                   });
                 },
                 on: { SPEAK_COMPLETE: "AskMeal" },
