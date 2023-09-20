@@ -30,71 +30,90 @@ interface DMContext {
 const grammar = {
   //meal prep utterances
   "alfredo, find a recipe that's perfect for a date night tomorrow": {
+    entities: {
     what: "recipe",
     when: "tomorrow",
     purpose: "date night",
+    },
   },
   "find a recipe that's perfect for date night": {
+    entities: {
     what: "recipe",
-    when: "",
     purpose: "date night",
+    },
   },
   "create a recipe that's perfect for date night": {
+    entities: {
     what: "recipe",
-    when: "",
     purpose: "date night",
+    },
   },
   "can you suggest an international dish for today?": {
+    entities: {
     what: "dish",
     when: "today",
     purpose: "international",
+    },
   },
   "can you suggest a 1O minutes smoothie for energy boost?": {
+    entities: {
     what: "healthy smoothie",
     when: "10 minutes",
     purpose: "energy boost",
+    },
   },
   "create a gluten-free and dairy-free meal plan for the week.": {
+    entities: {
     what: "weakly plan",
     when: "a week",
     purpose: "gluten-free and dairy-free",
+    },
   },
-  "create a quick Sunday snack with bananas.": {
+  "create a quick sunday snack with bananas.": {
+    entities: {
     what: "quick snack",
     when: "Sunday",
     purpose: "with bananas",
+    },
   },
   "suggest a recipe that's low in carbs and high in protein": {
-    what: "recipe",
-    when: "",
-    purpose: "low in carbs and high in protein",
+    entities: {
+      what: "recipe",
+      purpose: "low in carbs and high in protein",
+    }
   },
-  "create a health afternoon snack": {
+  "create a healthy afternoon snack": {
+    entities: {
     what: "snack",
     when: "afternoon",
     purpose: "snack",
+    },
   },
   "create an italian recipe for tonight": {
+    entities: {
     what:"recipe",
     when: "tonight",
     purpose: "italian",
+    }
   },
   "create a fun drink": {
+    entities: {
     what: "drink",
-    when: "",
     purpose: "fun",
+    }
   },
   "plan a weekend picnic": {
     entities: {
       what: "picnic",
       when: "weekend",
-      purpose: "",
     },
   },
 
 }
 
-//transfering this function inside guard
+//moved inside the guard = the new cond needs to be formed as a function that returns true/false
+
+
 // const getEntity = (context: DMContext, entity: string) => {
 //   // lowercase the utterance and remove tailing "."
 //   let u = context.lastResult[0].utterance.toLowerCase().replace(/\.$/g, "");
@@ -104,6 +123,7 @@ const grammar = {
 //   }
 //   return false;
 // };
+
 
 // helper functions
 const say =
@@ -170,20 +190,6 @@ const dmMachine = createMachine(
                   },
                 },
               },
-              // Ask: {
-              //   entry: listen(),
-              //   on: {
-              //     RECOGNISED: {
-              //       target: "Repeat",
-              //       actions: [
-              //         ({ event }) => console.log(event),
-              //         assign({
-              //           lastResult: ({ event }) => event.value,
-              //         }),
-              //       ],
-              //     },
-              //   },
-              // },
               Greet: {
                 entry: ({ context }) => {
                   context.spstRef.send({
@@ -203,20 +209,26 @@ const dmMachine = createMachine(
                       const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
                       if (u in grammar) {
                         if ("what" in grammar[u].entities && "when" in grammar[u].entities && "purpose" in grammar[u].entities) {
+                          console.log(grammar[u].entities["what"])
                         return true
                       }
                       }
                       return false
-                    } //condition here, trying to transfer this function inside the condition: 
-                    // const getEntity = (context: DMContext, entity: string) => {
-                  // lowercase the utterance and remove tailing "."
-                //   let u = context.lastResult[0].utterance.toLowerCase().replace(/\.$/g, "");
-                //   if (u in grammar) {
-                //     if (entity in grammar[u].entities) {
-                //       return grammar[u].entities[entity];}
-                //   }
-                //   return false;
-                // }; 
+                    }, 
+                actions: [
+                  ({ event }) => console.log(event),
+                  assign({
+                    what: ({ event }) => {
+                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
+                      return grammar[u].entities["what"]},
+                    when: ({ event }) => {
+                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
+                      return grammar[u].entities["when"]},
+                    purpose: ({ event }) => {
+                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
+                      return grammar[u].entities["purpose"]}
+                  }),
+                ],
                   },
                   {
                     target: "noMatch",
@@ -231,18 +243,18 @@ const dmMachine = createMachine(
                 },
               },
               noMatch: {
-                on: { SPEAK_COMPLETE: "AskMeal"}, 
+                entry: say("Mmm, seems i can't find anything for that. Try something else!"),
+                on: { SPEAK_COMPLETE: "AskName" },
               },
               okay: {  //test state to be altered
                 entry: ({ context }) => {
                   context.spstRef.send({
                     type: "SPEAK",
-                    value: { utterance: `perfect i will create a ${context.what}!` },
+                    value: { utterance: `perfect, i will create a ${context.what} for ${context.when} ${context.purpose}!` },
                   });
                 },
                 on: { SPEAK_COMPLETE: "AskMeal" },
               },
-
               IdleEnd: {},
             },
           },
