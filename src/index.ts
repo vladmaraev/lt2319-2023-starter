@@ -45,27 +45,27 @@ interface Grammar {
   };
 
 const grammar: Grammar = {
-  "I want to read a science-fiction book by Philip Dick on my kindle": {
+  "i want to read a novel by Milan Kundera on my kindle": {
     entities: {
-      genre: "science fiction",
-      author: "philip dick",
+      genre: "novel",
+      author: "milan kundera",
       media: "e-book",
     },
   },
-  "I want to read a Philip Dick book": {
+  "i want to read a Milan Kundera book": {
     entities: {
-      author: "philip dick",
+      author: "milan kundera",
     },
   },
-  "I want to read a science-fiction book on my kindle": {
+  "i want to read a novel on my kindle": {
     entities: {
-      genre: "science fiction",
+      genre: "novel",
       media: "e-book",
     },
   },
-  "I want to read science-fiction" : {
+  "i want to read a novel" : {
     entities: {
-      genre: "science fiction",
+      genre: "novel",
     },
   },
 };
@@ -73,14 +73,24 @@ const grammar: Grammar = {
 const getEntities = (entity:string, sentence: string) => {
   let u = sentence.toLowerCase().replace(/\.$/g, "");
   const words = u.split(' ')
-  if (grammar[u]) {
-    if (words.includes(entity))
+  if (u in grammar) {
+    if (entity in words)
     {
-      return true}
+      return grammar[u].entities}
       else {
         return false
     }
   }
+}
+
+// if (sent in grammar) {
+//   if ("genre" in grammar[sent].entities) {
+//     console.log(grammar[sent].entities["genre"])
+//     return true
+
+const lower = (sentence : string) => {
+  let u = sentence.toLowerCase().replace(/\.$/g, "");
+  return u 
 }
 
 // machine
@@ -120,18 +130,74 @@ const dmMachine = createMachine(
               Ask: {
                 entry: listen(),
                 on: {
-                  RECOGNISED: {
-                    guard: ({ event }) => getEntities(grammar[event.value[0].utterance].entities.genre, event.value[0].utterance),
+                  RECOGNISED: [
+                    {
                     target: "SuggestBook",
+                    guard: ({event}) => {
+                      const sent = lower(event.value[0].utterance);
+                      if (sent in grammar) {
+                        if ("genre" in grammar[sent].entities && "author" in grammar[sent].entities && "media" in grammar[sent].entities) {
+                          console.log(grammar[sent].entities["genre"])
+                          return true
+                        }
+                      }
+                      return false
+                    },
                     actions: [
                       ({ event }) => console.log(event),
                       assign({
-                        lastResult: ({ event }) => event.value,
+                        bookGenre: ({event}) => {
+                        const sentence = lower(event.value[0].utterance)
+                        grammar[sentence].entities["genre"]}
+                        //lastResult: ({ event }) => event.value,
                       }),
                     ],
                   },
+                  { target: "askForAuthor",
+                    guard: ({event}) => {
+                      const sent = lower(event.value[0].utterance);
+                      if (sent in grammar) {
+                        if ("genre" in grammar[sent].entities && "media" in grammar[sent].entities) {
+                          console.log(grammar[sent].entities["genre"])
+                          return true
+                        }
+                      }
+                      return false
+                    },
+                    actions: [
+                      ({ event }) => console.log(event),
+                      assign({
+                        bookGenre: ({event}) => {
+                        const sentence = lower(event.value[0].utterance)
+                        grammar[sentence].entities["genre"]}
+                        //lastResult: ({ event }) => event.value,
+                      }),
+                    ],
+                  },
+                  {
+                    target: "askForMedia",
+                    guard: ({event}) => {
+                      const sent = lower(event.value[0].utterance);
+                      if (sent in grammar) {
+                        if ("genre" in grammar[sent].entities && "author" in grammar[sent].entities) {
+                          console.log(grammar[sent].entities["genre"])
+                          return true
+                        }
+                      }
+                      return false
+                    },
+                    actions: [
+                      ({ event }) => console.log(event),
+                      assign({
+                        bookGenre: ({event}) => {
+                        const sentence = lower(event.value[0].utterance)
+                        grammar[sentence].entities["genre"]}
+                        //lastResult: ({ event }) => event.value,
+                      }),
+                    ],                 
+                  }],
                 },
-              },
+              },              
               SuggestBook: {
                 entry: ({ context }) => {
                   context.spstRef.send({
@@ -184,7 +250,7 @@ const dmMachine = createMachine(
       "speak.greeting": ({ context }) => {
         context.spstRef.send({
           type: "SPEAK",
-          value: { utterance: "Hello! I am here to help you find your next read! I can recommend you books based on your personal preferences." },
+          value: { utterance: "Hello!" }, //I am here to help you find your next read! I can recommend you books based on your personal preferences." },
         });
       },
       "speak.how-can-I-help": ({ context }) =>
