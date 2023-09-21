@@ -72,14 +72,15 @@ const grammar: Grammar = {
       author: "milan kundera",
     },
   },
-  "i want to listen to an audiobook" : {
+  "i want to read an ebook" : {
     entities: {
-      media: "audiobook",
+      media: "ebook",
     },
   },
-  "audiobook" : {
+  //for some reason audiobook was not being recognised
+  "hardcover" : {
     entities: {
-      media: "audiobook",
+      media: "hardcover",
     },
   },
   "i want to read philosophical fiction by milan kundera" : {
@@ -106,6 +107,11 @@ const grammar: Grammar = {
 const getEntities = (entity:string, sentence: string) => {
   let u = sentence.toLowerCase().replace(/\.$/g, "");
   const words = u.split(' ')
+  const entities = {genre: "nothing", author: "nothing", media: "nothing"}
+  const authors = ["milan kundera", "jane austen"]
+  const genres = ["philosophical fiction", "novel"]
+  const media = ["hardcover", "ebook"]
+  
   if (u in grammar) {
     if (entity in words)
     {
@@ -154,10 +160,15 @@ const dmMachine = createMachine(
             states: {
               Greeting: {
                 entry: "speak.greeting",
-                on: { SPEAK_COMPLETE: "HowCanIHelp" },
+                on: { SPEAK_COMPLETE: "HowCanIHelp"},
               },
               HowCanIHelp: {
-                entry: say("What genre of book are you interested in reading today?"),
+                entry: ({context}) => {
+                  context.spstRef.send({
+                    type: "SPEAK", 
+                    value:{utterance: "What genre of book are you interested in reading today?"},
+                  });
+                },
                 on: { SPEAK_COMPLETE: "Ask" },
               },
               noMatch: {
@@ -196,7 +207,7 @@ const dmMachine = createMachine(
                       }),
                     ],
                   },
-                  { target: "askForGenre",
+                  { target: "giveGenre",
                     guard: ({event}) => {
                       const sent = lower(event.value[0].utterance);
                       if (sent in grammar) {
@@ -210,10 +221,10 @@ const dmMachine = createMachine(
                     actions: [
                       ({ event }) => console.log(event),
                       assign({
-                        bookGenre: ({event}) => {
+                        bookAuthor: ({context, event}) => {
                         const sentence = lower(event.value[0].utterance)
-                        grammar[sentence].entities["genre"]},
-                        bookMedia: ({event}) => {
+                        grammar[sentence].entities["author"]},
+                        bookMedia: ({context, event}) => {
                           const sentence = lower(event.value[0].utterance)
                           grammar[sentence].entities["media"]},
                         //lastResult: ({ event }) => event.value,
@@ -245,7 +256,7 @@ const dmMachine = createMachine(
                       }),
                     ],                 
                   },
-                  { target: "askForAuthor",
+                  { target: "giveAuthor",
                     guard: ({event}) => {
                       const sent = lower(event.value[0].utterance);
                       if (sent in grammar) {
@@ -274,7 +285,7 @@ const dmMachine = createMachine(
                       const sent = lower(event.value[0].utterance);
                       if (sent in grammar) {
                         if ("genre" in grammar[sent].entities) {
-                          console.log(grammar[sent].entities["author"],event.bookGenre)
+                          console.log(grammar[sent].entities["genre"],event.bookGenre)
                           return true
                         }
                       }
@@ -346,20 +357,21 @@ const dmMachine = createMachine(
                     entry: listen(), 
                     on: {
                       RECOGNISED: [
+                        //both
                         {
                         target: "SuggestBook",
                         guard: ({event}) => {
                           const sent = lower(event.value[0].utterance);
                           if (sent in grammar) {
                             if ("author" in grammar[sent].entities && "genre" in grammar[sent].entities) {
-                              console.log(grammar[sent].entities["media"])
+                              console.log(grammar[sent].entities["genre"])
                               return true
                             }
                           }
                           return false
                         },
                         actions: [
-                          ({ event }) => console.log(event),
+                          ({ event }) => console.log(event.bookMedia),
                           assign({
                             bookGenre: ({event}) => {
                               const sentence = lower(event.value[0].utterance)
@@ -370,8 +382,9 @@ const dmMachine = createMachine(
                           }),
                         ],
                       },
+                      //media, => author & genre // only author
                       {
-                        target: "askForGenre",
+                        target: "giveGenre",
                         guard: ({event}) => {
                           const sent = lower(event.value[0].utterance);
                           if (sent in grammar) {
@@ -392,7 +405,83 @@ const dmMachine = createMachine(
                         ],
                       }],
                     },
-                  },   
+                  },
+                  giveGenre: {
+                    entry: ({ context }) => {
+                      context.spstRef.send({
+                        type: "SPEAK",
+                        //I don't find it very natural that the system asks for the genre after it has learned the author's name, as
+                        //someone would expect an author to only write one genre, but for the sake of the assignment I will leave it
+                        //like this
+                        value: { utterance: "What is your favorite genre?" },
+                      });
+                    },
+                    on: { SPEAK_COMPLETE: "giveGen" }},
+                      giveGen: {
+                        entry: listen(), 
+                        on: {
+                          RECOGNISED: [
+                            {
+                            target: "SuggestBook",
+                            guard: ({event}) => {
+                              const sent = lower(event.value[0].utterance);
+                              if (sent in grammar) {
+                                if ("genre" in grammar[sent].entities) {
+                                  console.log(grammar[sent].entities["media"])
+                                  return true
+                                }
+                              }
+                              return false
+                            },
+                            actions: [
+                              ({ event }) => console.log(event),
+                              assign({
+                                bookGenre: ({event}) => {
+                                  const sentence = lower(event.value[0].utterance)
+                                  grammar[sentence].entities["genre"]}
+                              }),
+                            ],
+                          }],
+                        },
+                      },
+                      giveAuthor: {
+                        entry: ({ context }) => {
+                          context.spstRef.send({
+                            type: "SPEAK",
+                            //I don't find it very natural that the system asks for the genre after it has learned the author's name, as
+                            //someone would expect an author to only write one genre, but for the sake of the assignment I will leave it
+                            //like this
+                            value: { utterance: "Tell me the author" },
+                          });
+                        },
+                        on: { SPEAK_COMPLETE: "giveAuth" }},
+                          giveAuth: {
+                            entry: listen(), 
+                            on: {
+                              RECOGNISED: [
+                                {
+                                target: "SuggestBook",
+                                guard: ({event}) => {
+                                  const sent = lower(event.value[0].utterance);
+                                  if (sent in grammar) {
+                                    if ("author" in grammar[sent].entities) {
+                                      console.log(grammar[sent].entities["author"])
+                                      return true
+                                    }
+                                  }
+                                  return false
+                                },
+                                actions: [
+                                  ({ event }) => console.log(event),
+                                  assign({
+                                    bookAuthor: ({event}) => {
+                                      const sentence = lower(event.value[0].utterance)
+                                      grammar[sentence].entities["author"]}
+                                  }),
+                                ],
+                              }],
+                            },
+                          },         
               onlyAuthor: {
                 entry: ({ context }) => {
                   context.spstRef.send({
@@ -513,7 +602,7 @@ const dmMachine = createMachine(
                         ],
                       }],
                     },
-                  },     
+                  },
               askForGenre: {
                 entry: ({ context }) => {
                   context.spstRef.send({
@@ -674,7 +763,7 @@ const dmMachine = createMachine(
                 entry: ({ context }) => {
                   context.spstRef.send({
                     type: "SPEAK",
-                    value: { utterance: "Based on your preferences I would suggest you The unbearable lightness of being. I will be able to provide you with your desired format when I'm connected to an API" },
+                    value: { utterance: "Based on your preferences I would suggest you The unbearable lightness of being. You can find it at the City Library" },
                   });
                 },
                 on: { SPEAK_COMPLETE: "Ask" },
