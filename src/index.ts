@@ -102,6 +102,7 @@ const grammar: Grammar = {
   },
 };
 
+//wasn't able to use it as I couldn't figure out a way to distinguish between the entities it would extract
 const getEntities = (entity:string, sentence: string) => {
   let u = sentence.toLowerCase().replace(/\.$/g, "");
   const words = u.split(' ')
@@ -157,6 +158,10 @@ const dmMachine = createMachine(
               },
               HowCanIHelp: {
                 entry: say("What genre of book are you interested in reading today?"),
+                on: { SPEAK_COMPLETE: "Ask" },
+              },
+              noMatch: {
+                entry: say("I am sorry I didn't quite catch that. What book genre do you want to read?"),
                 on: { SPEAK_COMPLETE: "Ask" },
               },
               Ask: {
@@ -323,6 +328,9 @@ const dmMachine = createMachine(
                         grammar[sentence].entities["media"]},
                       }),
                     ],
+                  },
+                  {
+                    target: "noMatch",
                   }],
                 },
               },
@@ -343,7 +351,7 @@ const dmMachine = createMachine(
                         guard: ({event}) => {
                           const sent = lower(event.value[0].utterance);
                           if (sent in grammar) {
-                            if ("author" in grammar[sent].entities && "genre" in grammar[sent].entities && !!event.bookMedia) {
+                            if ("author" in grammar[sent].entities && "genre" in grammar[sent].entities) {
                               console.log(grammar[sent].entities["media"])
                               return true
                             }
@@ -389,6 +397,9 @@ const dmMachine = createMachine(
                 entry: ({ context }) => {
                   context.spstRef.send({
                     type: "SPEAK",
+                    //I don't find it very natural that the system asks for the genre after it has learned the author's name, as
+                    //someone would expect an author to only write one genre, but for the sake of the assignment I will leave it
+                    //like this
                     value: { utterance: "What is your favorite genre?" },
                   });
                 },
@@ -520,7 +531,7 @@ const dmMachine = createMachine(
                         guard: ({event}) => {
                           const sent = lower(event.value[0].utterance);
                           if (sent in grammar) {
-                            if ("genre" in grammar[sent].entities && "media" in grammar[sent].entities && !!event.bookAuthor) {
+                            if ("genre" in grammar[sent].entities && "media" in grammar[sent].entities) {
                               console.log(grammar[sent].entities["media"])
                               return true
                             }
@@ -579,7 +590,7 @@ const dmMachine = createMachine(
                         guard: ({event}) => {
                           const sent = lower(event.value[0].utterance);
                           if (sent in grammar) {
-                            if ("author" in grammar[sent].entities && "media" in grammar[sent].entities && !!event.bookGenre) {
+                            if ("author" in grammar[sent].entities && "media" in grammar[sent].entities) {
                               console.log(grammar[sent].entities["genre"])
                               return true
                             }
@@ -663,15 +674,12 @@ const dmMachine = createMachine(
                 entry: ({ context }) => {
                   context.spstRef.send({
                     type: "SPEAK",
-                    value: { utterance: "I will give you the best recommendation when I am connected to a book API or ChatGPT" },
+                    value: { utterance: "Based on your preferences I would suggest you The unbearable lightness of being. I will be able to provide you with your desired format when I'm connected to an API" },
                   });
                 },
                 on: { SPEAK_COMPLETE: "Ask" },
               },
-              IdleEnd: {
-                entry: say("Sorry, I didn't quite catch that. Can you please repeat?"),
-                on: { SPEAK_COMPLETE: "Ask" },
-              },
+              IdleEnd: {},
             },
           },
         },
