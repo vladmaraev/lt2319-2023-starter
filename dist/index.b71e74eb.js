@@ -599,30 +599,44 @@ const say = (text)=>({ context })=>{
 const listen = ()=>({ context })=>context.spstRef.send({
             type: "LISTEN"
         });
+// defining the slots
 const extractEntities = (utterance)=>{
     const entities = {
-        person: null,
-        day: null,
-        time: null
+        kind: null,
+        taste: null,
+        alc: null
     };
     const words = utterance.split(" ");
+    // hardcoding the slot detection criteria
     words.forEach((word, index)=>{
-        if (word === "with" && words[index + 1]) entities.person = words[index + 1];
         if ([
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday"
-        ].includes(word)) entities.day = word;
+            "IPA",
+            "Lager",
+            "Ale",
+            "Pilsner",
+            "Dark",
+            "White",
+            "Brown"
+        ].includes(word)) entities.kind = word;
         if ([
-            "noon",
-            "morning",
-            "evening",
-            "night"
-        ].includes(word)) entities.time = word;
+            "sour",
+            "sweet",
+            "bready",
+            "bitter",
+            "fruity",
+            "coffee-like",
+            "chocolate"
+        ].includes(word)) entities.taste = word;
+        if ([
+            "very",
+            "strong",
+            "weak",
+            "average",
+            "medium",
+            "low",
+            "high",
+            "normal"
+        ].includes(word)) entities.alc = word;
     });
     return entities;
 };
@@ -660,16 +674,16 @@ const dmMachine = (0, _xstate.createMachine)({
                                     {
                                         target: "HowCanIHelp",
                                         actions: (0, _xstate.assign)({
-                                            person: null,
-                                            day: null,
-                                            time: null
+                                            kind: null,
+                                            taste: null,
+                                            alc: null
                                         })
                                     }
                                 ]
                             }
                         },
                         HowCanIHelp: {
-                            entry: say("Who would you like to have a meeting with?"),
+                            entry: say("What sort of beer would you like?"),
                             on: {
                                 SPEAK_COMPLETE: "Ask"
                             }
@@ -688,45 +702,49 @@ const dmMachine = (0, _xstate.createMachine)({
                                 }
                             }
                         },
+                        Done: {
+                            type: "final"
+                        },
                         Repeat: {
                             entry: ({ context })=>{
                                 const entities = extractEntities(context.lastResult[0].utterance);
-                                // Update context with extracted entities
-                                context.person = entities.person || context.person;
-                                context.day = entities.day || context.day;
-                                context.time = entities.time || context.time;
-                                console.log(context.person, context.day, context.time);
-                                // Decide what to prompt based on missing information
-                                if (!context.person) context.spstRef.send({
+                                console.log(context.lastResult[0].utterance);
+                                // updating the context with extracted entities
+                                context.kind = entities.kind || context.kind;
+                                context.taste = entities.taste || context.taste;
+                                context.alc = entities.alc || context.alc;
+                                console.log(context.kind, context.taste, context.alc);
+                                // selecting the correct prompt based on the missing slot
+                                if (!context.kind) context.spstRef.send({
                                     type: "SPEAK",
                                     value: {
-                                        utterance: "Who are you meeting with?"
+                                        utterance: "What kind of beer would you like?"
                                     }
                                 });
-                                else if (!context.day) context.spstRef.send({
+                                else if (!context.taste) context.spstRef.send({
                                     type: "SPEAK",
                                     value: {
-                                        utterance: "On which day?"
+                                        utterance: "How should it taste?"
                                     }
                                 });
-                                else if (!context.time) context.spstRef.send({
+                                else if (!context.alc) context.spstRef.send({
                                     type: "SPEAK",
                                     value: {
-                                        utterance: "At what time?"
+                                        utterance: "How strong would you like it to be"
                                     }
                                 });
                                 else context.spstRef.send({
                                     type: "SPEAK",
                                     value: {
-                                        utterance: "Meeting scheduled!"
+                                        utterance: `Very well, I will bring you a ${context.alc} ${context.taste} ${context.kind} beer`
                                     }
                                 });
                             },
                             on: {
                                 SPEAK_COMPLETE: [
                                     {
-                                        target: "Greeting",
-                                        guard: ({ context })=>context.person && context.day && context.time
+                                        target: "Done",
+                                        guard: ({ context })=>context.kind && context.taste && context.alc
                                     },
                                     {
                                         target: "Ask"
