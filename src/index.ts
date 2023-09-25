@@ -1,4 +1,4 @@
-import { createMachine, createActor, assign } from "xstate";
+import { createMachine, createActor, assign, fromPromise } from "xstate";
 import { speechstate, Settings, Hypothesis } from "speechstate";
 
 const azureCredentials = {
@@ -171,10 +171,6 @@ const dmMachine = createMachine(
                 },
                 on: { SPEAK_COMPLETE: "Ask" },
               },
-              noMatch: {
-                entry: say("I am sorry I didn't quite catch that. What book genre do you want to read?"),
-                on: { SPEAK_COMPLETE: "Ask" },
-              },
               Ask: {
                 entry: listen(),
                 on: {
@@ -203,7 +199,7 @@ const dmMachine = createMachine(
                         bookMedia: ({event}) => {
                           const sentence = lower(event.value[0].utterance)
                           grammar[sentence].entities["media"]},
-                        //lastResult: ({ event }) => event.value,
+                        lastResult: ({ event }) => event.value,
                       }),
                     ],
                   },
@@ -341,9 +337,41 @@ const dmMachine = createMachine(
                     ],
                   },
                   {
-                    target: "noMatch",
+                   target: "chatGPT",
+                    actions: [
+                      ({ event }) => console.log(event),
+                      assign({
+                        lastResult: ({event}) => {
+                          ({ event }) => event.value
+                        },
+                      }),
+                    ],
                   }],
                 },
+              },
+              chatGPT: {
+                invoke: {
+                  src: fromPromise(async({input}) => {
+                   const gptAnswer = await fetchFromChatGPT(input.lastResult[0].utterance, 250);
+                   return gptAnswer; 
+                  }),
+                  input: ({context, event}) => ({
+                    lastResult: context.lastResult
+                  }),
+                  onDone: {
+                    target: "success"
+                  },
+                },
+                // entry: say("I am sorry I didn't quite catch that. What book genre do you want to read?"),
+                // on: { SPEAK_COMPLETE: "Ask" },
+              },
+              success: {
+                entry: ({context}) => {
+                  context.spstRef.send({
+                    type: "SPEAK",
+                    value: { utterance: `${context.lastResult}` },
+                  });
+                }
               },
               onlyMedia: {
                 entry: ({ context }) => {
@@ -845,3 +873,34 @@ document.getElementById("button").onclick = () => actor.send({ type: "CLICK" });
 actor.subscribe((state) => {
   console.log(state.value);
 });
+
+async function fetchFromChatGPT(prompt: string, max_tokens: number) {
+  const myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    "Bearer <key>",
+  );
+  myHeaders.append("Content-Type", "application/json");
+  const raw = JSON.stringify({
+    model: "gpt-3.5-turbo",
+    messages: [
+            {
+              role: "user",
+              content: prompt,
+            },
+          ],
+    temperature: 0,
+    max_tokens: max_tokens,
+  });
+
+  const response = fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  })
+    .then((response) => response.json())
+    .then((response) => response.choices[0].message.content);
+
+  return response;
+}
