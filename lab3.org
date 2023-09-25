@@ -1,7 +1,11 @@
+#+OPTIONS: toc:t num:nil
 #+TITLE: Lab 3. Multimodality
+#+BEGIN_EXAMPLE
+This version is preliminary and subject to change
+#+END_EXAMPLE
 
-For this lab you have to do one of the two simple exercises.
-1. "Click on the badger" game
+For this lab you have to do one of the two exercises.
+1. "Point at the badger" game
 2. Furhat integration
    
 * 1. "Point at the badger"
@@ -12,7 +16,9 @@ You need to design a game which helps user learn new words in a new
 language. You are encouraged to do implement your game in languages
 other than English.
 
-[[./examples/lab3.png]]
+#+BEGIN_html
+<img src="./examples/lab3.png" width="300">
+#+END_html
 
 The basic logic of the game is the following:
 1. System tells user to point/click at one of the objects on the
@@ -33,3 +39,24 @@ Advanced matters:
    they don't speak the language yet!
 
  
+* 2. Furhat integration
+
+In this exercise you will get started with Furhat.
+
+1. Register at https://furhat.io/ ("Get SDK") and install the SDK and
+   virtual Furhat.
+2. Launch virtual Furhat and Start Remote API.
+3. You can use either your usual frontend XState to control Furhat or
+   you can run xstate as backend, see this repository:
+   https://github.com/vladmaraev/xstate-furhat-starter. In both cases
+   you will be using ~invoke~. In case of frontend, you may use your
+   browser to recognise and synthesise speech, not Furhat.
+4. If you wish you can use other ways to control Furhat, namely Kotlin
+   Skill API or Blockly.
+
+You need to make Furhat follow simple commands to control its
+gestures, i.e. "Nod", "Smile", "Shake your head".
+
+Resources:
+- [[https://docs.furhat.io/][Furhat docs]]
+- [[https://docs.furhat.io/remote-api/][Remote API docs]]
