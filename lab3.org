@@ -1,0 +1,35 @@
+#+TITLE: Lab 3. Multimodality
+
+For this lab you have to do one of the two simple exercises.
+1. "Click on the badger" game
+2. Furhat integration
+   
+* 1. "Point at the badger"
+In this exercise you will learn a bit more about how to interact with
+the HTML page.
+
+You need to design a game which helps user learn new words in a new
+language. You are encouraged to do implement your game in languages
+other than English.
+
+[[./examples/lab3.png]]
+
+The basic logic of the game is the following:
+1. System tells user to point/click at one of the objects on the
+   screen. See [[./examples/grid.html][example]] of UI (feel free to redesign it and change the
+   objects).
+2. User points/clicks at the object (e.g., the badger) on the screen.
+3. System tells user whether they are right or wrong and either repeats the
+   question or moves on to the next objects.
+
+Advanced matters:
+1. Use the power of xstate to send multimodal input to dialogue
+   manager, but try not to use too many events and don't repeat
+   yourself.
+2. You can use xstate to implement "point-and-hold" so that user
+   doesn't point at objects by mistake. Make use of [[https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseenter_event][mouseenter]] and
+   timers to implement this.
+3. Indicate visually whether the user is right or wrong. Note that
+   they don't speak the language yet!
+
+ 
