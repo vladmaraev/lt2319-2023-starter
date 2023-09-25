@@ -341,9 +341,7 @@ const dmMachine = createMachine(
                     actions: [
                       ({ event }) => console.log(event),
                       assign({
-                        lastResult: ({event}) => {
-                          ({ event }) => event.value
-                        },
+                        lastResult: ({event}) => event.value,
                       }),
                     ],
                   }],
@@ -356,7 +354,7 @@ const dmMachine = createMachine(
                    return gptAnswer; 
                   }),
                   input: ({context, event}) => ({
-                    lastResult: context.lastResult
+                    lastResult: context.lastResult,
                   }),
                   onDone: {
                     target: "success"
