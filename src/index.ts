@@ -1,12 +1,11 @@
-import { createMachine, createActor, assign, raise } from "xstate";
-import { speechstate, Settings, Hypothesis } from "speechstate";
+import { createMachine, createActor, assign, fromPromise } from "xstate";
+import { speechstate, Settings, Hypothesis,} from "speechstate";
 
 const azureCredentials = {
   endpoint:
     "https://northeurope.api.cognitive.microsoft.com/sts/v1.0/issuetoken",
   key: "994d7aefd0894deca17e2b24dc6b7daf",
 };
-
 
 const settings: Settings = {
   azureCredentials: azureCredentials,
@@ -15,17 +14,15 @@ const settings: Settings = {
   asrDefaultNoInputTimeout: 5000,
   ttsDefaultVoice: "en-GB-RyanNeural",
 };
-// air-conditioner functions 
+
 interface DMContext {
   spstRef?: any;
   lastResult?: Hypothesis[];
-  Mode?: string; 
-  Switch?: string ; // on or off
-  Intensity?: string; // weak, strong, or medium
-  Temperature?: string; // increase or decrease
-  Direction?: string; // body,legs or loop (which is the whole car)
+  music?: string; // play random music
+  singer?: string; // exact singer 
+  volume?: string ; // how loud it should be plyed loud, medium, quiet
+  song?: string;
   userInput?:string;
-  
 }; 
 
 // helper functions
@@ -44,158 +41,94 @@ const listen =
       type: "LISTEN",
     });
 
-interface Grammar {
-    [index: string]: {
-      intent: string;
-      entities: {
-        [index: string]: string;
+
+    interface Grammar {
+      [index: string]: {
+        intent: string;
+        entities: {
+          [index: string]: string;
+        };
       };
+    }
+  
+  const Grammar: Grammar = {
+    "play some music": {
+      music: "random",
+      volume: "loud"
+  },
+  "i would like to listen to Avicii": {
+    singer: "Avicii",
+    volume: "loud"
+},
+"": {
+  music: "classic",
+  volume: "loud"
+},
+"i would like to listen to Avicii": {
+  singer: "Taylor Swift",
+  volume: "medium"
+},
+}; 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const ToLowerCase = (object: string) => {
+  return object.toLowerCase().replace(/\.$/g, "");
     };
-  }
-
-  const grammar = {
-   
-// here are "shortcuts", when one just want to answer one-word utterances 
-    "Legs": {
-      Switch: "on",
-      Direction: "towards legs",
-    },
-    "Body": {
-      Switch: "on",
-      Direction: "towards body",
-    },
-    "Loop": {
-      Switch: "on",
-      Direction: "loop",
-    },
-    "Cool": {
-      Switch: "on",
-      Mode: "cool",
-    },
-    "Warm": {
-      Switch: "on",
-      Mode: "warm",
-    },
-    "Increasing": {
-      Switch: "on",
-      Temperature: "increasing",
-    },
-    "Decreasing": {
-      Switch: "on",
-      Temperature: "decreasing",
-    },
-    "Weak": {
-      Switch: "on",
-      Intensity:"weak"
-    },
-    "Medium": {
-      Switch: "on",
-      Intensity:"medium"
-    },
-    "Strong": {
-      Switch: "on",
-      Intensity:"strong"
-    },
+const lowerCaseGrammar = Object.keys(Grammar).reduce((acc, key) => {
+  acc[ToLowerCase(key)] = Grammar[key];
+  return acc;
+}, {});
 
 
 
-// here are longer sentences, it always starts with "Mode", so one has to start with an utterance which involves "Mode"
 
-    "Cool mode, strong intensity": {
-      Switch: "on",
-      Mode:"cool",
-      Intensity:"strong"
-    },
-    "Turn the airconditioner off": {
-      Switch: "off"
-    },
-    "Set it to warm mode": {
-      Switch: "on",
-      Mode: "warm"
-    },
-    "Turn it to cool mode": {
-      Switch: "on",
-      Mode: "cool"
-    },
-    "Turn the intensity to strong":{
-      Switch: "on",
-      Intensity: "strong"
-    },
-    "Turn the intensity to low":{
-      Switch: "on",
-      Intensity: "waek"
-    },
-    "Turn the intensity to medium":{
-      Switch: "on",
-      Intensity: "medium"
-    },
-    "Turn the intensity to high":{
-      Switch: "on",
-      Intensity: "strong"
-    },
-    "I want to raise the temperature": {
-      Switch: "on",
-      Temperature: "increasing"
-    }, 
-    "I want to lower the temperature": {
-      Switch: "on",
-      Temperature: "decreasing"
-    }, 
-    "Point the air-conditioner towards my legs ": { // legs = down
-      Switch: "on",  
-      Direction: "towards legs"
-    },
-    "Point the air-conditioner towards my body": { // body = middle 
-      Switch: "on", 
-      Direction: "middle"
-    },
-    "Turn the air conditioner on to warm mode with strong intensity": {
-      Switch: "on",
-      Mode: "warm",
-      Intensity: "strong"
-    },
-    "I feel cold, raise the temperature, and lower the intensity": {
-      Switch: "on",
-      Temperature: "increasing",
-      Mode: "warm",
-      Intensity: "weak"
-    },
-    "Please point the air-conditioner towards my body, cool air and medium intensity": {
-      Switch: "on",
-      Direction: "towards body",
-      Mode: "cool",
-      Intensity: "medium"
-    },
-    "Turn the air conditioner off": {
-      Switch: "off"
-    },
-    "Make a loop":{
-      Switch: "on",
-      Direction: "loop"
-    },
-    "Please point the air-conditioner towards my legs, warm air and high intensity": {
-      Switch: "on",
-      Direction: "towards legs",
-      Mode: "warm",
-      Intensity: "strong"
-    },
-    "I feel hot, lower the temperature, and increase the intensity": {
-      Switch: "on",
-      Temperature: "decreasing",
-      Mode: "cool",
-      Intensity: "strong"
-    },
-  }
 
-  const ToLowerCase = (object: string) => {
-    return object.toLowerCase().replace(/\.$/g, "");
-      };
-  const lowerCaseGrammar = Object.keys(grammar).reduce((acc, key) => {
-    acc[ToLowerCase(key)] = grammar[key];
-    return acc;
-  }, {});
-   
 // machine
+async function fetchFromChatGPT(prompt: string, max_tokens: number) {
+  const myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    "Bearer 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",
+  );
+  myHeaders.append("Content-Type", "application/json");
+  const raw = JSON.stringify({
+    model: "gpt-3.5-turbo",
+    messages: [
+            {
+              role: "user",
+              content: prompt,
+            },
+          ],
+    temperature: 0,
+    max_tokens: 50,
+  });
+
+  const response = fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  })
+    .then((response) => response.json())
+    .then((response) => response.choices[0].message.content);
+
+  return response;
+}
+
 const dmMachine = createMachine(
   {
     id: "root",
@@ -226,76 +159,59 @@ const dmMachine = createMachine(
                 on: { SPEAK_COMPLETE: "help" },
               },
               help: {
-                entry: say("How can I help you?"),
+                entry: say("Which music would you like to play?"),
                 on: { SPEAK_COMPLETE: "Ask" },
               },
               Ask: {
                 entry: listen(),
                 on: {
                   RECOGNISED: {
+                    target: "AskChatGPT",
                     actions: [
-                      ({ event }) => console.log(event),
                       assign({
-                        userInput: ({ event }) => event.value[0].utterance,
-                        Switch: ({ context, event }) => {
-                          const userInput = ToLowerCase(event.value[0].utterance);
-                          return lowerCaseGrammar[userInput]?.Switch || context.Switch;
-                        },
-                        Mode: ({ context, event }) => {
-                          const userInput = ToLowerCase(event.value[0].utterance);
-                          return lowerCaseGrammar[userInput]?.Mode || context.Mode;
-                        },
-                        Intensity: ({ context, event }) => {
-                          const userInput = ToLowerCase(event.value[0].utterance);
-                          return lowerCaseGrammar[userInput]?.Intensity || context.Intensity;
-                        },
-                        Direction: ({ context, event }) => {
-                          const userInput = ToLowerCase(event.value[0].utterance);
-                          return lowerCaseGrammar[userInput]?.Direction || context.Direction;
-                        },
-                        Temperature: ({ context, event }) => {
-                          const userInput = ToLowerCase(event.value[0].utterance);
-                          return lowerCaseGrammar[userInput]?.Temperature || context.Temperature;
-                        },
+                        lastResult: ({ event }) => event.value,
                       }),
-                      
                     ],
                     target: 'CheckSlots'
                   }
                   
                 },
-              },  
+              }, 
+              
+              
+
+
               CheckSlots: {
                 always: [
-                  { target: 'AskMode', guard: 'isModeMissing' },
-                  { target: 'AskDirection', guard: 'isDirectionMissing' },
-                  { target: 'AskTemperature', guard: 'isTemperatureMissing' },
-                  { target: 'AskIntensity', guard: 'isIntensityMissing' },
-                  { target: 'AskSwitch', guard: 'isSwitchMissing' },
-                  { target: 'FeedbackAndRepeat' }, 
+                  { target: 'Askmusic', guard: 'ismusicMissing' },
+                  { target: 'Asksinger', guard: 'issingerMissing' },
+                  { target: 'Asksong', guard: 'issongMissing' },
+                  { target: 'Asktype', guard: 'istypeMissing' },
+                  { target: 'Askvolume', guard: 'isvolumeMissing' },
+                  { target: 'SayBack' }, 
                 ]
                 },
-              AskMode: {
-                entry: say('Which Mode would you like?'),
+              Askmusic: {
+                entry: say('Which music would you like?'),
                 on:{ SPEAK_COMPLETE: 'Ask' }
               },
-              AskDirection: {
-                entry: say('Which Direction would you like?'),
+              Asksinger: {
+                entry: say('Which singer would you like?'),
                 on: { SPEAK_COMPLETE: 'Ask' }
               },
-              AskTemperature: {
-                entry: say('Which Temperature would you like?'),
+              Asksong: {
+                entry: say('Which song would you like?'),
                 on: { SPEAK_COMPLETE: 'Ask' }
               },
-              AskIntensity: {
-                entry: say('Which Temperature would you like?'),
+              Asktype: {
+                entry: say('Which type would you like?'),
                 on: { SPEAK_COMPLETE: 'Ask' }
               },
-              AskSwitch: {
-                entry: say('Switch is on.'),
+              Askvolume: {
+                entry: say('Which volume would you like?'),
                 on: { SPEAK_COMPLETE: 'Ask' }
               },
-              FeedbackAndRepeat: {
+              SayBack: {
                 entry: 'navigateFeedback',
                 on: {
                   SPEAK_COMPLETE: {actions: "prepare"}
@@ -305,7 +221,48 @@ const dmMachine = createMachine(
           },
         },
       },
-          
+
+      AskChatGPT: {
+        invoke: {
+            src: fromPromise(async ({ input }) => {
+                const data = await fetchFromChatGPT(
+                    input.lastResult[0].utterance + "give it to me in a json format with entities: music, singer, song, type and volume",
+                    40,
+                );
+                return data;
+            }),
+
+            input: ({ context, event }) => ({
+              lastResult: context.lastResult,
+          }),
+          onDone: {
+              target: "SayBack",
+              actions: [
+                ({ event }) => console.log(JSON.parse(event.output)),
+                assign({ recipeName: ({ event }) => JSON.parse(event.output).recipeName,
+              music: ({event}) => JSON.parse(event.output).prepTime,
+              singer: ({ event }) => JSON.parse(event.output).cookTime,
+              song: ({ event }) => JSON.parse(event.output).servings,
+              type: ({ event }) => JSON.parse(event.output).ingredients,
+              volume: ({ event }) => JSON.parse(event.output).instructions,
+            }),
+          ],
+          },
+          SayBack: {
+            entry: ({ context }) => {
+                context.spstRef.send({
+                    type: "SPEAK",
+                    value: { utterance: context.SayBack },
+                });
+            },
+            on: { SPEAK_COMPLETE: "..Ready" },
+          },
+
+            
+
+
+
+
           GUI: {
             initial: "PageLoaded",
             states: {
@@ -334,58 +291,55 @@ const dmMachine = createMachine(
       },
   
 
+        guards: {
+          ismusicMissing: ({ context }) => !context.music,
+          issingerMissing: ({ context }) => !context.singer,
+          issongissing: ({ context }) => !context.song,
+          istypeMissing: ({ context }) => !context.type,
+          isvolumeMissing: ({ context }) => !context.volume,
+        },  
 
-  {
-    guards: {
-      isModeMissing: ({ context }) => !context.Mode,
-      isDirectionMissing: ({ context }) => !context.Direction,
-      isTemperatureMissing: ({ context }) => !context.Temperature,
-      isIntensityMissing: ({ context }) => !context.Intensity,
-      isSwitchMissing: ({ context }) => !context.Switch,
-    },
-    
-
-    actions: {
-      prepare: ({ context }) =>
-        context.spstRef.send({
-          type: "PREPARE",
-        }),
-      // saveLastResult:
-      "speak.greeting": ({ context }) => {
-        context.spstRef.send({
-          type: "SPEAK",
-          value: { utterance: "Hello! Welcome to your air-conditioner." },
-        });
+        actions: {
+          prepare: ({ context }) =>
+            context.spstRef.send({
+              type: "PREPARE",
+            }),
+          // saveLastResult:
+          "speak.greeting": ({ context }) => {
+            context.spstRef.send({
+              type: "SPEAK",
+              value: { utterance: "Hello! Welcome to your music operator." },
+            });
+          },
+          "speak.help": ({ context }) =>
+            context.spstRef.send({
+              type: "SPEAK",
+              value: { utterance: "Which music would you like?" },
+            }),
+          "gui.PageLoaded": ({ }) => {
+            document.getElementById("button").innerText = "Click to start!";
+          },
+          "gui.Inactive": ({ }) => {
+            document.getElementById("button").innerText = "Inactive";
+          },
+          "gui.Idle": ({ }) => {
+            document.getElementById("button").innerText = "Idle";
+          },
+          "gui.Speaking": ({ }) => {
+            document.getElementById("button").innerText = "Speaking...";
+          },
+          "gui.Listening": ({ }) => {
+            document.getElementById("button").innerText = "Listening...";
+          },
+          navigateFeedback: ({ context }) => {
+            context.spstRef.send({
+              type: "SPEAK",
+              value: { utterance: `Ok! Navigating from ${context.StartingPoint} to ${context.Destination} with preference: ${context.RoutePreference} and stopover at ${context.Stopover}.Have a safe journey` },
+            });
+          },
+        },
       },
-      "speak.help": ({ context }) =>
-        context.spstRef.send({
-          type: "SPEAK",
-          value: { utterance: "How can I help you?" },
-        }),
-      "gui.PageLoaded": ({ }) => {
-        document.getElementById("button").innerText = "Click to start!";
-      },
-      "gui.Inactive": ({ }) => {
-        document.getElementById("button").innerText = "Inactive";
-      },
-      "gui.Idle": ({ }) => {
-        document.getElementById("button").innerText = "Idle";
-      },
-      "gui.Speaking": ({ }) => {
-        document.getElementById("button").innerText = "Speaking...";
-      },
-      "gui.Listening": ({ }) => {
-        document.getElementById("button").innerText = "Listening...";
-      },
-      navigateFeedback: ({ context }) => {
-        context.spstRef.send({
-          type: "SPEAK",
-          value: { utterance: `Alright, the air-corditioner is turned ${context.Switch}, on ${context.Mode} mode and on ${context.Intensity} intensity, the temperature is ${context.Temperature}, the direction is ${context.Direction}.` },
-        });
-      },
-    },
-  },
-);
+    );
 
 
 
