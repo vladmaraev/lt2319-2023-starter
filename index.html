@@ -3,12 +3,27 @@
   <head>
     <title>SpeechState DM sandbox</title>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="style2.css">
   </head>
 
   <body>
-    <div id="app"><button id="button"></button></div>
+    <div id="app">
+      <div id="button-container">
+        <button class="custom-button" id="button1"></button>
+        <div id="button-grid">
+          <button class="custom-button" id="button2">🦡</button>
+          <button class="custom-button" id="button3">🐘</button>
+          <button class="custom-button" id="button4">🦁</button>
+          <button class="custom-button" id="button5">🦒</button>
+          <button class="custom-button" id="button6">🦓</button>
+          <button class="custom-button" id="button7">🐈</button>
+          <button class="custom-button" id="button8">🦊</button>
+          <button class="custom-button" id="button9">🐕</button>
+          <button class="custom-button" id="button10">🐁</button>
+        </div>
+      </div>
+    </div>
     <iframe data-xstate style="position: absolute; height: 100%; width: 100%; border: 2px"></iframe>
     <script type="module" src="src/index.ts"></script>
-    
   </body>
 </html>
