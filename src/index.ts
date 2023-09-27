@@ -75,7 +75,7 @@ async function fetchFromChatGPT(prompt: string, max_tokens: number) {
 };
 
 
-
+// Dictionary in progress
 
 const category: Categories = {
   action: ["drop", "steal", "poach"],
