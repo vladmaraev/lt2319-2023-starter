@@ -14,17 +14,15 @@ const settings: Settings = {
   asrDefaultNoInputTimeout: 5000,
   ttsDefaultVoice: "en-GB-RyanNeural",
 };
-
 interface DMContext {
   spstRef?: any;
   lastResult?: Hypothesis[];
-  music?: string; // play random music
+  //music?: string; // play random music 
   singer?: string; // exact singer 
   volume?: string ; // how loud it should be plyed loud, medium, quiet
-  song?: string;
+  song?: string; // name of the song 
   userInput?:string;
 }; 
-
 // helper functions
 const say =
   (text: string) =>
@@ -40,64 +38,10 @@ const listen =
     context.spstRef.send({
       type: "LISTEN",
     });
-
-
     interface Grammar {
-      [index: string]: {
-        intent: string;
-        entities: {
-          [index: string]: string;
-        };
-      };
+      [index: string]
     }
-  
-  const Grammar: Grammar = {
-    "play some music": {
-      music: "random",
-      volume: "loud"
-  },
-  "i would like to listen to Avicii": {
-    singer: "Avicii",
-    volume: "loud"
-},
-"": {
-  music: "classic",
-  volume: "loud"
-},
-"i would like to listen to Avicii": {
-  singer: "Taylor Swift",
-  volume: "medium"
-},
-}; 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const ToLowerCase = (object: string) => {
-  return object.toLowerCase().replace(/\.$/g, "");
-    };
-const lowerCaseGrammar = Object.keys(Grammar).reduce((acc, key) => {
-  acc[ToLowerCase(key)] = Grammar[key];
-  return acc;
-}, {});
-
-
-
-
-
-// machine
+  // machine
 async function fetchFromChatGPT(prompt: string, max_tokens: number) {
   const myHeaders = new Headers();
   myHeaders.append(
@@ -117,7 +61,46 @@ async function fetchFromChatGPT(prompt: string, max_tokens: number) {
     max_tokens: 50,
   });
 
-  const response = fetch("https://api.openai.com/v1/chat/completions", {
+  
+  const grammar: Grammar = {
+
+  /*"play some music": {
+    music: "random",
+    volume: "loud"
+  },
+  "i would like to listen to classic": {
+  music: "classic",
+  volume: "loud"
+},*/
+  "i would like to listen to Avicii": {
+    singer: "Avicii",
+    volume: "loud"
+},
+"i would like to listen to Taylor Swift": {
+  singer: "Taylor Swift",
+  volume: "medium"
+},
+"play songs from Michael Jackson": {
+  singer: "Michael Jackson",
+  volume: "medium",
+},
+"play Vienna Calling from Falco": {
+  singer: "Falco",
+  volume: "medium",
+  song: "Vienna Calling",
+},
+
+}; 
+
+
+const ToLowerCase = (object: string) => {
+  return object.toLowerCase().replace(/\.$/g, "");
+    };
+const lowerCaseGrammar = Object.keys(grammar).reduce((acc, key) => {
+  acc[ToLowerCase(key)] = grammar[key];
+  return acc;
+}, {});
+const response = fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
     headers: myHeaders,
     body: raw,
@@ -129,8 +112,17 @@ async function fetchFromChatGPT(prompt: string, max_tokens: number) {
   return response;
 }
 
+
+
+
+
+
+
+
+
+
 const dmMachine = createMachine(
-  {
+  { 
     id: "root",
     type: "parallel",
     states: {
@@ -166,100 +158,44 @@ const dmMachine = createMachine(
                 entry: listen(),
                 on: {
                   RECOGNISED: {
-                    target: "AskChatGPT",
+                    target: "ChatGPTanswers",
                     actions: [
                       assign({
                         lastResult: ({ event }) => event.value,
                       }),
                     ],
-                    target: 'CheckSlots'
-                  }
+                   // target: 'CheckSlots'
+                  },
                   
                 },
               }, 
-              
-              
-
-
-              CheckSlots: {
-                always: [
-                  { target: 'Askmusic', guard: 'ismusicMissing' },
-                  { target: 'Asksinger', guard: 'issingerMissing' },
-                  { target: 'Asksong', guard: 'issongMissing' },
-                  { target: 'Asktype', guard: 'istypeMissing' },
-                  { target: 'Askvolume', guard: 'isvolumeMissing' },
-                  { target: 'SayBack' }, 
-                ]
-                },
-              Askmusic: {
-                entry: say('Which music would you like?'),
-                on:{ SPEAK_COMPLETE: 'Ask' }
-              },
-              Asksinger: {
-                entry: say('Which singer would you like?'),
-                on: { SPEAK_COMPLETE: 'Ask' }
-              },
-              Asksong: {
-                entry: say('Which song would you like?'),
-                on: { SPEAK_COMPLETE: 'Ask' }
-              },
-              Asktype: {
-                entry: say('Which type would you like?'),
-                on: { SPEAK_COMPLETE: 'Ask' }
-              },
-              Askvolume: {
-                entry: say('Which volume would you like?'),
-                on: { SPEAK_COMPLETE: 'Ask' }
+              ChatGPTanswers:{
+                invoke: {
+                  src: fromPromise(async({input}) => {
+                    const data = await fetchFromChatGPT(
+                      input.lastResult[0].utterance,40,
+                      );
+                      return data;
+                  }),
+                  input:({context,event}) => ({
+                    lastResult: context.lastResult,
+                  }),
+                  onDone: {
+                    target: "SayBack",
+                    actions: assign({SayBack:({ event}) => event.output }),
+                    }
+                  }
               },
               SayBack: {
-                entry: 'navigateFeedback',
-                on: {
-                  SPEAK_COMPLETE: {actions: "prepare"}
-                }
+                entry: ({ context }) => {
+                    context.spstRef.send({
+                        type: "SPEAK",
+                        value: { utterance: context.SayBack },
+                    });
+                },
+                on: { SPEAK_COMPLETE: "..Ready" },
               },
-            }
-          },
-        },
-      },
-
-      AskChatGPT: {
-        invoke: {
-            src: fromPromise(async ({ input }) => {
-                const data = await fetchFromChatGPT(
-                    input.lastResult[0].utterance + "give it to me in a json format with entities: music, singer, song, type and volume",
-                    40,
-                );
-                return data;
-            }),
-
-            input: ({ context, event }) => ({
-              lastResult: context.lastResult,
-          }),
-          onDone: {
-              target: "SayBack",
-              actions: [
-                ({ event }) => console.log(JSON.parse(event.output)),
-                assign({ recipeName: ({ event }) => JSON.parse(event.output).recipeName,
-              music: ({event}) => JSON.parse(event.output).prepTime,
-              singer: ({ event }) => JSON.parse(event.output).cookTime,
-              song: ({ event }) => JSON.parse(event.output).servings,
-              type: ({ event }) => JSON.parse(event.output).ingredients,
-              volume: ({ event }) => JSON.parse(event.output).instructions,
-            }),
-          ],
-          },
-          SayBack: {
-            entry: ({ context }) => {
-                context.spstRef.send({
-                    type: "SPEAK",
-                    value: { utterance: context.SayBack },
-                });
-            },
-            on: { SPEAK_COMPLETE: "..Ready" },
-          },
-
-            
-
+              
 
 
 
@@ -290,21 +226,13 @@ const dmMachine = createMachine(
         },
       },
   
-
-        guards: {
-          ismusicMissing: ({ context }) => !context.music,
-          issingerMissing: ({ context }) => !context.singer,
-          issongissing: ({ context }) => !context.song,
-          istypeMissing: ({ context }) => !context.type,
-          isvolumeMissing: ({ context }) => !context.volume,
-        },  
-
+      
+      {
         actions: {
           prepare: ({ context }) =>
             context.spstRef.send({
               type: "PREPARE",
             }),
-          // saveLastResult:
           "speak.greeting": ({ context }) => {
             context.spstRef.send({
               type: "SPEAK",
@@ -314,7 +242,7 @@ const dmMachine = createMachine(
           "speak.help": ({ context }) =>
             context.spstRef.send({
               type: "SPEAK",
-              value: { utterance: "Which music would you like?" },
+              value: { utterance: "How can I help you?" },
             }),
           "gui.PageLoaded": ({ }) => {
             document.getElementById("button").innerText = "Click to start!";
@@ -334,19 +262,31 @@ const dmMachine = createMachine(
           navigateFeedback: ({ context }) => {
             context.spstRef.send({
               type: "SPEAK",
-              value: { utterance: `Ok! Navigating from ${context.StartingPoint} to ${context.Destination} with preference: ${context.RoutePreference} and stopover at ${context.Stopover}.Have a safe journey` },
+              value: { utterance: `Alright, the music is playing on ${context.volume} volume. The song which is playing is ${context.song} by ${context.singer}` },
             });
           },
         },
       },
-    );
+    },
+      
 
+      
+    
+    
+    
+    const actor = createActor(dmMachine).start();
+    
+    document.getElementById("button").onclick = () => actor.send({ type: "CLICK" });
+    
+    actor.subscribe((state) => {
+      console.log(state.value);
+    });
+  
 
-
-const actor = createActor(dmMachine).start();
-
-document.getElementById("button").onclick = () => actor.send({ type: "CLICK" });
-
-actor.subscribe((state) => {
-  console.log(state.value);
-});
+    /*guards: {
+      ismusicMissing: ({ context }) => !context.music,
+      issingernMissing: ({ context }) => !context.singer,
+      issongMissing: ({ context }) => !context.song,
+      istypeMissing: ({ context }) => !context.type,
+      isvolumeMissing: ({ context }) => !context.volume,
+    }*/ 
