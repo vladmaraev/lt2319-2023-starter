@@ -1,0 +1,84 @@
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+/* this dirrectly affects the elements that are tables */
+table1, th, td {
+    border: 1px solid;
+    width: 100px;
+    padding: 4px;
+}
+
+.image-style1 {
+    width: 800px;
+}
+
+.text-style1 {
+    width: 800px;
+    font-family: 'Cambria', Cochin, Georgia, Times, Times New Roman, serif;
+
+}
+
+/* .BigContainer {
+    display:flex
+} */
+
+/* the Start button div */
+#app {
+    /* background-color:blueviolet; */
+    width: 10%;
+    /* height: 200px; */
+    float: left;
+}
+
+button {
+    /* width: max-content; */
+    top: 50px;
+    left: 2px;
+    width: 80px;
+    height: 400px;
+}
+
+.GeneralContainer {
+    display: inline-block;
+    width: 90%;
+    /* background-color: azure; */
+}
+
+/* div elements */
+
+#message {
+    /* background-color:beige; */
+    padding: 20px;
+
+}
+.TableContainer {
+    display: flex;
+    width: 840px;
+    /* background-color: antiquewhite; */
+}
+
+#table1 {
+    width: 600px;
+    border-spacing: 1px;
+    border-collapse: separate;
+    padding: 20px;
+    font-family: 'Cambria', Cochin, Georgia, Times, Times New Roman, serif;
+    
+}
+#table2 {
+    width: 400px;
+    border-spacing: 1px;
+    border-collapse: fixed;
+    padding: 20px;
+    font-family: 'Cambria', Cochin, Georgia, Times, Times New Roman, serif;
+    
+}
+
+#picture {
+    /* background-color: antiquewhite; */
+    padding: 20px;
+    position: center; 
+}
+/* Remember we have "message", "table1 and 2" and "picture" */

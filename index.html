@@ -3,13 +3,21 @@
   <head>
     <title>SpeechState DM sandbox</title>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
 
   <body>
-    <div id="app"><button id="button"></button></div>
-    <div id="message"> </div>
-    <div id="table1"> </div>
-    <div id="table2"> </div>
+    
+    <!-- <div class="BigContainer" id="app&info"> -->
+      <div id="app"> <button id="button"> </button></div>
+      <div class="GeneralContainer" id="info">
+        <div id="message"> </div>
+        <div class="TableContainer" id="container"> 
+          <div class="contained" id="table1"> </div>
+          <div class="contained"  id="table2"> </div>
+        </div>
+        <img id="picture"> </img>
+      <!-- </div> -->
     <iframe data-xstate style="position: absolute; height: 100%; width: 100%; border: 2px"></iframe>
     <script type="module" src="src/index.ts"></script>
     

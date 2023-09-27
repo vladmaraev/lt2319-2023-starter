@@ -1,0 +1,68 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+table1, th, td {
+  border: 1px solid;
+  width: 100px;
+  padding: 4px;
+}
+
+.image-style1 {
+  width: 800px;
+}
+
+.text-style1 {
+  width: 800px;
+  font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+}
+
+#app {
+  float: left;
+  width: 10%;
+}
+
+button {
+  width: 80px;
+  height: 400px;
+  top: 50px;
+  left: 2px;
+}
+
+.GeneralContainer {
+  width: 90%;
+  display: inline-block;
+}
+
+#message {
+  padding: 20px;
+}
+
+.TableContainer {
+  width: 840px;
+  display: flex;
+}
+
+#table1 {
+  border-spacing: 1px;
+  border-collapse: separate;
+  width: 600px;
+  padding: 20px;
+  font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+}
+
+#table2 {
+  border-spacing: 1px;
+  border-collapse: fixed;
+  width: 400px;
+  padding: 20px;
+  font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+}
+
+#picture {
+  position: center;
+  padding: 20px;
+}
+
+/*# sourceMappingURL=index.1303bb05.css.map */

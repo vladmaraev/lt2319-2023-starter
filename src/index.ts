@@ -1,4 +1,4 @@
-import { createMachine, createActor, assign, sendTo, raise } from "xstate";
+import { createMachine, createActor, assign, sendTo, raise, fromPromise } from "xstate";
 import { speechstate, Settings, Hypothesis } from "speechstate";
 
 const azureCredentials = {
@@ -20,7 +20,8 @@ interface DMContext {
   lastResult?: Hypothesis[];
   act?: any;
   ene?: any;
-  loc?: any
+  loc?: any;
+  lootinfo?: any;
 }
 
 
@@ -40,15 +41,51 @@ interface Specific {
 }
 };
 
-//0 for drop, 1 for steal and 2 for poach
+// mydict = {"Genus": {"wolf": {"location" : {"Jungle": { "Hellhound": {"Drop": "a", "Steal": "b" , "Poach": "c"} }, "Desert":{"Wolf": {"Drop": "a", "Steal": "b" , "Poach": "c"} } }, "Mines": {"No Enemy"}}}}
+
+async function fetchFromChatGPT(prompt: string, max_tokens: number) {
+  const myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    "Bearer <key>",
+  );
+  myHeaders.append("Content-Type", "application/json");
+  const raw = JSON.stringify({
+    model: "gpt-3.5-turbo",
+    messages: [
+            {
+              role: "user",
+              content: prompt,
+            },
+          ],
+    temperature: 0, //change to 0.2 to experiment
+    max_tokens: max_tokens,
+  });
+
+  const response = fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  })
+    .then((response) => response.json())
+    .then((response) => response.choices[0].message.content);
+
+  return response;
+};
+
+
+
+
 const category: Categories = {
   action: ["drop", "steal", "poach"],
   enemy: ["wolf", "wolves", "gargoyle", "gargoyles", "skeleton", "skeletons"], //use regex to fit plurals, etc
   location: ["desert", "jungle", "mines"],
   negation: ["nah", "no", "not really", "I don't think so", "nope"],
-  affirmation: ["yes", "okay", "all right", "sure", "yeah", "yep"],
+  affirmation: ["yes", "okay", "right", "sure", "yeah", "yep"],
 };
 
+// TO fix: use regex to fit plurals, etc.
 const correspondsTo: Specific = {
     desert: {
       wolf: "Wolf", wolves: "Wolf", gargoyle: "NoEnemy", gargoyles: "NoEnemy", skeleton: "Fideliant", skeletons: "Fideliant", 
@@ -146,7 +183,7 @@ function checkNoEnemyInfo (context, enemy, location){
 
 };
 
-//Ask: what does MALBORO DROP in the Golmore JUNGLE
+
 
 // machine
 const dmMachine = createMachine(
@@ -186,6 +223,39 @@ const dmMachine = createMachine(
                 on: { SPEAK_COMPLETE: "Ask" },
               },
 
+              GPT:{
+                entry: ({context}) => console.log(context.lootinfo),
+                invoke: {
+                  src: fromPromise(async({ input })=> {
+                    const data = await fetchFromChatGPT("Hey, GPT! Could you please reformulate the following sentence so it doesn't sound repetitive? FYI, the tags 'common', 'uncommon', etc., stand for the chances of getting the item. The sentence should sound natural and fluent. Don't omit any information. This is the sentence:" + input.lastResult, 200);
+                    return data;
+                  }),
+                  input: ({ context, event}) => ({
+                    lastResult: context.lootinfo,
+                  }),
+                  onDone: {
+                    target: "SpeakGPToutput",
+                    actions: [
+                      ({ event }) => console.log(event.output) ,
+                    ],
+                  },
+                },
+              },
+
+              // SpeakGPToutput: {
+              //   entry: ({event}) => say(`${event.output}`),
+              //   on: {SPEAK_COMPLETE: "AnythingElse" }
+              // },
+
+              SpeakGPToutput: {
+                  entry: ({ event, context }) => {
+                    context.spstRef.send({
+                      type: "SPEAK",
+                      value: { utterance: `${event.output}`},
+                    })},
+                    on: {SPEAK_COMPLETE: "AnythingElse" },
+                  },
+
               Ask: {
                 entry: listen(),
                 // CONFIGURE TIMEOUT EVENT
@@ -199,6 +269,7 @@ const dmMachine = createMachine(
                   RECOGNISED: [
                     // if more than one SLOT of the same type, store them all! (in more advanced labs)
                     // complete
+                    
                     {
                       guard: ({ event }) =>  getSlots(event, "action") && getSlots(event, "enemy") && getSlots(event, "location"),//extractAction(event) && extractEnemy(event) && extractLocation(event),
                       target: "LootInfo", //"SentenceParse"
@@ -207,7 +278,7 @@ const dmMachine = createMachine(
                         assign({ act: ({ event }) => getSlots(event, "action"),}),
                         assign({ ene: ({ event }) => getSlots(event, "enemy"),}),
                         assign({ loc: ({ event }) => getSlots(event, "location"),}),
-                        ({context})=> console.log(context.act, context.ene, context.loc)
+                        ({context})=> console.log(context.act, context.ene, context.loc),
                       ]
                     },
                     // incomplete (2 in)
@@ -595,17 +666,30 @@ const dmMachine = createMachine(
                     ]
                   },
                     
-                  GiveLootInfo: {
-                  entry: ({ context }) => {
-                    context.spstRef.send({
-                      type: "SPEAK",
-                      value: { utterance: `For the enemy ${correspondsTo[context.loc][context.ene]} the ${context.act} loot is: ${getLootInfo(context, context.act, context.ene, context.loc)}`},
-                    })},
-                  on: {
-                    SPEAK_COMPLETE: { target: "#root.DialogueManager.Ready.AnythingElse"
+                //   GiveLootInfo: {
+                //   entry: ({ context }) => {
+                //     context.spstRef.send({
+                //       type: "SPEAK",
+                //       value: { utterance: `For the enemy ${correspondsTo[context.loc][context.ene]} the ${context.act} loot is: ${getLootInfo(context, context.act, context.ene, context.loc)}`},
+                //     })},
+                //   on: {
+                //     SPEAK_COMPLETE: { 
+                //       // target: "#root.DialogueManager.Ready.AnythingElse",
+                //       target: "#root.DialogueManager.Ready.GPT",
+                //       actions: assign({ lootinfo: ({context}) => `For the enemy ${correspondsTo[context.loc][context.ene]} the ${context.act} loot is: ${getLootInfo(context, context.act, context.ene, context.loc)}`}),
+                //     },
+                //   },
+                // },
+
+                GiveLootInfo: {
+                  always: [
+                    {
+                      target: "#root.DialogueManager.Ready.GPT",
+                      actions: assign({ lootinfo: ({context}) => `For the enemy ${correspondsTo[context.loc][context.ene]} the ${context.act} loot is: ${getLootInfo(context, context.act, context.ene, context.loc)}`}),
                     }
-                  },
+                  ]
                 },
+
                 NoEnemy:{
                   entry: say("There's no such enemy in that location."),
                   on: {SPEAK_COMPLETE: "#root.DialogueManager.Ready.AnythingElse" },
@@ -629,10 +713,13 @@ const dmMachine = createMachine(
                         {
                           guard: ({event})=> getSlots(event, "negation"),
                           target: "#root",
+                          actions: say("All right, see ya.")
                         },
                         {
                           guard: ({event})=> getSlots(event, "affirmation"),
-                          target: "#root.DialogueManager.Ready.AskMeAnything",
+                          // target: "#root.DialogueManager.Ready.AskMeAnything",
+                          target: "#root.DialogueManager.Ready.Ask",
+                          actions: say("Okay, I'm listening.")
                         },
                         {
                           target: "CouldntHearYou",
@@ -725,10 +812,27 @@ actor.subscribe((state) => {
 // display tables --------------------------------------------------------
 // TABLE EDITING WILL BE TRANSFERED TO A CSS FILE
 
-const messageDiv = document.getElementById("message");
-messageDiv.textContent = "Hello!\n Try asking something like:  \"What can I get from a skeleton?\" or \"What can I steal from wolves?\" or \"What can I poach from gargoyles in the jungle\". Bear in mind that the system won't recognize something like \"What can skeletons steal from ME?\". That's not possible, for now. Your request can be wordy, as long as you use the selected terms.";
-messageDiv.style.fontWeight = ''; // 
+// Create a background image URL
+// const backgroundImageUrl = 'url(https://jegged.com/img/Games/Final-Fantasy-XII/Maps/World/World-Map.png)';
 
+// // Set the background image style for the <body> element
+// document.body.style.backgroundImage = backgroundImageUrl;
+// document.body.style.backgroundRepeat = 'no-repeat';
+// document.body.style.backgroundSize = 'cover'; // You can adjust this as needed
+
+// Select the existing <img> element by its ID
+const mapImage = document.getElementById('picture') as HTMLImageElement;
+
+// Set the new image source (replace with the actual image path)
+mapImage.src = 'https://jegged.com/img/Games/Final-Fantasy-XII/Maps/World/World-Map.png';
+mapImage.classList.add('image-style1')
+
+// Optionally, you can also update the alt text
+// mapImage.alt = 'New Image Alt Text';
+
+const messageDiv = document.getElementById("message");
+messageDiv.textContent = "Hello! Try asking something like:  \"What can I get from a skeleton?\" or \"What can I steal from wolves?\" or \"What can I poach from gargoyles in the jungle\". Bear in mind that the system won't recognize something like \"What can skeletons steal from ME?\". That's not possible, for now. Your request can be wordy, as long as you use the selected terms.";
+messageDiv.classList.add('text-style1')
 
 // Enemy Table
 // Select the container element
@@ -736,10 +840,6 @@ const tableContainer = document.getElementById('table1');
 
 // Create the table element
 const table = document.createElement('EnemyTable');
-
-// Set cell spacing and padding
-table.style.borderCollapse = 'separate'; 
-table.style.borderSpacing = '6px'; 
 
 // Create the table header (thead)
 const thead = document.createElement('thead');
@@ -790,6 +890,7 @@ table.appendChild(tbody);
 
 // Append the table to the container
 tableContainer.appendChild(table);
+table.classList.add('table-style');
 // ---------------------------------------------------------------
 
 // table 2 --- - -- - - -- -- - - - -- - - 
@@ -799,10 +900,6 @@ const tableContainer2 = document.getElementById("table2");
 
 // Create the table element
 const table2 = document.createElement('ActionTable');
-
-// Set cell spacing and padding
-table2.style.borderCollapse = 'separate'; 
-table2.style.borderSpacing = '6px'; 
 
 // Create the table header (thead)
 const thead2 = document.createElement('thead');
@@ -822,7 +919,7 @@ const tbody2 = document.createElement('tbody');
 
 // Add rows with data
 const data2 = [
-  ["Enemy", "DROP"],
+  ["Enemy", "DROP", ""],
   ["You", "STEAL", "POACH"],
   // Add more rows as needed
 ];
@@ -842,7 +939,8 @@ table2.appendChild(tbody2);
 
 // Append the table to the container
 tableContainer2.appendChild(table2);
-
+tableContainer2.classList.add('table-style');
+tableContainer2.classList.add('box2');
 
 
 
