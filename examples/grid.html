@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>grid</title>
+    <meta charset="UTF-8" />
+
+    <style>
+      #container {
+        margin: 50px;
+        display: grid;
+        grid-template-columns: repeat(3, 100px);
+        grid-template-columns: repeat(auto, 100px);
+      }
+      #container.active > div:hover {
+        background-color: lightgoldenrodyellow;
+        cursor: cell;
+      }
+      #container > div {
+        line-height: 100px;
+        font-size: xxx-large;
+        border: 2px solid white;
+        background-color: whitesmoke;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container" class="active">
+      <div>🦡</div>
+      <div>🍌</div>
+      <div>📖</div>
+      <div>🦋</div>
+      <div>🚌</div>
+      <div>💣</div>
+      <div>🐛</div>
+      <div>🫘</div>
+      <div>🦇</div>
+    </div>
+  </body>
+</html>
