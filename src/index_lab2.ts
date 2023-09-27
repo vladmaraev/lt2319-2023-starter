@@ -19,7 +19,7 @@ async function fetchFromChatGPT(prompt: string, max_tokens: number) {
   const myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
-    "Bearer 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",
+    "Bearer ",
   );
   myHeaders.append("Content-Type", "application/json");
   const raw = JSON.stringify({
@@ -31,7 +31,7 @@ async function fetchFromChatGPT(prompt: string, max_tokens: number) {
             },
           ],
     temperature: 0,
-    max_tokens: 1000,
+    max_tokens: 50,
   });
 
   const response = fetch("https://api.openai.com/v1/chat/completions", {
@@ -53,9 +53,9 @@ interface DMContext {
   StartingPoint?: string;
   RoutePreference?: string;
   Stopover?: string;
-  Questions?: string;
   userInput?: string;
   recognisedData?: any;
+  userDialogs?: string[];
 }
 
 
@@ -203,120 +203,99 @@ const dmMachine = createMachine(
               },
               HowCanIHelp: {
                 entry: say("You can say where you want to go."),
-                on: { SPEAK_COMPLETE: "Ask" },
+                on: { SPEAK_COMPLETE: "Start" },
               },
-              Ask: {
+              Start: {
                 entry: listen(),
                 on: {
                   RECOGNISED: {
-                    actions: [
-                      ({ event }) => console.log(event),
-                      assign({
-                        userInput: ({ event }) => event.value[0].utterance,
-                        Destination: ({ context, event }) => {
-                          const userInput = ToLowerCase(event.value[0].utterance);
-                          return lowerCaseGrammar[userInput]?.Destination || context.Destination;
-                        },
-                        StartingPoint: ({ context, event }) => {
-                          const userInput = ToLowerCase(event.value[0].utterance);
-                          return lowerCaseGrammar[userInput]?.StartingPoint || context.StartingPoint;
-                        },
-                        RoutePreference: ({ context, event }) => {
-                          const userInput = ToLowerCase(event.value[0].utterance);
-                          return lowerCaseGrammar[userInput]?.RoutePreference || context.RoutePreference;
-                        },
-                        Stopover: ({ context, event }) => {
-                          const userInput = ToLowerCase(event.value[0].utterance);
-                          return lowerCaseGrammar[userInput]?.Stopover || context.Stopover;
-                        },     
-                        Questions: ({ context, event }) => {
-                          const userInput = ToLowerCase(event.value[0].utterance);
-                          return lowerCaseGrammar[userInput]?.Questions || context.Questions;
-                        },
-                      }),
-                      
-                    ],
-                    target: 'CheckSlots'
-                  }
-                  
-                },
-              },  
-              getquestions: {
-                entry: listen(),
-                on: { 
-                  RECOGNISED: {
-                    target: 'GPTanswer',
+                    target: 'AskchatGPT',
                     actions:[
                       assign({
                         lastResult: ({ event }) => event.value,
-                      }),
+                      })
                     ],
-                 }
+                  }
+                },
               },
-              },
-              GPTanswer:{
+              AskchatGPT:{
                 invoke: {
                   src: fromPromise(async({input}) => {
-                    const data = await fetchFromChatGPT(
-                      input.lastResult[0].utterance,40,
-                      );
-                      return data;
-                  }),
-                  input:({context,event}) => ({
-                    lastResult: context.lastResult,
-                  }),
-                  onDone: {
-                    target: "SayBack",
-                    actions: assign({SayBack:({ event}) => event.output }),
+                      const data = await fetchFromChatGPT(
+                        input.lastResult[0].utterance + "reply in a json format with entities: StartingPoint, Destination, RoutePreference, Stopover.If I don't mention at any entities, leave it empty.",40,
+                        );
+                        return data;
+                    }),
+                    input:({context,event}) => ({
+                      lastResult: context.lastResult,
+                    }),
+                    onDone: {
+                      actions: [
+                        ({ event }) => console.log(JSON.parse(event.output)),
+                        assign({
+                          StartingPoint: ({ event }) => JSON.parse(event.output).StartingPoint, 
+                          Destination: ({ event }) => JSON.parse(event.output).Destination,
+                          RoutePreference: ({ event }) => JSON.parse(event.output).RoutePreference,
+                          Stopover: ({ event }) => JSON.parse(event.output).Stopover, 
+                        }),
+                      ],
+                      target: 'CheckSlots'
                     }
-                  }
-              },
+                      }
+                    },
+              
+
+    
               SayBack: {
                 entry: ({ context }) => {
                     context.spstRef.send({
                         type: "SPEAK",
-                        value: { utterance: context.SayBack },
+                        value: { utterance: "Great!" },
                     });
                 },
-                on: { SPEAK_COMPLETE: "..Ready" },
+                on: { SPEAK_COMPLETE: "FeedbackAndRepeat" },
               },
+
+
+
 
               CheckSlots: {
                 always: [
-                  { target: 'AnswerQuestions', guard:'haveQuestions' }, 
                   { target: 'AskStartingPoint', guard: 'isStartingPointMissing' },
                   { target: 'AskDestination', guard: 'isDestinationMissing' },
                   { target: 'AskRoutePreference', guard: 'isRoutePreferenceMissing' },
                   { target: 'AskStopover', guard: 'isStopoverMissing' },
-                  { target: 'FeedbackAndRepeat' },
+                  { target: 'SayBack' },
                 ]
                 },
+
+           
+
               AskStartingPoint: {
                 entry: say('From where will you start your journey?'),
-                on:{ SPEAK_COMPLETE: 'Ask' }
+                on:{ SPEAK_COMPLETE: 'Start' }
               },
+           
+              
               AskDestination: {
                 entry: say('Where would you like to go?'),
-                on: { SPEAK_COMPLETE: 'Ask' }
+                on: { SPEAK_COMPLETE: 'Start' }
               },
+              
               AskRoutePreference: {
                 entry: say('Do you have any route preferences, like avoiding highways?'),
-                on: { SPEAK_COMPLETE: 'Ask' }
+                on: { SPEAK_COMPLETE: 'Start' }
               },
+              
               AskStopover: {
                 entry: say('Would you like to have a stopover somewhere? If yes, where?'),
-                on: { SPEAK_COMPLETE: 'Ask' }
+                on: { SPEAK_COMPLETE: 'Start' }
               },
+              
               FeedbackAndRepeat: {
                 entry: 'navigateFeedback',
                 on: {
                   SPEAK_COMPLETE: {actions: "prepare"}
-                }
-              },
-              AnswerQuestions: {
-                entry: say('I will try to answer your questions.'),
-                on: { 
-                  SPEAK_COMPLETE: {target: 'getquestions'}
                 }
               },
             },
@@ -357,7 +336,6 @@ const dmMachine = createMachine(
 
   {
     guards: {
-      haveQuestions: ({ context }) => context.Questions,
       isStartingPointMissing: ({ context }) => !context.StartingPoint,
       isDestinationMissing: ({ context }) => !context.Destination,
       isRoutePreferenceMissing: ({ context }) => !context.RoutePreference,
@@ -400,7 +378,7 @@ const dmMachine = createMachine(
       navigateFeedback: ({ context }) => {
         context.spstRef.send({
           type: "SPEAK",
-          value: { utterance: `Ok! Navigating from ${context.StartingPoint} to ${context.Destination} with preference: ${context.RoutePreference} and stopover at ${context.Stopover}.Have a safe journey` },
+          value: { utterance: `Navigating from ${context.StartingPoint} to ${context.Destination} with preference: ${context.RoutePreference} and stopover at ${context.Stopover}.Have a safe journey` },
         });
       },
     },
