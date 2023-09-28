@@ -45,87 +45,158 @@ interface Grammar {
   };
 
 const grammar: Grammar = {
-  "i want to read a novel by milan kundera on my kindle": {
+  "i don't want to know about these things": {
     entities: {
-      genre: "novel",
-      author: "milan kundera",
-      media: "e-book",
+      answer: "no"
     },
   },
-  "i want to read a novel" : {
+  "no" : {
     entities: {
-      genre: "novel",
+      answer: "no",
     },
   },
-  "novel" : {
+  "no, thank you" : {
     entities: {
-      genre: "novel",
+      answer: "no",
     },
   },
-  "i want to read a milan kundera book": {
+  "i don't want to" : {
     entities: {
-      author: "milan kundera",
+      answer: "no",
     },
   },
-  "milan kundera": {
+  "i don't" : {
     entities: {
-      author: "milan kundera",
+      answer: "no",
     },
   },
-  "i want to read an ebook" : {
+  "no i don't" : {
     entities: {
-      media: "ebook",
+      answer: "no",
     },
   },
-  //for some reason audiobook was not being recognised
-  "hardcover" : {
+  "tell me about the plot": {
     entities: {
-      media: "hardcover",
+      answer: "yes",
+      what: "plot"
     },
   },
-  "i want to read philosophical fiction by milan kundera" : {
+  "yes the plot": {
     entities: {
-      genre: "philosophical fiction",
-      author: "milan kundera",
+      answer: "yes",
+      what: "plot"
     },
   },
-  "i want to read a novel on my kindle": {
+  "the plot": {
     entities: {
-      genre: "novel",
-      media: "e-book",
+      answer: "yes",
+      what: "plot"
     },
   },
-  "i want to hear a milan kundera book" : {
+  "the mood": {
     entities: {
-      author: "milan kundera",
-      media: "audiobook",
+      answer: "yes",
+      what: "mood"
+    },
+  },
+  "no I already know that": {
+    entities: {
+      answer: "no",
+    },
+  },
+  "no you told me already": {
+    entities: {
+      answer: "no",
+    },
+  },
+  "ok": {
+    entities: {
+      answer: "yes",
+      what: "both"
+    },
+  },
+  "yes": {
+    entities: {
+      answer: "yes",
+      what: "both"
+    },
+  },
+  "yes, please" : {
+    entities: {
+      answer: "yes",
+    },
+  },
+  "yeah tell me about the plot" : {
+    entities: {
+      answer: "yes",
+      what: "plot"
+    },
+  },
+  "yes, tell me about its plot" : {
+    entities: {
+      answer: "yes",
+      what: "plot"
+    },
+  },
+  "yes, tell me about its plot please" : {
+    entities: {
+      answer: "yes",
+      what: "plot"
+    }
+  },
+  "yes, tell me about its mood" : {
+    entities: {
+      answer: "yes",
+      what: "mood"
+    },
+  },
+  "tell me about the mood" : {
+    entities: {
+      answer: "yes",
+      what: "mood"
+    },
+  },
+  "tell me about the general feel" : {
+    entities: {
+      answer: "yes",
+      what: "mood",
+    },
+  },
+  "what is the general feel": {
+    entities: {
+      answer: "yes",
+      what: "mood",
+    },
+  },
+  "tell me about both" : {
+    entities: {
+      answer: "yes",
+      what: "both",
     },
   },
 };
 
-//wasn't able to use it as I couldn't figure out a way to distinguish between the entities it would extract
-const getEntities = (entity:string, sentence: string) => {
-  let u = sentence.toLowerCase().replace(/\.$/g, "");
-  const words = u.split(' ')
-  const entities = {genre: "nothing", author: "nothing", media: "nothing"}
-  const authors = ["milan kundera", "jane austen"]
-  const genres = ["philosophical fiction", "novel"]
-  const media = ["hardcover", "ebook"]
-  
-  if (u in grammar) {
-    if (entity in words)
-    {
-      return grammar[u].entities}
-      else {
-        return false
+//the following function is not used in the code
+const getEntities = (sentence: string) => {
+  const result = [];
+  const entities = grammar[sentence].entities
+  const sent = sentence.toLowerCase().replace(/\.$/g, "").split(" ")
+  for (let i = 0; i < sent.length; i++) {
+    if (sent[i] in entities) {
+      result.push(sent[i]);
+      return result
     }
   }
-}
+  return false;
+};
 
-// if (sent in grammar) {
-//   if ("genre" in grammar[sent].entities) {
-//     console.log(grammar[sent].entities["genre"])
-//     return true
+const getDialogues = (user: string, gpt: string) => {
+  const dialogues = {users: [], gptAnswers: []}
+  dialogues.users.push(user);
+  dialogues.gptAnswers.push(gpt);
+  console.log(dialogues)
+  return dialogues
+};
 
 const lower = (sentence : string) => {
   let u = sentence.toLowerCase().replace(/\.$/g, "");
@@ -166,7 +237,7 @@ const dmMachine = createMachine(
                 entry: ({context}) => {
                   context.spstRef.send({
                     type: "SPEAK", 
-                    value:{utterance: "What genre of book are you interested in reading today?"},
+                    value:{utterance: "What are you in the mood for reading today?"},
                   });
                 },
                 on: { SPEAK_COMPLETE: "Ask" },
@@ -175,167 +246,6 @@ const dmMachine = createMachine(
                 entry: listen(),
                 on: {
                   RECOGNISED: [
-                    {
-                    target: "SuggestBook",
-                    guard: ({event}) => {
-                      const sent = lower(event.value[0].utterance);
-                      if (sent in grammar) {
-                        if ("genre" in grammar[sent].entities && "author" in grammar[sent].entities && "media" in grammar[sent].entities) {
-                          console.log(grammar[sent].entities["genre"])
-                          return true
-                        }
-                      }
-                      return false
-                    },
-                    actions: [
-                      ({ event }) => console.log(event),
-                      assign({
-                        bookGenre: ({event}) => {
-                        const sentence = lower(event.value[0].utterance)
-                        grammar[sentence].entities["genre"]},
-                        bookAuthor: ({event}) => {
-                          const sentence = lower(event.value[0].utterance)
-                          grammar[sentence].entities["author"]},
-                        bookMedia: ({event}) => {
-                          const sentence = lower(event.value[0].utterance)
-                          grammar[sentence].entities["media"]},
-                        lastResult: ({ event }) => event.value,
-                      }),
-                    ],
-                  },
-                  { target: "giveGenre",
-                    guard: ({event}) => {
-                      const sent = lower(event.value[0].utterance);
-                      if (sent in grammar) {
-                        if ("author" in grammar[sent].entities && "media" in grammar[sent].entities) {
-                          console.log(grammar[sent].entities["author"])
-                          return true
-                        }
-                      }
-                      return false
-                    },
-                    actions: [
-                      ({ event }) => console.log(event),
-                      assign({
-                        bookAuthor: ({context, event}) => {
-                        const sentence = lower(event.value[0].utterance)
-                        grammar[sentence].entities["author"]},
-                        bookMedia: ({context, event}) => {
-                          const sentence = lower(event.value[0].utterance)
-                          grammar[sentence].entities["media"]},
-                        //lastResult: ({ event }) => event.value,
-                      }),
-                    ],
-                  },
-                  {
-                    target: "askForMedia",
-                    guard: ({event}) => {
-                      const sent = lower(event.value[0].utterance);
-                      if (sent in grammar) {
-                        if ("genre" in grammar[sent].entities && "author" in grammar[sent].entities) {
-                          console.log(grammar[sent].entities["genre"])
-                          return true
-                        }
-                      }
-                      return false
-                    },
-                    actions: [
-                      ({ event }) => console.log(event),
-                      assign({
-                        bookGenre: ({event}) => {
-                          const sentence = lower(event.value[0].utterance)
-                          grammar[sentence].entities["genre"]},
-                        bookAuthor: ({event}) => {
-                          const sentence = lower(event.value[0].utterance)
-                          grammar[sentence].entities["author"]},
-                        //lastResult: ({ event }) => event.value,
-                      }),
-                    ],                 
-                  },
-                  { target: "giveAuthor",
-                    guard: ({event}) => {
-                      const sent = lower(event.value[0].utterance);
-                      if (sent in grammar) {
-                        if ("genre" in grammar[sent].entities && "media" in grammar[sent].entities) {
-                          console.log(grammar[sent].entities["genre"])
-                          return true
-                        }
-                      }
-                      return false
-                    },
-                    actions: [
-                      ({ event }) => console.log(event),
-                      assign({
-                        bookGenre: ({event}) => {
-                        const sentence = lower(event.value[0].utterance)
-                        grammar[sentence].entities["genre"]},
-                        bookMedia: ({event}) => {
-                          const sentence = lower(event.value[0].utterance)
-                          grammar[sentence].entities["media"]},
-                        //lastResult: ({ event }) => event.value,
-                      }),
-                    ],
-                  },
-                  { target: "onlyGenre",
-                    guard: ({event}) => {
-                      const sent = lower(event.value[0].utterance);
-                      if (sent in grammar) {
-                        if ("genre" in grammar[sent].entities) {
-                          console.log(grammar[sent].entities["genre"],event.bookGenre)
-                          return true
-                        }
-                      }
-                      return false
-                    },
-                    actions: [
-                      ({ event }) => console.log(event),
-                      assign({
-                        bookGenre: ({event}) => {
-                        const sentence = lower(event.value[0].utterance)
-                        grammar[sentence].entities["genre"]},
-                      }),
-                    ],
-                  },
-                  { target: "onlyAuthor",
-                    guard: ({event}) => {
-                      const sent = lower(event.value[0].utterance);
-                      if (sent in grammar) {
-                        if ("author" in grammar[sent].entities) {
-                          console.log(grammar[sent].entities["author"])
-                          return true
-                        }
-                      }
-                      return false
-                    },
-                    actions: [
-                      ({ event }) => console.log(event),
-                      assign({
-                        bookAuthor: ({event}) => {
-                        const sentence = lower(event.value[0].utterance)
-                        grammar[sentence].entities["author"]},
-                      }),
-                    ],
-                  },
-                  { target: "onlyMedia",
-                    guard: ({event}) => {
-                      const sent = lower(event.value[0].utterance);
-                      if (sent in grammar) {
-                        if ("media" in grammar[sent].entities) {
-                          console.log(grammar[sent].entities["media"])
-                          return true
-                        }
-                      }
-                      return false
-                    },
-                    actions: [
-                      ({ event }) => console.log(event),
-                      assign({
-                        bookMedia: ({event}) => {
-                        const sentence = lower(event.value[0].utterance)
-                        grammar[sentence].entities["media"]},
-                      }),
-                    ],
-                  },
                   {
                    target: "chatGPT",
                     actions: [
@@ -349,451 +259,284 @@ const dmMachine = createMachine(
               },
               chatGPT: {
                 invoke: {
-                  src: fromPromise(async({input}) => {
-                   const gptAnswer = await fetchFromChatGPT(input.lastResult[0].utterance, 250);
+                  src: fromPromise(async({input}) => {  
+                    //inside the gpt function + I have already read that book + the ${context.bookName} if it's possible to use context
+                    // there like this
+                   const gptAnswer = await fetchFromChatGPT(`this utterance contains what I seek to read ${input.lastResult[0].utterance}. 
+                      Give me your suggestion of one book in a JSON file with entities like bookName, bookAuthor, bookGenre, bookMood, and bookPlot. 
+                      Try to be diverse and don't answer if the utterance is a question`, 250);
                    return gptAnswer; 
                   }),
                   input: ({context, event}) => ({
                     lastResult: context.lastResult,
                   }),
                   onDone: {
-                    target: "success"
+                    target: "success",
+                    actions: [
+                      ({ event }) => console.log(event.output),
+                      assign({
+                        gptzAnswer: ({ event }) => event.output,
+                        bookName: ({ event }) => JSON.parse(event.output).bookName,
+                        bookAuthor: ({ event }) => JSON.parse(event.output).bookAuthor,
+                        bookGenre: ({ event }) => JSON.parse(event.output).bookGenre,
+                        bookMood: ({ event }) => JSON.parse(event.output).bookMood,
+                        bookPlot: ({ event }) => JSON.parse(event.output).bookPlot
+                      })
+                    ]
                   },
                 },
-                // entry: say("I am sorry I didn't quite catch that. What book genre do you want to read?"),
-                // on: { SPEAK_COMPLETE: "Ask" },
               },
               success: {
                 entry: ({context}) => {
                   context.spstRef.send({
                     type: "SPEAK",
-                    value: { utterance: `${context.lastResult}` },
+                    value: { utterance: `The book I would suggest you read is ${context.bookName} by ${context.bookAuthor}. It is a very nice ${context.bookGenre} book! Would you like to know more about the book's plot or its general mood?` },
                   });
-                }
+                },
+                on: { SPEAK_COMPLETE: "yesNo" }
               },
-              onlyMedia: {
-                entry: ({ context }) => {
-                  context.spstRef.send({
-                    type: "SPEAK",
-                    value: { utterance: "Please, tell me what is the author you want to read?" },
-                  });
-                },
-                on: { SPEAK_COMPLETE: "askAuthor2" }},
-                  askAuthor2: {
-                    entry: listen(), 
-                    on: {
-                      RECOGNISED: [
-                        //both
-                        {
-                        target: "SuggestBook",
-                        guard: ({event}) => {
-                          const sent = lower(event.value[0].utterance);
-                          if (sent in grammar) {
-                            if ("author" in grammar[sent].entities && "genre" in grammar[sent].entities) {
-                              console.log(grammar[sent].entities["genre"])
-                              return true
-                            }
-                          }
-                          return false
-                        },
-                        actions: [
-                          ({ event }) => console.log(event.bookMedia),
-                          assign({
-                            bookGenre: ({event}) => {
-                              const sentence = lower(event.value[0].utterance)
-                              grammar[sentence].entities["genre"]},
-                            bookAuthor: ({event}) =>{
-                              const sentence = lower(event.value[0].utterance)
-                              grammar[sentence].entities["author"]}
-                          }),
-                        ],
-                      },
-                      //media, => author & genre // only author
-                      {
-                        target: "giveGenre",
-                        guard: ({event}) => {
-                          const sent = lower(event.value[0].utterance);
-                          if (sent in grammar) {
-                            if ("author" in grammar[sent].entities) {
-                              console.log(grammar[sent].entities["author"])
-                              return true
-                            }
-                          }
-                          return false
-                        },
-                        actions: [
-                          ({ event }) => console.log(event),
-                          assign({
-                            bookGenre: ({event}) => {
-                              const sentence = lower(event.value[0].utterance)
-                              grammar[sentence].entities["genre"]},
-                          }),
-                        ],
-                      }],
+              yesNo: {
+                entry: listen(),
+                on: {
+                  RECOGNISED: [
+                   {
+                    target: "wantMood",
+                    guard: ({context, event}) => {
+                      const sent = lower(event.value[0].utterance);
+                      if (sent in grammar) {
+                        if ( grammar[sent].entities.answer == "yes" && context.plotDone == "yes" ) {
+                          return true
+                        }
+                      }
+                      return false
                     },
-                  },
-                  giveGenre: {
-                    entry: ({ context }) => {
-                      context.spstRef.send({
-                        type: "SPEAK",
-                        //I don't find it very natural that the system asks for the genre after it has learned the author's name, as
-                        //someone would expect an author to only write one genre, but for the sake of the assignment I will leave it
-                        //like this
-                        value: { utterance: "What is your favorite genre?" },
-                      });
+                   },
+                   {
+                    target: "wantPlot",
+                    guard: ({context, event}) => {
+                      const sent = lower(event.value[0].utterance);
+                      if (sent in grammar) {
+                        if ( grammar[sent].entities.answer == "yes" && context.moodDone == "yes" ) {
+                          return true
+                        }
+                      }
+                      return false
                     },
-                    on: { SPEAK_COMPLETE: "giveGen" }},
-                      giveGen: {
-                        entry: listen(), 
-                        on: {
-                          RECOGNISED: [
-                            {
-                            target: "SuggestBook",
-                            guard: ({event}) => {
-                              const sent = lower(event.value[0].utterance);
-                              if (sent in grammar) {
-                                if ("genre" in grammar[sent].entities) {
-                                  console.log(grammar[sent].entities["media"])
-                                  return true
-                                }
-                              }
-                              return false
-                            },
-                            actions: [
-                              ({ event }) => console.log(event),
-                              assign({
-                                bookGenre: ({event}) => {
-                                  const sentence = lower(event.value[0].utterance)
-                                  grammar[sentence].entities["genre"]}
-                              }),
-                            ],
-                          }],
-                        },
-                      },
-                      giveAuthor: {
-                        entry: ({ context }) => {
-                          context.spstRef.send({
-                            type: "SPEAK",
-                            //I don't find it very natural that the system asks for the genre after it has learned the author's name, as
-                            //someone would expect an author to only write one genre, but for the sake of the assignment I will leave it
-                            //like this
-                            value: { utterance: "Tell me the author" },
-                          });
-                        },
-                        on: { SPEAK_COMPLETE: "giveAuth" }},
-                          giveAuth: {
-                            entry: listen(), 
-                            on: {
-                              RECOGNISED: [
-                                {
-                                target: "SuggestBook",
-                                guard: ({event}) => {
-                                  const sent = lower(event.value[0].utterance);
-                                  if (sent in grammar) {
-                                    if ("author" in grammar[sent].entities) {
-                                      console.log(grammar[sent].entities["author"])
-                                      return true
-                                    }
-                                  }
-                                  return false
-                                },
-                                actions: [
-                                  ({ event }) => console.log(event),
-                                  assign({
-                                    bookAuthor: ({event}) => {
-                                      const sentence = lower(event.value[0].utterance)
-                                      grammar[sentence].entities["author"]}
-                                  }),
-                                ],
-                              }],
-                            },
-                          },         
-              onlyAuthor: {
-                entry: ({ context }) => {
-                  context.spstRef.send({
-                    type: "SPEAK",
-                    //I don't find it very natural that the system asks for the genre after it has learned the author's name, as
-                    //someone would expect an author to only write one genre, but for the sake of the assignment I will leave it
-                    //like this
-                    value: { utterance: "What is your favorite genre?" },
-                  });
-                },
-                on: { SPEAK_COMPLETE: "askGen" }},
-                  askGen: {
-                    entry: listen(), 
-                    on: {
-                      RECOGNISED: [
-                        {
-                        target: "SuggestBook",
-                        guard: ({event}) => {
-                          const sent = lower(event.value[0].utterance);
-                          if (sent in grammar) {
-                            if ("genre" in grammar[sent].entities && "media" in grammar[sent].entities && event.bookAuthor) {
-                              console.log(grammar[sent].entities["media"])
-                              return true
-                            }
-                          }
-                          return false
-                        },
-                        actions: [
-                          ({ event }) => console.log(event),
-                          assign({
-                            bookMedia: ({event}) => {
-                              const sentence = lower(event.value[0].utterance)
-                              grammar[sentence].entities["media"]},
-                            bookAuthor: ({event}) =>{
-                              const sentence = lower(event.value[0].utterance)
-                              grammar[sentence].entities["author"]}
-                          }),
-                        ],
-                      },
-                      {
-                        target: "askForMedia",
-                        guard: ({event}) => {
-                          const sent = lower(event.value[0].utterance);
-                          if (sent in grammar) {
-                            if ("genre" in grammar[sent].entities) {
-                              console.log(grammar[sent].entities["genre"])
-                              return true
-                            }
-                          }
-                          return false
-                        },
-                        actions: [
-                          ({ event }) => console.log(event),
-                          assign({
-                            bookGenre: ({event}) => {
-                              const sentence = lower(event.value[0].utterance)
-                              grammar[sentence].entities["genre"]},
-                          }),
-                        ],
-                      }],
+                   },
+                   {
+                    target: "plot",
+                    guard: ({ context, event }) => {
+                      const sent = lower(event.value[0].utterance);
+                      if (sent in grammar) {
+                        if ( grammar[sent].entities.answer == "yes" && context.moodDone == "yes" || grammar[sent].entities.answer == "yes" && grammar[sent].entities.what == "plot") {
+                          return true
+                        }
+                      }
+                      return false
                     },
-                  },     
-              onlyGenre: {
-                entry: ({ context }) => {
-                  context.spstRef.send({
-                    type: "SPEAK",
-                    value: { utterance: "What author would you like to discover today?" },
-                  });
-                },
-                on: { SPEAK_COMPLETE: "askAuth" }},
-                  askAuth: {
-                    entry: listen(), 
-                    on: {
-                      RECOGNISED: [
-                        {
-                        target: "SuggestBook",
-                        guard: ({event}) => {
-                          const sent = lower(event.value[0].utterance);
-                          if (sent in grammar) {
-                            if ("author" in grammar[sent].entities && "media" in grammar[sent].entities) {
-                              console.log(grammar[sent].entities["media"])
-                              return true
-                            }
-                          }
-                          return false
-                        },
-                        actions: [
-                          ({ event }) => console.log(event),
-                          assign({
-                            bookMedia: ({event}) => {
-                              const sentence = lower(event.value[0].utterance)
-                              grammar[sentence].entities["media"]},
-                            bookAuthor: ({event}) =>{
-                              const sentence = lower(event.value[0].utterance)
-                              grammar[sentence].entities["author"]}
-                          }),
-                        ],
-                      },
-                      {
-                        target: "askForMedia",
-                        guard: ({event}) => {
-                          const sent = lower(event.value[0].utterance);
-                          if (sent in grammar) {
-                            if ("author" in grammar[sent].entities) {
-                              console.log(grammar[sent].entities["author"])
-                              return true
-                            }
-                          }
-                          return false
-                        },
-                        actions: [
-                          ({ event }) => console.log(event),
-                          assign({
-                            bookAuthor: ({event}) => {
-                              const sentence = lower(event.value[0].utterance)
-                              grammar[sentence].entities["author"]},
-                          }),
-                        ],
-                      }],
+                    actions: [
+                      ({ event }) => console.log(event.output),
+                      assign({
+                        plotDone: ({ event }) => "yes",
+                      })
+                    ]
+                   },
+                   {
+                    target: "mood",
+                    guard: ({context, event}) => {
+                      const sent = lower(event.value[0].utterance);
+                      if (sent in grammar) {
+                        if (grammar[sent].entities.answer == "yes" && grammar[sent].entities.what == "mood") {
+                          return true
+                        }
+                      }
+                      return false
                     },
-                  },
-              askForGenre: {
-                entry: ({ context }) => {
-                  context.spstRef.send({
-                    type: "SPEAK",
-                    value: { utterance: "What genre do you prefer?" },
-                  });
-                },
-                on: { SPEAK_COMPLETE: "askGenre" }},
-                  askGenre: {
-                    entry: listen(), 
-                    on: {
-                      RECOGNISED: [
-                        {
-                        target: "SuggestBook",
-                        guard: ({event}) => {
-                          const sent = lower(event.value[0].utterance);
-                          if (sent in grammar) {
-                            if ("genre" in grammar[sent].entities && "media" in grammar[sent].entities) {
-                              console.log(grammar[sent].entities["media"])
-                              return true
-                            }
-                          }
-                          return false
-                        },
-                        actions: [
-                          ({ event }) => console.log(event),
-                          assign({
-                            bookMedia: ({event}) => {
-                              const sentence = lower(event.value[0].utterance)
-                              grammar[sentence].entities["media"]},
-                            bookGenre: ({event}) =>{
-                              const sentence = lower(event.value[0].utterance)
-                              grammar[sentence].entities["genre"]}
-                          }),
-                        ],
-                      },
-                      {
-                        target: "askForMedia",
-                        guard: ({event}) => {
-                          const sent = lower(event.value[0].utterance);
-                          if (sent in grammar) {
-                            if ("genre" in grammar[sent].entities) {
-                              console.log(grammar[sent].entities["media"])
-                              return true
-                            }
-                          }
-                          return false
-                        },
-                        actions: [
-                          ({ event }) => console.log(event),
-                          assign({
-                            bookGenre: ({event}) => {
-                              const sentence = lower(event.value[0].utterance)
-                              grammar[sentence].entities["genre"]},
-                          }),
-                        ],
-                      }],
+                    actions: [
+                      ({ event }) => console.log(event.output),
+                      assign({
+                        moodDone: ({ event }) => "yes",
+                      })
+                    ]
+                   },
+                   {
+                    target: "both",
+                    guard: ({event}) => {
+                      const sent = lower(event.value[0].utterance);
+                      if (sent in grammar) {
+                        if (grammar[sent].entities.answer == "yes" && grammar[sent].entities.what == "both") {
+                          return true
+                        }
+                      }
+                      return false
                     },
-                  },       
-              askForAuthor: {
-                entry: ({ context }) => {
-                  context.spstRef.send({
-                    type: "SPEAK",
-                    value: { utterance: "What author do you have in mind?" },
-                  });
-                },
-                on: { SPEAK_COMPLETE: "askAuthor" }},
-                  askAuthor: {
-                    entry: listen(), 
-                    on: {
-                      RECOGNISED: [
-                        {
-                        target: "SuggestBook",
-                        guard: ({event}) => {
-                          const sent = lower(event.value[0].utterance);
-                          if (sent in grammar) {
-                            if ("author" in grammar[sent].entities && "media" in grammar[sent].entities) {
-                              console.log(grammar[sent].entities["genre"])
-                              return true
-                            }
-                          }
-                          return false
-                        },
-                        actions: [
-                          ({ event }) => console.log(event),
-                          assign({
-                            bookAuthor: ({event}) => {
-                              const sentence = lower(event.value[0].utterance)
-                              grammar[sentence].entities["author"]},
-                            bookMedia: ({event}) => {
-                              const sentence = lower(event.value[0].utterance)
-                              grammar[sentence].entities["media"]},
-                            //lastResult: ({ event }) => event.value,
-                          }),
-                        ],
-                      },
-                      {
-                        target: "askForMedia",
-                        guard: ({event}) => {
-                          const sent = lower(event.value[0].utterance);
-                          if (sent in grammar) {
-                            if ("author" in grammar[sent].entities) {
-                              console.log(grammar[sent].entities["author"])
-                              return true
-                            }
-                          }
-                          return false
-                        },
-                        actions: [
-                          ({ event }) => console.log(event),
-                          assign({
-                            bookAuthor: ({event}) => {
-                            const sentence = lower(event.value[0].utterance)
-                            grammar[sentence].entities["author"]}
-                            //lastResult: ({ event }) => event.value,
-                          }),
-                        ],                 
-                      }],
+                   },
+                   {
+                    target: "goodbye",
+                    guard: ({event}) => {
+                      const sent = lower(event.value[0].utterance);
+                      if (sent in grammar) {
+                        if (grammar[sent].entities.answer == "no") {
+                          return true
+                        }
+                      }
+                      return false
                     },
-                  },
-              askForMedia: {
-                entry: ({ context }) => {
-                  context.spstRef.send({
-                    type: "SPEAK",
-                    value: { utterance: "What format do you want your book in? For example audiobook, e-book, or hardcover?" },
-                  });
+                   },
+                   {
+                    target: "noEntiendo",
+                     actions: [
+                       ({ event }) => console.log(event),
+                       assign({
+                         lastResult: ({event}) => event.value,
+                       }),
+                     ],
+                   },
+                   ],
                 },
-                on: { SPEAK_COMPLETE: "askMedia" }},
-                  askMedia: {
-                    entry: listen(), 
-                    on: {
-                      RECOGNISED: [
-                        {
-                        target: "SuggestBook",
-                        guard: ({event}) => {
-                          const sent = lower(event.value[0].utterance);
-                          if (sent in grammar) {
-                            if ("media" in grammar[sent].entities) {
-                              console.log(grammar[sent].entities["media"])
-                              return true
-                            }
-                          }
-                          return false
-                        },
-                        actions: [
-                          ({ event }) => console.log(event),
-                          assign({
-                            bookMedia: ({event}) => {
-                              const sentence = lower(event.value[0].utterance)
-                              grammar[sentence].entities["media"]},
-                          }),
-                        ],
-                      }],
-                    },
-                  },        
-              SuggestBook: {
-                id: "SuggestBook",
-                entry: ({ context }) => {
-                  context.spstRef.send({
-                    type: "SPEAK",
-                    value: { utterance: "Based on your preferences I would suggest you The unbearable lightness of being. You can find it at the City Library" },
-                  });
-                },
-                on: { SPEAK_COMPLETE: "Ask" },
               },
+              noEntiendo: {
+                entry: ({context}) => {
+                  context.spstRef.send({
+                    type: "SPEAK", 
+                    value:{utterance: "I don't think I got that correctly. Would you like me to tell you about its plot or its mood?"},
+                  });
+                },
+                on: { SPEAK_COMPLETE: "yesNo" },
+              },
+              plot: {
+                entry: ({context}) => {
+                  context.spstRef.send({
+                    type: "SPEAK", 
+                    value:{utterance: `${context.bookPlot}. Would you like to learn the book's mood set?`},
+                  });
+                },
+                on: { SPEAK_COMPLETE: "yesNo" },
+              },
+              mood: {
+                entry: ({context}) => {
+                  context.spstRef.send({
+                    type: "SPEAK", 
+                    value:{utterance: `${context.bookName} is considered a ${context.bookMood} book. Would you like to hear its plot?`},
+                  });
+                },
+                on: { SPEAK_COMPLETE: "yesNo" },
+              },
+              both: {
+                entry: ({context}) => {
+                  context.spstRef.send({
+                    type: "SPEAK", 
+                    value:{utterance: `${context.bookPlot}. The book is considered to be ${context.bookMood}.`},
+                  });
+                },
+                on: { SPEAK_COMPLETE: "goodbye" },
+                
+              },
+              wantMood: {
+                entry: ({ context }) => {
+                  context.spstRef.send({
+                    type: "SPEAK",
+                    value: { utterance: `The mood of ${context.bookName} is described as ${context.bookMood}.`},
+                  });
+                },
+                on : { SPEAK_COMPLETE: "goodbye" }
+              },
+              wantPlot: {
+                entry: ({ context }) => {
+                  context.spstRef.send({
+                    type: "SPEAK",
+                    value: { utterance: `The plot of ${context.bookName} is this. ${context.bookPlot}.`},
+                  });
+                },
+                on : { SPEAK_COMPLETE: "goodbye" }  
+              },
+              goodbye: {
+                entry: ({ context }) => {
+                  context.spstRef.send({
+                    type: "SPEAK",
+                    //last part of this utterance would make more sense if I could make this system available to other people and save their chat. 
+                    //I'm implementing it now because I think it would be a nice feature and I want to see how it works and how the dialogue evolves                    
+                    value: { utterance: `Hope this information makes you more excited about reading this book! Enjoy your read!`}, //PS. If you want take some time to chat with me about books and help me collect dialogues between users and me, it would help a lot! What do you say?"`}, 
+                  });
+                },
+                //on : { SPEAK_COMPLETE: "yesOrNo" } 
+              },
+              // yesOrNo: {
+              //   entry: listen(),
+              //   on: {
+              //     RECOGNISED: [
+              //     {
+              //       target: "bye",
+              //       guard: ({ context, event }) => {
+              //         const sent = lower(event.value[0].utterance);
+              //         if (sent in grammar || null) {
+              //           if ( grammar[sent].entities.answer == "no") {
+              //             return true
+              //           }
+              //         }
+              //         return false
+              //       },
+              //      },
+              //      {
+              //       target: "chatWithGPT",
+              //       guard: ({context, event}) => {
+              //         const sent = lower(event.value[0].utterance);
+              //         if (sent in grammar) {
+              //           if ( grammar[sent].entities.answer == "yes") {
+              //             return true
+              //           }
+              //         }
+              //         return false
+              //       },
+              //      }],
+              //   },
+              // },
+              // chatWithGPT: {
+              //   invoke: {
+              //     src: fromPromise(async({input}) => {  
+              //       //inside the gpt function + I have already read that book + the ${context.bookName} if it's possible to use context
+              //       // there like this
+              //      const gptAnswer = await fetchFromChatGPT(`Let's discuss about ${input.lastResult[0].utterance} but keep it very concise please`, 150);
+              //      return gptAnswer; 
+              //     }),
+              //     //this doesn't really work because it keeps the utterance used in the very beginning of the state machine and I couldn't figure out a way to use the context.bookName or context.bookAuthor
+              //     input: ({context, event}) => ({
+              //       lastResult: context.lastResult,
+              //     }),
+              //     onDone: {
+              //       target: "speak",
+              //       actions: [
+              //         ({ context, event }) => console.log(event.output),
+              //         assign({
+              //           gptzAnswer: ({ event }) => event.output,
+              //         })
+              //       ]
+              //     },
+              //   },
+              // },
+              // speak: {
+              //   entry: ({context}) => {
+              //     context.spstRef.send({
+              //       type: "SPEAK",
+              //       value: { utterance: `${context.gptzAnswer}` },
+              //     });
+              //     actions: [
+              //       ({ context, event }) => console.log(event.output),
+              //       assign({
+              //         dialogues: ({ event }) => getDialogues(event.value[0].utterance, context.gptzAnswer),
+              //       })
+              //     ]
+              //   },
+              //   on: { SPEAK_COMPLETE: "chatWithGPT" }
+              // },
+              // bye: {
+              //   entry: ({ context }) => {
+              //     context.spstRef.send({
+              //       type: "SPEAK",
+              //       value: { utterance: "Ok! It was nice talking to you"},
+              //     });
+              //   },
+              // },
               IdleEnd: {},
             },
           },
@@ -876,7 +619,7 @@ async function fetchFromChatGPT(prompt: string, max_tokens: number) {
   const myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
-    "Bearer <key>",
+    "Bearer <>",
   );
   myHeaders.append("Content-Type", "application/json");
   const raw = JSON.stringify({
@@ -887,7 +630,7 @@ async function fetchFromChatGPT(prompt: string, max_tokens: number) {
               content: prompt,
             },
           ],
-    temperature: 0,
+    temperature: 0.5,
     max_tokens: max_tokens,
   });
 
