@@ -6,7 +6,7 @@
 
 html, body {
   height: 100vh;
-  background: hsla(323, 37%, 84%, 0.7);
+  background: hsla(226, 35%, 39%, 0.842);
 }
 
 #button{
@@ -166,3 +166,210 @@ html, body {
   .dot:nth-child(10){
     animation-delay: 0.9s;
   }
+
+  /* star animations */
+
+.star-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 150px; 
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  align-items: center;
+}
+
+.star {
+  width: 150px; 
+  height: 150px;
+  font-size: 90px; 
+  position: relative;
+}
+
+.star::before,
+.star::after {
+  content: "★";
+  position: absolute;
+  color: rgba(255, 217, 0, 0.661);
+  animation: blink 1s infinite alternate;
+}
+
+.star::before {
+  top: 300px;
+  right: 360px; 
+}
+
+.star::after {
+  top: 400px; 
+  right: 200px; 
+}
+/* star 1 */
+
+.star1 {
+  width: 150px; 
+  height: 150px;
+  font-size: 90px; 
+  position: relative;
+}
+
+.star1::before,
+.star1::after {
+  content: "★";
+  position: absolute;
+  color: rgba(245, 237, 195, 0.864);
+  animation: blink 1s infinite alternate;
+}
+
+.star1::before {
+  top: -80px;
+  right: 650px; 
+}
+
+.star1::after {
+  top: 15px; 
+  right: 550px; 
+}
+
+
+@keyframes blink {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
+/* planet */
+
+/* .planet {
+  width: 100px;
+  height: 100px;
+  background: conic-gradient(
+      #e3b3eea4 0%,
+      #f6b86d 25%,
+      #f7c590 50%,
+      #e8b7ec 75%,
+      #ec98b7 100%
+  ); 
+  border-radius: 50%;
+  position: relative;
+  animation: spin 10s linear infinite;
+  animation-name: spin, move;
+  animation-duration: 10s, 5s;
+  animation-timing-function: linear, ease-in-out;
+}
+
+@keyframes spin {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+}
+
+@keyframes move {
+  0% {
+      left: -100px;
+  }
+  50% {
+      left: 50%;
+      transform: translateX(-50%);
+  }
+  100% {
+      left: calc(100% + 100px);
+  }
+} */
+
+.spaceship {
+  width: 200px;
+  height: 100px;
+  position: relative;
+  animation: spin 10s linear infinite, move 5s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.body {
+  width: 100%;
+  height: 100%;
+  background: conic-gradient(
+    #e3b3eea4 0%,
+    #f6b86d 25%,
+    #f7c590 50%,
+    #e8b7ec 75%,
+    #ec98b7 100%
+); 
+  border-radius: 50px;
+  position: absolute;
+}
+
+.window {
+  width: 20px;
+  height: 20px;
+  background: #c6eaf1d6 0%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 50%;
+}
+
+.window1 {
+  left: 50px;
+  width: 1cm;
+  height: 1cm;
+  left: 6%;
+}
+
+.window2 {
+  left: 90px;
+  width: 1cm;
+  height: 1cm;
+  left: 40%;
+}
+
+.window3 {
+  left: 130px;
+  width: 1cm;
+  height: 1cm;
+  left: 75%;
+}
+
+.wing {
+  width: 80px;
+  height: 30px;
+  background: #989898;
+  position: absolute;
+  transform: translateY(-50%);
+  border-radius: 10px;
+}
+
+.left-wing {
+  left: -5px;
+  bottom: 90%;
+  transform: rotate(210deg);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.right-wing {
+  left: -5px;
+  bottom: -20%;
+  transform: rotate(150deg);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+@keyframes move {
+  0% {
+    left: -100px;
+  }
+  50% {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  100% {
+    left: calc(100% + 100px);
+  }
+}
+

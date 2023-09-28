@@ -1,5 +1,6 @@
 import { createMachine, createActor, assign } from "xstate";
 import { speechstate, Settings, Hypothesis } from "speechstate";
+import { fromPromise } from 'xstate';
 
 const azureCredentials = {
   endpoint:
@@ -15,522 +16,151 @@ const settings: Settings = {
   ttsDefaultVoice: "en-GB-RyanNeural",
 };
 
+
 interface DMContext {
   spstRef?: any;
   lastResult?: Hypothesis[];
   // name: any;
 }
 
-// creating a grammar for our utterances: 
-
-//what = the meal you want to prepare
-//when = the time you want the meal preperation to take or for when would you like the meal, e.g organize a meal for the whole week
-//purpose = is there a special occasion or a specific detail? e.g. create a warm meal for rainy days. 
+//grammar for language change and next question
 
 const grammar = {
-  //meal prep utterances
-  "find a recipe that's perfect for a date night tomorrow": {
+  "italian": {
     entities: {
-    what: "recipe",
-    when: "tomorrow",
-    purpose: "date night",
+      italian: "italian"
     },
   },
-  "i want a recipe that's perfect for date night": {
+  "swedish": {
     entities: {
-    what: "recipe",
-    purpose: "date night",
+      swedish: "swedish"
     },
   },
-  "create a recipe that's perfect for date night": {
+  "spanish": {
     entities: {
-    what: "recipe",
-    purpose: "date night",
+      spanish: "spanish"
     },
   },
-  "can you suggest an international dish for today?": {
+  "portuguese": {
     entities: {
-    what: "dish",
-    when: "today",
-    purpose: "international",
+      portuguese: "portuguese"
     },
   },
-  "create a smoothie for energy boost": {
+  "french": {
     entities: {
-    what: "smoothie",
-    purpose: "energy boost",
+      french: "french"
     },
   },
-  "create a gluten free and dairy free meal plan for the week": {
+  "german": {
     entities: {
-    what: "meal plan",
-    when: "a week",
-    purpose: "gluten-free and dairy-free",
+      german: "german"
     },
   },
-  "create a quick sunday snack with bananas": {
+  "translate in italian": {
     entities: {
-    what: "quick snack",
-    when: "Sunday",
-    purpose: "with bananas",
+      italian: "italian"
     },
   },
-  "suggest a recipe that's low in carbs and high in protein": {
+  "translate in swedish": {
     entities: {
-      what: "recipe",
-      purpose: "low in carbs and high in protein",
-    }
-  },
-  "create a healthy afternoon snack": {
-    entities: {
-    what: "snack",
-    when: "the afternoon",
-    purpose: "healthy",
-    },
-  },
-  "create an italian recipe for tonight": {
-    entities: {
-    what:"recipe",
-    when: "tonight",
-    purpose: "italian",
-    }
-  },
-  "create a fun drink": {
-    entities: {
-    what: "drink",
-    purpose: "fun",
-    }
-  },
-  "plan a weekend picnic": {
-    entities: {
-      what: "picnic",
-      when: "the weekend",
-    },
-  },
-  "i want something for tomorrow's dinner": {
-    entities: {
-      when: "tomorrow",
-      purpose: "dinner",
-    },
-  },
-  "find me something savory for breakfast": {
-    entities: {
-      when: "breakfast",
-      purpose: "savory",
-    },
-  },
-  "create something sweet for dessert": {
-    entities: {
-      when: "dessert",
-      purpose: "sweet",
-    },
-  },
-  "find me something for today": {
-    entities: {
-      when: "today",
-    },
-  },
-  "find me something quick": {
-    entities: {
-      purpose: "quick",
-    },
-  },
-  "create a warm meal for rainy days": {
-    entities: {
-      what: "meal",
-      when: "rainy days",
-      purpose: "warm, comfort food",
-    },
-  },
-  "suggest a meal for dinner tonight": {
-    entities: {
-      what: "meal", 
-      when: "tonight" ,
-    }
-  },
-  "find a recipe for a special occasion": {
-    entities: {
-      what: "recipe", 
-      purpose: "special occasion",
-    }
-  },
-  "create a healthy breakfast": {
-    entities: {
-      what: "breakfast", 
-      purpose: "healthy",
-    },
-  },
-  "can you recommend a quick and easy dish": {
-    entities: {
-      what: "dish", 
-      purpose: "quick and easy",
-    },
-  },
-  "suggest a dessert for this weekend": {
-    entities: {
-      what: "dessert", 
-      when: "this weekend",
-    },
-  },
-  "find a recipe with chicken for tomorrow's lunch": {
-    entities: {
-      what: "recipe with chicken", 
-      when: "tomorrow", 
-      purpose: "lunch" ,
-    },
-  },
-  "create a vegetarian dinner": {
-    entities: {
-      what: "dinner", 
-      purpose: "vegetarian",
-    },
-  },
-  "suggest a cocktail recipe for a party": {
-    entities: {
-      what: "cocktail", 
-      purpose: "party",
-    },
-  },
-  "find something for a quick snack in the evening": {
-    entities: {
-      when: "the evening", 
-      purpose: "quick snack",
-    },
-  },
-  "create a soup for cold winter days": {
-    entities: {
-      what: "soup", 
-      when: "cold winter days", 
-      purpose: "comforting" 
-    },
-  },
-  "find something for tomorrow": {
-    entities: {
-      when: "tomorrow"
-    },
-  },
-  "find something for today": {
-    entities: {
-      when: "today"
-    },
-  },
-  "find something for the morning": {
-    entities: {
-      when: "the morning"
-    },
-  },
-  "i want something for the week": {
-    entities: {
-      when: "the week"
-    },
-  },
-  "i want something for the weekend": {
-    entities: {
-      when: "the weekend"
-    },
-  },
-  "i want something for sunday": {
-    entities: {
-      when: "Sunday"
-    },
-  },
-  "find something sweet": {
-    entities: {
-      purpose: "sweet"
-    },
-  },
-  "find something savory": {
-    entities: {
-      purpose: "savory"
-    },
-  },
-  "find something lactose free": {
-    entities: {
-      purpose: "lactose free"
-    },
-  },
-  "find something gluten free": {
-    entities: {
-    purpose: "gluten free"
-    },
-  },
-  "i would like to have a donught": {
-    entities: {
-      what: "donught"
-    },
-  },
-  "i would like to eat a donught": {
-    entities: {
-    what: "donught"
-    },
-  },
-  "i want to have a donught": {
-    entities: {
-      what: "donught"
-    },
-  },
-  "i want a donught": {
-    entities: {
-      what: "donught"
-    },
-  },
-  "i would like to have a burger": {
-    entities: {
-      what: "burger"
-    },
-  },
-  "i would like to eat a burger": {
-    entities: {
-      what: "burger"
-    },
-  },
-  "i want to have a burger": {
-    entities: {
-      what: "burger"
-    },
-  },
-  "i want burger": {
-    entities: {
-      what: "burger"
-    },
-  },
-  "i would like to have pasta": {
-    entities: {
-      what: "pasta"
-    },
-  },
-  "i would like to eat pasta": {
-    entities: {
-      what: "pasta"
-    },
-  },
-  "i want to have pasta": {
-    entities: {
-      what: "pasta"
-    },
-  },
-  "i want pasta": {
-    entities: {
-      what: "pasta"
-    },
-  },
-  "i would like to have french fries": {
-    entities: {
-      what: "French fries"
-    },
-  },
-  "i would like to eat french fries": {
-    entities: {
-      what: "French fries"
-    },
-  },
-  "i want to have french fries": {
-    entities: {
-      what: "French fries"
-    },
-  },
-  "i want french fries": {
-    entities: {
-      what: "French fries"
-    },
-  },
-  "i would like to have a donught for tomorrow": {
-    entities: {
-      what: "donught",
-      when: "tomorrow"
-    },
-  },
-  "i would like to eat a donught for the afternoon": {
-    entities: {
-      what: "donught",
-      when: "the afternoon"
+      swedish: "swedish"
     },
   },
-  "i want to have a donught for Mondays": {
+  "translate in spanish": {
     entities: {
-      what: "donught",
-      when: "Mondays"
+      spanish: "spanish"
     },
   },
-  "i want a donught for the weekend": {
+  "translate in portuguese": {
     entities: {
-      what: "donught",
-      when: "the weekend"
+      portuguese: "portuguese"
     },
   },
-  "i would like to have burger for the day": {
+  "translate in french": {
     entities: {
-      what: "burger",
-      when: "the day"
+      french: "french"
     },
   },
-  "burger for tonight": {
+  "translate in german": {
     entities: {
-      what: "burger",
-      when: "tonight"
+      german: "german"
     },
   },
-  "i want burger for friday": {
+  "next question": {
     entities: {
-      what: "burger",
-      when: "Friday"
+      next: "next question"
     },
   },
-  "i would like to have pasta for the morning": {
+  "i have another question": {
     entities: {
-      what: "pasta",
-      when: "the morning"
+      next: "next question"
     },
   },
-  "i would like to eat pasta for sunday": {
+  "i want to know more": {
     entities: {
-      what: "pasta",
-      when: "Sunday"
+      next: "next question"
     },
   },
-  "i want to have pasta for tomorrow": {
+  "i would like to ask something else": {
     entities: {
-      what: "pasta",
-      when: "tomororow"
+      next: "next question"
     },
   },
-  "i want pasta for tonight": {
+  "stop": {
     entities: {
-      what: "pasta",
-      when: "tonight"
+      stop: "stop"
     },
   },
-  "i would like to have french fries for the afternoon": {
+  "no more questions": {
     entities: {
-      what: "Fench fries",
-      when: "the afternoon"
+      stop: "stop"
     },
   },
-  "i would like to eat french fries for tomorrow": {
+  "i don't have any more questions": {
     entities: {
-      what: "Fench fries",
-      when: "tomorrow"
+      stop: "stop"
     },
   },
-  "i want to have french fries for friday": {
+  "i don't want to ask anything": {
     entities: {
-      what: "Fench fries",
-      when: "Friday"
+      stop: "stop"
     },
-  },
-  "i want french fries for tonight": {
-    entities: {
-      what: "Fench fries",
-      when: "tonight"
-    },
-  },
-  "i want it to be vegeterian and for Tuesday": {
-    entities: {
-      purpose: "vegeterian",
-      when:"Tuesday"
-    }
-  },
-  "i would like something gluten free for tonight": {
-    entities: {
-      purpose: "gluten-free",
-      when:"tonight"
-    }
-  },
-  "i want something vegan for the week": {
-    entities: {
-      purpose: "vegan",
-      when:"the week"
-    }
-  },
-  "i want something sweet for the evening": {
-    entities: {
-      purpose: "sweet",
-      when:"evening"
-    }
-  },
-  "i would like something sweet for the evening": {
-    entities: {
-      purpose: "sweet",
-      when:"evening"
-    }
-  },
-  "i would like something lactose-free for the weekend": {
-    entities: {
-      purpose: "lactose-free",
-      when:"the weekend"
-    }
-  },
-  "i want something for the evening's date night": {
-    entities: {
-      purpose: "date night",
-      when:"evening"
-    }
-  },
-  "i want something for the tomorrow's meeting": {
-    entities: {
-      purpose: "meeting",
-      when:"evening"
-    }
-  },
-  "i want italian food for a date.": {
-    entities: {
-      purpose: "a date",
-      what:"italian food"
-    }
-  },
-  "italian food for a date.": {
-    entities: {
-      purpose: "a date",
-      what:"italian food"
-    }
-  },
-  "i want a vegan pizza": {
-    entities: {
-      purpose: "vegan",
-      what:"pizza"
-    }
-  },
-  "i want vegan pizza": {
-    entities: {
-      purpose: "vegan",
-      what:"pizza"
-    }
-  },
-  "vegan pizza": {
-    entities: {
-      purpose: "vegan",
-      what:"pizza"
-    }
-  },
-  "i want a savory meal": {
-    entities: {
-      purpose: "savory",
-      what:"meal"
-    }
-  },
-  "create a warm meal": {
-    entities: {
-      purpose: "warm",
-      what:"meal"
-    }
   },
 }
 
+//chat gpt keys:
 
-//moved inside the guard = the new cond needs to be formed as a function that returns true/false
+async function fetchFromChatGPT(prompt: string, max_tokens: number) {
+  const myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    "Bearer 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",
+  );
+  myHeaders.append("Content-Type", "application/json");
+  const raw = JSON.stringify({
+    model: "gpt-3.5-turbo",
+    messages: [
+            {
+              role: "user",
+              content: prompt,
+            },
+          ],
+    temperature: 0.2,
+    max_tokens: max_tokens,
+  });
 
+  const response = fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  })
+    .then((response) => response.json())
+    .then((response) => response.choices[0].message.content);
 
-// const getEntity = (context: DMContext, entity: string) => {
-//   // lowercase the utterance and remove tailing "."
-//   let u = context.lastResult[0].utterance.toLowerCase().replace(/\.$/g, "");
-//   if (u in grammar) {
-//     if (entity in grammar[u].entities) {
-//       return grammar[u].entities[entity];}
-//   }
-//   return false;
-// };
+  return response;
+}
 
-// helper functions
 
 const say =
   (text: string) =>
@@ -563,7 +193,7 @@ const dmMachine = createMachine(
                 spstRef: ({ spawn }) => {
                   return spawn(speechstate, {
                     input: {
-                      settings: settings,
+                      settings: settings, 
                     },
                   });
                 },
@@ -578,6 +208,7 @@ const dmMachine = createMachine(
                 on: { SPEAK_COMPLETE: "GetName" }, //move to ask for name from here 
               },
               //new states for lab 1
+              //SELECT A LANGUAGE
               GetName: {
                 entry: say("If you don't mind me asking, what shall I call you?"),
                 on: { SPEAK_COMPLETE: "AskName" },
@@ -590,7 +221,7 @@ const dmMachine = createMachine(
                     actions: [
                       ({ event }) => console.log(event),
                       assign({
-                        name: ({event}) => event.value[0].utterance.replace(/\.$/g, ""),
+                        username: ({event}) => event.value[0].utterance.replace(/\.$/g, ""),
                       }),
                     ],
                   },
@@ -600,609 +231,502 @@ const dmMachine = createMachine(
                 entry: ({ context }) => {
                   context.spstRef.send({
                     type: "SPEAK",
-                    value: { utterance: `Well ${context.name}, what can I do for you today?` },
+                    value: { utterance: `So ${context.username}, what would you like to know?`},
                   });
                 },
-                on: { SPEAK_COMPLETE: "AskMeal" },
+                on: { SPEAK_COMPLETE: "askUniverse" },
               },
-              AskMeal: {
+              //move to askUniverse
+              askUniverse: {
                 entry: listen(),
                 on: {
-                  RECOGNISED:[
-                    //all events are filled
-                  {                  
-                    target: "CompleteMeal",
-                    guard: ({event}) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      if (u in grammar) {
-                        if ("what" in grammar[u].entities && "when" in grammar[u].entities && "purpose" in grammar[u].entities) {
-                          console.log(grammar[u].entities["what"])
-                        return true
-                      }
-                      }
-                      return false
-                    }, 
-                actions: [
-                  ({ event }) => console.log(event),
-                  assign({
-                    what: ({ event }) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      return grammar[u].entities["what"]},
-                    when: ({ event }) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      return grammar[u].entities["when"]},
-                    purpose: ({ event }) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      return grammar[u].entities["purpose"]}
-                  }),
-                ],
-                  },
-                  // when event is missing -> the system will move to a state that is asking when will the meal/recipe is needed
-                  {                  
-                    target: "MissingWhen",
-                    guard: ({event}) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      if (u in grammar) {
-                        if ("what" in grammar[u].entities && "purpose" in grammar[u].entities) {
-                          console.log(grammar[u].entities["what"])
-                        return true
-                      }
-                      }
-                      return false
-                    }, 
-                actions: [
-                  ({ event }) => console.log(event),
-                  assign({
-                    what: ({ event }) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      return grammar[u].entities["what"]},
-                    purpose: ({ event }) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      return grammar[u].entities["purpose"]}
-                  }),
-                ],
-                  },
-                  //what event is missing => system moves to a state that will ask what the user wants - e.g. if the user says something 
-                  // instead a "recipe" or "meal" the system will ask if they want something specific
-                  {                  
-                    target: "MissingWhat",
-                    guard: ({event}) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      if (u in grammar) {
-                        if ("when" in grammar[u].entities && "purpose" in grammar[u].entities) {
-                          console.log(grammar[u].entities["when"])
-                        return true
-                      }
-                      }
-                      return false
-                    }, 
-                actions: [
-                  ({ event }) => console.log(event),
-                  assign({
-                    when: ({ event }) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      return grammar[u].entities["when"]},
-                    purpose: ({ event }) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      return grammar[u].entities["purpose"]}
-                  }),
-                ],
-                  },
-                  //purpose event is missing - system moves to a different state that will ask if the user has a certain preference or if there is a special occasion.
-                  {                  
-                    target: "MissingPurpose",
-                    guard: ({event}) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      if (u in grammar) {
-                        if ("when" in grammar[u].entities && "what" in grammar[u].entities) {
-                          console.log(grammar[u].entities["when"])
-                        return true
-                      }
-                      }
-                      return false
-                    }, 
-                actions: [
-                  ({ event }) => console.log(event),
-                  assign({
-                    when: ({ event }) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      return grammar[u].entities["when"]},
-                    what: ({ event }) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      return grammar[u].entities["what"]}
-                  }),
-                ],
-                  },
-                  //only having what - system moves to 2 different states that will ask for when and purpose (there is the chance of saying them together)
-                  {                  
-                    target: "onlyHaveWhat",
-                    guard: ({event}) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      if (u in grammar) {
-                        if ("what" in grammar[u].entities) {
-                          console.log(grammar[u].entities["what"])
-                        return true
-                      }
-                      }
-                      return false
-                    }, 
-                actions: [
-                  ({ event }) => console.log(event),
-                  assign({
-                    what: ({ event }) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      return grammar[u].entities["what"]},
-                  }),
-                ],
-                  },
-                  //only when is provided and the system will move to 2 different states to fill the rest (if both are mentioned in the first the form is completed)
-                  {                  
-                    target: "onlyHaveWhen",
-                    guard: ({event}) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      if (u in grammar) {
-                        if ("when" in grammar[u].entities) {
-                          console.log(grammar[u].entities["when"])
-                        return true
-                      }
-                      }
-                      return false
-                    }, 
-                actions: [
-                  ({ event }) => console.log(event),
-                  assign({
-                    when: ({ event }) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      return grammar[u].entities["when"]},
-                  }),
-                ],
-                  },
-                  //only purpose state is given and system moves to 2 different states (same description as above)
-                  {                  
-                    target: "onlyHavePurpose",
-                    guard: ({event}) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      if (u in grammar) {
-                        if ("purpose" in grammar[u].entities) {
-                          console.log(grammar[u].entities["purpose"])
-                        return true
-                      }
-                      }
-                      return false
-                    }, 
-                actions: [
-                  ({ event }) => console.log(event),
-                  assign({
-                    purpose: ({ event }) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      return grammar[u].entities["purpose"]},
-                  }),
-                ],
-                  },
-                  {
-                    target: "noMatch",
+                  RECOGNISED: [
+                    {
+                      target: "Universe", 
                     actions: [
                       ({ event }) => console.log(event),
                       assign({
                         lastResult: ({ event }) => event.value,
                       }),
                     ],
-                  }
+                    },
+                    {
+                      target: "noMatch"
+                    },
                   ],
+                },
+              },
+              //ask about universe
+              Universe: {
+                invoke: {
+                  src: fromPromise(async ({ input }) => {
+                      const data = await fetchFromChatGPT(input.lastResult[0].utterance + " If the question is relevant to only astrophysics and space science, turn into a json form with the entities: name, description. Otherwise replace text in description with: 'I studied astrophysics. Your question is irrelevant to me.'", 100);
+                      return data;
+                    }),
+                    input: ({ context }) => ({
+                      lastResult: context.lastResult,
+                      // userId: context.userId,
+                    }),
+                  onDone: {
+                    target: "Filler",
+                    // guard: ({event}) => {
+                    //   if (isJSONString(event.output)) {
+                    //     return true
+                    //   } return false
+                    // },
+                    actions: [
+                      assign({ 
+                        name: ({event}) => JSON.parse(event.output).name || "",
+                        description: ({event}) => JSON.parse(event.output).description || "I studied astrophysics. Your question is irrelevant to me.",
+                      }),
+                    ],
+                  },
+                  onError: {
+                    target: "noMatch",
+                  },
                 },
               },
               noMatch: {
-                entry: say("Mmm, seems i can't find anything for that. Try something else!"),
-                on: { SPEAK_COMPLETE: "AskMeal" },
+                entry: say("I studied astrophysics and science. I'm sorry but your question seems irrelevant. Try asking something else!"),
+                on: { SPEAK_COMPLETE: "Greet" },
               },
-              CompleteMeal: {  //test state to be altered
+              //state for filler before replying - is that making the pause smaller?
+              Filler: {
                 entry: ({ context }) => {
                   context.spstRef.send({
                     type: "SPEAK",
-                    value: { utterance: `perfect, i will create a ${context.what} for ${context.when} under the condition: ${context.purpose}!` },
+                    value: { utterance: "Mmm! What an interesting question! Listen closely!"},
                   });
                 },
-                on: { SPEAK_COMPLETE: "completed" },
+                on: { SPEAK_COMPLETE: "retrieveReply" },
               },
-              //getting the missing when event when  user gives the what and the purpose
-              MissingWhen: {
+              retrieveReply: {
                 entry: ({ context }) => {
                   context.spstRef.send({
                     type: "SPEAK",
-                    value: { utterance: `For when would you like your ${context.what}?` },
+                    value: { utterance: context.description},
                   });
                 },
-                on: { SPEAK_COMPLETE: "GettingWhen" },
+                on: { SPEAK_COMPLETE: "askToTranslate" },
               },
-              GettingWhen: {
+              //say it in other languages (italian + swedish)
+              askToTranslate: {
+                entry: ({ context }) => {
+                  context.spstRef.send({
+                    type: "SPEAK",
+                    value: { utterance: "Is there anything else you would like to know? Maybe you would like to translate the previous answer to your native language? If you want a translation please say your prefered language, for exampple: english, italian, swedish. If you want to ask something else please say: next question! If you want to stop just say: stop!", voice: "en-GB-RyanNeural"},
+                  });
+                },
+                on: { SPEAK_COMPLETE: "yesOrNo" },
+              },
+              yesOrNo: {
                 entry: listen(),
                 on: {
-                  RECOGNISED: {
-                    target: "CompleteMeal", //change state to say name. "so <name> what can i do for you today?"
-                    actions: [
+                  RECOGNISED: [
+                    {
+                      target: "TranslateIt", 
+                      guard: ({event}) => {
+                        const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
+                        if (u in grammar) {
+                          if ("italian" in grammar[u].entities) {
+                            console.log(grammar[u].entities["italian"])
+                          return true
+                        }
+                        }
+                        return false
+                      }, 
+                      actions: [
                       ({ event }) => console.log(event),
-                      assign({
-                        when: ({ event }) => {
-                          const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "").replace("for ", "")
-                          return u
-                        },
-                      }),
                     ],
-                  },
-                },
-              },
-              //getting the missing purpose event when user gives the what and the when
-              MissingPurpose: {
-                entry: ({ context }) => {
-                  context.spstRef.send({
-                    type: "SPEAK",
-                    value: { utterance: `Is there any occasion taking place or a preference you would like your ${context.what} to have?` },
-                  });
-                },
-                on: { SPEAK_COMPLETE: "GettingPurpose" },
-              },
-              GettingPurpose: {
-                entry: listen(),
-                on: {
-                  RECOGNISED: {
-                    target: "CompleteMeal", //change state to say name. "so <name> what can i do for you today?"
-                    actions: [
+                    },
+                    {
+                      target: "TranslateSwe", 
+                      guard: ({event}) => {
+                        const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
+                        if (u in grammar) {
+                          if ("swedish" in grammar[u].entities) {
+                            console.log(grammar[u].entities["swedish"])
+                          return true
+                        }
+                        }
+                        return false
+                      }, 
+                      actions: [
                       ({ event }) => console.log(event),
-                      assign({
-                        purpose: ({ event }) => {
-                          const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "").replace("for ", "")
-                          if (u === "no" || u === "no, thank you" || u === "no thank you") {
-                            return "no preference"
-                          }
-                          return u
-                        },
-                      }),
                     ],
-                  },
-                },
-              },
-              // when user gives only when and purpose => state for filling out "what"
-              MissingWhat: {
-                entry: ({ context }) => {
-                  context.spstRef.send({
-                    type: "SPEAK",
-                    value: { utterance: `Could you provide me with what would you like to eat, pizza, donughts, burger?` },
-                  });
-                },
-                on: { SPEAK_COMPLETE: "GettingWhat" },
-              },
-              GettingWhat: {
-                entry: listen(),
-                on: {
-                  RECOGNISED: {
-                    target: "CompleteMeal", //change state to say name. "so <name> what can i do for you today?"
-                    actions: [
+                    },
+                    {
+                      target: "TranslateFr", //fr-FR-ClaudeNeural 
+                      guard: ({event}) => {
+                        const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
+                        if (u in grammar) {
+                          if ("french" in grammar[u].entities) {
+                            console.log(grammar[u].entities["french"])
+                          return true
+                        }
+                        }
+                        return false
+                      }, 
+                      actions: [
                       ({ event }) => console.log(event),
-                      assign({
-                        what: ({ event }) => {
-                          const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "").replace("i would like to eat ", "").replace("i want to eat ", "").replace("i'm craving for ","").replace("i want a ").replace(" sounds nice","")
-                          return u
-                        },
-                      }),
                     ],
-                  },
-                },
-              },
-              //missing BOTH what and purpose events
-              onlyHaveWhen: {
-                entry: ({ context }) => {
-                  context.spstRef.send({
-                    type: "SPEAK",
-                    value: { utterance: `Could you provide me with what would you like to eat and if there is a specific preference or occasion? For example you can say: vegan pizza or italian food for a date.` },
-                  });
-                },
-                on: { SPEAK_COMPLETE: "WhatAndPurpose" },
-              },
-              WhatAndPurpose: {
-                entry: listen(),
-                on: {
-                  RECOGNISED:[
-                    //all events are filled
-                  {                  
-                    target: "CompleteMeal",
-                    guard: ({event}) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      if (u in grammar) {
-                        if ("what" in grammar[u].entities && "purpose" in grammar[u].entities) {
-                          console.log(grammar[u].entities["what"])
-                        return true
-                      }
-                      }
-                      return false
-                    }, 
-                actions: [
-                  ({ event }) => console.log(event),
-                  assign({
-                    what: ({ event }) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      return grammar[u].entities["what"]},
-                    purpose: ({ event }) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      return grammar[u].entities["purpose"]}
-                  }),
-                ],
-                  },
-                  //what event is missing => system moves to a state that will ask what the user wants - e.g. if the user says something 
-                  // instead a "recipe" or "meal" the system will ask if they want something specific
-                  {                  
-                    target: "MissingWhat",
-                    guard: ({event}) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      if (u in grammar) {
-                        if ("purpose" in grammar[u].entities) {
-                          console.log(grammar[u].entities["purpose"])
-                        return true
-                      }
-                      }
-                      return false
-                    }, 
-                actions: [
-                  ({ event }) => console.log(event),
-                  assign({
-                    purpose: ({ event }) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      return grammar[u].entities["purpose"]}
-                  }),
-                ],
-                  },
-                  //purpose event is missing - system moves to a different state that will ask if the user has a certain preference or if there is a special occasion.
-                  {                  
-                    target: "MissingPurpose",
-                    guard: ({event}) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      if (u in grammar) {
-                        if ("what" in grammar[u].entities) {
-                          console.log(grammar[u].entities["what"])
-                        return true
-                      }
-                      }
-                      return false
-                    }, 
-                actions: [
-                  ({ event }) => console.log(event),
-                  assign({
-                    what: ({ event }) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      return grammar[u].entities["what"]}
-                  }),
-                ],
-                  },
-                  {
-                    target: "nomatch",
-                    actions: [
+                    },
+                    {
+                      target: "TranslateGer", //de-DE-AmalaNeural 
+                      guard: ({event}) => {
+                        const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
+                        if (u in grammar) {
+                          if ("german" in grammar[u].entities) {
+                            console.log(grammar[u].entities["german"])
+                          return true
+                        }
+                        }
+                        return false
+                      }, 
+                      actions: [
                       ({ event }) => console.log(event),
-                      assign({
-                        lastResult: ({ event }) => event.value,
-                      }),
                     ],
-                  }
+                    },
+                    {
+                      target: "TranslateSpa", //es-ES-IreneNeural 
+                      guard: ({event}) => {
+                        const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
+                        if (u in grammar) {
+                          if ("spanish" in grammar[u].entities) {
+                            console.log(grammar[u].entities["spanish"])
+                          return true
+                        }
+                        }
+                        return false
+                      }, 
+                      actions: [
+                      ({ event }) => console.log(event),
+                    ],
+                    },
+                    {
+                      target: "TranslatePort", //pt-BR-AntonioNeural
+                      guard: ({event}) => {
+                        const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
+                        if (u in grammar) {
+                          if ("portuguese" in grammar[u].entities) {
+                            console.log(grammar[u].entities["portuguese"])
+                          return true
+                        }
+                        }
+                        return false
+                      }, 
+                      actions: [
+                      ({ event }) => console.log(event),
+                    ],
+                    },
+                    {
+                      target: "Goodbye", 
+                      guard: ({event}) => {
+                        const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
+                        if (u in grammar) {
+                          if ("stop" in grammar[u].entities) {
+                            console.log(grammar[u].entities["stop"])
+                          return true
+                        }
+                        }
+                        return false
+                      }, 
+                      actions: [
+                      ({ event }) => console.log(event),
+                    ],
+                    },
+                    {
+                      target: "Greet", 
+                      guard: ({event}) => {
+                        const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
+                        if (u in grammar) {
+                          if ("next" in grammar[u].entities) {
+                            console.log(grammar[u].entities["next"])
+                          return true
+                        }
+                        }
+                        return false
+                      }, 
+                      actions: [
+                      ({ event }) => console.log(event),
+                    ],
+                    },
+                    {
+                      target: "noMatch2",
+                    },
                   ],
                 },
               },
-              nomatch: {
-                entry: say("Mmm, seems i can't find anything for that. Try something else!"),
-                on: { SPEAK_COMPLETE: "WhatAndPurpose" },
+              noMatch2: {
+                entry: say("I think I didn't hear you proprely! Could you, please, repeat?"),
+                on: { SPEAK_COMPLETE: "yesOrNo" },
               },
-              //missing both when and porpuse
-              onlyHaveWhat: {
-                entry: ({ context }) => {
-                  context.spstRef.send({
-                    type: "SPEAK",
-                    value: { utterance: `Could you provide me with when would you like to have your ${context.what} and if there is a specific preference or occasion? For example you can say: "I want it to be vegeterian and for Tuesday"` },
-                  });
-                },
-                on: { SPEAK_COMPLETE: "WhenAndPurpose" },
-              },
-              WhenAndPurpose: {
-                entry: listen(),
-                on: {
-                  RECOGNISED:[
-                    //all events are filled
-                  {                  
-                    target: "CompleteMeal",
-                    guard: ({event}) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      if (u in grammar) {
-                        if ("when" in grammar[u].entities && "purpose" in grammar[u].entities) {
-                          console.log(grammar[u].entities["when"])
-                        return true
-                      }
-                      }
-                      return false
-                    }, 
-                actions: [
-                  ({ event }) => console.log(event),
-                  assign({
-                    when: ({ event }) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      return grammar[u].entities["when"]},
-                    purpose: ({ event }) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      return grammar[u].entities["purpose"]}
-                  }),
-                ],
-                  },
-                  //what event is missing => system moves to a state that will ask what the user wants - e.g. if the user says something 
-                  // instead a "recipe" or "meal" the system will ask if they want something specific
-                  {                  
-                    target: "MissingWhen",
-                    guard: ({event}) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      if (u in grammar) {
-                        if ("purpose" in grammar[u].entities) {
-                          console.log(grammar[u].entities["purpose"])
-                        return true
-                      }
-                      }
-                      return false
-                    }, 
-                actions: [
-                  ({ event }) => console.log(event),
-                  assign({
-                    purpose: ({ event }) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      return grammar[u].entities["purpose"]}
-                  }),
-                ],
-                  },
-                  //purpose event is missing - system moves to a different state that will ask if the user has a certain preference or if there is a special occasion.
-                  {                  
-                    target: "MissingPurpose",
-                    guard: ({event}) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      if (u in grammar) {
-                        if ("when" in grammar[u].entities) {
-                          console.log(grammar[u].entities["when"])
-                        return true
-                      }
-                      }
-                      return false
-                    }, 
-                actions: [
-                  ({ event }) => console.log(event),
-                  assign({
-                    when: ({ event }) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      return grammar[u].entities["when"]}
-                  }),
-                ],
-                  },
-                  {
-                    target: "nomatch1",
+              //translating in italian
+              TranslateIt: {
+                invoke: {
+                  src: fromPromise(async ({ input }) => {
+                      const data = await fetchFromChatGPT("Please translate this text to italian: " + input.description, 100);
+                      return data;
+                    }),
+                    input: ({ context }) => ({
+                      description: context.description,
+                      // userId: context.userId,
+                    }),
+                  onDone: {
+                    target: "ItWait",
                     actions: [
-                      ({ event }) => console.log(event),
-                      assign({
-                        lastResult: ({ event }) => event.value,
+                      assign({ 
+                        italianTranslation: ({event}) => event.output,
                       }),
                     ],
-                  }
-                  ],
+                  },
+                  onError: {
+                    target: "noMatch1",
+                  },
                 },
               },
-              nomatch1: {
-                entry: say("Mmm, seems i can't find anything for that. Try something else!"),
-                on: { SPEAK_COMPLETE: "WhenAndPurpose" },
+              noMatch1: {
+                entry: say("I studied astrophysics and science. I'm sorry but your question seems irrelevant. Try asking something else!"),
+                on: { SPEAK_COMPLETE: "askToTranslate" },
               },
-              //missing BOTH what and when events
-              onlyHavePurpose: {
+              ItWait: {
                 entry: ({ context }) => {
                   context.spstRef.send({
                     type: "SPEAK",
-                    value: { utterance: `Could you provide me with what would you like to eat and when? For example you can say: I want pizza for tonight.` },
+                    value: { utterance: "Naturalmente, è un piacere" , voice: "it-IT-GianniNeural"},
                   });
                 },
-                on: { SPEAK_COMPLETE: "WhenAndWhat" },
+                on: { SPEAK_COMPLETE: "ItalianCompleted" },
               },
-              WhenAndWhat: {
-                entry: listen(),
-                on: {
-                  RECOGNISED:[
-                    //all events are filled
-                  {                  
-                    target: "CompleteMeal",
-                    guard: ({event}) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      if (u in grammar) {
-                        if ("when" in grammar[u].entities && "what" in grammar[u].entities) {
-                          console.log(grammar[u].entities["when"])
-                        return true
-                      }
-                      }
-                      return false
-                    }, 
-                actions: [
-                  ({ event }) => console.log(event),
-                  assign({
-                    when: ({ event }) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      return grammar[u].entities["when"]},
-                    what: ({ event }) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      return grammar[u].entities["what"]}
-                  }),
-                ],
-                  },
-                  //what event is missing => system moves to a state that will ask what the user wants - e.g. if the user says something 
-                  // instead a "recipe" or "meal" the system will ask if they want something specific
-                  {                  
-                    target: "MissingWhen",
-                    guard: ({event}) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      if (u in grammar) {
-                        if ("what" in grammar[u].entities) {
-                          console.log(grammar[u].entities["what"])
-                        return true
-                      }
-                      }
-                      return false
-                    }, 
-                actions: [
-                  ({ event }) => console.log(event),
-                  assign({
-                    what: ({ event }) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      return grammar[u].entities["what"]}
-                  }),
-                ],
-                  },
-                  //purpose event is missing - system moves to a different state that will ask if the user has a certain preference or if there is a special occasion.
-                  {                  
-                    target: "MissingWhat",
-                    guard: ({event}) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      if (u in grammar) {
-                        if ("when" in grammar[u].entities) {
-                          console.log(grammar[u].entities["when"])
-                        return true
-                      }
-                      }
-                      return false
-                    }, 
-                actions: [
-                  ({ event }) => console.log(event),
-                  assign({
-                    when: ({ event }) => {
-                      const u = event.value[0].utterance.toLowerCase().replace(/\.$/g, "")
-                      return grammar[u].entities["when"]}
-                  }),
-                ],
-                  },
-                  {
-                    target: "nomatch2",
+              ItalianCompleted: {
+                entry: ({ context }) => {
+                  context.spstRef.send({
+                    type: "SPEAK",
+                    value: { utterance: context.italianTranslation , voice: "it-IT-GianniNeural"},
+                  });
+                },
+                on: { SPEAK_COMPLETE: "askToTranslate" },
+              },
+              //translating in swedish
+              TranslateSwe: {
+                invoke: {
+                  src: fromPromise(async ({ input }) => {
+                      const data = await fetchFromChatGPT("Please translate this text to swedish: " + input.description, 100);
+                      return data;
+                    }),
+                    input: ({ context }) => ({
+                      description: context.description,
+                    }),
+                  onDone: {
+                    target: "SweWait",
                     actions: [
-                      ({ event }) => console.log(event),
-                      assign({
-                        lastResult: ({ event }) => event.value,
+                      assign({ 
+                        swedishTranslation: ({event}) => event.output,
                       }),
                     ],
-                  }
-                  ],
+                  },
+                  onError: {
+                    target: "noMatch1",
+                  },
                 },
               },
-              nomatch2: {
-                entry: say("Mmm, seems i can't find anything for that. Try something else!"),
-                on: { SPEAK_COMPLETE: "WhenAndWhat" },
-              },
-              completed: {
+              SweWait: {
                 entry: ({ context }) => {
                   context.spstRef.send({
                     type: "SPEAK",
-                    value: { utterance: `Here is a list of everything I found under ${context.what}. Enjoy!` },
+                    value: { utterance: "Självklart, är det min glädje" , voice: "sv-SE-MattiasNeural"},
                   });
                 },
-                on: { SPEAK_COMPLETE: "openCookbook" },
+                on: { SPEAK_COMPLETE: "SwedishCompleted" },
               },
-              openCookbook: {
-                  entry: "CookBook", //website opening state
-                  on: { SPEAK_COMPLETE: "IdleEnd" }, //done
+              SwedishCompleted: {
+                entry: ({ context }) => {
+                  context.spstRef.send({
+                    type: "SPEAK",
+                    value: { utterance: context.swedishTranslation , voice: "sv-SE-MattiasNeural"},
+                  });
+                },
+                on: { SPEAK_COMPLETE: "askToTranslate" },
+              },
+              //translating in portuguese
+              TranslatePort: {
+                invoke: {
+                  src: fromPromise(async ({ input }) => {
+                      const data = await fetchFromChatGPT("Please translate this text to portuguese: " + input.description, 100);
+                      return data;
+                    }),
+                    input: ({ context }) => ({
+                      description: context.description,
+                      // userId: context.userId,
+                    }),
+                  onDone: {
+                    target: "PortWait",
+                    actions: [
+                      assign({ 
+                        portugueseTranslation: ({event}) => event.output,
+                      }),
+                    ],
+                  },
+                  onError: {
+                    target: "noMatch1",
+                  },
+                },
+              },
+              PortWait: {
+                entry: ({ context }) => {
+                  context.spstRef.send({
+                    type: "SPEAK",
+                    value: { utterance: "Claro, é um prazer" , voice: "pt-BR-AntonioNeural"},
+                  });
+                },
+                on: { SPEAK_COMPLETE: "PortugueseCompleted" },
+              },
+              PortugueseCompleted: {
+                entry: ({ context }) => {
+                  context.spstRef.send({
+                    type: "SPEAK",
+                    value: { utterance: context.portugueseTranslation , voice: "pt-BR-AntonioNeural"},
+                  });
+                },
+                on: { SPEAK_COMPLETE: "askToTranslate" },
+              },
+              //translating in german
+              TranslateGer: {
+                invoke: {
+                  src: fromPromise(async ({ input }) => {
+                      const data = await fetchFromChatGPT("Please translate this text to german: " + input.description, 100);
+                      return data;
+                    }),
+                    input: ({ context }) => ({
+                      description: context.description,
+                      // userId: context.userId,
+                    }),
+                  onDone: {
+                    target: "GerWait",
+                    actions: [
+                      assign({ 
+                        germanTranslation: ({event}) => event.output,
+                      }),
+                    ],
+                  },
+                  onError: {
+                    target: "noMatch1",
+                  },
+                },
+              },
+              GerWait: {
+                entry: ({ context }) => {
+                  context.spstRef.send({
+                    type: "SPEAK",
+                    value: { utterance: "Natürlich, ist es mir ein Vergnügen" , voice: "de-DE-AmalaNeural "},
+                  });
+                },
+                on: { SPEAK_COMPLETE: "GermanCompleted" },
+              },
+              GermanCompleted: {
+                entry: ({ context }) => {
+                  context.spstRef.send({
+                    type: "SPEAK",
+                    value: { utterance: context.germanTranslation , voice: "de-DE-AmalaNeural "},
+                  });
+                },
+                on: { SPEAK_COMPLETE: "askToTranslate" },
+              },
+              //translating in spanish
+              TranslateSpa: {
+                invoke: {
+                  src: fromPromise(async ({ input }) => {
+                      const data = await fetchFromChatGPT("Please translate this text to spanish: " + input.description, 100);
+                      return data;
+                    }),
+                    input: ({ context }) => ({
+                      description: context.description,
+                      // userId: context.userId,
+                    }),
+                  onDone: {
+                    target: "SpWait",
+                    actions: [
+                      assign({ 
+                        spanishTranslation: ({event}) => event.output,
+                      }),
+                    ],
+                  },
+                  onError: {
+                    target: "noMatch1",
+                  },
+                },
+              },
+              SpWait: {
+                entry: ({ context }) => {
+                  context.spstRef.send({
+                    type: "SPEAK",
+                    value: { utterance: "Por supuesto, es un placer" , voice: "es-ES-IreneNeural"},
+                  });
+                },
+                on: { SPEAK_COMPLETE: "SpanishCompleted" },
+              },
+              SpanishCompleted: {
+                entry: ({ context }) => {
+                  context.spstRef.send({
+                    type: "SPEAK",
+                    value: { utterance: context.spanishTranslation , voice: "es-ES-IreneNeural"},
+                  });
+                },
+                on: { SPEAK_COMPLETE: "askToTranslate" },
+              },
+              //translating in french
+              TranslateFr: {
+                invoke: {
+                  src: fromPromise(async ({ input }) => {
+                      const data = await fetchFromChatGPT("Please translate this text to french: " + input.description, 100);
+                      return data;
+                    }),
+                    input: ({ context }) => ({
+                      description: context.description,
+                      // userId: context.userId,
+                    }),
+                  onDone: {
+                    target: "FrWait",
+                    actions: [
+                      assign({ 
+                        frenchTranslation: ({event}) => event.output,
+                      }),
+                    ],
+                  },
+                  onError: {
+                    target: "noMatch1",
+                  },
+                },
+              },
+              FrWait: {
+                entry: ({ context }) => {
+                  context.spstRef.send({
+                    type: "SPEAK",
+                    value: { utterance: "Bien sûr, avec plaisir!" , voice: "fr-FR-ClaudeNeural"},
+                  });
+                },
+                on: { SPEAK_COMPLETE: "FrenchCompleted" },
+              },
+              FrenchCompleted: {
+                entry: ({ context }) => {
+                  context.spstRef.send({
+                    type: "SPEAK",
+                    value: { utterance: context.frenchTranslation , voice: "fr-FR-ClaudeNeural"},
+                  });
+                },
+                on: { SPEAK_COMPLETE: "askToTranslate" },
+              },
+              Goodbye: {
+                entry: ({ context }) => {
+                  context.spstRef.send({
+                    type: "SPEAK",
+                    value: { utterance: `I'm happy I could answer your science questions ${context.username}. Have a nice day!`, voice: "en-GB-RyanNeural"},
+                  });
+                },
+                on: { SPEAK_COMPLETE: "IdleEnd" },
               },
               IdleEnd: {
-                entry: "GUI.PageLoaded", //done
+                entry: "GUI.PageLoaded",
               },
             },
           },
@@ -1246,7 +770,7 @@ const dmMachine = createMachine(
       "speak.greeting": ({ context }) => {
         context.spstRef.send({
           type: "SPEAK",
-          value: { utterance: "Hello and welcome to TasteTraverse. My name is Alfredo and I'm here to help you prepare your desired meal! Think of me as your personal chef." },
+          value: { utterance: "Hello and welcome to your personal planitarium. My name is Mercurio and I'll be your guide. You can ask me anything you would like to know about space and the universe; from black holes to the closest galaxy to our Milky Way. Maybe you would like to know what gravity is and how it changes to various planets!" },
         });
       },
       "speak.how-can-I-help": ({ context }) =>
@@ -1306,4 +830,6 @@ document.getElementById("button").onclick = () => actor.send({ type: "CLICK" });
 actor.subscribe((state) => {
   console.log(state.value);
 });
+
+
 
