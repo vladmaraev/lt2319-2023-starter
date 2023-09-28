@@ -588,31 +588,6 @@ const dmMachine = createMachine(
               },
             },
           },
-          Ready_German: {
-            initial: "idle",
-            states: {
-              idle: {
-                on: {SWITCH_TO_GERMAN: "GERMAN"},
-                entry: [
-                  assign({
-                    spstRef: ({ spawn})=>{
-                      return spawn(speechstate, {
-                        input: {
-                          settings2: settings,
-                        },
-                      });
-                    },
-                  }),
-                ],
-              },
-              GERMAN: {
-                entry: say("Hallo, wie kann Ich Ihnen helfen?"),
-                on: {SPEAK_COMPLETE: "Ask"},
-              },
-              Ask:{
-              }
-            },
-          },
         },
       },
       GUI: {
