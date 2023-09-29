@@ -15,9 +15,9 @@ GPT is implemented to rephrase a string, simplest task.
 ### EXPERIMENTS
 The following experiments are done to test to what level GPT's implementation can replace the architecture of the program, starting from the data base, to extraction of entities and strings.
 
-### 1. simple request to obtain detailed niche information
-### 2. requesting entities from a string
-### 3. requesting the matching of objects in lists with those of a string
+### 1. Simple request to obtain detailed niche information. _Conclusion: Not good enough._
+### 2. Requesting entities from a string. _Conclusion: Not good enough if the entities are not predetermined._
+### 3. Requesting the matching of objects in lists with those of a string. _Conclusion: Good._
 
 ----------------------- 
 ### Experiment 1.
