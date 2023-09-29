@@ -41,13 +41,18 @@ interface Specific {
 }
 };
 
+// Search for API
 // mydict = {"Genus": {"wolf": {"location" : {"Jungle": { "Hellhound": {"Drop": "a", "Steal": "b" , "Poach": "c"} }, "Desert":{"Wolf": {"Drop": "a", "Steal": "b" , "Poach": "c"} } }, "Mines": {"No Enemy"}}}}
+
+// Experiments:
+// Q.1.
+// Hey, GPT! In Final Fantasy XII: The Zodiac Age, what can I steal from wolves in the Dalmascan desert? 
 
 async function fetchFromChatGPT(prompt: string, max_tokens: number) {
   const myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
-    "Bearer <key>",
+    "Bearer <key goes here>",
   );
   myHeaders.append("Content-Type", "application/json");
   const raw = JSON.stringify({
@@ -74,7 +79,12 @@ async function fetchFromChatGPT(prompt: string, max_tokens: number) {
   return response;
 };
 
+// const myprompt: string = "Hey, GPT! Could you please reformulate the following sentence so it doesn't sound repetitive? FYI, the tags 'common', 'uncommon', etc., stand for the chances of getting the item. The sentence should sound natural and fluent. Don't omit any information. This is the sentence: ";
+// const myprompt: string = "Hey, GPT! In Final Fantasy XII: The Zodiac Age, "
 
+
+
+// DATA
 // Dictionary in progress
 
 const category: Categories = {
@@ -183,6 +193,18 @@ function checkNoEnemyInfo (context, enemy, location){
 
 };
 
+// 0 shot
+// const myprompt: string = `Hey, GPT!  Could you please let me know if the following sentence request has any of these entities: Action: ${category.action}, Enemy: ${category.enemy}, Location: ${category.location} ?, this is the sentence: `;
+// 1 shot
+// const myprompt: string = `Hey, GPT!  Could you please let me know if the following sentence request has any of these entities: Action: ${category.action}, Enemy: ${category.enemy}, Location: ${category.location} ? Here's an example: Example sentence: "What can I get from skeletons?". Entities: Enemy: skeletons , Action: None, Location: None. This is the sentence: `;
+// 2 shot
+// const myprompt: string = `Hey, GPT!  Could you please let me know if the following sentence request has any of these entities: Action: ${category.action}, Enemy: ${category.enemy}, Location: ${category.location} ? Here's two examples: Example sentence 1: "What can I get from skeletons?". Entities for example 1: Enemy: skeletons , Action: None, Location: None. Example sentence 2: "What can I obtain from Gargoyles in the jungle?". Entities for example 2: Enemy: gargoyles , Action: None, Location: jungle. This is the sentence: `;
+
+// changed word Entities, not used in the prompt
+// const myprompt: string = `Hey, GPT!  Could you please let me know if the following sentence request has any of the words in the lists?: Action: ${category.action}, Enemy: ${category.enemy}, Location: ${category.location} ? Here's two examples: Example sentence 1: "What can I get from skeletons?". Matches for example 1: Enemy: skeletons , Action: None, Location: None. Example sentence 2: "What can I obtain from Gargoyles in the jungle?". Matches for example 2: Enemy: gargoyles , Action: None, Location: jungle. Give me a list for every category. This is the sentence: `;
+// asking for JSON object
+const myprompt: string = `Hey, GPT! Here's a JSON object: {"action": <action>, "enemy": <enemy>, "location": <location> }.  Could you please let me know if the following sentence request has any of the words in the lists?: Action: ${category.action}, Enemy: ${category.enemy}, Location: ${category.location} ? Here's two examples: Example sentence 1: "What can I get from skeletons?". Matches for example 1: Enemy: skeletons , Action: , Location: . Example sentence 2: "What can I obtain from Gargoyles in the jungle?". Matches for example 2: Enemy: gargoyles , Action: , Location: jungle. Put the categories in the JSON object. If there's no match, keep the category empty. This is the sentence: `;
+
 
 
 // machine
@@ -220,23 +242,49 @@ const dmMachine = createMachine(
 
               AskMeAnything: {
                 entry: say("Ask me about a type of enemy, an action to perform and a location to know the loot in FF12"),
-                on: { SPEAK_COMPLETE: "Ask" },
+                on: { SPEAK_COMPLETE: "AskGPT" },
               },
 
+              AskGPT : {
+                entry: listen(),
+                // CONFIGURE TIMEOUT EVENT
+                after: {
+                  10200: {
+                    target: "AskMeAnything",
+                    actions: say("I couldn't hear you. Let's try again."), 
+                  }
+                },
+                on: {
+                  RECOGNISED: {
+                      target: "GPT", 
+                      actions: [
+                        ({ event }) => console.log(event),
+                        assign({ 
+                          lastResult: ({ event }) => event.value[0].utterance }), 
+                        ]
+                    },
+                },
+            },
+
               GPT:{
-                entry: ({context}) => console.log(context.lootinfo),
+                entry: ({context}) => console.log(context.lootinfo, category.enemy, context.lastResult),
                 invoke: {
                   src: fromPromise(async({ input })=> {
-                    const data = await fetchFromChatGPT("Hey, GPT! Could you please reformulate the following sentence so it doesn't sound repetitive? FYI, the tags 'common', 'uncommon', etc., stand for the chances of getting the item. The sentence should sound natural and fluent. Don't omit any information. This is the sentence:" + input.lastResult, 200);
+                    const data = await fetchFromChatGPT(myprompt + input.lastResult, 400);
                     return data;
                   }),
                   input: ({ context, event}) => ({
-                    lastResult: context.lootinfo,
+                    lastResult: context.lastResult,
                   }),
                   onDone: {
-                    target: "SpeakGPToutput",
+                    target: "Ask",
                     actions: [
-                      ({ event }) => console.log(event.output) ,
+                      ({ event }) => console.log(JSON.parse(event.output).enemy),
+                      assign({  
+                        ene: ({event}) => (JSON.parse(event.output).enemy) ,
+                        act: ({event}) => (JSON.parse(event.output).action) ,
+                        loc: ({event}) => (JSON.parse(event.output).location) ,
+                      })
                     ],
                   },
                 },
@@ -257,7 +305,8 @@ const dmMachine = createMachine(
                   },
 
               Ask: {
-                entry: listen(),
+                // silenced for lab2:
+                // entry: listen(),
                 // CONFIGURE TIMEOUT EVENT
                 after: {
                   10200: {
@@ -265,81 +314,81 @@ const dmMachine = createMachine(
                     actions: say("I couldn't hear you. Let's try again."), 
                   }
                 },
-                on: {
-                  RECOGNISED: [
+                always: [ 
+                  //RECOGNISED: [
                     // if more than one SLOT of the same type, store them all! (in more advanced labs)
                     // complete
                     
                     {
-                      guard: ({ event }) =>  getSlots(event, "action") && getSlots(event, "enemy") && getSlots(event, "location"),//extractAction(event) && extractEnemy(event) && extractLocation(event),
+                      guard: ({ context }) =>  context.act.length > 0 && context.ene.length > 0 && context.loc.length > 0,//extractAction(event) && extractEnemy(event) && extractLocation(event),
                       target: "LootInfo", //"SentenceParse"
                       actions: [
                         assign({lastResult: ({ event }) => event.value,}),
-                        assign({ act: ({ event }) => getSlots(event, "action"),}),
-                        assign({ ene: ({ event }) => getSlots(event, "enemy"),}),
-                        assign({ loc: ({ event }) => getSlots(event, "location"),}),
+                        // assign({ act: ({ event }) => getSlots(event, "action"),}),
+                        // assign({ ene: ({ event }) => getSlots(event, "enemy"),}),
+                        // assign({ loc: ({ event }) => getSlots(event, "location"),}),
                         ({context})=> console.log(context.act, context.ene, context.loc),
                       ]
                     },
                     // incomplete (2 in)
                     // ask location
                     {
-                      guard: ({ event }) => getSlots(event, "action") && getSlots(event, "enemy"),
+                      guard: ({ context }) => context.act.length > 0 && context.ene.length > 0,
                       target: "AskLocation", //"SentenceParse"
                       actions:[
                         assign({lastResult: ({ event }) => event.value,}),
-                        assign({ act: ({ event }) => getSlots(event, "action"),}),
-                        assign({ ene: ({ event }) => getSlots(event, "enemy"),}),
+                        // assign({ act: ({ event }) => getSlots(event, "action"),}),
+                        // assign({ ene: ({ event }) => getSlots(event, "enemy"),}),
                       ]
                     }, 
 
                     // ask enemy
                   {
-                    guard: ({ context, event }) => getSlots(event, "action") && getSlots(event, "location"),
+                    guard: ({ context }) => context.act.length > 0 && context.loc.length > 0,
                     target: "AskEnemy", //"SentenceParse"
                     actions: [
                       assign({lastResult: ({ event }) => event.value,}),
-                      assign({ act: ({ event }) => getSlots(event, "action"),}),
-                      assign({ loc: ({ event }) => getSlots(event, "location"),}),
+                      // assign({ act: ({ event }) => getSlots(event, "action"),}),
+                      // assign({ loc: ({ event }) => getSlots(event, "location"),}),
                     ]
                   },
                   // ask action
                   {
-                    guard: ({ context, event }) => getSlots(event, "enemy") && getSlots(event, "location"),
+                    guard: ({ context }) => context.ene.length > 0 && context.loc.length > 0,
                     target: "AskAction", //"SentenceParse"
                     actions:[
                       assign({lastResult: ({ event }) => event.value,}),
-                      assign({ ene: ({ event }) => getSlots(event, "enemy"),}),
-                      assign({ loc: ({ event }) => getSlots(event, "location"),}),
+                      // assign({ ene: ({ event }) => getSlots(event, "enemy"),}),
+                      // assign({ loc: ({ event }) => getSlots(event, "location"),}),
                   ]
                   },
 
                   // incomplete (1 in)
                   // ask enemy and location
                   {
-                    guard: ({ event }) => getSlots(event, "action"),
+                    guard: ({ context }) => context.act.length > 0 ,
                     target: "AskEnemyLocation", //"SentenceParse"
                     actions:[
                       assign({lastResult: ({ event }) => event.value,}),
-                      assign({ act: ({ event }) => getSlots(event, "action"),}),
+                      // assign({ act: ({ event }) => getSlots(event, "action"),}),
                   ]
                   },
                   // ask action and location
                   {
-                    guard: ({ event }) => getSlots(event, "enemy"),
+                    guard: ({ context }) => context.ene.length > 0 ,
                     target: "AskActionLocation", //"SentenceParse"
                     actions:[
                       assign({lastResult: ({ event }) => event.value,}),
-                      assign({ ene: ({ event }) => getSlots(event, "enemy"),}),
+                      // assign({ ene: ({ event }) => getSlots(event, "enemy"),}),
                   ]
                   },
                   // ask action and enemy
                   {
-                    guard: ({ event }) => getSlots(event, "location"),
+                    guard: ({ context }) => context.loc.length > 0 ,
                     target: "AskActionEnemy", //"SentenceParse"
                     actions:[
                       assign({lastResult: ({ event }) => event.value,}),
-                      assign({ loc: ({ event }) => getSlots(event, "location"),}),
+                      // assign({ loc: ({ event }) => getSlots(event, "location"),}),
                   ]
                   },
 
@@ -348,11 +397,10 @@ const dmMachine = createMachine(
                   }
                   ]
                 },
-              },
 
               CouldntHear: {
-                entry: say("Something didn't work, hold on."),
-                on: {SPEAK_COMPLETE: "Ask" },
+                entry: say("Something didn't work, hold on. Okay, try again."),
+                on: {SPEAK_COMPLETE: "AskGPT" },
               },
 
               // Asking for clarifications when 2 slots are filled 
@@ -666,29 +714,29 @@ const dmMachine = createMachine(
                     ]
                   },
                     
-                //   GiveLootInfo: {
-                //   entry: ({ context }) => {
-                //     context.spstRef.send({
-                //       type: "SPEAK",
-                //       value: { utterance: `For the enemy ${correspondsTo[context.loc][context.ene]} the ${context.act} loot is: ${getLootInfo(context, context.act, context.ene, context.loc)}`},
-                //     })},
-                //   on: {
-                //     SPEAK_COMPLETE: { 
-                //       // target: "#root.DialogueManager.Ready.AnythingElse",
+                  GiveLootInfo: {
+                  entry: ({ context }) => {
+                    context.spstRef.send({
+                      type: "SPEAK",
+                      value: { utterance: `For the enemy ${correspondsTo[context.loc][context.ene]} the ${context.act} loot is: ${getLootInfo(context, context.act, context.ene, context.loc)}`},
+                    })},
+                  on: {
+                    SPEAK_COMPLETE: { 
+                      target: "#root.DialogueManager.Ready.AnythingElse",
+                      // target: "#root.DialogueManager.Ready.GPT",
+                      actions: assign({ lootinfo: ({context}) => `For the enemy ${correspondsTo[context.loc][context.ene]} the ${context.act} loot is: ${getLootInfo(context, context.act, context.ene, context.loc)}`}),
+                    },
+                  },
+                },
+
+                // GiveLootInfo: {
+                //   always: [
+                //     {
                 //       target: "#root.DialogueManager.Ready.GPT",
                 //       actions: assign({ lootinfo: ({context}) => `For the enemy ${correspondsTo[context.loc][context.ene]} the ${context.act} loot is: ${getLootInfo(context, context.act, context.ene, context.loc)}`}),
-                //     },
-                //   },
+                //     }
+                //   ]
                 // },
-
-                GiveLootInfo: {
-                  always: [
-                    {
-                      target: "#root.DialogueManager.Ready.GPT",
-                      actions: assign({ lootinfo: ({context}) => `For the enemy ${correspondsTo[context.loc][context.ene]} the ${context.act} loot is: ${getLootInfo(context, context.act, context.ene, context.loc)}`}),
-                    }
-                  ]
-                },
 
                 NoEnemy:{
                   entry: say("There's no such enemy in that location."),

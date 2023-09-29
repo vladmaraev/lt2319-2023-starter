@@ -587,10 +587,14 @@ const settings = {
     asrDefaultNoInputTimeout: 10000,
     ttsDefaultVoice: "en-US-JennyNeural"
 };
+// Search for API
 // mydict = {"Genus": {"wolf": {"location" : {"Jungle": { "Hellhound": {"Drop": "a", "Steal": "b" , "Poach": "c"} }, "Desert":{"Wolf": {"Drop": "a", "Steal": "b" , "Poach": "c"} } }, "Mines": {"No Enemy"}}}}
+// Experiments:
+// Q.1.
+// Hey, GPT! In Final Fantasy XII: The Zodiac Age, what can I steal from wolves in the Dalmascan desert? 
 async function fetchFromChatGPT(prompt, max_tokens) {
     const myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer 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");
+    myHeaders.append("Authorization", "Bearer <key goes here>");
     myHeaders.append("Content-Type", "application/json");
     const raw = JSON.stringify({
         model: "gpt-3.5-turbo",
@@ -611,6 +615,10 @@ async function fetchFromChatGPT(prompt, max_tokens) {
     }).then((response)=>response.json()).then((response)=>response.choices[0].message.content);
     return response;
 }
+// const myprompt: string = "Hey, GPT! Could you please reformulate the following sentence so it doesn't sound repetitive? FYI, the tags 'common', 'uncommon', etc., stand for the chances of getting the item. The sentence should sound natural and fluent. Don't omit any information. This is the sentence: ";
+// const myprompt: string = "Hey, GPT! In Final Fantasy XII: The Zodiac Age, "
+// DATA
+// Dictionary in progress
 const category = {
     action: [
         "drop",
@@ -740,6 +748,16 @@ function checkNoEnemyInfo(context, enemy, location) {
     if (beastName === "NoEnemy") return true;
     else return false;
 }
+// 0 shot
+// const myprompt: string = `Hey, GPT!  Could you please let me know if the following sentence request has any of these entities: Action: ${category.action}, Enemy: ${category.enemy}, Location: ${category.location} ?, this is the sentence: `;
+// 1 shot
+// const myprompt: string = `Hey, GPT!  Could you please let me know if the following sentence request has any of these entities: Action: ${category.action}, Enemy: ${category.enemy}, Location: ${category.location} ? Here's an example: Example sentence: "What can I get from skeletons?". Entities: Enemy: skeletons , Action: None, Location: None. This is the sentence: `;
+// 2 shot
+// const myprompt: string = `Hey, GPT!  Could you please let me know if the following sentence request has any of these entities: Action: ${category.action}, Enemy: ${category.enemy}, Location: ${category.location} ? Here's two examples: Example sentence 1: "What can I get from skeletons?". Entities for example 1: Enemy: skeletons , Action: None, Location: None. Example sentence 2: "What can I obtain from Gargoyles in the jungle?". Entities for example 2: Enemy: gargoyles , Action: None, Location: jungle. This is the sentence: `;
+// changed word Entities, not used in the prompt
+// const myprompt: string = `Hey, GPT!  Could you please let me know if the following sentence request has any of the words in the lists?: Action: ${category.action}, Enemy: ${category.enemy}, Location: ${category.location} ? Here's two examples: Example sentence 1: "What can I get from skeletons?". Matches for example 1: Enemy: skeletons , Action: None, Location: None. Example sentence 2: "What can I obtain from Gargoyles in the jungle?". Matches for example 2: Enemy: gargoyles , Action: None, Location: jungle. Give me a list for every category. This is the sentence: `;
+// asking for JSON object
+const myprompt = `Hey, GPT! Here's a JSON object: {"action": <action>, "enemy": <enemy>, "location": <location> }.  Could you please let me know if the following sentence request has any of the words in the lists?: Action: ${category.action}, Enemy: ${category.enemy}, Location: ${category.location} ? Here's two examples: Example sentence 1: "What can I get from skeletons?". Matches for example 1: Enemy: skeletons , Action: , Location: . Example sentence 2: "What can I obtain from Gargoyles in the jungle?". Matches for example 2: Enemy: gargoyles , Action: , Location: jungle. Put the categories in the JSON object. If there's no match, keep the category empty. This is the sentence: `;
 // machine
 const dmMachine = (0, _xstate.createMachine)({
     /** @xstate-layout N4IgpgJg5mDOIC5QCcD2qAuA6AIgSwEMAbVKAVzAFkCA7AmZLABWTAAcDWBiAQQGUASgBUhfAPoCAojxwBNANoAGALqJQbVLDwY8qGmpAAPRACYAzIqwBOAKwWAHADZ7ARnv3FLkwBYANCABPRBcAdjNrK0ibTxsrEzsQqwBfJP80TFxCEnIqWnowRgEwAggArABxVjAdGiguPiZpAGkxAGEAeUomABlJIUklVSQQDS0dPQNjBDNvbyx7M1jQ+xsbbzMF-yDp9xCsWft4kJsQ8ysXbxS09Gx8YlIKajoGLCKSsp5YAGtKMB4aAIYAAWeFq9UaPBaHS6vX6gwMo20un0wymXhCW0Q3kUFiwLish0cIW8ji85yuIHStyyD1yzwKr2KpSwny+XCkHXKADkAJJ8SQ4eHDRHjFGgKYmDzWOyKJyudyeHyYhA2EyOCKRRyKEwhexWHEUqmZe45J75QpMj7fdmSTm8-mClxDdSaJETVGICyWWwOZxuDxePyBUzuOZWZz2MJEtWKKxmQ03Y3ZR55F5vZmsm12vkC+QmZ0jV2iyaekzemVy-2KoPbC4uSzeEzh7UbGahEIJjJ3ZN082M94s60c9rcnOCswFkXIkvTevS33ygNK4MIezY-YyxSk9Za5KpSmJ7u0s1py2DtnD0cO+TeSdF6ce2flhdVwPK8yuLBmY5NkJeRxWI28b7kaR6mqmDLplaF62iO9q5jYd5jA+4qls+sp+gqb4rmWjg2FgW7xC4LiOGY5iLJcIGHjS4H0haA6Zpe8GCo4SFumKRhofOGGLtWyouLE6r6lqbixIoaydtSJopnR-YZkOsFXrmIRscWj5etxlZYcu2y6iYWAmCRW7EicxzEZJSbHhB9HyWyhiwBgBAYGAWAEAAZs5yAABT1mWigAJRcKBNEyX2UHnkKLrIe6qEIJK6FaUuNalmqX6SmYAmRn+tiOBZYGhaeA6tKgZBEBANAYAAEsUyDgs0bSdD0fQDCoCL3jFnFxfqmmYUlyphC4WB-lqOpmBYZEuHlIW9oVtk8AAxqKWCtECYDzWykWFtFHESoJBlqmsZxxuY-EOPMsQ6m4RnRPYU3STNkFnqyC1LSta0bU6bXbTOhndc4xJ6mWiwrPx+KDfWcbau4gZ4XdPYno9DHfC9yLni9WZwWOm1Th1aKuPhJKRviISKCT3iqqDNj2PMJg6t4BKAZ44lw1Zsnhc9i2oxzGAY0pjqqShnVXQT-3E6TijkyYyqRNTGxqrYVjEhLLO0WFT3I5zeho4tXD2Y5zmuR5BQ+dqigBUF1H3QjNnQSjWvc9j7U7cE+P7KLivi5L-ES9T7ijaSnjeB2VFdtN1tybbms0FgPI0PNqAALZsHbNB1ZCDUws1jvfY+v2WP93iAziVM2MqWVYKROpV+T+qGSrBWI7Zkg0GACdlG961cNn7E-aS6q03hQGRGRZj8ZGvvA844kl7Y9cPTb57N637erZ38ifcKTs-YZ+eRoXcTFyDK6hKSBErJGMx2GqRJz+H7PfEvbeLy3vPMd3amxW4ixu0THtkxTx9iT6R1LESMNgSKGVWLfayEdn7Lzga-LGG8oo90fF-EWv8Sb-ylsfGwzgvyxAyrqVwpEwjQLZurL4j9oJL11g5JyLl3KeRNn5QKwUrYwPvlQluT9WRL3foLPG39CbZSwRLABtZSS+0IVuIkMxa7kLVkjbh8DY7xyTtQtOUJGqwhagLXGpgd4Vz3kXYGpdj6zD2LuKuAlPBjVyiHKS8NOGUO6KgeaTlUYdw2q1TeOdYpqiDtYX8+IDqrAlu+Rwhc8S2BJHEMsJE9zXFDhwihyi3EeNeqvD6+jnZxXMLvAGB8zHvhlPscmQcSShBOA45JTjWZKNshkzx9tvgZMQdeXxKCP5CxWBg0RnsJGmHAYNUiqx3BT1VDYRRs1oLNKWqydpTEkG5JnKJfpYtsHvjGnsP8ep8TiMAjfRxllVazPPPMrmbT3F0P1owo23lfJmzYZbZxaSmnuJadHRZ7iBEGIQOsn+Aytk4Q2NTQyepSYLBCIkcMMzG5zM+UtNRic2CXL0FojOTU4RdK2qggJBTjFFKBiXd8hkhIRjCBlWY6x4ULz4TwgI6LvkPxbksxSb9cU4zyS4DKVgCIkx8FfcmJ93zEkGj4D8ZhIg+lCHS2BDLl7Mrgey7M15kF4p6WiPlArtTkzIiKkIjhSmygImsJwxFabRFnic-K88FWsqVUiq5KjVWY2vPmL6+KhY6vFkKg14CjXvm8MRCungiRRJmOI4OdTTkN3pY6tuyrFVur5vICcXqtWIBWJYGY35tTgI8Hy0pkosB2AuGNbEFg1TAVjXau+lDqHJsde0vWDDDbMKeebdhbzGk0MZc211vyuVb0fASOYjZwyV0cH6HB2wfDfyhU2cdMwwiUTrWHFxyim3Oq1iijRA7d2pwaPVaE2K9GZsEdm6IX51iCsLTifEpTEgEWpWEGU5Monyq4SnQdL1U2ctWWgsi6ogEn31NPcMZL3AxLWHhPCThjjfsob+o92sMAAZWZe-5vLUpgaNRB1YUGcJgyGo2eKHtDKTVtZu95kdRR-sWphj1QHP4gbI4ZAjZsiPGpwrGfCkp9ThklKEIOtaDwpN7ec7myJGMYZucs68Ga-HeqmOfAiAlSLYkZmEKwZKvAGX9FfaIpxbo0dSX29Dsm0Pc1bfQg2TDjZdpeZJhp0mNYMZsx5jJfy8mRH0vWASgE1ySjWO+Yi1MjUnHxABYiSHzNSYRVZvQyr93JyjsyzFZ7dG+ZnOpmIWnYzYl02Sxw+k9l6h2fjMzG6LPua+Cnah6HaGKdzCO-xPq8ONnA9xwS-FFaDT9lPEi2JnDIeUY1xlzWX6tf5thnlGV9JxGE8RAC4k1T8VOOEKmu5YghvHjGiT9SzlJZk3oJr3MWscqxp6lTWaAWLeCStxJ63eO1ipuDWMNjoi8rMLUo7cb7U-qjhdjzV21W5mU90q9q5ZgGRxFCv78QZ16cAXDwiM7Di02lXg8bc0QdTcuy-NtDmHksOeRbVzJ2E0NYJ-AonYBctjt1AZSF0riK8rifxPC+dYxeGlXpeI66Af1q3fj0UTW0uTeXllnRWd2uqezXDoGiOyt4IAptwCZayskwWPTQ4Jw8dlDcZgWOblUDLWyTyNyXJUCaKZ7FL0+k714PpjCnEYRlRRPwpXA3qp3CKyN1gE3GAzcW+8db239uNXcpnE7-Y35XeKxJt+UeK4zLzEOOfWUgNFhB5D2HioeAABuYAC80HN7LzOOLWM+oxCuP7kYy3hL+3+NwKeg--EBCCWokgiCwBcnw-vYAOltdr1MRYxJrAXC3LXRYpNlQbAuAKjKTg4xalxwltzp2ATAlBFAPvA-F7D9H3Nu7MPAvqjNrqaVxcZXmO2K2IShdOM0vDLyzvu+e8H+H8fgfp+8xx9EA1g9gRMmwysmxwENhF9hoYlXBFYl8fAytP9u999D9B8H4T8Sd7lO1TZu1Xlt96Uv80Df8h8B8HdOoo05gB4Thvw1wtQ09H8AJ1QR4IUzYvBVQUC99e9SCAR0Cq9z0KCpgQDWcyQIDbBeV7BF9vdRD6ZI1yIZguDv90DloSoyoKpqpOBZASoBCcsFd7sRCwDhNIDJCYCZ0K4CRzBjgMIjVhcjRygABVHkZgfINxEoSALgVoboHkVoJoIQ0wRWeYIkEiRYKmHKHSLEWmSwWmZYApOgpJAHRw5w2OAgTmUvXgQQEQcQKQGQBQfQmHdKCuRIEaOJGdZwN7LEcJIooOcBGoskCyJIlkNIlyHkCAIgEfLIsQPgIQHgYQMfebOPAzNcb8ENQyHUcMVHbYaIcw44AMatMiQ4BopwponQUvGONokffgAQLonovowUfI-5R7YY8VMY4oyYrEd-AyD7AkKmGFckE5RolGNYvgNgYoL4ffXQ+XIA2cfSY40Y9ECY5UH7fuE4RWQTEuEwJY5wp4lyboPAByMAGgD42bfw6YOwfYOIapHwENWYEiZUemOcY4GFIOGFE4WYFIfcGgVACAOAAwKkAYx8AAWh1GVGZLsIIOpwZICRcC922zNm4z10OANXlRYHYE4DAC5M6lOH4hvRlQJC1E8BWESCN0lKmA1xXHWH5XpiiBpWKwJCD0qDAGqH31VOCBZIbycAnRfyJGJFOFJk72+F+C724KgFNIezNiGlcEgJbGcGSh2HXFjCFNCIyhIn+x7UIIdS+DdLi25znEWHOBn0q3iASPDOp1gWKlKnKiqhqjdJOHwlOEHniiiSVP6h8ArjIiwUJnrHE1TPjUjJTmjKpm200wWL9lmH6m6lwxhTphnU31q0SxpxTkt3ejdLLG6klWqQAiDl-FBlsCGmODjGIXODzy3zTOBwWQ82jNIkGnATwVbMOHbJXHHk9PlgSTXADAdNp2RTjlRQbPP3+R8G1AMjXVWCpnWznUQAJD2HWB1FlH-DGXZKpzrK4WoS3JxDLRbMlDbL9N5S1DxC+xnQynLWVlXOAsbSm28VHOImiO62OCnNOEVk2zwiGimTbEE3WBqxF1o0s0VV4UdS3PAQgr3KgoPJgoOBIriD9ipkE0vMlxvIPWXlHPI2fMvnGXfJlJOH2FjA2B53sSNUvOZS3PMCYt92gvCybB-kQyDmEwUrQ0wvvLyUMlxAnLwsAgIvr3nTsHwktV5VVGOivl0syRdQyS3L-BUv3OxP02pgiwD3I1AUAuOzQvSTQzS0UoMp+lmGARfLEtVA-LinYyNUhVWAsGOG-F4sPSco6lj0fDwV2QOkbA8GLJOG2SCROAPLVDCFJhrI5KCqbgyq+RVXcWjI4LxFCEymiGiyiRNWpkfVmEn11EbHSqdUyujjSx3RGrdNJHzPyqLMLmKpwgqSe3DHWG1LWACsBwbQmwyyPVzJhSGhmsKrmostMEfQMngzVzLGJLDJqqBxQ22pGvQxcvCrQVw09KEzNlcFmMYNMFIwqy03iDWBXP7IjPXOsweql3uq+UmviH2sLMOpLJIw2ArlCA2BDUVng0vOlzbl2ryrhq3COplNIngriFOFsV+2uqAtuq2ol0JzBxbmarcGsCizzWiCIm+oBS221x8EqrWFrmmVQqpvF2RD4vUXSxpsEuetijV1hsOnhvmskRJjdljDjEOBJgEnzxuDD1HNJI01dz9jaqkJXDsHCGnVZuT21ApsCsFuN01or3Dytxtzt0ZVHKFN1uLMOANq90YolkAlv1sEgMhIFs2uZHL3NyL1L1DtQDdIymItGkLmYLfLxPT1SkrlOFOBrnDQ1tNztqwCj2dslsoJIgEzXTXwQ3DS90MjxArNJirINCDrFw+GIJ4IH2jrLDLRWCnW-AAm-EXzsDmF1AuHph3ABn5uBrXKeibp-yPzIIlILrU1pjNRqJiOyk2Ab27rgMutWC1GQPrroxZEnpUK73QOjoWDSkOCK3rD-A2zXoXpE2mK1D-HpiUJIKPwzPUOzK0JKmjvwRnkQoIx7obzTs9IEhrTXGCyhKwvxNeoAgWFJipkjDrgeOWKYFcNQHcIgDdOlI1KiLgL+xqPOEQdjUaJSOaLdMjHxNVCsWJCnX83iGqoyEeNIbnsQHVO2ELhIjxBMiNVlEBtHsSOWJhPWPaOauOoQAJKW1JgmIHjLBWChJWJLxcheLeJNOYZVGX0nSwTCKpXOJVDNn5VEzwnGj+0UKQehOaOD3hOciRNqFzPUd-Dgb1G0fxP1BNuJFIjInGRXJSCAA */ id: "root",
@@ -777,23 +795,49 @@ const dmMachine = (0, _xstate.createMachine)({
                         AskMeAnything: {
                             entry: say("Ask me about a type of enemy, an action to perform and a location to know the loot in FF12"),
                             on: {
-                                SPEAK_COMPLETE: "Ask"
+                                SPEAK_COMPLETE: "AskGPT"
+                            }
+                        },
+                        AskGPT: {
+                            entry: listen(),
+                            // CONFIGURE TIMEOUT EVENT
+                            after: {
+                                10200: {
+                                    target: "AskMeAnything",
+                                    actions: say("I couldn't hear you. Let's try again.")
+                                }
+                            },
+                            on: {
+                                RECOGNISED: {
+                                    target: "GPT",
+                                    actions: [
+                                        ({ event })=>console.log(event),
+                                        (0, _xstate.assign)({
+                                            lastResult: ({ event })=>event.value[0].utterance
+                                        })
+                                    ]
+                                }
                             }
                         },
                         GPT: {
-                            entry: ({ context })=>console.log(context.lootinfo),
+                            entry: ({ context })=>console.log(context.lootinfo, category.enemy, context.lastResult),
                             invoke: {
                                 src: (0, _xstate.fromPromise)(async ({ input })=>{
-                                    const data = await fetchFromChatGPT("Hey, GPT! Could you please reformulate the following sentence so it doesn't sound repetitive? FYI, the tags 'common', 'uncommon', etc., stand for the chances of getting the item. The sentence should sound natural and fluent. Don't omit any information. This is the sentence:" + input.lastResult, 200);
+                                    const data = await fetchFromChatGPT(myprompt + input.lastResult, 400);
                                     return data;
                                 }),
                                 input: ({ context, event })=>({
-                                        lastResult: context.lootinfo
+                                        lastResult: context.lastResult
                                     }),
                                 onDone: {
-                                    target: "SpeakGPToutput",
+                                    target: "Ask",
                                     actions: [
-                                        ({ event })=>console.log(event.output)
+                                        ({ event })=>console.log(JSON.parse(event.output).enemy),
+                                        (0, _xstate.assign)({
+                                            ene: ({ event })=>JSON.parse(event.output).enemy,
+                                            act: ({ event })=>JSON.parse(event.output).action,
+                                            loc: ({ event })=>JSON.parse(event.output).location
+                                        })
                                     ]
                                 }
                             }
@@ -816,7 +860,8 @@ const dmMachine = (0, _xstate.createMachine)({
                             }
                         },
                         Ask: {
-                            entry: listen(),
+                            // silenced for lab2:
+                            // entry: listen(),
                             // CONFIGURE TIMEOUT EVENT
                             after: {
                                 10200: {
@@ -824,128 +869,94 @@ const dmMachine = (0, _xstate.createMachine)({
                                     actions: say("I couldn't hear you. Let's try again.")
                                 }
                             },
-                            on: {
-                                RECOGNISED: [
-                                    // if more than one SLOT of the same type, store them all! (in more advanced labs)
-                                    // complete
-                                    {
-                                        guard: ({ event })=>getSlots(event, "action") && getSlots(event, "enemy") && getSlots(event, "location"),
-                                        target: "LootInfo",
-                                        actions: [
-                                            (0, _xstate.assign)({
-                                                lastResult: ({ event })=>event.value
-                                            }),
-                                            (0, _xstate.assign)({
-                                                act: ({ event })=>getSlots(event, "action")
-                                            }),
-                                            (0, _xstate.assign)({
-                                                ene: ({ event })=>getSlots(event, "enemy")
-                                            }),
-                                            (0, _xstate.assign)({
-                                                loc: ({ event })=>getSlots(event, "location")
-                                            }),
-                                            ({ context })=>console.log(context.act, context.ene, context.loc)
-                                        ]
-                                    },
-                                    // incomplete (2 in)
-                                    // ask location
-                                    {
-                                        guard: ({ event })=>getSlots(event, "action") && getSlots(event, "enemy"),
-                                        target: "AskLocation",
-                                        actions: [
-                                            (0, _xstate.assign)({
-                                                lastResult: ({ event })=>event.value
-                                            }),
-                                            (0, _xstate.assign)({
-                                                act: ({ event })=>getSlots(event, "action")
-                                            }),
-                                            (0, _xstate.assign)({
-                                                ene: ({ event })=>getSlots(event, "enemy")
-                                            })
-                                        ]
-                                    },
-                                    // ask enemy
-                                    {
-                                        guard: ({ context, event })=>getSlots(event, "action") && getSlots(event, "location"),
-                                        target: "AskEnemy",
-                                        actions: [
-                                            (0, _xstate.assign)({
-                                                lastResult: ({ event })=>event.value
-                                            }),
-                                            (0, _xstate.assign)({
-                                                act: ({ event })=>getSlots(event, "action")
-                                            }),
-                                            (0, _xstate.assign)({
-                                                loc: ({ event })=>getSlots(event, "location")
-                                            })
-                                        ]
-                                    },
-                                    // ask action
-                                    {
-                                        guard: ({ context, event })=>getSlots(event, "enemy") && getSlots(event, "location"),
-                                        target: "AskAction",
-                                        actions: [
-                                            (0, _xstate.assign)({
-                                                lastResult: ({ event })=>event.value
-                                            }),
-                                            (0, _xstate.assign)({
-                                                ene: ({ event })=>getSlots(event, "enemy")
-                                            }),
-                                            (0, _xstate.assign)({
-                                                loc: ({ event })=>getSlots(event, "location")
-                                            })
-                                        ]
-                                    },
-                                    // incomplete (1 in)
-                                    // ask enemy and location
-                                    {
-                                        guard: ({ event })=>getSlots(event, "action"),
-                                        target: "AskEnemyLocation",
-                                        actions: [
-                                            (0, _xstate.assign)({
-                                                lastResult: ({ event })=>event.value
-                                            }),
-                                            (0, _xstate.assign)({
-                                                act: ({ event })=>getSlots(event, "action")
-                                            })
-                                        ]
-                                    },
-                                    // ask action and location
-                                    {
-                                        guard: ({ event })=>getSlots(event, "enemy"),
-                                        target: "AskActionLocation",
-                                        actions: [
-                                            (0, _xstate.assign)({
-                                                lastResult: ({ event })=>event.value
-                                            }),
-                                            (0, _xstate.assign)({
-                                                ene: ({ event })=>getSlots(event, "enemy")
-                                            })
-                                        ]
-                                    },
-                                    // ask action and enemy
-                                    {
-                                        guard: ({ event })=>getSlots(event, "location"),
-                                        target: "AskActionEnemy",
-                                        actions: [
-                                            (0, _xstate.assign)({
-                                                lastResult: ({ event })=>event.value
-                                            }),
-                                            (0, _xstate.assign)({
-                                                loc: ({ event })=>getSlots(event, "location")
-                                            })
-                                        ]
-                                    },
-                                    {
-                                        target: "CouldntHear"
-                                    }
-                                ]
-                            }
+                            always: [
+                                //RECOGNISED: [
+                                // if more than one SLOT of the same type, store them all! (in more advanced labs)
+                                // complete
+                                {
+                                    guard: ({ context })=>context.act.length > 0 && context.ene.length > 0 && context.loc.length > 0,
+                                    target: "LootInfo",
+                                    actions: [
+                                        (0, _xstate.assign)({
+                                            lastResult: ({ event })=>event.value
+                                        }),
+                                        // assign({ act: ({ event }) => getSlots(event, "action"),}),
+                                        // assign({ ene: ({ event }) => getSlots(event, "enemy"),}),
+                                        // assign({ loc: ({ event }) => getSlots(event, "location"),}),
+                                        ({ context })=>console.log(context.act, context.ene, context.loc)
+                                    ]
+                                },
+                                // incomplete (2 in)
+                                // ask location
+                                {
+                                    guard: ({ context })=>context.act.length > 0 && context.ene.length > 0,
+                                    target: "AskLocation",
+                                    actions: [
+                                        (0, _xstate.assign)({
+                                            lastResult: ({ event })=>event.value
+                                        })
+                                    ]
+                                },
+                                // ask enemy
+                                {
+                                    guard: ({ context })=>context.act.length > 0 && context.loc.length > 0,
+                                    target: "AskEnemy",
+                                    actions: [
+                                        (0, _xstate.assign)({
+                                            lastResult: ({ event })=>event.value
+                                        })
+                                    ]
+                                },
+                                // ask action
+                                {
+                                    guard: ({ context })=>context.ene.length > 0 && context.loc.length > 0,
+                                    target: "AskAction",
+                                    actions: [
+                                        (0, _xstate.assign)({
+                                            lastResult: ({ event })=>event.value
+                                        })
+                                    ]
+                                },
+                                // incomplete (1 in)
+                                // ask enemy and location
+                                {
+                                    guard: ({ context })=>context.act.length > 0,
+                                    target: "AskEnemyLocation",
+                                    actions: [
+                                        (0, _xstate.assign)({
+                                            lastResult: ({ event })=>event.value
+                                        })
+                                    ]
+                                },
+                                // ask action and location
+                                {
+                                    guard: ({ context })=>context.ene.length > 0,
+                                    target: "AskActionLocation",
+                                    actions: [
+                                        (0, _xstate.assign)({
+                                            lastResult: ({ event })=>event.value
+                                        })
+                                    ]
+                                },
+                                // ask action and enemy
+                                {
+                                    guard: ({ context })=>context.loc.length > 0,
+                                    target: "AskActionEnemy",
+                                    actions: [
+                                        (0, _xstate.assign)({
+                                            lastResult: ({ event })=>event.value
+                                        })
+                                    ]
+                                },
+                                {
+                                    target: "CouldntHear"
+                                }
+                            ]
                         },
                         CouldntHear: {
-                            entry: say("Something didn't work, hold on."),
+                            entry: say("Something didn't work, hold on. Okay, try again."),
                             on: {
-                                SPEAK_COMPLETE: "Ask"
+                                SPEAK_COMPLETE: "AskGPT"
                             }
                         },
                         // Asking for clarifications when 2 slots are filled 
@@ -1297,30 +1308,33 @@ const dmMachine = (0, _xstate.createMachine)({
                                         }
                                     ]
                                 },
-                                //   GiveLootInfo: {
-                                //   entry: ({ context }) => {
-                                //     context.spstRef.send({
-                                //       type: "SPEAK",
-                                //       value: { utterance: `For the enemy ${correspondsTo[context.loc][context.ene]} the ${context.act} loot is: ${getLootInfo(context, context.act, context.ene, context.loc)}`},
-                                //     })},
-                                //   on: {
-                                //     SPEAK_COMPLETE: { 
-                                //       // target: "#root.DialogueManager.Ready.AnythingElse",
-                                //       target: "#root.DialogueManager.Ready.GPT",
-                                //       actions: assign({ lootinfo: ({context}) => `For the enemy ${correspondsTo[context.loc][context.ene]} the ${context.act} loot is: ${getLootInfo(context, context.act, context.ene, context.loc)}`}),
-                                //     },
-                                //   },
-                                // },
                                 GiveLootInfo: {
-                                    always: [
-                                        {
-                                            target: "#root.DialogueManager.Ready.GPT",
+                                    entry: ({ context })=>{
+                                        context.spstRef.send({
+                                            type: "SPEAK",
+                                            value: {
+                                                utterance: `For the enemy ${correspondsTo[context.loc][context.ene]} the ${context.act} loot is: ${getLootInfo(context, context.act, context.ene, context.loc)}`
+                                            }
+                                        });
+                                    },
+                                    on: {
+                                        SPEAK_COMPLETE: {
+                                            target: "#root.DialogueManager.Ready.AnythingElse",
+                                            // target: "#root.DialogueManager.Ready.GPT",
                                             actions: (0, _xstate.assign)({
                                                 lootinfo: ({ context })=>`For the enemy ${correspondsTo[context.loc][context.ene]} the ${context.act} loot is: ${getLootInfo(context, context.act, context.ene, context.loc)}`
                                             })
                                         }
-                                    ]
+                                    }
                                 },
+                                // GiveLootInfo: {
+                                //   always: [
+                                //     {
+                                //       target: "#root.DialogueManager.Ready.GPT",
+                                //       actions: assign({ lootinfo: ({context}) => `For the enemy ${correspondsTo[context.loc][context.ene]} the ${context.act} loot is: ${getLootInfo(context, context.act, context.ene, context.loc)}`}),
+                                //     }
+                                //   ]
+                                // },
                                 NoEnemy: {
                                     entry: say("There's no such enemy in that location."),
                                     on: {
