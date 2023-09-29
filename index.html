@@ -1,14 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>SpeechState DM sandbox</title>
+    <title>Guess The Colours In Polish</title>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="./src/styles.css">
   </head>
-
-  <body>
-    <div id="app"><button id="button"></button></div>
+<body>
+    <div id="app">
+      <div id="container">
+      <button id="start"></button>
+      <h1>WYBIERZ ODPOWIEDNI KOLOR</h1>
+        <div id="buttons">
+          <button class="button" id="niebieski">🔵</button>
+          <button class="button" id="czerwony">🔴</button>
+          <button class="button" id="żółty">🟡</button>
+          <button class="button" id="zielony">🟢</button>
+          <button class="button" id="pomarańczowy">🟠</button>
+          <button class="button" id="fioletowy">🟣</button>
+          <button class="button" id="biały">⚪</button>
+          <button class="button" id="czarny">⚫</button>
+          <button class="button" id="brązowy">🟤</button>
+      </div>
+    </div>
+    </div>
     <iframe data-xstate style="position: absolute; height: 100%; width: 100%; border: 2px"></iframe>
     <script type="module" src="src/index.ts"></script>
-    
   </body>
 </html>
