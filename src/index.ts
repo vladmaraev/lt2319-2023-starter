@@ -4,15 +4,15 @@ import { speechstate, Settings, Hypothesis } from "speechstate";
 const azureCredentials = {
   endpoint:
     "https://northeurope.api.cognitive.microsoft.com/sts/v1.0/issuetoken",
-  key: "d281bc32d54f4bc090c53f113593a2a6",
+  key: "",
 };
 
 const settings: Settings = {
   azureCredentials: azureCredentials,
   asrDefaultCompleteTimeout: 0,
-  locale: "en-US",
+  locale: "pl-PL",
   asrDefaultNoInputTimeout: 5000,
-  ttsDefaultVoice: "en-GB-RyanNeural",
+  ttsDefaultVoice: "pl-PL-AgnieszkaNeural",
 };
 
 interface DMContext {
@@ -36,29 +36,11 @@ const listen =
       type: "LISTEN",
     });
 
-interface Grammar {
-    entities: {
-      [index: string]: string;
-        };
-      }
+    const colorGenerator = () => {
+      const colors = ["niebieski", "czerwony", "żółty", "zielony", "pomarańczowy", "fioletowy", "biały", "czarny", "brązowy"];
+      return colors[Math.floor(Math.random() * colors.length)];
+    };
 
-const grammar = {
-  entities: {
-      colour: "pink",
-      object: "lamp",
-      place: "shelf",
-        },
-      };
-
-const modify = (word: string, sentence: string) => {
-  console.log(word, sentence.toLowerCase().replace(/\.$/g, "").split(/\s+/))
-if (sentence.toLowerCase().replace(/\.$/g, "").split(/\s+/).includes(word)) {
-  return true}
-  else {
-    return false
-  }
-};
-  
 // machine
 const dmMachine = createMachine(
   {
@@ -90,219 +72,78 @@ const dmMachine = createMachine(
                 on: { SPEAK_COMPLETE: "Ask" },
               },
               Ask: {
-                entry: listen(),
-                on: {
-                  RECOGNISED: [{
-                    target: "All",
-                    guard: ({ event }) => modify(grammar.entities.colour, event.value[0].utterance) && modify(grammar.entities.object, event.value[0].utterance) && modify(grammar.entities.place, event.value[0].utterance),
-                    actions: assign({ 
-                      recognisedColour: ({ context }) =>
-                        (grammar.entities.colour),
-                        recognisedObject: ({ context }) =>
-                        (grammar.entities.object),
-                        recognisedPlace: ({ context }) =>
-                        (grammar.entities.place),
-                    }),
-                  },
-                  {
-                    target: "NoColour",
-                    guard: ({ event }) => !modify(grammar.entities.colour, event.value[0].utterance),
-                    actions: assign({
-                      recognisedObject: ({ event }) => {
-                        if (modify(grammar.entities.object, event.value[0].utterance)) {
-                          return grammar.entities.object
-                        }
-                      },
-                        recognisedPlace: ({ event }) => {
-                          if (modify(grammar.entities.place, event.value[0].utterance)) {
-                            return grammar.entities.place
-                          }
-                        },
-                    }),
-                  },
-                  {
-                    target: "NoObject",
-                  guard: ({ event }) => !modify(grammar.entities.object, event.value[0].utterance),
+                entry: ({ context }) => {
+                  const color = colorGenerator();
+                  context.color = color;
+                  context.spstRef.send({
+                    type: "SPEAK",
+                    value: { utterance: `${context.color}` },
+                  });
+                },
+                on: { SELECTED: [{
+                  target: "Correct",
+                  guard: ({ context, event }) => context.color === event.color,
                   actions: assign({
-                    recognisedColour: ({ event }) => {
-                      if (modify(grammar.entities.colour, event.value[0].utterance)) {
-                        return grammar.entities.colour
-                      }
-                    },
-                      recognisedPlace: ({ event }) => {
-                        if (modify(grammar.entities.place, event.value[0].utterance)) {
-                          return grammar.entities.place
-                        }
-                      },
+                    correct: ({ event }) => event.color,
                   }),
                 },
                 {
-                  target: "NoPlace",
-                guard: ({ event }) => !modify(grammar.entities.place, event.value[0].utterance),
+                  target: "Incorrect",
+                  guard: ({ context, event }) => context.color !== event.color,
+                  actions: assign({
+                    incorrect: ({ event }) => event.color,
+                  }),
+                },
+              ],
+              },
+            },
+            Correct: {
+              entry: ({ context }) => {
+                const correctButton = document.getElementById(`${context.color}`)
+                correctButton.style.backgroundColor = "green",
+                setTimeout(() => {
+                  correctButton.style.backgroundColor = "hsla(217, 85%, 66%, 0.4)";
+                }, 1000);
+                context.spstRef.send({
+                  type: "SPEAK",
+                  value: { utterance: `Zgadza się! Kolejny kolor to` },
+                });
+              },
+              on: { SPEAK_COMPLETE: "Ask" },
+            },
+            Incorrect: {
+              entry: ({ context }) => {
+                const wrongButton = document.getElementById(`${context.incorrect}`)
+                wrongButton.style.backgroundColor = "red",
+                setTimeout(() => {
+                  wrongButton.style.backgroundColor = "hsla(217, 85%, 66%, 0.4)";
+                }, 1000);
+                context.spstRef.send({
+                  type: "SPEAK",
+                  value: { utterance: `Niestety nie. Spróbuj ponownie` },
+                });
+              },
+              on: { SELECTED: [{
+                target: "Correct",
+                guard: ({ context, event }) => context.color === event.color,
                 actions: assign({
-                  recognisedColour: ({ event }) => {
-                    if (modify(grammar.entities.colour, event.value[0].utterance)) {
-                      return grammar.entities.colour
-                    }
-                  },
-                    recognisedObject: ({ event }) => {
-                      if (modify(grammar.entities.object, event.value[0].utterance)) {
-                        return grammar.entities.object
-                      }
-                    },
+                  correct: ({ event }) => event.color,
                 }),
               },
-                ],
-                },
-              },
-              All: {
-                entry: ({ context }) => {
-                  context.spstRef.send({
-                    type: "SPEAK",
-                    value: { utterance: `OK, I put the ${context.recognisedColour} ${context.recognisedObject} on the ${context.recognisedPlace}` },
-                  });
-                },
-              },
-              NoColour: { entry: raise({ type: "FILL_COLOUR" }) },
-              NoObject: { entry: raise({ type: "FILL_OBJECT" }) },
-              NoPlace: { entry: raise({ type: "FILL_PLACE" }) },
-              IdleEnd: {},
+              {
+                target: "Incorrect",
+                guard: ({ context, event }) => context.color !== event.color,
+                actions: assign({
+                incorrect: ({ event }) => event.color,
+              }),
+              }
+            ],
+            },
             },
           },
         },
       },
-      SlotColour: {
-        initial: "Idle",
-        states: {
-          Idle: { on: { FILL_COLOUR: "Prompt" } },
-          Prompt: {
-            entry: ({ context }) => {
-              context.spstRef.send({
-                type: "SPEAK",
-                value: { utterance: `Tell me the colour`},
-              });
-            },
-            on: { SPEAK_COMPLETE: "Ask" },
-          },
-          Ask: {
-            entry: listen(),
-            on: { RECOGNISED: [{
-              target: "#root.DialogueManager.Form.All",
-            guard: ({ event, context }) => modify(grammar.entities.colour, event.value[0].utterance) && (!!context.recognisedObject ||  modify(grammar.entities.object, event.value[0].utterance)) && (!!context.recognisedPlace || modify(grammar.entities.place, event.value[0].utterance)),
-            actions: assign({ 
-              recognisedColour: ({ context }) =>
-                (grammar.entities.colour),
-                recognisedObject: ({ event, context }) => {
-                  if (context.recognisedObject) {
-                    return context.recognisedObject;
-                  } else if (modify(grammar.entities.object, event.value[0].utterance)) {
-                    return grammar.entities.object;
-                  };
-                },
-                recognisedPlace: ({ event, context }) => {
-                  if (context.recognisedPlace) {
-                    return context.recognisedPlace;
-                  } else if (modify(grammar.entities.place, event.value[0].utterance)) {
-                    return grammar.entities.place;
-                  };
-                },
-            }),
-          },
-          {
-          target: "#root.SlotObject.Prompt",
-          guard: ({ event, context }) => modify(grammar.entities.colour, event.value[0].utterance) && !context.recognisedObject && !modify(grammar.entities.object, event.value[0].utterance),
-          actions: assign({ 
-            recognisedColour: ({ context }) =>
-              (grammar.entities.colour),
-          }),
-        },
-        {
-          target: "#root.SlotPlace.Prompt",
-          guard: ({ event, context }) => modify(grammar.entities.colour, event.value[0].utterance) && !context.recognisedPlace,
-          actions: assign({ 
-            recognisedColour: ({ context }) =>
-              (grammar.entities.colour),
-              recognisedObject: ({ event, context }) => {
-                if (context.recognisedObject) {
-                  return context.recognisedObject;
-                } else if (modify(grammar.entities.object, event.value[0].utterance)) {
-                  return grammar.entities.object;
-                };
-              },
-          }),
-        },
-        ],
-        },
-      },
     },
-  },
-  SlotObject: {
-    initial: "Idle",
-    states: {
-      Idle: { on: { FILL_OBJECT: "Prompt" } },
-      Prompt: {
-        entry: ({ context }) => {
-          context.spstRef.send({
-            type: "SPEAK",
-            value: { utterance: `What is the object?`},
-          });
-        },
-        on: { SPEAK_COMPLETE: "Ask" },
-      },
-      Ask: {
-        entry: listen(),
-        on: { RECOGNISED: [{
-          target: "#root.DialogueManager.Form.All",
-        guard: ({ event, context }) => modify(grammar.entities.object, event.value[0].utterance) && !!context.recognisedColour && (!!context.recognisedPlace || modify(grammar.entities.place, event.value[0].utterance)), 
-        actions: assign({
-          recognisedObject: ({ context }) => grammar.entities.object,
-          recognisedPlace: ({ event, context }) => {
-            if (context.recognisedPlace) {
-              return context.recognisedPlace;
-            } else if (modify(grammar.entities.place, event.value[0].utterance)) {
-              return grammar.entities.place;
-            };
-            }
-        }),
-      },
-      {
-        target: "#root.SlotPlace.Prompt",
-      guard: ({ event }) => modify(grammar.entities.object, event.value[0].utterance) && !modify(grammar.entities.place, event.value[0].utterance), 
-      actions: assign({
-        recognisedObject: ({ context }) => grammar.entities.object,
-      }),
-    },
-    ],
-    },
-  },
-},
-},
-SlotPlace: {
-  initial: "Idle",
-  states: {
-    Idle: { on: { FILL_PLACE: "Prompt" } },
-    Prompt: {
-      entry: ({ context }) => {
-        context.spstRef.send({
-          type: "SPEAK",
-          value: { utterance: `Where should I put the ${context.recognisedColour} ${context.recognisedObject}?`},
-        });
-      },
-      on: { SPEAK_COMPLETE: "Ask" },
-    },
-    Ask: {
-      entry: listen(),
-      on: { RECOGNISED: {
-        target: "#root.DialogueManager.Form.All",
-      guard: ({ event, context }) => modify(grammar.entities.place, event.value[0].utterance) && !!context.recognisedColour && !!context.recognisedObject,
-      actions: assign({
-        recognisedPlace: ({ context }) => grammar.entities.place,
-      }),
-    },
-  },
-},
-},
-},
       GUI: {
         initial: "PageLoaded",
         states: {
@@ -341,23 +182,23 @@ SlotPlace: {
       "speak.prompt": ({ context }) => {
         context.spstRef.send({
           type: "SPEAK",
-          value: { utterance: "Hi! What is your request?" },
+          value: { utterance: "Cześć! Zagrajmy w grę. Podam ci kolor, a ty wybierzesz go spośród listy. Gotowy?Zaczynajmy" },
         });
       },
       "gui.PageLoaded": ({}) => {
-        document.getElementById("button").innerText = "Click to start!";
+        document.getElementById("start").innerText = "Naciśnij aby rozpocząć";
       },
       "gui.Inactive": ({}) => {
-        document.getElementById("button").innerText = "Inactive";
+        document.getElementById("start").innerText = "Nieaktywny";
       },
       "gui.Idle": ({}) => {
-        document.getElementById("button").innerText = "Idle";
+        document.getElementById("start").innerText = "Bezczynny";
       },
       "gui.Speaking": ({}) => {
-        document.getElementById("button").innerText = "Speaking...";
+        document.getElementById("start").innerText = "Mówi...";
       },
       "gui.Listening": ({}) => {
-        document.getElementById("button").innerText = "Listening...";
+        document.getElementById("start").innerText = "Słucha...";
       },
     },
   },
@@ -365,7 +206,16 @@ SlotPlace: {
 
 const actor = createActor(dmMachine).start();
 
-document.getElementById("button").onclick = () => actor.send({ type: "CLICK" });
+document.getElementById("start").onclick = () => actor.send({ type: "CLICK" });
+document.getElementById("niebieski").onclick = () => actor.send({ type: "SELECTED", color: "niebieski"});
+document.getElementById("czerwony").onclick = () =>actor.send({ type: "SELECTED", color: "czerwony"});
+document.getElementById("żółty").onclick = () => actor.send({ type: "SELECTED", color: "żółty"});
+document.getElementById("zielony").onclick = () => actor.send({ type: "SELECTED", color: "zielony"});
+document.getElementById("pomarańczowy").onclick = () => actor.send({ type: "SELECTED", color: "pomarańczowy"});
+document.getElementById("fioletowy").onclick = () => actor.send({ type: "SELECTED", color: "fioletowy"});
+document.getElementById("biały").onclick = () => actor.send({ type: "SELECTED", color: "biały"});
+document.getElementById("czarny").onclick = () => actor.send({ type: "SELECTED", color: "czarny"});
+document.getElementById("brązowy").onclick = () => actor.send({ type: "SELECTED", color: "brązowy"});
 
 actor.subscribe((state) => {
   console.log(state.value);
