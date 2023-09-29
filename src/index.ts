@@ -1,4 +1,4 @@
-import { createMachine, createActor, assign, raise } from "xstate";
+import { createMachine, createActor, assign } from "xstate";
 import { speechstate, Settings, Hypothesis } from "speechstate";
 
 const azureCredentials = {
