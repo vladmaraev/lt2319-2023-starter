@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/emoji.css@3.0.1/emoji.min.css" rel="stylesheet" />
+  <title>Grid</title>
+  <link href="lab3.css" rel="stylesheet" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    #container {
+      margin: 50px;
+      display: grid;
+      grid-template-columns: repeat(3, 400px);
+    }
+
+    #container.active > div:hover {
+      background-color: lightblue;
+      cursor: pointer;
+    }
+
+    #container > div {
+      line-height: 100px;
+      font-size: xxx-large;
+      border: 2px solid white;
+      background-color: whitesmoke;
+      text-align: center;
+    }
+
+    /* Center and enlarge the displayed word */
+    #word-display {
+      font-size: 2em; /* Adjust the font size as needed */
+      margin: 0 auto; /* Center the text horizontally */
+      text-align: center; /* Center the text horizontally */
+      margin-top: 20px;
+    }
+    
+    /* Display words below the grid */
+    #word-list {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 1.5em;
+    }
+ 
+  </style>
+</head>
+<body>
+  <!--  <button id="nextButton">Next</button>   --> 
+  <link href="lab3.css" rel="stylesheet" />
+
+  <div id="container" class="active">
+    <div class="emoji" data-word="der Waschbär">🦡</div>
+    <div class="emoji" data-word="das Buch">📖</div>
+    <div class="emoji" data-word="der Schmetterling">🦋</div>
+    <div class="emoji" data-word="der Bus">🚌</div>
+    <div class="emoji" data-word="das Haus">🏠</div>
+    <div class="emoji" data-word="die Zitrone">🍋</div>
+    <div class="emoji" data-word="der Vogel">🐦</div>
+    <div class="emoji" data-word="der Baum">🌳</div>
+    <div class="emoji" data-word="der Regenbogen">🌈</div>
+  </div>
+
+  <!-- Display the word below the grid -->
+  <div id="word-list"></div>
+
+  <!-- Listen Again Button -->
+  <button id="listenAgainButton" style="display: none;">Listen Again</button>
+
+  <script>
+    const emojis = document.querySelectorAll(".emoji");
+    const synth = window.speechSynthesis;
+    const wordList = document.getElementById("word-list"); // Reference to the word list element
+    const listenAgainButton = document.getElementById("listenAgainButton"); // Reference to the Listen Again button
+
+    let wordIndex = 0; // Track the current word index
+    let correctCount = 0; // Track the correct answers
+
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    function displayWord() {
+      const displayedWord = shuffledWords[wordIndex];
+      const utterance = new SpeechSynthesisUtterance(displayedWord);
+      synth.speak(utterance);
+      wordList.textContent = displayedWord; // Display the word below the grid
+      listenAgainButton.style.display = "block"; // Show the Listen Again button
+    }
+
+    // Shuffle the words and start the game
+    const shuffledWords = Array.from(emojis).map((emoji) => emoji.getAttribute("data-word"));
+    shuffleArray(shuffledWords);
+    displayWord();
+
+    emojis.forEach((emoji) => {
+      emoji.addEventListener("click", () => {
+        const selectedWord = emoji.getAttribute("data-word");
+        const displayedWord = shuffledWords[wordIndex];
+
+        if (selectedWord === displayedWord) {
+          wordIndex++;
+
+          if (wordIndex === shuffledWords.length) {
+            alert("Wohooo! Congrats! You did it!");
+            // You can reset the game or perform another action here
+          } else {
+            displayWord();
+          }
+        } else {
+          alert("Oops, sorry... that's incorrect. Don't worry, just try again.");
+          // Repeat the word if it was incorrect
+          displayWord();
+        }
+      });
+    });
+
+    // Listen Again button event listener
+    listenAgainButton.addEventListener("click", () => {
+      displayWord();
+    });
+  </script>
+</body>
+</html>
