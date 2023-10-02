@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>grid</title>
+    <meta charset="UTF-8" />
+
+    <style>
+      #container {
+        margin: 50px;
+        display: grid;
+        grid-template-columns: repeat(3, 100px);
+        grid-template-columns: repeat(auto, 100px);
+      }
+      #container.active > div:hover {
+        background-color: lightgoldenrodyellow;
+        cursor: cell;
+      }
+      #container > div {
+        line-height: 100px;
+        font-size: xxx-large;
+        border: 2px solid white;
+        background-color: whitesmoke;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="english"><button id="button-english"> English </button></div>
+    <div id="spanish"><button id="button-spanish"> Spanish </button></div>
+    <div id="japanese"><button id="button-japanese"> Japanese </button></div>
+
+    <div id="container" class="active">
+      <div id="div1"> </div>
+      <div id="div2"> </div>
+      <div id="div3"> </div>
+      <div id="div4"> </div>
+      <div id="div5"> </div>
+      <div id="div6"> </div>
+      <div id="div7"> </div>
+      <div id="div8"> </div>
+      <div id="div9"> </div>
+    </div>
+    <div id="bottom-text"> </div>
+    <script type="module" src="src/index.ts"></script>
+  </body>
+</html>
