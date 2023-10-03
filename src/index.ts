@@ -184,19 +184,19 @@ const dmMachineEnglish = createMachine(
                   },
                   oops: {
                     entry: say("Oops, listen again."),
-                    on: { SPEAK_COMPLETE: "ask" }
+                    on: { SPEAK_COMPLETE: { target: "ask"}}
                   },
                   waitforclick: {
                     on: {
-                      CLICK_DIV_1: { target: "#root.DialogueManager.Ready.Word_2" },
-                      CLICK_DIV_2: { target: "oops" },
-                      CLICK_DIV_3: { target: "oops" },
-                      CLICK_DIV_4: { target: "oops" },
-                      CLICK_DIV_5: { target: "oops" },
-                      CLICK_DIV_6: { target: "oops" },
-                      CLICK_DIV_7: { target: "oops" },
-                      CLICK_DIV_8: { target: "oops" },
-                      CLICK_DIV_9: { target: "oops" },
+                      CLICK_DIV_1: { target: "#root.DialogueManager.Ready.Word_2", actions:[ assign({ div : ({ context }) => "div1"}), "correctItem" ]},
+                      CLICK_DIV_2: { target: "oops", actions:[ assign({ div : ({ context }) => "div2"}), "incorrectItem" ]}, 
+                      CLICK_DIV_3: { target: "oops", actions:[ assign({ div : ({ context }) => "div3"}), "incorrectItem" ]},
+                      CLICK_DIV_4: { target: "oops", actions:[ assign({ div : ({ context }) => "div4"}), "incorrectItem" ]},
+                      CLICK_DIV_5: { target: "oops", actions:[ assign({ div : ({ context }) => "div5"}), "incorrectItem" ]},
+                      CLICK_DIV_6: { target: "oops", actions:[ assign({ div : ({ context }) => "div6"}), "incorrectItem" ]},
+                      CLICK_DIV_7: { target: "oops", actions:[ assign({ div : ({ context }) => "div7"}), "incorrectItem" ]},
+                      CLICK_DIV_8: { target: "oops", actions:[ assign({ div : ({ context }) => "div8"}), "incorrectItem" ]},
+                      CLICK_DIV_9: { target: "oops", actions:[ assign({ div : ({ context }) => "div9"}), "incorrectItem" ]},
                     }
                 }
               },
@@ -215,15 +215,15 @@ const dmMachineEnglish = createMachine(
                 },
                 waitforclick: {
                   on: {
-                    CLICK_DIV_1: { target: "oops" },
-                    CLICK_DIV_2: { target: "#root.DialogueManager.Ready.Word_3"},
-                    CLICK_DIV_3: { target: "oops" },
-                    CLICK_DIV_4: { target: "oops" },
-                    CLICK_DIV_5: { target: "oops" },
-                    CLICK_DIV_6: { target: "oops" },
-                    CLICK_DIV_7: { target: "oops" },
-                    CLICK_DIV_8: { target: "oops" },
-                    CLICK_DIV_9: { target: "oops" },
+                    CLICK_DIV_1: { target: "oops", actions:[ assign({ div : ({ context }) => "div1"}), "incorrectItem" ]},
+                    CLICK_DIV_2: { target: "#root.DialogueManager.Ready.Word_3", actions:[ assign({ div : ({ context }) => "div2"}), "correctItem"  ]},
+                    CLICK_DIV_3: { target: "oops", actions:[ assign({ div : ({ context }) => "div3"}), "incorrectItem" ]},
+                    CLICK_DIV_4: { target: "oops", actions:[ assign({ div : ({ context }) => "div4"}), "incorrectItem" ]},
+                    CLICK_DIV_5: { target: "oops", actions:[ assign({ div : ({ context }) => "div5"}), "incorrectItem" ]},
+                    CLICK_DIV_6: { target: "oops", actions:[ assign({ div : ({ context }) => "div6"}), "incorrectItem" ]},
+                    CLICK_DIV_7: { target: "oops", actions:[ assign({ div : ({ context }) => "div7"}), "incorrectItem" ]},
+                    CLICK_DIV_8: { target: "oops", actions:[ assign({ div : ({ context }) => "div8"}), "incorrectItem" ]},
+                    CLICK_DIV_9: { target: "oops", actions:[ assign({ div : ({ context }) => "div9"}), "incorrectItem" ]},
                   }
                 }
               }
@@ -242,15 +242,15 @@ const dmMachineEnglish = createMachine(
                 },
                 waitforclick: {
                   on: {
-                    CLICK_DIV_1: { target: "oops" },
-                    CLICK_DIV_2: { target: "oops" },
-                    CLICK_DIV_3: "#root.DialogueManager.Ready.Word_4",
-                    CLICK_DIV_4: { target: "oops" },
-                    CLICK_DIV_5: { target: "oops" },
-                    CLICK_DIV_6: { target: "oops" },
-                    CLICK_DIV_7: { target: "oops" },
-                    CLICK_DIV_8: { target: "oops" },
-                    CLICK_DIV_9: { target: "oops" }, 
+                    CLICK_DIV_1: { target: "oops", actions:[ assign({ div : ({ context }) => "div1"}), "incorrectItem" ]},
+                    CLICK_DIV_2: { target: "oops", actions:[ assign({ div : ({ context }) => "div2"}), "incorrectItem" ]},
+                    CLICK_DIV_3: { target: "#root.DialogueManager.Ready.Word_4", actions:[ assign({ div : ({ context }) => "div3"}), "correctItem"  ]},
+                    CLICK_DIV_4: { target: "oops", actions:[ assign({ div : ({ context }) => "div4"}), "incorrectItem" ]},
+                    CLICK_DIV_5: { target: "oops", actions:[ assign({ div : ({ context }) => "div5"}), "incorrectItem" ]},
+                    CLICK_DIV_6: { target: "oops", actions:[ assign({ div : ({ context }) => "div6"}), "incorrectItem" ]},
+                    CLICK_DIV_7: { target: "oops", actions:[ assign({ div : ({ context }) => "div7"}), "incorrectItem" ]},
+                    CLICK_DIV_8: { target: "oops", actions:[ assign({ div : ({ context }) => "div8"}), "incorrectItem" ]},
+                    CLICK_DIV_9: { target: "oops", actions:[ assign({ div : ({ context }) => "div9"}), "incorrectItem" ]}, 
                   }
                 }
               }
@@ -268,15 +268,15 @@ const dmMachineEnglish = createMachine(
                 },
                 waitforclick: {
                   on: {
-                    CLICK_DIV_1: { target: "oops" },
-                    CLICK_DIV_2: { target: "oops" },
-                    CLICK_DIV_3: { target: "oops" },
-                    CLICK_DIV_4: "#root.DialogueManager.Ready.Word_5",
-                    CLICK_DIV_5: { target: "oops" },
-                    CLICK_DIV_6: { target: "oops" },
-                    CLICK_DIV_7: { target: "oops" },
-                    CLICK_DIV_8: { target: "oops" },
-                    CLICK_DIV_9: { target: "oops" }, 
+                    CLICK_DIV_1: { target: "oops", actions:[ assign({ div : ({ context }) => "div1"}), "incorrectItem" ]},
+                    CLICK_DIV_2: { target: "oops", actions:[ assign({ div : ({ context }) => "div2"}), "incorrectItem" ]},
+                    CLICK_DIV_3: { target: "oops", actions:[ assign({ div : ({ context }) => "div3"}), "incorrectItem" ]},
+                    CLICK_DIV_4: { target: "#root.DialogueManager.Ready.Word_5", actions:[ assign({ div : ({ context }) => "div4"}), "correctItem"  ]},
+                    CLICK_DIV_5: { target: "oops", actions:[ assign({ div : ({ context }) => "div5"}), "incorrectItem" ]},
+                    CLICK_DIV_6: { target: "oops", actions:[ assign({ div : ({ context }) => "div6"}), "incorrectItem" ]},
+                    CLICK_DIV_7: { target: "oops", actions:[ assign({ div : ({ context }) => "div7"}), "incorrectItem" ]},
+                    CLICK_DIV_8: { target: "oops", actions:[ assign({ div : ({ context }) => "div8"}), "incorrectItem" ]},
+                    CLICK_DIV_9: { target: "oops", actions:[ assign({ div : ({ context }) => "div9"}), "incorrectItem" ]}, 
                   }
                 }
               }
@@ -294,15 +294,15 @@ const dmMachineEnglish = createMachine(
                 },
                 waitforclick: {
                   on: {
-                    CLICK_DIV_1: { target: "oops" },
-                    CLICK_DIV_2: { target: "oops" },
-                    CLICK_DIV_3: { target: "oops" },
-                    CLICK_DIV_4: { target: "oops" },
-                    CLICK_DIV_5: "#root.DialogueManager.Ready.Word_6" ,
-                    CLICK_DIV_6: { target: "oops" },
-                    CLICK_DIV_7: { target: "oops" },
-                    CLICK_DIV_8: { target: "oops" },
-                    CLICK_DIV_9: { target: "oops" }, 
+                    CLICK_DIV_1: { target: "oops", actions:[ assign({ div : ({ context }) => "div1"}), "incorrectItem" ]},
+                    CLICK_DIV_2: { target: "oops", actions:[ assign({ div : ({ context }) => "div2"}), "incorrectItem" ]},
+                    CLICK_DIV_3: { target: "oops", actions:[ assign({ div : ({ context }) => "div3"}), "incorrectItem" ]},
+                    CLICK_DIV_4: { target: "oops", actions:[ assign({ div : ({ context }) => "div4"}), "incorrectItem" ]},
+                    CLICK_DIV_5: { target: "#root.DialogueManager.Ready.Word_6", actions:[ assign({ div : ({ context }) => "div5"}), "correctItem"  ]},
+                    CLICK_DIV_6: { target: "oops", actions:[ assign({ div : ({ context }) => "div6"}), "incorrectItem" ]},
+                    CLICK_DIV_7: { target: "oops", actions:[ assign({ div : ({ context }) => "div7"}), "incorrectItem" ]},
+                    CLICK_DIV_8: { target: "oops", actions:[ assign({ div : ({ context }) => "div8"}), "incorrectItem" ]},
+                    CLICK_DIV_9: { target: "oops", actions:[ assign({ div : ({ context }) => "div9"}), "incorrectItem" ]}, 
                   }
                 }
               }
@@ -320,15 +320,15 @@ const dmMachineEnglish = createMachine(
                 },
                 waitforclick: {
                   on: {
-                    CLICK_DIV_1: { target: "oops" },
-                    CLICK_DIV_2: { target: "oops" },
-                    CLICK_DIV_3: { target: "oops" },
-                    CLICK_DIV_4: { target: "oops" },
-                    CLICK_DIV_5: { target: "oops" },
-                    CLICK_DIV_6: "#root.DialogueManager.Ready.Word_7",
-                    CLICK_DIV_7: { target: "oops" },
-                    CLICK_DIV_8: { target: "oops" },
-                    CLICK_DIV_9: { target: "oops" },  
+                    CLICK_DIV_1: { target: "oops", actions:[ assign({ div : ({ context }) => "div1"}), "incorrectItem" ]},
+                    CLICK_DIV_2: { target: "oops", actions:[ assign({ div : ({ context }) => "div2"}), "incorrectItem" ]},
+                    CLICK_DIV_3: { target: "oops", actions:[ assign({ div : ({ context }) => "div3"}), "incorrectItem" ]},
+                    CLICK_DIV_4: { target: "oops", actions:[ assign({ div : ({ context }) => "div4"}), "incorrectItem" ]},
+                    CLICK_DIV_5: { target: "oops", actions:[ assign({ div : ({ context }) => "div5"}), "incorrectItem" ]},
+                    CLICK_DIV_6: { target: "#root.DialogueManager.Ready.Word_7", actions:[ assign({ div : ({ context }) => "div6"}), "correctItem" ]},
+                    CLICK_DIV_7: { target: "oops", actions:[ assign({ div : ({ context }) => "div7"}), "incorrectItem" ]},
+                    CLICK_DIV_8: { target: "oops", actions:[ assign({ div : ({ context }) => "div8"}), "incorrectItem" ]},
+                    CLICK_DIV_9: { target: "oops", actions:[ assign({ div : ({ context }) => "div9"}), "incorrectItem" ]},  
                   }
                 }
               }
@@ -346,15 +346,15 @@ const dmMachineEnglish = createMachine(
                 },
                 waitforclick: {
                   on: {
-                    CLICK_DIV_1: { target: "oops" },
-                    CLICK_DIV_2: { target: "oops" },
-                    CLICK_DIV_3: { target: "oops" },
-                    CLICK_DIV_4: { target: "oops" },
-                    CLICK_DIV_5: { target: "oops" },
-                    CLICK_DIV_6: { target: "oops" },
-                    CLICK_DIV_7: "#root.DialogueManager.Ready.Word_8",
-                    CLICK_DIV_8: { target: "oops" },
-                    CLICK_DIV_9: { target: "oops" },  
+                    CLICK_DIV_1: { target: "oops", actions:[ assign({ div : ({ context }) => "div1"}), "incorrectItem" ]},
+                    CLICK_DIV_2: { target: "oops", actions:[ assign({ div : ({ context }) => "div2"}), "incorrectItem" ]},
+                    CLICK_DIV_3: { target: "oops", actions:[ assign({ div : ({ context }) => "div3"}), "incorrectItem" ]},
+                    CLICK_DIV_4: { target: "oops", actions:[ assign({ div : ({ context }) => "div4"}), "incorrectItem" ]},
+                    CLICK_DIV_5: { target: "oops", actions:[ assign({ div : ({ context }) => "div5"}), "incorrectItem" ]},
+                    CLICK_DIV_6: { target: "oops", actions:[ assign({ div : ({ context }) => "div6"}), "incorrectItem" ]},
+                    CLICK_DIV_7: { target: "#root.DialogueManager.Ready.Word_8", actions:[ assign({ div : ({ context }) => "div7"}), "correctItem"  ]},
+                    CLICK_DIV_8: { target: "oops", actions:[ assign({ div : ({ context }) => "div8"}), "incorrectItem" ]},
+                    CLICK_DIV_9: { target: "oops", actions:[ assign({ div : ({ context }) => "div9"}), "incorrectItem" ]},  
                   }
                 }
               }
@@ -372,15 +372,15 @@ const dmMachineEnglish = createMachine(
                 },
                 waitforclick: {
                   on: {
-                    CLICK_DIV_1: { target: "oops" },
-                    CLICK_DIV_2: { target: "oops" },
-                    CLICK_DIV_3: { target: "oops" },
-                    CLICK_DIV_4: { target: "oops" },
-                    CLICK_DIV_5: { target: "oops" },
-                    CLICK_DIV_6: { target: "oops" },
-                    CLICK_DIV_7: { target: "oops" },
-                    CLICK_DIV_8: "#root.DialogueManager.Ready.Word_9",
-                    CLICK_DIV_9: { target: "oops" },   
+                    CLICK_DIV_1: { target: "oops", actions:[ assign({ div : ({ context }) => "div1"}), "incorrectItem" ]},
+                    CLICK_DIV_2: { target: "oops", actions:[ assign({ div : ({ context }) => "div2"}), "incorrectItem" ]},
+                    CLICK_DIV_3: { target: "oops", actions:[ assign({ div : ({ context }) => "div3"}), "incorrectItem" ]},
+                    CLICK_DIV_4: { target: "oops", actions:[ assign({ div : ({ context }) => "div4"}), "incorrectItem" ]},
+                    CLICK_DIV_5: { target: "oops", actions:[ assign({ div : ({ context }) => "div5"}), "incorrectItem" ]},
+                    CLICK_DIV_6: { target: "oops", actions:[ assign({ div : ({ context }) => "div6"}), "incorrectItem" ]},
+                    CLICK_DIV_7: { target: "oops", actions:[ assign({ div : ({ context }) => "div7"}), "incorrectItem" ]},
+                    CLICK_DIV_8: { target: "#root.DialogueManager.Ready.Word_9", actions:[ assign({ div : ({ context }) => "div8"}), "correctItem"  ]},
+                    CLICK_DIV_9: { target: "oops", actions:[ assign({ div : ({ context }) => "div9"}), "incorrectItem" ]},   
                   }
                 }
               }
@@ -398,15 +398,15 @@ const dmMachineEnglish = createMachine(
                 },
                 waitforclick: {
                   on: {
-                    CLICK_DIV_1: { target: "oops" },
-                    CLICK_DIV_2: { target: "oops" },
-                    CLICK_DIV_3: { target: "oops" },
-                    CLICK_DIV_4: { target: "oops" },
-                    CLICK_DIV_5: { target: "oops" },
-                    CLICK_DIV_6: { target: "oops" },
-                    CLICK_DIV_7: { target: "oops" },
-                    CLICK_DIV_8: { target: "oops" },
-                    CLICK_DIV_9: "#root.DialogueManager.Ready.Congrats",   
+                    CLICK_DIV_1: { target: "oops", actions:[ assign({ div : ({ context }) => "div1"}), "incorrectItem" ]},
+                    CLICK_DIV_2: { target: "oops", actions:[ assign({ div : ({ context }) => "div2"}), "incorrectItem" ]},
+                    CLICK_DIV_3: { target: "oops", actions:[ assign({ div : ({ context }) => "div3"}), "incorrectItem" ]},
+                    CLICK_DIV_4: { target: "oops", actions:[ assign({ div : ({ context }) => "div4"}), "incorrectItem" ]},
+                    CLICK_DIV_5: { target: "oops", actions:[ assign({ div : ({ context }) => "div5"}), "incorrectItem" ]},
+                    CLICK_DIV_6: { target: "oops", actions:[ assign({ div : ({ context }) => "div6"}), "incorrectItem" ]},
+                    CLICK_DIV_7: { target: "oops", actions:[ assign({ div : ({ context }) => "div7"}), "incorrectItem" ]},
+                    CLICK_DIV_8: { target: "oops", actions:[ assign({ div : ({ context }) => "div8"}), "incorrectItem" ]},
+                    CLICK_DIV_9: { target: "#root.DialogueManager.Ready.Congrats", actions:[ assign({ div : ({ context }) => "div9"}), "correctItem" ]},   
                   }
                 }
               }
@@ -454,6 +454,14 @@ const dmMachineEnglish = createMachine(
         context.spstRef.send({
           type: "PREPARE",
         }),
+        incorrectItem: ({ context }) => {
+          document.getElementById(`${context.div}`).style.backgroundColor = "#ff0004";
+          setTimeout(() => { document.getElementById(`${context.div}`).style.backgroundColor = "whitesmoke"}, 2500)
+        },
+        correctItem: ({ context }) => {
+          document.getElementById(`${context.div}`).style.backgroundColor = "greenyellow";
+          setTimeout(() => { document.getElementById(`${context.div}`).style.backgroundColor = "whitesmoke"}, 700)
+        },
       // saveLastResult:
       "speak.greeting": ({ context }) => {
         context.spstRef.send({
@@ -468,7 +476,7 @@ const dmMachineEnglish = createMachine(
         document.getElementById("bottom-text").innerText = "Inactive";
       },
       "gui.Idle": ({}) => {
-        document.getElementById("bottom-text").innerText = "Waiting...";
+        document.getElementById("bottom-text").innerText = " Waiting for your answer...";
       },
       "gui.Speaking": ({}) => {
         document.getElementById("bottom-text").innerText = "Speaking...";
@@ -513,7 +521,7 @@ const dmMachineSpanish = createMachine(
               },
 
               Instructions: {
-                entry: say("Escoged el emoji. Listos? Vamos"),
+                entry: say("Escoged el emoji correcto. Listos?"),
                 on: { SPEAK_COMPLETE: "Word_1" },
               },
 
@@ -530,15 +538,15 @@ const dmMachineSpanish = createMachine(
                   },
                   waitforclick: {
                     on: {
-                      CLICK_DIV_1: { target: "#root.DialogueManager.Ready.Word_2" },
-                      CLICK_DIV_2: { target: "oops" },
-                      CLICK_DIV_3: { target: "oops" },
-                      CLICK_DIV_4: { target: "oops" },
-                      CLICK_DIV_5: { target: "oops" },
-                      CLICK_DIV_6: { target: "oops" },
-                      CLICK_DIV_7: { target: "oops" },
-                      CLICK_DIV_8: { target: "oops" },
-                      CLICK_DIV_9: { target: "oops" },
+                      CLICK_DIV_1: { target: "#root.DialogueManager.Ready.Word_2", actions:[ assign({ div : ({ context }) => "div1"}), "correctItem" ]},
+                      CLICK_DIV_2: { target: "oops", actions:[ assign({ div : ({ context }) => "div2"}), "incorrectItem" ]}, 
+                      CLICK_DIV_3: { target: "oops", actions:[ assign({ div : ({ context }) => "div3"}), "incorrectItem" ]},
+                      CLICK_DIV_4: { target: "oops", actions:[ assign({ div : ({ context }) => "div4"}), "incorrectItem" ]},
+                      CLICK_DIV_5: { target: "oops", actions:[ assign({ div : ({ context }) => "div5"}), "incorrectItem" ]},
+                      CLICK_DIV_6: { target: "oops", actions:[ assign({ div : ({ context }) => "div6"}), "incorrectItem" ]},
+                      CLICK_DIV_7: { target: "oops", actions:[ assign({ div : ({ context }) => "div7"}), "incorrectItem" ]},
+                      CLICK_DIV_8: { target: "oops", actions:[ assign({ div : ({ context }) => "div8"}), "incorrectItem" ]},
+                      CLICK_DIV_9: { target: "oops", actions:[ assign({ div : ({ context }) => "div9"}), "incorrectItem" ]},
                     }
                 }
               },
@@ -557,15 +565,15 @@ const dmMachineSpanish = createMachine(
                 },
                 waitforclick: {
                   on: {
-                    CLICK_DIV_1: { target: "oops" },
-                    CLICK_DIV_2: { target: "#root.DialogueManager.Ready.Word_3"},
-                    CLICK_DIV_3: { target: "oops" },
-                    CLICK_DIV_4: { target: "oops" },
-                    CLICK_DIV_5: { target: "oops" },
-                    CLICK_DIV_6: { target: "oops" },
-                    CLICK_DIV_7: { target: "oops" },
-                    CLICK_DIV_8: { target: "oops" },
-                    CLICK_DIV_9: { target: "oops" },
+                    CLICK_DIV_1: { target: "oops", actions:[ assign({ div : ({ context }) => "div1"}), "incorrectItem" ]},
+                    CLICK_DIV_2: { target: "#root.DialogueManager.Ready.Word_3", actions:[ assign({ div : ({ context }) => "div2"}), "correctItem"  ]},
+                    CLICK_DIV_3: { target: "oops", actions:[ assign({ div : ({ context }) => "div3"}), "incorrectItem" ]},
+                    CLICK_DIV_4: { target: "oops", actions:[ assign({ div : ({ context }) => "div4"}), "incorrectItem" ]},
+                    CLICK_DIV_5: { target: "oops", actions:[ assign({ div : ({ context }) => "div5"}), "incorrectItem" ]},
+                    CLICK_DIV_6: { target: "oops", actions:[ assign({ div : ({ context }) => "div6"}), "incorrectItem" ]},
+                    CLICK_DIV_7: { target: "oops", actions:[ assign({ div : ({ context }) => "div7"}), "incorrectItem" ]},
+                    CLICK_DIV_8: { target: "oops", actions:[ assign({ div : ({ context }) => "div8"}), "incorrectItem" ]},
+                    CLICK_DIV_9: { target: "oops", actions:[ assign({ div : ({ context }) => "div9"}), "incorrectItem" ]},
                   }
                 }
               }
@@ -584,15 +592,15 @@ const dmMachineSpanish = createMachine(
                 },
                 waitforclick: {
                   on: {
-                    CLICK_DIV_1: { target: "oops" },
-                    CLICK_DIV_2: { target: "oops" },
-                    CLICK_DIV_3: "#root.DialogueManager.Ready.Word_4",
-                    CLICK_DIV_4: { target: "oops" },
-                    CLICK_DIV_5: { target: "oops" },
-                    CLICK_DIV_6: { target: "oops" },
-                    CLICK_DIV_7: { target: "oops" },
-                    CLICK_DIV_8: { target: "oops" },
-                    CLICK_DIV_9: { target: "oops" }, 
+                    CLICK_DIV_1: { target: "oops", actions:[ assign({ div : ({ context }) => "div1"}), "incorrectItem" ]},
+                    CLICK_DIV_2: { target: "oops", actions:[ assign({ div : ({ context }) => "div2"}), "incorrectItem" ]},
+                    CLICK_DIV_3: { target: "#root.DialogueManager.Ready.Word_4", actions:[ assign({ div : ({ context }) => "div3"}), "correctItem"  ]},
+                    CLICK_DIV_4: { target: "oops", actions:[ assign({ div : ({ context }) => "div4"}), "incorrectItem" ]},
+                    CLICK_DIV_5: { target: "oops", actions:[ assign({ div : ({ context }) => "div5"}), "incorrectItem" ]},
+                    CLICK_DIV_6: { target: "oops", actions:[ assign({ div : ({ context }) => "div6"}), "incorrectItem" ]},
+                    CLICK_DIV_7: { target: "oops", actions:[ assign({ div : ({ context }) => "div7"}), "incorrectItem" ]},
+                    CLICK_DIV_8: { target: "oops", actions:[ assign({ div : ({ context }) => "div8"}), "incorrectItem" ]},
+                    CLICK_DIV_9: { target: "oops", actions:[ assign({ div : ({ context }) => "div9"}), "incorrectItem" ]}, 
                   }
                 }
               }
@@ -610,15 +618,15 @@ const dmMachineSpanish = createMachine(
                 },
                 waitforclick: {
                   on: {
-                    CLICK_DIV_1: { target: "oops" },
-                    CLICK_DIV_2: { target: "oops" },
-                    CLICK_DIV_3: { target: "oops" },
-                    CLICK_DIV_4: "#root.DialogueManager.Ready.Word_5",
-                    CLICK_DIV_5: { target: "oops" },
-                    CLICK_DIV_6: { target: "oops" },
-                    CLICK_DIV_7: { target: "oops" },
-                    CLICK_DIV_8: { target: "oops" },
-                    CLICK_DIV_9: { target: "oops" }, 
+                    CLICK_DIV_1: { target: "oops", actions:[ assign({ div : ({ context }) => "div1"}), "incorrectItem" ]},
+                    CLICK_DIV_2: { target: "oops", actions:[ assign({ div : ({ context }) => "div2"}), "incorrectItem" ]},
+                    CLICK_DIV_3: { target: "oops", actions:[ assign({ div : ({ context }) => "div3"}), "incorrectItem" ]},
+                    CLICK_DIV_4: { target: "#root.DialogueManager.Ready.Word_5", actions:[ assign({ div : ({ context }) => "div4"}), "correctItem"  ]},
+                    CLICK_DIV_5: { target: "oops", actions:[ assign({ div : ({ context }) => "div5"}), "incorrectItem" ]},
+                    CLICK_DIV_6: { target: "oops", actions:[ assign({ div : ({ context }) => "div6"}), "incorrectItem" ]},
+                    CLICK_DIV_7: { target: "oops", actions:[ assign({ div : ({ context }) => "div7"}), "incorrectItem" ]},
+                    CLICK_DIV_8: { target: "oops", actions:[ assign({ div : ({ context }) => "div8"}), "incorrectItem" ]},
+                    CLICK_DIV_9: { target: "oops", actions:[ assign({ div : ({ context }) => "div9"}), "incorrectItem" ]}, 
                   }
                 }
               }
@@ -636,15 +644,15 @@ const dmMachineSpanish = createMachine(
                 },
                 waitforclick: {
                   on: {
-                    CLICK_DIV_1: { target: "oops" },
-                    CLICK_DIV_2: { target: "oops" },
-                    CLICK_DIV_3: { target: "oops" },
-                    CLICK_DIV_4: { target: "oops" },
-                    CLICK_DIV_5: "#root.DialogueManager.Ready.Word_6" ,
-                    CLICK_DIV_6: { target: "oops" },
-                    CLICK_DIV_7: { target: "oops" },
-                    CLICK_DIV_8: { target: "oops" },
-                    CLICK_DIV_9: { target: "oops" }, 
+                    CLICK_DIV_1: { target: "oops", actions:[ assign({ div : ({ context }) => "div1"}), "incorrectItem" ]},
+                    CLICK_DIV_2: { target: "oops", actions:[ assign({ div : ({ context }) => "div2"}), "incorrectItem" ]},
+                    CLICK_DIV_3: { target: "oops", actions:[ assign({ div : ({ context }) => "div3"}), "incorrectItem" ]},
+                    CLICK_DIV_4: { target: "oops", actions:[ assign({ div : ({ context }) => "div4"}), "incorrectItem" ]},
+                    CLICK_DIV_5: { target: "#root.DialogueManager.Ready.Word_6", actions:[ assign({ div : ({ context }) => "div5"}), "correctItem"  ]},
+                    CLICK_DIV_6: { target: "oops", actions:[ assign({ div : ({ context }) => "div6"}), "incorrectItem" ]},
+                    CLICK_DIV_7: { target: "oops", actions:[ assign({ div : ({ context }) => "div7"}), "incorrectItem" ]},
+                    CLICK_DIV_8: { target: "oops", actions:[ assign({ div : ({ context }) => "div8"}), "incorrectItem" ]},
+                    CLICK_DIV_9: { target: "oops", actions:[ assign({ div : ({ context }) => "div9"}), "incorrectItem" ]}, 
                   }
                 }
               }
@@ -662,15 +670,15 @@ const dmMachineSpanish = createMachine(
                 },
                 waitforclick: {
                   on: {
-                    CLICK_DIV_1: { target: "oops" },
-                    CLICK_DIV_2: { target: "oops" },
-                    CLICK_DIV_3: { target: "oops" },
-                    CLICK_DIV_4: { target: "oops" },
-                    CLICK_DIV_5: { target: "oops" },
-                    CLICK_DIV_6: "#root.DialogueManager.Ready.Word_7",
-                    CLICK_DIV_7: { target: "oops" },
-                    CLICK_DIV_8: { target: "oops" },
-                    CLICK_DIV_9: { target: "oops" },  
+                    CLICK_DIV_1: { target: "oops", actions:[ assign({ div : ({ context }) => "div1"}), "incorrectItem" ]},
+                    CLICK_DIV_2: { target: "oops", actions:[ assign({ div : ({ context }) => "div2"}), "incorrectItem" ]},
+                    CLICK_DIV_3: { target: "oops", actions:[ assign({ div : ({ context }) => "div3"}), "incorrectItem" ]},
+                    CLICK_DIV_4: { target: "oops", actions:[ assign({ div : ({ context }) => "div4"}), "incorrectItem" ]},
+                    CLICK_DIV_5: { target: "oops", actions:[ assign({ div : ({ context }) => "div5"}), "incorrectItem" ]},
+                    CLICK_DIV_6: { target: "#root.DialogueManager.Ready.Word_7", actions:[ assign({ div : ({ context }) => "div6"}), "correctItem" ]},
+                    CLICK_DIV_7: { target: "oops", actions:[ assign({ div : ({ context }) => "div7"}), "incorrectItem" ]},
+                    CLICK_DIV_8: { target: "oops", actions:[ assign({ div : ({ context }) => "div8"}), "incorrectItem" ]},
+                    CLICK_DIV_9: { target: "oops", actions:[ assign({ div : ({ context }) => "div9"}), "incorrectItem" ]},  
                   }
                 }
               }
@@ -688,15 +696,15 @@ const dmMachineSpanish = createMachine(
                 },
                 waitforclick: {
                   on: {
-                    CLICK_DIV_1: { target: "oops" },
-                    CLICK_DIV_2: { target: "oops" },
-                    CLICK_DIV_3: { target: "oops" },
-                    CLICK_DIV_4: { target: "oops" },
-                    CLICK_DIV_5: { target: "oops" },
-                    CLICK_DIV_6: { target: "oops" },
-                    CLICK_DIV_7: "#root.DialogueManager.Ready.Word_8",
-                    CLICK_DIV_8: { target: "oops" },
-                    CLICK_DIV_9: { target: "oops" },  
+                    CLICK_DIV_1: { target: "oops", actions:[ assign({ div : ({ context }) => "div1"}), "incorrectItem" ]},
+                    CLICK_DIV_2: { target: "oops", actions:[ assign({ div : ({ context }) => "div2"}), "incorrectItem" ]},
+                    CLICK_DIV_3: { target: "oops", actions:[ assign({ div : ({ context }) => "div3"}), "incorrectItem" ]},
+                    CLICK_DIV_4: { target: "oops", actions:[ assign({ div : ({ context }) => "div4"}), "incorrectItem" ]},
+                    CLICK_DIV_5: { target: "oops", actions:[ assign({ div : ({ context }) => "div5"}), "incorrectItem" ]},
+                    CLICK_DIV_6: { target: "oops", actions:[ assign({ div : ({ context }) => "div6"}), "incorrectItem" ]},
+                    CLICK_DIV_7: { target: "#root.DialogueManager.Ready.Word_8", actions:[ assign({ div : ({ context }) => "div7"}), "correctItem"  ]},
+                    CLICK_DIV_8: { target: "oops", actions:[ assign({ div : ({ context }) => "div8"}), "incorrectItem" ]},
+                    CLICK_DIV_9: { target: "oops", actions:[ assign({ div : ({ context }) => "div9"}), "incorrectItem" ]},  
                   }
                 }
               }
@@ -714,15 +722,15 @@ const dmMachineSpanish = createMachine(
                 },
                 waitforclick: {
                   on: {
-                    CLICK_DIV_1: { target: "oops" },
-                    CLICK_DIV_2: { target: "oops" },
-                    CLICK_DIV_3: { target: "oops" },
-                    CLICK_DIV_4: { target: "oops" },
-                    CLICK_DIV_5: { target: "oops" },
-                    CLICK_DIV_6: { target: "oops" },
-                    CLICK_DIV_7: { target: "oops" },
-                    CLICK_DIV_8: "#root.DialogueManager.Ready.Word_9",
-                    CLICK_DIV_9: { target: "oops" },   
+                    CLICK_DIV_1: { target: "oops", actions:[ assign({ div : ({ context }) => "div1"}), "incorrectItem" ]},
+                    CLICK_DIV_2: { target: "oops", actions:[ assign({ div : ({ context }) => "div2"}), "incorrectItem" ]},
+                    CLICK_DIV_3: { target: "oops", actions:[ assign({ div : ({ context }) => "div3"}), "incorrectItem" ]},
+                    CLICK_DIV_4: { target: "oops", actions:[ assign({ div : ({ context }) => "div4"}), "incorrectItem" ]},
+                    CLICK_DIV_5: { target: "oops", actions:[ assign({ div : ({ context }) => "div5"}), "incorrectItem" ]},
+                    CLICK_DIV_6: { target: "oops", actions:[ assign({ div : ({ context }) => "div6"}), "incorrectItem" ]},
+                    CLICK_DIV_7: { target: "oops", actions:[ assign({ div : ({ context }) => "div7"}), "incorrectItem" ]},
+                    CLICK_DIV_8: { target: "#root.DialogueManager.Ready.Word_9", actions:[ assign({ div : ({ context }) => "div8"}), "correctItem"  ]},
+                    CLICK_DIV_9: { target: "oops", actions:[ assign({ div : ({ context }) => "div9"}), "incorrectItem" ]},   
                   }
                 }
               }
@@ -740,22 +748,22 @@ const dmMachineSpanish = createMachine(
                 },
                 waitforclick: {
                   on: {
-                    CLICK_DIV_1: { target: "oops" },
-                    CLICK_DIV_2: { target: "oops" },
-                    CLICK_DIV_3: { target: "oops" },
-                    CLICK_DIV_4: { target: "oops" },
-                    CLICK_DIV_5: { target: "oops" },
-                    CLICK_DIV_6: { target: "oops" },
-                    CLICK_DIV_7: { target: "oops" },
-                    CLICK_DIV_8: { target: "oops" },
-                    CLICK_DIV_9: "#root.DialogueManager.Ready.Congrats",   
+                    CLICK_DIV_1: { target: "oops", actions:[ assign({ div : ({ context }) => "div1"}), "incorrectItem" ]},
+                    CLICK_DIV_2: { target: "oops", actions:[ assign({ div : ({ context }) => "div2"}), "incorrectItem" ]},
+                    CLICK_DIV_3: { target: "oops", actions:[ assign({ div : ({ context }) => "div3"}), "incorrectItem" ]},
+                    CLICK_DIV_4: { target: "oops", actions:[ assign({ div : ({ context }) => "div4"}), "incorrectItem" ]},
+                    CLICK_DIV_5: { target: "oops", actions:[ assign({ div : ({ context }) => "div5"}), "incorrectItem" ]},
+                    CLICK_DIV_6: { target: "oops", actions:[ assign({ div : ({ context }) => "div6"}), "incorrectItem" ]},
+                    CLICK_DIV_7: { target: "oops", actions:[ assign({ div : ({ context }) => "div7"}), "incorrectItem" ]},
+                    CLICK_DIV_8: { target: "oops", actions:[ assign({ div : ({ context }) => "div8"}), "incorrectItem" ]},
+                    CLICK_DIV_9: { target: "#root.DialogueManager.Ready.Congrats", actions:[ assign({ div : ({ context }) => "div9"}), "correctItem" ]},   
                   }
                 }
               }
               },   
 
               Congrats: {
-                entry: say(" Enhorabuena! Las has encertado todas! "),
+                entry: say(" Enhorabuena. Las has encertado todas. "),
                 on: { SPEAK_COMPLETE: "#root" }
               }
             },
@@ -796,6 +804,14 @@ const dmMachineSpanish = createMachine(
         context.spstRef.send({
           type: "PREPARE",
         }),
+        incorrectItem: ({ context }) => {
+          document.getElementById(`${context.div}`).style.backgroundColor = "#ff0004";
+          setTimeout(() => { document.getElementById(`${context.div}`).style.backgroundColor = "whitesmoke"}, 2500)
+        },
+        correctItem: ({ context }) => {
+          document.getElementById(`${context.div}`).style.backgroundColor = "greenyellow";
+          setTimeout(() => { document.getElementById(`${context.div}`).style.backgroundColor = "whitesmoke"}, 700)
+        },
       // saveLastResult:
       "speak.greeting": ({ context }) => {
         context.spstRef.send({
@@ -807,16 +823,16 @@ const dmMachineSpanish = createMachine(
         document.getElementById("bottom-text").innerText = "Choose a language to start!";
       },
       "gui.Inactive": ({}) => {
-        document.getElementById("bottom-text").innerText = "Inactive";
+        document.getElementById("bottom-text").innerText = "Inactivo";
       },
       "gui.Idle": ({}) => {
-        document.getElementById("bottom-text").innerText = "Waiting...";
+        document.getElementById("bottom-text").innerText = "Esperando tu respuesta...";
       },
       "gui.Speaking": ({}) => {
-        document.getElementById("bottom-text").innerText = "Speaking...";
+        document.getElementById("bottom-text").innerText = "Hablando...";
       },
       "gui.Listening": ({}) => {
-        document.getElementById("bottom-text").innerText = "Listening...";
+        document.getElementById("bottom-text").innerText = "Escuchando...";
       },
     },
   },
@@ -873,15 +889,15 @@ const dmMachineJapanese = createMachine(
                   },
                   waitforclick: {
                     on: {
-                      CLICK_DIV_1: { target: "#root.DialogueManager.Ready.Word_2" },
-                      CLICK_DIV_2: { target: "oops" },
-                      CLICK_DIV_3: { target: "oops" },
-                      CLICK_DIV_4: { target: "oops" },
-                      CLICK_DIV_5: { target: "oops" },
-                      CLICK_DIV_6: { target: "oops" },
-                      CLICK_DIV_7: { target: "oops" },
-                      CLICK_DIV_8: { target: "oops" },
-                      CLICK_DIV_9: { target: "oops" },
+                      CLICK_DIV_1: { target: "#root.DialogueManager.Ready.Word_2", actions:[ assign({ div : ({ context }) => "div1"}), "correctItem" ]},
+                      CLICK_DIV_2: { target: "oops", actions:[ assign({ div : ({ context }) => "div2"}), "incorrectItem" ]}, 
+                      CLICK_DIV_3: { target: "oops", actions:[ assign({ div : ({ context }) => "div3"}), "incorrectItem" ]},
+                      CLICK_DIV_4: { target: "oops", actions:[ assign({ div : ({ context }) => "div4"}), "incorrectItem" ]},
+                      CLICK_DIV_5: { target: "oops", actions:[ assign({ div : ({ context }) => "div5"}), "incorrectItem" ]},
+                      CLICK_DIV_6: { target: "oops", actions:[ assign({ div : ({ context }) => "div6"}), "incorrectItem" ]},
+                      CLICK_DIV_7: { target: "oops", actions:[ assign({ div : ({ context }) => "div7"}), "incorrectItem" ]},
+                      CLICK_DIV_8: { target: "oops", actions:[ assign({ div : ({ context }) => "div8"}), "incorrectItem" ]},
+                      CLICK_DIV_9: { target: "oops", actions:[ assign({ div : ({ context }) => "div9"}), "incorrectItem" ]},
                     }
                 }
               },
@@ -900,15 +916,15 @@ const dmMachineJapanese = createMachine(
                 },
                 waitforclick: {
                   on: {
-                    CLICK_DIV_1: { target: "oops" },
-                    CLICK_DIV_2: { target: "#root.DialogueManager.Ready.Word_3"},
-                    CLICK_DIV_3: { target: "oops" },
-                    CLICK_DIV_4: { target: "oops" },
-                    CLICK_DIV_5: { target: "oops" },
-                    CLICK_DIV_6: { target: "oops" },
-                    CLICK_DIV_7: { target: "oops" },
-                    CLICK_DIV_8: { target: "oops" },
-                    CLICK_DIV_9: { target: "oops" },
+                    CLICK_DIV_1: { target: "oops", actions:[ assign({ div : ({ context }) => "div1"}), "incorrectItem" ]},
+                    CLICK_DIV_2: { target: "#root.DialogueManager.Ready.Word_3", actions:[ assign({ div : ({ context }) => "div2"}), "correctItem"  ]},
+                    CLICK_DIV_3: { target: "oops", actions:[ assign({ div : ({ context }) => "div3"}), "incorrectItem" ]},
+                    CLICK_DIV_4: { target: "oops", actions:[ assign({ div : ({ context }) => "div4"}), "incorrectItem" ]},
+                    CLICK_DIV_5: { target: "oops", actions:[ assign({ div : ({ context }) => "div5"}), "incorrectItem" ]},
+                    CLICK_DIV_6: { target: "oops", actions:[ assign({ div : ({ context }) => "div6"}), "incorrectItem" ]},
+                    CLICK_DIV_7: { target: "oops", actions:[ assign({ div : ({ context }) => "div7"}), "incorrectItem" ]},
+                    CLICK_DIV_8: { target: "oops", actions:[ assign({ div : ({ context }) => "div8"}), "incorrectItem" ]},
+                    CLICK_DIV_9: { target: "oops", actions:[ assign({ div : ({ context }) => "div9"}), "incorrectItem" ]},
                   }
                 }
               }
@@ -927,15 +943,15 @@ const dmMachineJapanese = createMachine(
                 },
                 waitforclick: {
                   on: {
-                    CLICK_DIV_1: { target: "oops" },
-                    CLICK_DIV_2: { target: "oops" },
-                    CLICK_DIV_3: "#root.DialogueManager.Ready.Word_4",
-                    CLICK_DIV_4: { target: "oops" },
-                    CLICK_DIV_5: { target: "oops" },
-                    CLICK_DIV_6: { target: "oops" },
-                    CLICK_DIV_7: { target: "oops" },
-                    CLICK_DIV_8: { target: "oops" },
-                    CLICK_DIV_9: { target: "oops" }, 
+                    CLICK_DIV_1: { target: "oops", actions:[ assign({ div : ({ context }) => "div1"}), "incorrectItem" ]},
+                    CLICK_DIV_2: { target: "oops", actions:[ assign({ div : ({ context }) => "div2"}), "incorrectItem" ]},
+                    CLICK_DIV_3: { target: "#root.DialogueManager.Ready.Word_4", actions:[ assign({ div : ({ context }) => "div3"}), "correctItem"  ]},
+                    CLICK_DIV_4: { target: "oops", actions:[ assign({ div : ({ context }) => "div4"}), "incorrectItem" ]},
+                    CLICK_DIV_5: { target: "oops", actions:[ assign({ div : ({ context }) => "div5"}), "incorrectItem" ]},
+                    CLICK_DIV_6: { target: "oops", actions:[ assign({ div : ({ context }) => "div6"}), "incorrectItem" ]},
+                    CLICK_DIV_7: { target: "oops", actions:[ assign({ div : ({ context }) => "div7"}), "incorrectItem" ]},
+                    CLICK_DIV_8: { target: "oops", actions:[ assign({ div : ({ context }) => "div8"}), "incorrectItem" ]},
+                    CLICK_DIV_9: { target: "oops", actions:[ assign({ div : ({ context }) => "div9"}), "incorrectItem" ]}, 
                   }
                 }
               }
@@ -953,15 +969,15 @@ const dmMachineJapanese = createMachine(
                 },
                 waitforclick: {
                   on: {
-                    CLICK_DIV_1: { target: "oops" },
-                    CLICK_DIV_2: { target: "oops" },
-                    CLICK_DIV_3: { target: "oops" },
-                    CLICK_DIV_4: "#root.DialogueManager.Ready.Word_5",
-                    CLICK_DIV_5: { target: "oops" },
-                    CLICK_DIV_6: { target: "oops" },
-                    CLICK_DIV_7: { target: "oops" },
-                    CLICK_DIV_8: { target: "oops" },
-                    CLICK_DIV_9: { target: "oops" }, 
+                    CLICK_DIV_1: { target: "oops", actions:[ assign({ div : ({ context }) => "div1"}), "incorrectItem" ]},
+                    CLICK_DIV_2: { target: "oops", actions:[ assign({ div : ({ context }) => "div2"}), "incorrectItem" ]},
+                    CLICK_DIV_3: { target: "oops", actions:[ assign({ div : ({ context }) => "div3"}), "incorrectItem" ]},
+                    CLICK_DIV_4: { target: "#root.DialogueManager.Ready.Word_5", actions:[ assign({ div : ({ context }) => "div4"}), "correctItem"  ]},
+                    CLICK_DIV_5: { target: "oops", actions:[ assign({ div : ({ context }) => "div5"}), "incorrectItem" ]},
+                    CLICK_DIV_6: { target: "oops", actions:[ assign({ div : ({ context }) => "div6"}), "incorrectItem" ]},
+                    CLICK_DIV_7: { target: "oops", actions:[ assign({ div : ({ context }) => "div7"}), "incorrectItem" ]},
+                    CLICK_DIV_8: { target: "oops", actions:[ assign({ div : ({ context }) => "div8"}), "incorrectItem" ]},
+                    CLICK_DIV_9: { target: "oops", actions:[ assign({ div : ({ context }) => "div9"}), "incorrectItem" ]}, 
                   }
                 }
               }
@@ -979,15 +995,15 @@ const dmMachineJapanese = createMachine(
                 },
                 waitforclick: {
                   on: {
-                    CLICK_DIV_1: { target: "oops" },
-                    CLICK_DIV_2: { target: "oops" },
-                    CLICK_DIV_3: { target: "oops" },
-                    CLICK_DIV_4: { target: "oops" },
-                    CLICK_DIV_5: "#root.DialogueManager.Ready.Word_6" ,
-                    CLICK_DIV_6: { target: "oops" },
-                    CLICK_DIV_7: { target: "oops" },
-                    CLICK_DIV_8: { target: "oops" },
-                    CLICK_DIV_9: { target: "oops" }, 
+                    CLICK_DIV_1: { target: "oops", actions:[ assign({ div : ({ context }) => "div1"}), "incorrectItem" ]},
+                    CLICK_DIV_2: { target: "oops", actions:[ assign({ div : ({ context }) => "div2"}), "incorrectItem" ]},
+                    CLICK_DIV_3: { target: "oops", actions:[ assign({ div : ({ context }) => "div3"}), "incorrectItem" ]},
+                    CLICK_DIV_4: { target: "oops", actions:[ assign({ div : ({ context }) => "div4"}), "incorrectItem" ]},
+                    CLICK_DIV_5: { target: "#root.DialogueManager.Ready.Word_6", actions:[ assign({ div : ({ context }) => "div5"}), "correctItem"  ]},
+                    CLICK_DIV_6: { target: "oops", actions:[ assign({ div : ({ context }) => "div6"}), "incorrectItem" ]},
+                    CLICK_DIV_7: { target: "oops", actions:[ assign({ div : ({ context }) => "div7"}), "incorrectItem" ]},
+                    CLICK_DIV_8: { target: "oops", actions:[ assign({ div : ({ context }) => "div8"}), "incorrectItem" ]},
+                    CLICK_DIV_9: { target: "oops", actions:[ assign({ div : ({ context }) => "div9"}), "incorrectItem" ]}, 
                   }
                 }
               }
@@ -1005,15 +1021,15 @@ const dmMachineJapanese = createMachine(
                 },
                 waitforclick: {
                   on: {
-                    CLICK_DIV_1: { target: "oops" },
-                    CLICK_DIV_2: { target: "oops" },
-                    CLICK_DIV_3: { target: "oops" },
-                    CLICK_DIV_4: { target: "oops" },
-                    CLICK_DIV_5: { target: "oops" },
-                    CLICK_DIV_6: "#root.DialogueManager.Ready.Word_7",
-                    CLICK_DIV_7: { target: "oops" },
-                    CLICK_DIV_8: { target: "oops" },
-                    CLICK_DIV_9: { target: "oops" },  
+                    CLICK_DIV_1: { target: "oops", actions:[ assign({ div : ({ context }) => "div1"}), "incorrectItem" ]},
+                    CLICK_DIV_2: { target: "oops", actions:[ assign({ div : ({ context }) => "div2"}), "incorrectItem" ]},
+                    CLICK_DIV_3: { target: "oops", actions:[ assign({ div : ({ context }) => "div3"}), "incorrectItem" ]},
+                    CLICK_DIV_4: { target: "oops", actions:[ assign({ div : ({ context }) => "div4"}), "incorrectItem" ]},
+                    CLICK_DIV_5: { target: "oops", actions:[ assign({ div : ({ context }) => "div5"}), "incorrectItem" ]},
+                    CLICK_DIV_6: { target: "#root.DialogueManager.Ready.Word_7", actions:[ assign({ div : ({ context }) => "div6"}), "correctItem" ]},
+                    CLICK_DIV_7: { target: "oops", actions:[ assign({ div : ({ context }) => "div7"}), "incorrectItem" ]},
+                    CLICK_DIV_8: { target: "oops", actions:[ assign({ div : ({ context }) => "div8"}), "incorrectItem" ]},
+                    CLICK_DIV_9: { target: "oops", actions:[ assign({ div : ({ context }) => "div9"}), "incorrectItem" ]},  
                   }
                 }
               }
@@ -1031,15 +1047,15 @@ const dmMachineJapanese = createMachine(
                 },
                 waitforclick: {
                   on: {
-                    CLICK_DIV_1: { target: "oops" },
-                    CLICK_DIV_2: { target: "oops" },
-                    CLICK_DIV_3: { target: "oops" },
-                    CLICK_DIV_4: { target: "oops" },
-                    CLICK_DIV_5: { target: "oops" },
-                    CLICK_DIV_6: { target: "oops" },
-                    CLICK_DIV_7: "#root.DialogueManager.Ready.Word_8",
-                    CLICK_DIV_8: { target: "oops" },
-                    CLICK_DIV_9: { target: "oops" },  
+                    CLICK_DIV_1: { target: "oops", actions:[ assign({ div : ({ context }) => "div1"}), "incorrectItem" ]},
+                    CLICK_DIV_2: { target: "oops", actions:[ assign({ div : ({ context }) => "div2"}), "incorrectItem" ]},
+                    CLICK_DIV_3: { target: "oops", actions:[ assign({ div : ({ context }) => "div3"}), "incorrectItem" ]},
+                    CLICK_DIV_4: { target: "oops", actions:[ assign({ div : ({ context }) => "div4"}), "incorrectItem" ]},
+                    CLICK_DIV_5: { target: "oops", actions:[ assign({ div : ({ context }) => "div5"}), "incorrectItem" ]},
+                    CLICK_DIV_6: { target: "oops", actions:[ assign({ div : ({ context }) => "div6"}), "incorrectItem" ]},
+                    CLICK_DIV_7: { target: "#root.DialogueManager.Ready.Word_8", actions:[ assign({ div : ({ context }) => "div7"}), "correctItem"  ]},
+                    CLICK_DIV_8: { target: "oops", actions:[ assign({ div : ({ context }) => "div8"}), "incorrectItem" ]},
+                    CLICK_DIV_9: { target: "oops", actions:[ assign({ div : ({ context }) => "div9"}), "incorrectItem" ]},  
                   }
                 }
               }
@@ -1057,15 +1073,15 @@ const dmMachineJapanese = createMachine(
                 },
                 waitforclick: {
                   on: {
-                    CLICK_DIV_1: { target: "oops" },
-                    CLICK_DIV_2: { target: "oops" },
-                    CLICK_DIV_3: { target: "oops" },
-                    CLICK_DIV_4: { target: "oops" },
-                    CLICK_DIV_5: { target: "oops" },
-                    CLICK_DIV_6: { target: "oops" },
-                    CLICK_DIV_7: { target: "oops" },
-                    CLICK_DIV_8: "#root.DialogueManager.Ready.Word_9",
-                    CLICK_DIV_9: { target: "oops" },   
+                    CLICK_DIV_1: { target: "oops", actions:[ assign({ div : ({ context }) => "div1"}), "incorrectItem" ]},
+                    CLICK_DIV_2: { target: "oops", actions:[ assign({ div : ({ context }) => "div2"}), "incorrectItem" ]},
+                    CLICK_DIV_3: { target: "oops", actions:[ assign({ div : ({ context }) => "div3"}), "incorrectItem" ]},
+                    CLICK_DIV_4: { target: "oops", actions:[ assign({ div : ({ context }) => "div4"}), "incorrectItem" ]},
+                    CLICK_DIV_5: { target: "oops", actions:[ assign({ div : ({ context }) => "div5"}), "incorrectItem" ]},
+                    CLICK_DIV_6: { target: "oops", actions:[ assign({ div : ({ context }) => "div6"}), "incorrectItem" ]},
+                    CLICK_DIV_7: { target: "oops", actions:[ assign({ div : ({ context }) => "div7"}), "incorrectItem" ]},
+                    CLICK_DIV_8: { target: "#root.DialogueManager.Ready.Word_9", actions:[ assign({ div : ({ context }) => "div8"}), "correctItem"  ]},
+                    CLICK_DIV_9: { target: "oops", actions:[ assign({ div : ({ context }) => "div9"}), "incorrectItem" ]},   
                   }
                 }
               }
@@ -1083,15 +1099,15 @@ const dmMachineJapanese = createMachine(
                 },
                 waitforclick: {
                   on: {
-                    CLICK_DIV_1: { target: "oops" },
-                    CLICK_DIV_2: { target: "oops" },
-                    CLICK_DIV_3: { target: "oops" },
-                    CLICK_DIV_4: { target: "oops" },
-                    CLICK_DIV_5: { target: "oops" },
-                    CLICK_DIV_6: { target: "oops" },
-                    CLICK_DIV_7: { target: "oops" },
-                    CLICK_DIV_8: { target: "oops" },
-                    CLICK_DIV_9: "#root.DialogueManager.Ready.Congrats",   
+                    CLICK_DIV_1: { target: "oops", actions:[ assign({ div : ({ context }) => "div1"}), "incorrectItem" ]},
+                    CLICK_DIV_2: { target: "oops", actions:[ assign({ div : ({ context }) => "div2"}), "incorrectItem" ]},
+                    CLICK_DIV_3: { target: "oops", actions:[ assign({ div : ({ context }) => "div3"}), "incorrectItem" ]},
+                    CLICK_DIV_4: { target: "oops", actions:[ assign({ div : ({ context }) => "div4"}), "incorrectItem" ]},
+                    CLICK_DIV_5: { target: "oops", actions:[ assign({ div : ({ context }) => "div5"}), "incorrectItem" ]},
+                    CLICK_DIV_6: { target: "oops", actions:[ assign({ div : ({ context }) => "div6"}), "incorrectItem" ]},
+                    CLICK_DIV_7: { target: "oops", actions:[ assign({ div : ({ context }) => "div7"}), "incorrectItem" ]},
+                    CLICK_DIV_8: { target: "oops", actions:[ assign({ div : ({ context }) => "div8"}), "incorrectItem" ]},
+                    CLICK_DIV_9: { target: "#root.DialogueManager.Ready.Congrats", actions:[ assign({ div : ({ context }) => "div9"}), "correctItem" ]},   
                   }
                 }
               }
@@ -1139,6 +1155,14 @@ const dmMachineJapanese = createMachine(
         context.spstRef.send({
           type: "PREPARE",
         }),
+        incorrectItem: ({ context }) => {
+          document.getElementById(`${context.div}`).style.backgroundColor = "#ff0004";
+          setTimeout(() => { document.getElementById(`${context.div}`).style.backgroundColor = "whitesmoke"}, 2500)
+        },
+        correctItem: ({ context }) => {
+          document.getElementById(`${context.div}`).style.backgroundColor = "greenyellow";
+          setTimeout(() => { document.getElementById(`${context.div}`).style.backgroundColor = "whitesmoke"}, 700)
+        },
       // saveLastResult:
       "speak.greeting": ({ context }) => {
         context.spstRef.send({
@@ -1153,13 +1177,13 @@ const dmMachineJapanese = createMachine(
         document.getElementById("bottom-text").innerText = "Inactive";
       },
       "gui.Idle": ({}) => {
-        document.getElementById("bottom-text").innerText = "Waiting...";
+        document.getElementById("bottom-text").innerText = "待っている...";
       },
       "gui.Speaking": ({}) => {
-        document.getElementById("bottom-text").innerText = "Speaking...";
+        document.getElementById("bottom-text").innerText = "話している...";
       },
       "gui.Listening": ({}) => {
-        document.getElementById("bottom-text").innerText = "Listening...";
+        document.getElementById("bottom-text").innerText = "聞いている...";
       },
     },
   },
@@ -1224,11 +1248,11 @@ function addClickHandlers3() {
 //addClickHandlers3();
 
 // call actors and send click handlers 
-document.getElementById("button-english").onclick = () => { actor1.send({ type: "CLICK" }), addClickHandlers1()};
-document.getElementById("button-spanish").onclick = () => {actor2.send({ type: "CLICK" }); addClickHandlers2()};
-document.getElementById("button-japanese").onclick = () => {actor3.send({ type: "CLICK" }); addClickHandlers3()};
+document.getElementById("button-english").onclick = () => { actor1.send({ type: "CLICK" }), addClickHandlers1() };
+document.getElementById("button-spanish").onclick = () => { actor2.send({ type: "CLICK" }); addClickHandlers2() };
+document.getElementById("button-japanese").onclick = () => { actor3.send({ type: "CLICK" }); addClickHandlers3() };
 
-
+// Event for CLICK on anything except the right choice
 
 // HMMMM
 actor1.subscribe((state) => {

@@ -802,37 +802,93 @@ const dmMachineEnglish = (0, _xstate.createMachine)({
                                 oops: {
                                     entry: say("Oops, listen again."),
                                     on: {
-                                        SPEAK_COMPLETE: "ask"
+                                        SPEAK_COMPLETE: {
+                                            target: "ask"
+                                        }
                                     }
                                 },
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "#root.DialogueManager.Ready.Word_2"
+                                            target: "#root.DialogueManager.Ready.Word_2",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "correctItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_3: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_4: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_5: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_6: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_7: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_8: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_9: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         }
                                     }
                                 }
@@ -856,31 +912,85 @@ const dmMachineEnglish = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "#root.DialogueManager.Ready.Word_3"
+                                            target: "#root.DialogueManager.Ready.Word_3",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "correctItem"
+                                            ]
                                         },
                                         CLICK_DIV_3: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_4: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_5: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_6: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_7: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_8: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_9: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         }
                                     }
                                 }
@@ -904,29 +1014,85 @@ const dmMachineEnglish = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
-                                        CLICK_DIV_3: "#root.DialogueManager.Ready.Word_4",
+                                        CLICK_DIV_3: {
+                                            target: "#root.DialogueManager.Ready.Word_4",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "correctItem"
+                                            ]
+                                        },
                                         CLICK_DIV_4: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_5: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_6: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_7: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_8: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_9: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         }
                                     }
                                 }
@@ -950,29 +1116,85 @@ const dmMachineEnglish = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_3: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
-                                        CLICK_DIV_4: "#root.DialogueManager.Ready.Word_5",
+                                        CLICK_DIV_4: {
+                                            target: "#root.DialogueManager.Ready.Word_5",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "correctItem"
+                                            ]
+                                        },
                                         CLICK_DIV_5: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_6: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_7: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_8: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_9: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         }
                                     }
                                 }
@@ -996,29 +1218,85 @@ const dmMachineEnglish = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_3: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_4: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
-                                        CLICK_DIV_5: "#root.DialogueManager.Ready.Word_6",
+                                        CLICK_DIV_5: {
+                                            target: "#root.DialogueManager.Ready.Word_6",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "correctItem"
+                                            ]
+                                        },
                                         CLICK_DIV_6: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_7: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_8: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_9: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         }
                                     }
                                 }
@@ -1042,29 +1320,85 @@ const dmMachineEnglish = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_3: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_4: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_5: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
-                                        CLICK_DIV_6: "#root.DialogueManager.Ready.Word_7",
+                                        CLICK_DIV_6: {
+                                            target: "#root.DialogueManager.Ready.Word_7",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "correctItem"
+                                            ]
+                                        },
                                         CLICK_DIV_7: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_8: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_9: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         }
                                     }
                                 }
@@ -1088,29 +1422,85 @@ const dmMachineEnglish = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_3: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_4: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_5: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_6: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
-                                        CLICK_DIV_7: "#root.DialogueManager.Ready.Word_8",
+                                        CLICK_DIV_7: {
+                                            target: "#root.DialogueManager.Ready.Word_8",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "correctItem"
+                                            ]
+                                        },
                                         CLICK_DIV_8: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_9: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         }
                                     }
                                 }
@@ -1134,29 +1524,85 @@ const dmMachineEnglish = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_3: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_4: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_5: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_6: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_7: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
-                                        CLICK_DIV_8: "#root.DialogueManager.Ready.Word_9",
+                                        CLICK_DIV_8: {
+                                            target: "#root.DialogueManager.Ready.Word_9",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "correctItem"
+                                            ]
+                                        },
                                         CLICK_DIV_9: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         }
                                     }
                                 }
@@ -1180,30 +1626,86 @@ const dmMachineEnglish = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_3: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_4: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_5: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_6: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_7: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_8: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
-                                        CLICK_DIV_9: "#root.DialogueManager.Ready.Congrats"
+                                        CLICK_DIV_9: {
+                                            target: "#root.DialogueManager.Ready.Congrats",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "correctItem"
+                                            ]
+                                        }
                                     }
                                 }
                             }
@@ -1270,6 +1772,18 @@ const dmMachineEnglish = (0, _xstate.createMachine)({
         prepare: ({ context })=>context.spstRef.send({
                 type: "PREPARE"
             }),
+        incorrectItem: ({ context })=>{
+            document.getElementById(`${context.div}`).style.backgroundColor = "#ff0004";
+            setTimeout(()=>{
+                document.getElementById(`${context.div}`).style.backgroundColor = "whitesmoke";
+            }, 2500);
+        },
+        correctItem: ({ context })=>{
+            document.getElementById(`${context.div}`).style.backgroundColor = "greenyellow";
+            setTimeout(()=>{
+                document.getElementById(`${context.div}`).style.backgroundColor = "whitesmoke";
+            }, 700);
+        },
         // saveLastResult:
         "speak.greeting": ({ context })=>{
             context.spstRef.send({
@@ -1286,7 +1800,7 @@ const dmMachineEnglish = (0, _xstate.createMachine)({
             document.getElementById("bottom-text").innerText = "Inactive";
         },
         "gui.Idle": ({})=>{
-            document.getElementById("bottom-text").innerText = "Waiting...";
+            document.getElementById("bottom-text").innerText = " Waiting for your answer...";
         },
         "gui.Speaking": ({})=>{
             document.getElementById("bottom-text").innerText = "Speaking...";
@@ -1330,7 +1844,7 @@ const dmMachineSpanish = (0, _xstate.createMachine)({
                             }
                         },
                         Instructions: {
-                            entry: say("Escoged el emoji. Listos? Vamos"),
+                            entry: say("Escoged el emoji correcto. Listos?"),
                             on: {
                                 SPEAK_COMPLETE: "Word_1"
                             }
@@ -1353,31 +1867,85 @@ const dmMachineSpanish = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "#root.DialogueManager.Ready.Word_2"
+                                            target: "#root.DialogueManager.Ready.Word_2",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "correctItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_3: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_4: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_5: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_6: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_7: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_8: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_9: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         }
                                     }
                                 }
@@ -1401,31 +1969,85 @@ const dmMachineSpanish = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "#root.DialogueManager.Ready.Word_3"
+                                            target: "#root.DialogueManager.Ready.Word_3",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "correctItem"
+                                            ]
                                         },
                                         CLICK_DIV_3: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_4: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_5: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_6: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_7: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_8: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_9: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         }
                                     }
                                 }
@@ -1449,29 +2071,85 @@ const dmMachineSpanish = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
-                                        CLICK_DIV_3: "#root.DialogueManager.Ready.Word_4",
+                                        CLICK_DIV_3: {
+                                            target: "#root.DialogueManager.Ready.Word_4",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "correctItem"
+                                            ]
+                                        },
                                         CLICK_DIV_4: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_5: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_6: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_7: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_8: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_9: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         }
                                     }
                                 }
@@ -1495,29 +2173,85 @@ const dmMachineSpanish = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_3: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
-                                        CLICK_DIV_4: "#root.DialogueManager.Ready.Word_5",
+                                        CLICK_DIV_4: {
+                                            target: "#root.DialogueManager.Ready.Word_5",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "correctItem"
+                                            ]
+                                        },
                                         CLICK_DIV_5: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_6: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_7: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_8: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_9: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         }
                                     }
                                 }
@@ -1541,29 +2275,85 @@ const dmMachineSpanish = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_3: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_4: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
-                                        CLICK_DIV_5: "#root.DialogueManager.Ready.Word_6",
+                                        CLICK_DIV_5: {
+                                            target: "#root.DialogueManager.Ready.Word_6",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "correctItem"
+                                            ]
+                                        },
                                         CLICK_DIV_6: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_7: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_8: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_9: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         }
                                     }
                                 }
@@ -1587,29 +2377,85 @@ const dmMachineSpanish = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_3: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_4: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_5: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
-                                        CLICK_DIV_6: "#root.DialogueManager.Ready.Word_7",
+                                        CLICK_DIV_6: {
+                                            target: "#root.DialogueManager.Ready.Word_7",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "correctItem"
+                                            ]
+                                        },
                                         CLICK_DIV_7: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_8: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_9: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         }
                                     }
                                 }
@@ -1633,29 +2479,85 @@ const dmMachineSpanish = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_3: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_4: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_5: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_6: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
-                                        CLICK_DIV_7: "#root.DialogueManager.Ready.Word_8",
+                                        CLICK_DIV_7: {
+                                            target: "#root.DialogueManager.Ready.Word_8",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "correctItem"
+                                            ]
+                                        },
                                         CLICK_DIV_8: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_9: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         }
                                     }
                                 }
@@ -1679,29 +2581,85 @@ const dmMachineSpanish = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_3: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_4: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_5: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_6: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_7: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
-                                        CLICK_DIV_8: "#root.DialogueManager.Ready.Word_9",
+                                        CLICK_DIV_8: {
+                                            target: "#root.DialogueManager.Ready.Word_9",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "correctItem"
+                                            ]
+                                        },
                                         CLICK_DIV_9: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         }
                                     }
                                 }
@@ -1725,36 +2683,92 @@ const dmMachineSpanish = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_3: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_4: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_5: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_6: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_7: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_8: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
-                                        CLICK_DIV_9: "#root.DialogueManager.Ready.Congrats"
+                                        CLICK_DIV_9: {
+                                            target: "#root.DialogueManager.Ready.Congrats",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "correctItem"
+                                            ]
+                                        }
                                     }
                                 }
                             }
                         },
                         Congrats: {
-                            entry: say(" Enhorabuena! Las has encertado todas! "),
+                            entry: say(" Enhorabuena. Las has encertado todas. "),
                             on: {
                                 SPEAK_COMPLETE: "#root"
                             }
@@ -1815,6 +2829,18 @@ const dmMachineSpanish = (0, _xstate.createMachine)({
         prepare: ({ context })=>context.spstRef.send({
                 type: "PREPARE"
             }),
+        incorrectItem: ({ context })=>{
+            document.getElementById(`${context.div}`).style.backgroundColor = "#ff0004";
+            setTimeout(()=>{
+                document.getElementById(`${context.div}`).style.backgroundColor = "whitesmoke";
+            }, 2500);
+        },
+        correctItem: ({ context })=>{
+            document.getElementById(`${context.div}`).style.backgroundColor = "greenyellow";
+            setTimeout(()=>{
+                document.getElementById(`${context.div}`).style.backgroundColor = "whitesmoke";
+            }, 700);
+        },
         // saveLastResult:
         "speak.greeting": ({ context })=>{
             context.spstRef.send({
@@ -1828,16 +2854,16 @@ const dmMachineSpanish = (0, _xstate.createMachine)({
             document.getElementById("bottom-text").innerText = "Choose a language to start!";
         },
         "gui.Inactive": ({})=>{
-            document.getElementById("bottom-text").innerText = "Inactive";
+            document.getElementById("bottom-text").innerText = "Inactivo";
         },
         "gui.Idle": ({})=>{
-            document.getElementById("bottom-text").innerText = "Waiting...";
+            document.getElementById("bottom-text").innerText = "Esperando tu respuesta...";
         },
         "gui.Speaking": ({})=>{
-            document.getElementById("bottom-text").innerText = "Speaking...";
+            document.getElementById("bottom-text").innerText = "Hablando...";
         },
         "gui.Listening": ({})=>{
-            document.getElementById("bottom-text").innerText = "Listening...";
+            document.getElementById("bottom-text").innerText = "Escuchando...";
         }
     }
 });
@@ -1898,31 +2924,85 @@ const dmMachineJapanese = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "#root.DialogueManager.Ready.Word_2"
+                                            target: "#root.DialogueManager.Ready.Word_2",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "correctItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_3: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_4: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_5: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_6: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_7: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_8: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_9: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         }
                                     }
                                 }
@@ -1946,31 +3026,85 @@ const dmMachineJapanese = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "#root.DialogueManager.Ready.Word_3"
+                                            target: "#root.DialogueManager.Ready.Word_3",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "correctItem"
+                                            ]
                                         },
                                         CLICK_DIV_3: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_4: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_5: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_6: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_7: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_8: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_9: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         }
                                     }
                                 }
@@ -1994,29 +3128,85 @@ const dmMachineJapanese = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
-                                        CLICK_DIV_3: "#root.DialogueManager.Ready.Word_4",
+                                        CLICK_DIV_3: {
+                                            target: "#root.DialogueManager.Ready.Word_4",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "correctItem"
+                                            ]
+                                        },
                                         CLICK_DIV_4: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_5: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_6: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_7: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_8: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_9: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         }
                                     }
                                 }
@@ -2040,29 +3230,85 @@ const dmMachineJapanese = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_3: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
-                                        CLICK_DIV_4: "#root.DialogueManager.Ready.Word_5",
+                                        CLICK_DIV_4: {
+                                            target: "#root.DialogueManager.Ready.Word_5",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "correctItem"
+                                            ]
+                                        },
                                         CLICK_DIV_5: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_6: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_7: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_8: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_9: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         }
                                     }
                                 }
@@ -2086,29 +3332,85 @@ const dmMachineJapanese = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_3: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_4: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
-                                        CLICK_DIV_5: "#root.DialogueManager.Ready.Word_6",
+                                        CLICK_DIV_5: {
+                                            target: "#root.DialogueManager.Ready.Word_6",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "correctItem"
+                                            ]
+                                        },
                                         CLICK_DIV_6: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_7: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_8: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_9: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         }
                                     }
                                 }
@@ -2132,29 +3434,85 @@ const dmMachineJapanese = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_3: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_4: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_5: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
-                                        CLICK_DIV_6: "#root.DialogueManager.Ready.Word_7",
+                                        CLICK_DIV_6: {
+                                            target: "#root.DialogueManager.Ready.Word_7",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "correctItem"
+                                            ]
+                                        },
                                         CLICK_DIV_7: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_8: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_9: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         }
                                     }
                                 }
@@ -2178,29 +3536,85 @@ const dmMachineJapanese = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_3: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_4: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_5: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_6: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
-                                        CLICK_DIV_7: "#root.DialogueManager.Ready.Word_8",
+                                        CLICK_DIV_7: {
+                                            target: "#root.DialogueManager.Ready.Word_8",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "correctItem"
+                                            ]
+                                        },
                                         CLICK_DIV_8: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_9: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         }
                                     }
                                 }
@@ -2224,29 +3638,85 @@ const dmMachineJapanese = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_3: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_4: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_5: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_6: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_7: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
-                                        CLICK_DIV_8: "#root.DialogueManager.Ready.Word_9",
+                                        CLICK_DIV_8: {
+                                            target: "#root.DialogueManager.Ready.Word_9",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "correctItem"
+                                            ]
+                                        },
                                         CLICK_DIV_9: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         }
                                     }
                                 }
@@ -2270,30 +3740,86 @@ const dmMachineJapanese = (0, _xstate.createMachine)({
                                 waitforclick: {
                                     on: {
                                         CLICK_DIV_1: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div1"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_2: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div2"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_3: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div3"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_4: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div4"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_5: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div5"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_6: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div6"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_7: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div7"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
                                         CLICK_DIV_8: {
-                                            target: "oops"
+                                            target: "oops",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div8"
+                                                }),
+                                                "incorrectItem"
+                                            ]
                                         },
-                                        CLICK_DIV_9: "#root.DialogueManager.Ready.Congrats"
+                                        CLICK_DIV_9: {
+                                            target: "#root.DialogueManager.Ready.Congrats",
+                                            actions: [
+                                                (0, _xstate.assign)({
+                                                    div: ({ context })=>"div9"
+                                                }),
+                                                "correctItem"
+                                            ]
+                                        }
                                     }
                                 }
                             }
@@ -2360,6 +3886,18 @@ const dmMachineJapanese = (0, _xstate.createMachine)({
         prepare: ({ context })=>context.spstRef.send({
                 type: "PREPARE"
             }),
+        incorrectItem: ({ context })=>{
+            document.getElementById(`${context.div}`).style.backgroundColor = "#ff0004";
+            setTimeout(()=>{
+                document.getElementById(`${context.div}`).style.backgroundColor = "whitesmoke";
+            }, 2500);
+        },
+        correctItem: ({ context })=>{
+            document.getElementById(`${context.div}`).style.backgroundColor = "greenyellow";
+            setTimeout(()=>{
+                document.getElementById(`${context.div}`).style.backgroundColor = "whitesmoke";
+            }, 700);
+        },
         // saveLastResult:
         "speak.greeting": ({ context })=>{
             context.spstRef.send({
@@ -2376,13 +3914,13 @@ const dmMachineJapanese = (0, _xstate.createMachine)({
             document.getElementById("bottom-text").innerText = "Inactive";
         },
         "gui.Idle": ({})=>{
-            document.getElementById("bottom-text").innerText = "Waiting...";
+            document.getElementById("bottom-text").innerText = "待っている...";
         },
         "gui.Speaking": ({})=>{
-            document.getElementById("bottom-text").innerText = "Speaking...";
+            document.getElementById("bottom-text").innerText = "話している...";
         },
         "gui.Listening": ({})=>{
-            document.getElementById("bottom-text").innerText = "Listening...";
+            document.getElementById("bottom-text").innerText = "聞いている...";
         }
     }
 });
@@ -2450,6 +3988,7 @@ document.getElementById("button-japanese").onclick = ()=>{
     });
     addClickHandlers3();
 };
+// Event for CLICK on anything except the right choice
 // HMMMM
 actor1.subscribe((state)=>{
     console.log(state.value);
