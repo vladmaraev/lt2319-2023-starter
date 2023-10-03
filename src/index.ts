@@ -10,9 +10,9 @@ const azureCredentials = {
 const settings: Settings = {
   azureCredentials: azureCredentials,
   asrDefaultCompleteTimeout: 0,
-  locale: "en-US",
+  locale: "el-GR",
   asrDefaultNoInputTimeout: 5000,
-  ttsDefaultVoice: "en-GB-RyanNeural",
+  ttsDefaultVoice: "el-GR-NestorasNeural",
 };
 
 interface DMContext {
@@ -23,184 +23,51 @@ interface DMContext {
 // helper functions
 const say =
   (text: string) =>
-  ({ context }) => {
-    context.spstRef.send({
-      type: "SPEAK",
-      value: { utterance: text },
-    });
-  };
+    ({ context }) => {
+      context.spstRef.send({
+        type: "SPEAK",
+        value: { utterance: text },
+      });
+    };
 const listen =
   () =>
-  ({ context }) =>
-    context.spstRef.send({
-      type: "LISTEN",
-    });
+    ({ context }) =>
+      context.spstRef.send({
+        type: "LISTEN",
+      });
 
 interface Grammar {
   [index: string]: {
     entities: {
       [index: string]: string;
     };
-   },
-  };
+  },
+};
 
 const grammar: Grammar = {
-  "i don't want to know about these things": {
+  "ναι": {
     entities: {
-      answer: "no"
+      help: "yes"
     },
   },
-  "no" : {
+  "όχι": {
     entities: {
-      answer: "no",
-    },
-  },
-  "no, thank you" : {
-    entities: {
-      answer: "no",
-    },
-  },
-  "i don't want to" : {
-    entities: {
-      answer: "no",
-    },
-  },
-  "i don't" : {
-    entities: {
-      answer: "no",
-    },
-  },
-  "no i don't" : {
-    entities: {
-      answer: "no",
-    },
-  },
-  "tell me about the plot": {
-    entities: {
-      answer: "yes",
-      what: "plot"
-    },
-  },
-  "yes the plot": {
-    entities: {
-      answer: "yes",
-      what: "plot"
-    },
-  },
-  "the plot": {
-    entities: {
-      answer: "yes",
-      what: "plot"
-    },
-  },
-  "the mood": {
-    entities: {
-      answer: "yes",
-      what: "mood"
-    },
-  },
-  "no I already know that": {
-    entities: {
-      answer: "no",
-    },
-  },
-  "no you told me already": {
-    entities: {
-      answer: "no",
-    },
-  },
-  "ok": {
-    entities: {
-      answer: "yes",
-      what: "both"
-    },
-  },
-  "yes": {
-    entities: {
-      answer: "yes",
-      what: "both"
-    },
-  },
-  "yes, please" : {
-    entities: {
-      answer: "yes",
-    },
-  },
-  "yeah tell me about the plot" : {
-    entities: {
-      answer: "yes",
-      what: "plot"
-    },
-  },
-  "yes, tell me about its plot" : {
-    entities: {
-      answer: "yes",
-      what: "plot"
-    },
-  },
-  "yes, tell me about its plot please" : {
-    entities: {
-      answer: "yes",
-      what: "plot"
-    }
-  },
-  "yes, tell me about its mood" : {
-    entities: {
-      answer: "yes",
-      what: "mood"
-    },
-  },
-  "tell me about the mood" : {
-    entities: {
-      answer: "yes",
-      what: "mood"
-    },
-  },
-  "tell me about the general feel" : {
-    entities: {
-      answer: "yes",
-      what: "mood",
-    },
-  },
-  "what is the general feel": {
-    entities: {
-      answer: "yes",
-      what: "mood",
-    },
-  },
-  "tell me about both" : {
-    entities: {
-      answer: "yes",
-      what: "both",
+      help: "no"
     },
   },
 };
 
-//the following function is not used in the code
-const getEntities = (sentence: string) => {
-  const result = [];
-  const entities = grammar[sentence].entities
-  const sent = sentence.toLowerCase().replace(/\.$/g, "").split(" ")
-  for (let i = 0; i < sent.length; i++) {
-    if (sent[i] in entities) {
-      result.push(sent[i]);
-      return result
-    }
-  }
-  return false;
+const images = ["κουνάβι", "μπανάνα", "βιβλίο", "πεταλούδα", "λεωφορείο", "βόμβα", "σκουληκάκι", "φασόλια", "νυχτερίδα"]
+
+const getItem = (array: any) => {
+  const indexRandom = Math.floor(Math.random() * array.length);
+  let item = `${array[indexRandom]}`
+  return item
 };
 
-const getDialogues = (user: string, gpt: string) => {
-  const dialogues = {users: [], gptAnswers: []}
-  dialogues.users.push(user);
-  dialogues.gptAnswers.push(gpt);
-  console.log(dialogues)
-  return dialogues
-};
-
-const lower = (sentence : string) => {
+const lower = (sentence: string) => {
   let u = sentence.toLowerCase().replace(/\.$/g, "");
-  return u 
+  return u
 }
 
 // machine
@@ -223,6 +90,7 @@ const dmMachine = createMachine(
                     },
                   });
                 },
+                word: ({ event }) => getItem(images)
               }),
             ],
           },
@@ -231,312 +99,182 @@ const dmMachine = createMachine(
             states: {
               Greeting: {
                 entry: "speak.greeting",
-                on: { SPEAK_COMPLETE: "HowCanIHelp"},
+                on: { SPEAK_COMPLETE: "HowCanIHelp" },
               },
               HowCanIHelp: {
-                entry: ({context}) => {
+                entry: ({ context }) => {
+                  let count = 0;
+                  context.count = count;
+                  let arrayOfImages = images;
+                  context.arrayOfImages = arrayOfImages;
+                  const word = getItem(context.arrayOfImages);
+                  context.word = word
                   context.spstRef.send({
-                    type: "SPEAK", 
-                    value:{utterance: "What are you in the mood for reading today?"},
+                    type: "SPEAK",
+                    value: { utterance: `Ας μάθουμε ελληνικά μαζί! Δείξε μου τη λέξη. ${context.word}` },
                   });
+                  context.arrayOfImages = context.arrayOfImages.filter((picture: any) => picture !== context.word);
                 },
                 on: { SPEAK_COMPLETE: "Ask" },
               },
               Ask: {
-                entry: listen(),
+                entry: ({ context }) => {
+                  console.log("ask", context.count, "array ask", context.arrayOfImages)
+                },
                 on: {
-                  RECOGNISED: [
-                  {
-                   target: "chatGPT",
-                    actions: [
-                      ({ event }) => console.log(event),
-                      assign({
-                        lastResult: ({event}) => event.value,
+                  SELECTED: [
+                    {
+                      target: "done",
+                      guard: ({ context, event }) => context.word === event.word && context.arrayOfImages.length === 0
+                    },
+                    {
+                      target: "hint",
+                      guard: ({ context, event }) => context.count == 2,
+                      actions: assign({
+                        wrong: ({ event }) => event.word,
                       }),
-                    ],
-                  }],
+                    },
+                    {
+                      target: "true",
+                      guard: ({ context, event }) => context.word === event.word,
+                      actions: [
+                        assign({
+                          correct: ({ event }) => event.word,
+                        }),
+                        ({ event }) => console.log(event),
+                      ],
+                    },
+                    {
+                      target: "false",
+                      guard: ({ context, event }) => context.word !== event.word,
+                      actions: assign({
+                        wrong: ({ event }) => event.word,
+                      }),
+                    },
+                  ],
                 },
               },
-              chatGPT: {
-                invoke: {
-                  src: fromPromise(async({input}) => {  
-                    //inside the gpt function + I have already read that book + the ${context.bookName} if it's possible to use context
-                    // there like this
-                   const gptAnswer = await fetchFromChatGPT(`this utterance contains what I seek to read ${input.lastResult[0].utterance}. 
-                      Give me your suggestion of one book in a JSON file with entities like bookName, bookAuthor, bookGenre, bookMood, and bookPlot. 
-                      Try to be diverse and don't answer if the utterance is a question`, 250);
-                   return gptAnswer; 
-                  }),
-                  input: ({context, event}) => ({
-                    lastResult: context.lastResult,
-                  }),
-                  onDone: {
-                    target: "success",
-                    actions: [
-                      ({ event }) => console.log(event.output),
-                      assign({
-                        gptzAnswer: ({ event }) => event.output,
-                        bookName: ({ event }) => JSON.parse(event.output).bookName,
-                        bookAuthor: ({ event }) => JSON.parse(event.output).bookAuthor,
-                        bookGenre: ({ event }) => JSON.parse(event.output).bookGenre,
-                        bookMood: ({ event }) => JSON.parse(event.output).bookMood,
-                        bookPlot: ({ event }) => JSON.parse(event.output).bookPlot
-                      })
-                    ]
-                  },
-                },
-              },
-              success: {
-                entry: ({context}) => {
+              true: {
+                entry: ({ context }) => {
+                  const rightAnswer = document.getElementById(`${context.word}`)
+                  rightAnswer.style.backgroundColor = "green",
+                    setTimeout(() => {
+                      rightAnswer.style.backgroundColor = "hsla(126, 32%, 67%, 1)";
+                    }, 1000);
+                  const word = getItem(context.arrayOfImages);
+                  context.word = word
                   context.spstRef.send({
                     type: "SPEAK",
-                    value: { utterance: `The book I would suggest you read is ${context.bookName} by ${context.bookAuthor}. It is a very nice ${context.bookGenre} book! Would you like to know more about the book's plot or its general mood?` },
+                    value: { utterance: `Σωστά! ${context.word}` },
                   });
+                  context.count = 0
+                  context.arrayOfImages = context.arrayOfImages.filter((picture: any) => picture !== context.word);
+                  console.log(context.arrayOfImages)
                 },
-                on: { SPEAK_COMPLETE: "yesNo" }
+                on: { SPEAK_COMPLETE: "Ask" },
               },
-              yesNo: {
+              false: {
+                entry: ({ context }) => {
+                  const wrongAnswer = document.getElementById(`${context.wrong}`)
+                  wrongAnswer.style.backgroundColor = "red",
+                    setTimeout(() => {
+                      wrongAnswer.style.backgroundColor = "hsla(240, 3%, 94%, 1)";
+                    }, 1000);
+                    context.spstRef.send({
+                      type: "SPEAK",
+                      value: { utterance: `Λάθος! Προσπάθησε ξανά! ${context.word}` },
+                    });
+                    context.count += 1
+                  },
+                  on: { SPEAK_COMPLETE: "Ask" },
+                },
+              hint: {
+                entry: ({ context }) => {
+                  context.spstRef.send({
+                    type: "SPEAK",
+                    value: { utterance: "Θες βοήθεια?" },
+                  });
+                  context.count = 0
+                  console.log("help")
+                },
+                on: { SPEAK_COMPLETE: "giveHint" },
+              },
+              giveHint: {
                 entry: listen(),
                 on: {
                   RECOGNISED: [
-                   {
-                    target: "wantMood",
-                    guard: ({context, event}) => {
-                      const sent = lower(event.value[0].utterance);
-                      if (sent in grammar) {
-                        if ( grammar[sent].entities.answer == "yes" && context.plotDone == "yes" ) {
-                          return true
+                    {
+                      target: "yes",
+                      guard: ({ context, event }) => {
+                        const sent = lower(event.value[0].utterance);
+                        if (sent in grammar) {
+                          if (grammar[sent].entities.help == "yes") {
+                            return true
+                          }
                         }
-                      }
-                      return false
+                        return false
+                      },
                     },
-                   },
-                   {
-                    target: "wantPlot",
-                    guard: ({context, event}) => {
-                      const sent = lower(event.value[0].utterance);
-                      if (sent in grammar) {
-                        if ( grammar[sent].entities.answer == "yes" && context.moodDone == "yes" ) {
-                          return true
+                    {
+                      target: "Ask",
+                      guard: ({ context, event }) => {
+                        const sent = lower(event.value[0].utterance);
+                        if (sent in grammar) {
+                          if (grammar[sent].entities.help == "no") {
+                            return true
+                          }
                         }
-                      }
-                      return false
+                        return false
+                      },
                     },
-                   },
-                   {
-                    target: "plot",
-                    guard: ({ context, event }) => {
-                      const sent = lower(event.value[0].utterance);
-                      if (sent in grammar) {
-                        if ( grammar[sent].entities.answer == "yes" && context.moodDone == "yes" || grammar[sent].entities.answer == "yes" && grammar[sent].entities.what == "plot") {
-                          return true
-                        }
-                      }
-                      return false
+                    {
+                      target: "noEntiendo",
                     },
-                    actions: [
-                      ({ event }) => console.log(event.output),
-                      assign({
-                        plotDone: ({ event }) => "yes",
-                      })
-                    ]
-                   },
-                   {
-                    target: "mood",
-                    guard: ({context, event}) => {
-                      const sent = lower(event.value[0].utterance);
-                      if (sent in grammar) {
-                        if (grammar[sent].entities.answer == "yes" && grammar[sent].entities.what == "mood") {
-                          return true
-                        }
-                      }
-                      return false
-                    },
-                    actions: [
-                      ({ event }) => console.log(event.output),
-                      assign({
-                        moodDone: ({ event }) => "yes",
-                      })
-                    ]
-                   },
-                   {
-                    target: "both",
-                    guard: ({event}) => {
-                      const sent = lower(event.value[0].utterance);
-                      if (sent in grammar) {
-                        if (grammar[sent].entities.answer == "yes" && grammar[sent].entities.what == "both") {
-                          return true
-                        }
-                      }
-                      return false
-                    },
-                   },
-                   {
-                    target: "goodbye",
-                    guard: ({event}) => {
-                      const sent = lower(event.value[0].utterance);
-                      if (sent in grammar) {
-                        if (grammar[sent].entities.answer == "no") {
-                          return true
-                        }
-                      }
-                      return false
-                    },
-                   },
-                   {
-                    target: "noEntiendo",
-                     actions: [
-                       ({ event }) => console.log(event),
-                       assign({
-                         lastResult: ({event}) => event.value,
-                       }),
-                     ],
-                   },
-                   ],
+                  ]
+                }
+              },
+              yes: {
+                entry: ({ context }) => {
+                  const newArray = images.filter((picture: any) => picture !== context.word)
+                  const rightAnswer = document.getElementById(`${context.word}`);
+                  const wrongPicture = document.getElementById(`${getItem(newArray)}`);
+                  wrongPicture.style.backgroundColor = "red";
+                  if (wrongPicture !== rightAnswer) {
+                    setTimeout(() => {
+                      wrongPicture.style.backgroundColor = "hsla(240, 3%, 94%, 1)";
+                    }, 2000);
+                  }
+                  context.spstRef.send({
+                    type: "SPEAK",
+                    value: { utterance: `Δεν είναι αυτή!` },
+                  });
+                  context.count = 0
                 },
+                on: { SPEAK_COMPLETE: "Ask" },
               },
               noEntiendo: {
-                entry: ({context}) => {
-                  context.spstRef.send({
-                    type: "SPEAK", 
-                    value:{utterance: "I don't think I got that correctly. Would you like me to tell you about its plot or its mood?"},
-                  });
-                },
-                on: { SPEAK_COMPLETE: "yesNo" },
-              },
-              plot: {
-                entry: ({context}) => {
-                  context.spstRef.send({
-                    type: "SPEAK", 
-                    value:{utterance: `${context.bookPlot}. Would you like to learn the book's mood set?`},
-                  });
-                },
-                on: { SPEAK_COMPLETE: "yesNo" },
-              },
-              mood: {
-                entry: ({context}) => {
-                  context.spstRef.send({
-                    type: "SPEAK", 
-                    value:{utterance: `${context.bookName} is considered a ${context.bookMood} book. Would you like to hear its plot?`},
-                  });
-                },
-                on: { SPEAK_COMPLETE: "yesNo" },
-              },
-              both: {
-                entry: ({context}) => {
-                  context.spstRef.send({
-                    type: "SPEAK", 
-                    value:{utterance: `${context.bookPlot}. The book is considered to be ${context.bookMood}.`},
-                  });
-                },
-                on: { SPEAK_COMPLETE: "goodbye" },
-                
-              },
-              wantMood: {
                 entry: ({ context }) => {
                   context.spstRef.send({
                     type: "SPEAK",
-                    value: { utterance: `The mood of ${context.bookName} is described as ${context.bookMood}.`},
+                    value: { utterance: "Συγγνώμη, δεν άκουσα. Πες μου ξανά!" },
                   });
                 },
-                on : { SPEAK_COMPLETE: "goodbye" }
+                on: { SPEAK_COMPLETE: "Ask" },
               },
-              wantPlot: {
+              done: {
                 entry: ({ context }) => {
+                  const rightAnswer = document.getElementById(`${context.word}`)
+                  rightAnswer.style.backgroundColor = "green",
+                    setTimeout(() => {
+                      rightAnswer.style.backgroundColor = "hsla(126, 32%, 67%, 1)";
+                    }, 1000);
                   context.spstRef.send({
                     type: "SPEAK",
-                    value: { utterance: `The plot of ${context.bookName} is this. ${context.bookPlot}.`},
+                    value: { utterance: `Μπράβο!` },
                   });
+                  console.log("done")
                 },
-                on : { SPEAK_COMPLETE: "goodbye" }  
               },
-              goodbye: {
-                entry: ({ context }) => {
-                  context.spstRef.send({
-                    type: "SPEAK",
-                    //last part of this utterance would make more sense if I could make this system available to other people and save their chat. 
-                    //I'm implementing it now because I think it would be a nice feature and I want to see how it works and how the dialogue evolves                    
-                    value: { utterance: `Hope this information makes you more excited about reading this book! Enjoy your read!`}, //PS. If you want take some time to chat with me about books and help me collect dialogues between users and me, it would help a lot! What do you say?"`}, 
-                  });
-                },
-                //on : { SPEAK_COMPLETE: "yesOrNo" } 
-              },
-              // yesOrNo: {
-              //   entry: listen(),
-              //   on: {
-              //     RECOGNISED: [
-              //     {
-              //       target: "bye",
-              //       guard: ({ context, event }) => {
-              //         const sent = lower(event.value[0].utterance);
-              //         if (sent in grammar || null) {
-              //           if ( grammar[sent].entities.answer == "no") {
-              //             return true
-              //           }
-              //         }
-              //         return false
-              //       },
-              //      },
-              //      {
-              //       target: "chatWithGPT",
-              //       guard: ({context, event}) => {
-              //         const sent = lower(event.value[0].utterance);
-              //         if (sent in grammar) {
-              //           if ( grammar[sent].entities.answer == "yes") {
-              //             return true
-              //           }
-              //         }
-              //         return false
-              //       },
-              //      }],
-              //   },
-              // },
-              // chatWithGPT: {
-              //   invoke: {
-              //     src: fromPromise(async({input}) => {  
-              //       //inside the gpt function + I have already read that book + the ${context.bookName} if it's possible to use context
-              //       // there like this
-              //      const gptAnswer = await fetchFromChatGPT(`Let's discuss about ${input.lastResult[0].utterance} but keep it very concise please`, 150);
-              //      return gptAnswer; 
-              //     }),
-              //     //this doesn't really work because it keeps the utterance used in the very beginning of the state machine and I couldn't figure out a way to use the context.bookName or context.bookAuthor
-              //     input: ({context, event}) => ({
-              //       lastResult: context.lastResult,
-              //     }),
-              //     onDone: {
-              //       target: "speak",
-              //       actions: [
-              //         ({ context, event }) => console.log(event.output),
-              //         assign({
-              //           gptzAnswer: ({ event }) => event.output,
-              //         })
-              //       ]
-              //     },
-              //   },
-              // },
-              // speak: {
-              //   entry: ({context}) => {
-              //     context.spstRef.send({
-              //       type: "SPEAK",
-              //       value: { utterance: `${context.gptzAnswer}` },
-              //     });
-              //     actions: [
-              //       ({ context, event }) => console.log(event.output),
-              //       assign({
-              //         dialogues: ({ event }) => getDialogues(event.value[0].utterance, context.gptzAnswer),
-              //       })
-              //     ]
-              //   },
-              //   on: { SPEAK_COMPLETE: "chatWithGPT" }
-              // },
-              // bye: {
-              //   entry: ({ context }) => {
-              //     context.spstRef.send({
-              //       type: "SPEAK",
-              //       value: { utterance: "Ok! It was nice talking to you"},
-              //     });
-              //   },
-              // },
               IdleEnd: {},
             },
           },
@@ -570,7 +308,6 @@ const dmMachine = createMachine(
   },
   {
     // custom actions
-    //
     actions: {
       prepare: ({ context }) =>
         context.spstRef.send({
@@ -580,7 +317,7 @@ const dmMachine = createMachine(
       "speak.greeting": ({ context }) => {
         context.spstRef.send({
           type: "SPEAK",
-          value: { utterance: "Hello!" }, //I am here to help you find your next read! I can recommend you books based on your personal preferences." },
+          value: { utterance: "Γεια!" }, //I am here to help you find your next read! I can recommend you books based on your personal preferences." },
         });
       },
       "speak.how-can-I-help": ({ context }) =>
@@ -588,20 +325,20 @@ const dmMachine = createMachine(
           type: "SPEAK",
           value: { utterance: "How can I help you?" },
         }),
-      "gui.PageLoaded": ({}) => {
-        document.getElementById("button").innerText = "Click to start!";
+      "gui.PageLoaded": ({ }) => {
+        document.getElementById("button").innerText = "Ξεκίνα!";
       },
-      "gui.Inactive": ({}) => {
+      "gui.Inactive": ({ }) => {
         document.getElementById("button").innerText = "Inactive";
       },
-      "gui.Idle": ({}) => {
-        document.getElementById("button").innerText = "Idle";
+      "gui.Idle": ({ }) => {
+        document.getElementById("button").innerText = "Περιμένω";
       },
-      "gui.Speaking": ({}) => {
-        document.getElementById("button").innerText = "Speaking...";
+      "gui.Speaking": ({ }) => {
+        document.getElementById("button").innerText = "Μιλάω...";
       },
-      "gui.Listening": ({}) => {
-        document.getElementById("button").innerText = "Listening...";
+      "gui.Listening": ({ }) => {
+        document.getElementById("button").innerText = "Ακούω...";
       },
     },
   },
@@ -610,38 +347,19 @@ const dmMachine = createMachine(
 const actor = createActor(dmMachine).start();
 
 document.getElementById("button").onclick = () => actor.send({ type: "CLICK" });
-
+document.getElementById("πεταλούδα").onclick = () => actor.send({ type: "SELECTED", word: "πεταλούδα" });
+document.getElementById("κουνάβι").onclick = () => actor.send({ type: "SELECTED", word: "κουνάβι" });
+document.getElementById("μπανάνα").onclick = () => actor.send({ type: "SELECTED", word: "μπανάνα" });
+document.getElementById("βιβλίο").onclick = () => actor.send({ type: "SELECTED", word: "βιβλίο" });
+document.getElementById("λεωφορείο").onclick = () => actor.send({ type: "SELECTED", word: "λεωφορείο" });
+document.getElementById("βόμβα").onclick = () => actor.send({ type: "SELECTED", word: "βόμβα" });
+document.getElementById("σκουληκάκι").onclick = () => actor.send({ type: "SELECTED", word: "σκουληκάκι" });
+document.getElementById("φασόλια").onclick = () => actor.send({ type: "SELECTED", word: "φασόλια" });
+document.getElementById("νυχτερίδα").onclick = () => actor.send({ type: "SELECTED", word: "νυχτερίδα" });
 actor.subscribe((state) => {
   console.log(state.value);
 });
 
-async function fetchFromChatGPT(prompt: string, max_tokens: number) {
-  const myHeaders = new Headers();
-  myHeaders.append(
-    "Authorization",
-    "Bearer <>",
-  );
-  myHeaders.append("Content-Type", "application/json");
-  const raw = JSON.stringify({
-    model: "gpt-3.5-turbo",
-    messages: [
-            {
-              role: "user",
-              content: prompt,
-            },
-          ],
-    temperature: 0.5,
-    max_tokens: max_tokens,
-  });
-
-  const response = fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: myHeaders,
-    body: raw,
-    redirect: "follow",
-  })
-    .then((response) => response.json())
-    .then((response) => response.choices[0].message.content);
-
-  return response;
-}
+actor.subscribe((state) => {
+  console.log(state.value);
+});

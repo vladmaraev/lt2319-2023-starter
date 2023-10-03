@@ -1,14 +1,48 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>SpeechState DM sandbox</title>
-    <meta charset="UTF-8" />
-  </head>
 
-  <body>
-    <div id="app"><button id="button"></button></div>
-    <iframe data-xstate style="position: absolute; height: 100%; width: 100%; border: 2px"></iframe>
-    <script type="module" src="src/index.ts"></script>
-    
-  </body>
+<head>
+  <title>grid</title>
+  <meta charset="UTF-8" />
+  <style>
+    #container {
+      margin: 50px;
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-template-columns: repeat(auto, 100px);
+    }
+
+    #container.active>div:hover {
+      background-color: lightgoldenrodyellow;
+      cursor: cell;
+    }
+
+    #container>div {
+      line-height: 100px;
+      font-size: xxx-large;
+      border: 2px solid white;
+      background-color: whitesmoke;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <script type="module" src="src/index.ts"></script>
+  <div id="container" class="active">
+    <div id="κουνάβι">🦡</div>
+    <div id="μπανάνα">🍌</div>
+    <div id="βιβλίο">📖</div>
+    <div id="πεταλούδα">🦋</div>
+    <div id="λεωφορείο">🚌</div>
+    <div id="βόμβα">💣</div>
+    <div id="σκουληκάκι">🐛</div>
+    <div id="φασόλια">🫘</div>
+    <div id="νυχτερίδα">🦇</div>
+  </div>
+
+  <div id="app"><button id="button"></button></div>
+  <iframe data-xstate style="position: absolute; height: 100%; width: 100%; border: 2px"></iframe>
+</body>
+
 </html>
