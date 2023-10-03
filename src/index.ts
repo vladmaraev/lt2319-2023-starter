@@ -93,7 +93,7 @@ async function fetchFromChatGPT(prompt: string, max_tokens: number) {
 
   return response;
 }
-    
+
 // machine
 const dmMachine = createMachine(
   {
@@ -500,6 +500,8 @@ const dmMachine = createMachine(
 
 const actor = createActor(dmMachine).start();
 
+
+export default actor;
 document.getElementById("button").onclick = () => actor.send({ type: "CLICK" });
 
 actor.subscribe((state) => {

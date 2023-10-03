@@ -1,14 +1,64 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
-    <title>SpeechState DM sandbox</title>
+    <title>grid</title>
     <meta charset="UTF-8" />
-  </head>
+    <style>
+      .correct-click {
+    border-color: green !important;
+}
 
+  .incorrect-click {
+      border-color: red !important;
+  }
+      #container {
+        margin: 50px;
+        display: grid;
+        grid-template-columns: repeat(3, 100px);
+      }
+      #container.active > div:hover {
+        background-color: lightgoldenrodyellow;
+        cursor: cell;
+      }
+      #container > div {
+        line-height: 100px;
+        font-size: xxx-large;
+        border: 2px solid white;
+        background-color: whitesmoke;
+        text-align: center;
+      }
+    </style>
+  </head>
   <body>
+    <script type="module" src="src/index2.ts"></script>
+    <div id="container" class="active">
+      <div data-grid-item="1">🦡</div>
+      <div data-grid-item="2">🍌</div>
+      <div data-grid-item="3">📖</div>
+      <div data-grid-item="4">🦋</div>
+      <div data-grid-item="5">🚌</div>
+      <div data-grid-item="6">💣</div>
+      <div data-grid-item="7">🐛</div>
+      <div data-grid-item="8">🦬</div>
+      <div data-grid-item="9">🦇</div>
+    </div>
     <div id="app"><button id="button"></button></div>
     <iframe data-xstate style="position: absolute; height: 100%; width: 100%; border: 2px"></iframe>
-    <script type="module" src="src/index.ts"></script>
-    
+    <script type = "module">
+      import service from './src/index2.ts';
+      document.addEventListener('DOMContentLoaded', function() {
+        let gridItems = document.querySelectorAll('#container > div');
+        
+        gridItems.forEach(item => {
+          item.addEventListener('click', function() {
+            //alert('You clicked on grid item ' + this.dataset.gridItem);
+            service.send({
+                type: 'GRID_ITEM_CLICKED',
+                gridItem: this.dataset.gridItem
+            });
+          });
+        });
+      });
+    </script>
   </body>
 </html>
