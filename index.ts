@@ -36,10 +36,12 @@ const grammar = {
       "I want to hear Vienna Calling from Falco": {
         song: "Vienna Calling",
         singer: "Falco",
+        volume: "high",
       },
       "play Rock me Amadeus from Falco": {
         song: "Rock me Amadeus",
         singer: "Falco",
+        volume: "low",
       },
     }; 
 
@@ -95,7 +97,7 @@ const listen =
       const myHeaders = new Headers();
       myHeaders.append(
         "Authorization",
-        "Bearer  ",
+        "Bearer ",
       ),
       myHeaders.append("Content-Type", "application/json");
       const raw = JSON.stringify({
@@ -130,7 +132,11 @@ const listen =
     }, {});
 
 // machine
+// ... (previous code)
+
+// machine
 const dmMachine = createMachine(
+  
   {
     id: "root",
     type: "parallel",
@@ -139,7 +145,7 @@ const dmMachine = createMachine(
         initial: "Prepare",
         states: {
           Prepare: {
-            on: { ASRTTS_READY: "Ready" },
+            on: { ASRTTS_READY: "Start" },
             entry: [
               assign({
                 spstRef: ({ spawn }) => {
@@ -152,105 +158,114 @@ const dmMachine = createMachine(
               }),
             ],
           },
-        },
-      },
-      Ready: {
-        initial: "Greeting",
-        states: {
-          Greeting: {
-            entry: "speak.greeting",
-            on: { SPEAK_COMPLETE: "HowCanIHelp" },
-          },
-          HowCanIHelp: {
-            entry: say("You can say whatever you like."),
-            on: { SPEAK_COMPLETE: "Ask" },
-          },
-          Ask: {
-            entry: listen(),
-            on: {
-              RECOGNISED: {
-                target: "AskChatGPT",
-                actions: [
-                  assign({
-                    lastResult: ({ event }) => event.value,
-                  }),
-                ],
+          Start: {
+            initial: "Greeting",
+            states: {
+              Greeting: {
+                entry: "speak.greeting",
+                on: { SPEAK_COMPLETE: "music" },
               },
-            },
-          },
-          ChatGPTanswers:{
-            invoke: {
-              src: fromPromise(async({input}) => {
-                const data = await fetchFromChatGPT(
-                  input.lastResult[0].utterance,40,
-                  );
-                  return data;
-              }),
-              input:({context,event}) => ({
-                lastResult: context.lastResult,
-              }),
-              onDone: {
-                target: "SayBack",
-                actions: assign({SayBack:({ event}) => event.output }),
-                }
-              }
-          },
-          SayBack: {
-            entry: ({ context }) => {
-                context.spstRef.send({
+              music: {
+                entry: "speak.music",
+                on: { SPEAK_COMPLETE: "Ask" },
+              },
+              Ask: {
+                entry: "listen",
+                on: {
+                  RECOGNISED: {
+                    target: "AskChatGPT",
+                    actions: [
+                      assign({
+                        lastResult: ({ event }) => event.value,
+                      }),
+                    ],
+                  },
+                },
+              },
+              AskChatGPT: {
+                invoke: {
+                  src: fromPromise(async ({ input }) => {
+                    const data = await fetchFromChatGPT(
+                      input.lastResult[0].utterance,
+                      40
+                    );
+                    return data;
+                  }),
+                  input: ({ context, event }) => ({
+                    lastResult: context.lastResult,
+                  }),
+                  onDone: {
+                    target: "SayBack",
+                    actions: assign({ SayBack: ({ event }) => event.output }),
+                  },
+                },
+              },
+              SayBack: {
+                entry: ({ context }) => {
+                  context.spstRef.send({
                     type: "SPEAK",
                     value: { utterance: context.SayBack },
-                });
+                  });
+                },
+                on: { SPEAK_COMPLETE: "#root.DialogueManager.Start" }, 
+              },              
+              
             },
-            on: { SPEAK_COMPLETE: "..Ready" },
           },
         },
       },
-
-
-
-      GUI: {
-        initial: "PageLoaded",
-        states: {
-          PageLoaded: {
-            entry: "gui.PageLoaded",
-            on: { CLICK: { target: "Inactive", actions: "prepare" } },
-          },
-          Inactive: { entry: "gui.Inactive", on: { ASRTTS_READY: "Active" } },
-          Active: {
-            initial: "Idle",
+          GUI: {
+            initial: "PageLoaded",
             states: {
-              Idle: {
-                entry: "gui.Idle",
-                on: { TTS_STARTED: "Speaking", ASR_STARTED: "Listening" },
+            PageLoaded: {
+                entry: "gui.PageLoaded",
+                on: { CLICK: { target: "Inactive", actions: "prepare" } },
               },
-              Speaking: {
-                entry: "gui.Speaking",
-                on: { SPEAK_COMPLETE: "Idle" },
+              Inactive: { entry: "gui.Inactive", on: { ASRTTS_READY: "Active" } },
+              Active: {
+                initial: "Idle",
+                states: {
+                  Idle: {
+                    entry: "gui.Idle",
+                    on: { TTS_STARTED: "Speaking", ASR_STARTED: "Listening" },
+                  },
+                  Speaking: {
+                    entry: "gui.Speaking",
+                    on: { SPEAK_COMPLETE: "Idle" },
+                  },
+                  Listening: { entry: "gui.Listening", on: { RECOGNISED: "Idle" } },
+                },
               },
-              Listening: { entry: "gui.Listening", on: { RECOGNISED: "Idle" } },
             },
+          },
         },
       },
-    },
-    }, 
-    {
+
+              
+
+
+
+
+
+
+  {
     actions: {
       prepare: ({ context }) =>
         context.spstRef.send({
           type: "PREPARE",
         }),
-      // saveLastResult:
       "speak.greeting": ({ context }) => {
         context.spstRef.send({
           type: "SPEAK",
-          value: { utterance: "Hello world!" },
+          value: { utterance: "Hello! Welcome to Bruno, your music operator." },
         });
       },
-      "speak.how-can-I-help": ({ context }) =>
+      "speak.music": ({ context }) =>
         context.spstRef.send({
           type: "SPEAK",
-          value: { utterance: "How can I help you?" },
+          value: {
+            utterance: "Now you can say the song and the singer you would like to listen to.",
+          },
         }),
       "gui.PageLoaded": ({}) => {
         document.getElementById("button")!.innerText = "Click to start!";
@@ -270,13 +285,14 @@ const dmMachine = createMachine(
       navigateFeedback: ({ context }) => {
         context.spstRef.send({
           type: "SPEAK",
-          value: { utterance: `Alright, the volume is turned on ${context.volume}, the song is named ${context.song} and it is performed by ${context.singer}.` },
+          value: {
+            utterance: ` ${context.volume} ${context.song} ${context.singer}`,
+          },
         });
       },
     },
-    },
-      },      
-
+  }
+);
 
 const actor = createActor(dmMachine).start();
 
