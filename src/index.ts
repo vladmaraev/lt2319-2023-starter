@@ -4,7 +4,7 @@ import { speechstate, Settings, Hypothesis } from "speechstate";
 const azureCredentials = {
   endpoint:
     "https://northeurope.api.cognitive.microsoft.com/sts/v1.0/issuetoken",
-  key: "eedf2f3616c748c99f0d3266a102a6ba",
+  key: "",
 };
 
 const settings: Settings = {
@@ -43,16 +43,17 @@ interface Grammar {
         };
       };
     }
-
     const grammar = {
       entities: {
-          origin: "stockholm",
-          destination: "helsinki",
-          day: "wednesday",
-            },
-          };
+        origin: ["stockholm", "tokyo", "oslo", "berlin", "warsaw","rome", "sydney","seoul","barcelona","prague","copenhagen"].map(origin => origin.toLowerCase()), 
+        destination: ["helsinki", "paris", "cairo","berlin", "tallinn", "riga", "vilnius", "london", "chicago", "beijing","brisbane","perth","adelaide", "washington","osaka","melbourne"].map(destination => destination.toLowerCase()), 
+        day: ["monday","tuesday","wednesday", "thursday", "friday", "saturday", "sunday"].map(day => day.toLowerCase()), 
+      },
+    };
     
-    const ToLowerCase = (word: string, sentence: string) => {
+    
+    
+    const ToLowerCase = (word: any, sentence: string) => {
       console.log(word, sentence.toLowerCase().replace(/\.$/g, "").split(/\s+/))
     if (sentence.toLowerCase().replace(/\.$/g, "").split(/\s+/).includes(word)) {
       return true}
@@ -64,7 +65,7 @@ interface Grammar {
 // machine
 const dmMachine = createMachine(
   {
-    /** @xstate-layout N4IgpgJg5mDOIC5QCcD2qAuA6AIgSwEMAbVKAVzAFkCA7AmZLABWTAAcDWBiAQQGUASgBUhfAPoCAojxwBNANoAGALqJQbVLDwY8qGmpAAPRACYAbAGYzWAOwAWAKyKzimxYsBOByYA0IAJ6IdmYOWBZONi4eAIzRDh72AL6JfmiYuIQk5FS09GCMfBic2CyoALZsGFx8TNIA0mIAwgDylEwAMpJCkkqqSCAaWjp6BsYIJjYOoTZxFgAcXrF2dnN+gQjRJh4WWIpb9h6WDmYmc8mp6Nj4xKQU1HQMWIXFWDywANZcUi0A4gByAEk+JIcL0DINtLp9P0xhZohYbFhvPNgh4TPELHYLGtENFXIpdiFFNE7HibOj5ucQGkrplbjkHvknkVkNg3p9vs1-kCQfJon11JpISMYYg4QikSYUWY0RisTiNhM5rs5jYYns1fFtlSaRkbtl7nkCiy2R8vpJfoDgaCTAKBkLhtDQLD4YjkXNUejtvKArjojKkZjMXj4V4zilqZc9Vk7rlHs9Wa8zZzudb5BY7RDHaMxa7JdLZd7sb6NvNrGZSXZNY4THZnDqo81kHgoHgaGJnhgwFgAThOlwAGIA9rtMTNAQAn4Av5g-pZqE5jYuLAeObE1Xebx11cKmyKZUnTbhfekxR2EwN9JNlttjtFLtYa+t9sJqo1epNVodLo9FTgh0LqKCArASapSh4ywhFi567vuWCHlKTgeni56XtgT63p23bsualo8qCf5zgBIrOqYJLRFgWyYssdZzBYijhAqcxxJRHirniJinE4cJoY+zbPneBAPjhKZWry-L-kMgGkQgczePBijOGxyJqiECpmHuhIOHEJwJLRZi8RhL73thHxiAOqDIGIQgABZgGIOAEP41S1DwDQtG0nTdLOgpSSRRi4hYnFYMxa7UZYJxyep2whSc9FmKqcIVoZ-GYSZSbvGI0S4VyYkEZmxFOgFS4QfB5juF4JjRGx+7qZpzjacc+z6bxOBwDodCOoJD69v2Q4jg5kh8EI048CNzQzoRvnCkVYz+gSq7rpM6K1ooO4ltECxIquEwTDY5K1q17VtkJULdd2bWwB1p16IJrIuR+Hnft5U32n5s2IFMdhYFWCIOKqpIJbECqbR421zLt+0HXYR1XSdXVYRlOWpryr3zv5YxotYpwmM48yKWe7gg9puznptmwQZtwSw9dCPpSJFq5fhfIFe9i5VfEWDwt4Lh7hWjElls2ORHR3grWq9YRrql202diPsuZlnWXZDlOQ9bmfp5P4+W9M2LhTYNwlVcyqgklhniD9ghZ47ibTKEGKRYNPw3L9NmdlonM2jhX6xpFGbGe2xyVqEzExRZ7GxTpIegZUtRo5-jnT2faSIOw6jjgPAKN7bNAfNK5rpty1bmtqwlis31yfu1UInE3iSxc6QJ0nzevur7lfl5v6s3rQGOGD0Rql4jiYpqNgKhXIVITXMxTLjseN1cTlJwzeFpjnvcyXRC0m16GJxGqE9mOHDhWAlY+HAvkbpD8ACqALMHk7SoAQECQFwjTtACjR1Dr6MfQgeioQqpeEOBXM8dgFSLV2JEBwkQVhElXLxO+D8eAAGMdAADduwAggEQMAXARDiGGjwYQqMe7ZiAnCZUUoQwaUUNpTYIM6KImWJtTwHg9hBQSsg++rwMF4GwT2PBBD+ACA7EIUh3R8qSU3sVahlE4TEnoYw3wG1yTKhNsxCCjg5hxSdnHG+fD0FYO7HwNgYACDvDbFAdumtnrd1kZQmSCjaHKL3Koy2ckkRmASpwoK2kvAGMXlgFB-DTFYHaHgK6YAaA2ORnlP+PsqHLltv6KYGk6yWEgRtDSiJiRBWWCbEkMRwwhLCQCOgAjsG8EEEQiQ0g5BJNzjJU4YNVyXyavECGkwQZwm+vMTc8JzAOGSBGGgqA37wH6DSJx0lioAFpQ4liWd9Am6yNmKRsK1OkBo4z5DmRjUw55K5bHmocJS0QFThDWUsLU1UFgmx2fqWMjJGAsHYJwMAhyAG1nJCFM5UQXAyiueXUkSIlgLB0gicIV9pa7NeUaZkxQfnsxWGDCGMQgWXKgZzeEwQ9gMMOBDOF8cEUMiRa+ZgaAKgYFRUBCkiJMXnOBTEEG5gB6cKrDYE2Z4I7PJjBS+MJoMr0taYcHYvMIKz3MBo9lAZqpnn2ryusqFDG0heUKpkVKBy3wGjwP4fAADqkgBBivkViCiVUeUnI1AlEGZ5yyYimPtZYaI4gCvpIaYVLwjLmthJayig8PSrQmPajaSpSb-QmKDf0F51XRi9fs40LwZYu38v-RcQYrXBttWGsu6xYgBjsO65i9gHC6LKdfDVgrvXapFQnf1YpA3WpDXWfNfS9HbW2LjMN9g1opRvMZIS3yiItOKrWBU0bJT7F8XA1cxxB0CURr1SQTaEDklggPKqnEMlUxCEutKI6+JDrunSsdciXTWFVL43xa1TibHsOpD0thtGnzXL4zipKrypWHcJD466EoHg9AkWIjDeklgSt9Hl1V33OBOBMQ9f7TKZQslZWy9lG0XuccVWIVhWL9wSDyhhaj1j0N2FKPYUwvAJXREhle7t12zFAniY+SxtgylI4gcjewtgbng41ejiMBxkCIEQMQPAaCwAAO75DHL+86TG9EEmjuSWUFZnB1QJFwvGUGZjhGdp1V2I712TsgzsJwBN0lVmPpiQzN1kPJ06OuzdG1OG7FXPRfFHDZ72bpsetNRnbqvnXVYZU7hnBYgYnEeExZC0hFsPEPYYZVRuBhgmwLDmGPvBcycMIvj3AVomGTceuTpj-SCaeGYsRoh+eM-+1DSsMOq3WNNHDc1YgmFfRuUkAcK1h12FZ9EDFzwzG2Rl46QXHMK2iExiIlElVQTorXUFhaSbrM2NxUbg86vBfSiJsTEmpOyaspl-zXYlP4ZiKcUWXLaobXW0NrbMbxshNbiZUzOT1gwohSSKFxwYWjIy8vFdKcXNceAt448Ho1TzACelt7IP0rvZRdh+ZYwtjAIrF+uNg9SSlfWMEcOYH1ncW2EDxHid5YAbR0chAvj8nklPpsXGp9LBH2J3EUnDFpWtSR8eg74nJMybkyji7tOAFsWsMRisPbJhuAh0T3YJOCZk6rLwgEpnVuIAWF10+kFSTxHiJEDXj8YDP1fpAcHUC1y7GotsTwvNDoJrCSYwRo62vo+4x4YmEMPPDxNlYGISQXfGOqTgkRTHB4gw0mDcCNV-rwh26H1B4engWKsTY9dPMuaIXsJiSwtdLY8q5szkthx-rfuwK7tPUSYlxJoFAbP5hc-hHz8EdwMwY8Bi1E4GsHNkop57FU0x67VTsvcxWpLFUgokjGYkIAA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QCcD2qAuA6AIgSwEMAbVKAVzAFkCA7AmZLABWTAAcDWBiAQQGUASgBUhfAPoCAojxwBNANoAGALqJQbVLDwY8qGmpAAPRACYArADZFWMwBYA7IrOKrATjMBGAMwAaEAE9EWwsPLAcLS1dFAA4TOI87AF9EvzRMXEIScipaejBGPgxObBZUAFs2DC4+JmkAaTEAYQB5SiYAGUkhSSVVJBANLR09A2MEEwt7eywIixNXCZjorxN7P0CEDxNo6y9LEy9FLy9XWxNk1PRsfGJSCmo6BixC4qweWABrLikWgHEAOQAknxJDhegZBtpdPp+mNDrZolgPO49iFlmcLBZ1ogPC4vFhXPYImZXFZDi4zBcQGlrpk7jlHvlnkVkNh3l8fs0AcDQfIPH11JooSNYYh4YjkWZUR50RMsQEcRMzAT5hZonYFjsPLYqTSMrdsg88gUWWzPt9JH8gSCwSYBQMhcMYaA4YoEUiUZYZV4MfKNh4PFYwqrorZnBTzLqrvqsvdck8Xqy3ubOdybfIvPbIU7RmK3RLPWifXLsZsvPZQmdSdELAjbO4o+lmsg8FA8DQxC8MGAsICcJ0uAAxQHtdpiZoCQG-QH-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 */
     id: "root",
     type: "parallel",
     states: {
@@ -98,61 +99,112 @@ const dmMachine = createMachine(
                   RECOGNISED: [
                     {
                       target: "FULL_ANSWER",
-                      guard: ({ event }) => ToLowerCase(grammar.entities.origin, event.value[0].utterance) && ToLowerCase(grammar.entities.destination, event.value[0].utterance) && ToLowerCase(grammar.entities.day, event.value[0].utterance),
+                      guard: ({ event, context }) => {
+                        const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                        return grammar.entities.origin.some(origin =>
+                          ToLowerCase(origin, lowercasedUserInput)) && grammar.entities.destination.some(destination =>
+                            ToLowerCase(destination, lowercasedUserInput)) && grammar.entities.day.some(day =>
+                              ToLowerCase(day, lowercasedUserInput))
+                      },
                       actions: assign({ 
-                        Origin: ({ event }) => (grammar.entities.origin),
-                        Destination: ({ event }) => (grammar.entities.destination),
-                        Day: ({ event }) => (grammar.entities.day),
+                        Origin: ({ context, event }) => {
+                          const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                          const matchingOrigin = grammar.entities.origin.find(origin =>
+                            ToLowerCase(origin, lowercasedUserInput)
+                          );
+                          return matchingOrigin || null;
+                        },
+                        Destination: ({ context, event }) => {
+                          const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                          const matchingDestination = grammar.entities.destination.find(destination =>
+                            ToLowerCase(destination, lowercasedUserInput)
+                          );
+                          return matchingDestination || null;
+                        },
+                        Day: ({ context, event }) => {
+                          const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                          const matchingDay = grammar.entities.day.find(day =>
+                            ToLowerCase(day, lowercasedUserInput)
+                          );
+                          return matchingDay || null;
+                        },
                       }),
                     },
                     {
                       target: "Origin",
-                      guard: ({ event }) => !ToLowerCase(grammar.entities.origin, event.value[0].utterance),
+                      guard: ({ event, context }) => {
+                        const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                        return grammar.entities.destination.some(destination =>
+                          ToLowerCase(destination, lowercasedUserInput)
+                        ) && !context.Origin;
+                      },
                       actions: assign({
-                        Destination: ({ event }) => {
-                          if (ToLowerCase(grammar.entities.destination, event.value[0].utterance)) {
-                            return grammar.entities.destination
-                          }
+                        Destination: ({ context, event }) => {
+                          const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                          const matchingDestination = grammar.entities.destination.find(destination =>
+                            ToLowerCase(destination, lowercasedUserInput)
+                          );
+                          return matchingDestination || null;
                         },
-                        Day: ({ event }) => {
-                          if (ToLowerCase(grammar.entities.day, event.value[0].utterance)) {
-                            return grammar.entities.day
-                          }
+                        Day: ({ context, event }) => {
+                          const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                          const matchingDay = grammar.entities.destination.find(day =>
+                            ToLowerCase(day, lowercasedUserInput)
+                          );
+                          return matchingDay || null;
                         },
                       }),
-                    },
+                    },  //done
                     {
                       target: "Destination",
-                      guard: ({ event }) =>!ToLowerCase(grammar.entities.destination, event.value[0].utterance),
+                      guard: ({ event,context }) => {
+                        const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                        return grammar.entities.origin.some(origin => 
+                          ToLowerCase(origin, lowercasedUserInput)
+                        ) && !context.Destination;
+                      },
                       actions: assign({
                         Origin: ({ event}) => {
-                          if (ToLowerCase(grammar.entities.origin, event.value[0].utterance)) {
-                            return grammar.entities.origin
-                          }
+                          const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                          const matchingOrigin = grammar.entities.origin.find(origin =>
+                            ToLowerCase(origin, lowercasedUserInput) 
+                          );
+                          return matchingOrigin || null;
                         },
-                        Day: ({ event }) => {
-                          if (ToLowerCase(grammar.entities.day, event.value[0].utterance)) {
-                            return grammar.entities.day
-                          }
+                        Day: ({ event}) => {
+                          const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                          const matchingDay = grammar.entities.day.find(day =>
+                            ToLowerCase(day, lowercasedUserInput) 
+                          );
+                          return matchingDay || null;
                         },
                       }),
-                    },
+                    }, // done
                     {
                       target: "Day",
-                      guard: ({ event}) => !ToLowerCase(grammar.entities.day, event.value[0].utterance),
+                      guard: ({ event, context}) => {
+                        const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                        return grammar.entities.origin.some(origin => 
+                          ToLowerCase(origin, lowercasedUserInput)) && grammar.entities.destination.some(destination =>
+                            ToLowerCase(destination, lowercasedUserInput)) && !context.Day;
+                      },
                       actions: assign({
-                        Origin: ({ event}) => {
-                          if (ToLowerCase(grammar.entities.origin, event.value[0].utterance)) {
-                            return grammar.entities.origin
-                          }
+                        Origin: ({ context, event }) => {
+                          const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                          const matchingOrigin = grammar.entities.origin.find(origin =>
+                            ToLowerCase(origin, lowercasedUserInput)
+                          );
+                          return matchingOrigin || null;
                         },
-                        Destination: ({ event }) => {
-                          if (ToLowerCase(grammar.entities.destination, event.value[0].utterance)) {
-                            return grammar.entities.destination
-                          }
+                        Destination: ({ context, event }) => {
+                          const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                          const matchingDestination = grammar.entities.destination.find(destination =>
+                            ToLowerCase(destination, lowercasedUserInput)
+                          );
+                          return matchingDestination || null;
                         },
                       }),
-                    },
+                    }, //done
                   ],
                 },
               },
@@ -184,34 +236,58 @@ const dmMachine = createMachine(
               });
             },
             on: { SPEAK_COMPLETE: "Ask"},
-          },
+          }, //done
           Ask: {
             entry: listen(),
             on: {
               RECOGNISED: [
                 {
                   target: "#root.DialogueManager.Start.FULL_ANSWER",
-                  guard: ({ event, context }) => ToLowerCase(grammar.entities.origin, event.value[0].utterance) && !!context.Destination && ToLowerCase(grammar.entities.day, event.value[0].utterance),
+                  guard: ({ event, context }) => {
+                    const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                    return grammar.entities.origin.some(origin => 
+                      ToLowerCase(origin, lowercasedUserInput)) && grammar.entities.day.some(day=>
+                        ToLowerCase(day, lowercasedUserInput))
+                  },
                   actions: assign({
-                    Day: ({ event}) => {
-                      if (ToLowerCase(grammar.entities.day, event.value[0].utterance)) {
-                        return grammar.entities.day
-                      }
+                    Day: ({ context, event }) => {
+                      const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                      const matchingDay = grammar.entities.day.find(day =>
+                        ToLowerCase(day, lowercasedUserInput)
+                      );
+                      return matchingDay || null;
                     },
-                    Origin: ({ context }) => (grammar.entities.origin),
+                    Origin: ({ context, event }) => {
+                      const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                      const matchingOrigin = grammar.entities.origin.find(origin =>
+                        ToLowerCase(origin, lowercasedUserInput)
+                      );
+                      return matchingOrigin || null;
+                    },
                   }),
-                },
+                }, // done
                 {
                   target: "Ask_For_The_Day",
-                  guard: ({ event, context}) => ToLowerCase(grammar.entities.origin, event.value[0].utterance) && !context.Day,
+                  guard: ({ event, context }) => {
+                    const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                    return grammar.entities.origin.some(origin =>
+                      ToLowerCase(origin, lowercasedUserInput)
+                    )
+                  },
                   actions: assign({
-                    Origin: ({ context }) => 
-                    (grammar.entities.origin),
+                    Origin: ({ context, event }) => {
+                      const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                      const matchingOrigin = grammar.entities.origin.find(origin =>
+                        ToLowerCase(origin, lowercasedUserInput)
+                      );
+                      return matchingOrigin || null;
+                    },
                   }),
-                },
+                }, // done
+                
               ],
             },
-          },
+          }, // done
           Ask_For_The_Day: {
             entry: ({ context}) => {
               context.spstRef.send({
@@ -220,32 +296,43 @@ const dmMachine = createMachine(
               });
             },
             on: { SPEAK_COMPLETE: "Ask_1"},
-          },
+          }, // done
           Ask_1: {
             entry: listen(),
             on: {
               RECOGNISED: [
                 {
-                  target: "Full_Answer_Origin_State",
-                  guard: ({ event, context}) => ToLowerCase(grammar.entities.day, event.value[0].utterance) && !!context.Destination,
+                  target: "#Full_Answer_Origin_State",
+                  guard: ({ event, context }) => {
+                    const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                    return grammar.entities.day.some(day =>
+                      ToLowerCase(day, lowercasedUserInput)
+                    )
+                  },
                   actions: assign({
-                    Day: ({ context }) => 
-                    (grammar.entities.day),
+                    Day: ({ context, event }) => {
+                      const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                      const matchingDay = grammar.entities.day.find(day =>
+                        ToLowerCase(day, lowercasedUserInput)
+                      );
+                      return matchingDay || null;
+                    },
                   }),
                 },
               ],
             },
-          },
+          }, //done
           Full_Answer_Origin_State: {
+            id: "Full_Answer_Origin_State",
             entry: ({ context }) => {
               context.spstRef.send({
                 type: "SPEAK",
                 value: {utterance: `Okay, I will book the tickets from  ${context.Origin} to ${context.Destination} on the upcoming ${context.Day}.`},
               });
             },
-          },
+          }, // done
         },
-      },
+      }, // done
       Destination_State: {
         initial: "IDLE",
         states: {
@@ -258,34 +345,58 @@ const dmMachine = createMachine(
               });
             },
             on: { SPEAK_COMPLETE: "Ask"},
-          },
+          }, //done
           Ask: {
             entry: listen(),
             on: {
               RECOGNISED: [
                 {
                   target: "Ask_For_The_Day",
-                  guard: ({ event, context}) => ToLowerCase(grammar.entities.destination, event.value[0].utterance) && !ToLowerCase(grammar.entities.day, event.value[0].utterance),
-                  actions: assign({
-                    Destination: ({ context }) => 
-                    grammar.entities.destination,
+                  guard: ({ event, context}) => {
+                    const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                    return grammar.entities.destination.some(destination =>
+                      ToLowerCase(destination, lowercasedUserInput)
+                    ) && !context.Day;
+                  },
+                  actions:
+                  assign({
+                    Destination: ({ context, event }) => {
+                      const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                      const matchingDestination = grammar.entities.destination.find(destination =>
+                        ToLowerCase(destination, lowercasedUserInput)
+                      );
+                      return matchingDestination || null;
+                    },
                   }),
                 },
                 {
                   target: "#root.DialogueManager.Start.FULL_ANSWER",
-                  guard: ({ event, context}) => ToLowerCase(grammar.entities.destination, event.value[0].utterance) && !!context.Destination && ToLowerCase(grammar.entities.day, event.value[0].utterance),
+                  guard: ({ event, context}) => {
+                    const lowercaseUserInput = event.value[0].utterance.ToLowerCase();
+                    return grammar.entities.destination.some(destination =>
+                      ToLowerCase(destination, lowercaseUserInput)) && grammar.entities.day.some(day =>
+                        ToLowerCase(day, lowercaseUserInput)) 
+                  },
                   actions: assign({
-                    Destination: ({ context}) => (grammar.entities.destination),
-                    Day: ({ event}) => {
-                      if (ToLowerCase(grammar.entities.day, event.value[0].utterance)) {
-                        return grammar.entities.day
-                      }
+                    Destination: ({ context, event}) => {
+                      const lowercaseUserInput = event.value[0].utterance.ToLowerCase();
+                      const matchingDestination = grammar.entities.destination.find(destination =>
+                        ToLowerCase(destination, lowercaseUserInput)
+                      );
+                      return matchingDestination || null;
+                    },
+                    Day: ({ context, event }) => {
+                      const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                      const matchingDay = grammar.entities.day.find(day =>
+                        ToLowerCase(day, lowercasedUserInput)
+                      );
+                      return matchingDay || null;
                     },
                   }),
                 },
               ],
             },
-          },
+          }, //done
           Ask_For_The_Day: {
             entry: ({ context}) => {
               context.spstRef.send({
@@ -294,32 +405,43 @@ const dmMachine = createMachine(
               });
             },
             on: { SPEAK_COMPLETE: "Ask_1"},
-          },
+          }, //done
           Ask_1: {
             entry: listen(),
             on: {
               RECOGNISED: [
                 {
                   target: "Full_Answer_Destination_State",
-                  guard: ({ event, context}) => ToLowerCase(grammar.entities.day, event.value[0].utterance) && !!context.Destination,
+                  guard: ({ event, context}) => {
+                    const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                    return grammar.entities.day.some(day =>
+                      ToLowerCase(day, lowercasedUserInput)
+                    ) 
+                  },
                   actions: assign({
-                    Day: ({ context }) => 
-                      grammar.entities.day,
+
+                    Day: ({ context, event }) => {
+                      const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                      const matchingDay = grammar.entities.day.find(day =>
+                        ToLowerCase(day, lowercasedUserInput)
+                      );
+                      return matchingDay || null;
+                    },
                   }),
                 },
               ],
             },
-          },
+          }, //done
           Full_Answer_Destination_State: {
             entry: ({ context }) => {
               context.spstRef.send({
                 type: "SPEAK",
-                value: {utterance: `Okay, I will book the tickets from  ${context.Origin}  to ${context.Destination} on the upcoming ${context.Day}.`},
+                value: {utterance: `Okay, I will book the tickets from  ${context.Origin}  to ${context.Destination} for the upcoming ${context.Day}.`},
               });
             },
-          },
+          }, //done
         },
-      },
+      }, //done
       Day_State: {
         initial: "IDLE",
         states: {
@@ -332,30 +454,41 @@ const dmMachine = createMachine(
               });
             },
             on: { SPEAK_COMPLETE: "Ask"},
-          },
+          }, // done
           Ask: {
             entry: listen(),
             on: {
               RECOGNISED: 
                 {
                   target: "Full_Answer_Day_State",
-                  guard: ({ event, context }) => ToLowerCase(grammar.entities.day, event.value[0].utterance) && !!context.Destination && !!context.Origin,
+                  guard: ({ event, context }) => {
+                    const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                    return grammar.entities.day.some(day =>
+                      ToLowerCase(day, lowercasedUserInput)
+                    ) 
+                  },
                   actions: assign({
-                    Day: ({ context }) => (grammar.entities.day),
+                    Day: ({ context, event }) => {
+                      const lowercasedUserInput = event.value[0].utterance.toLowerCase();
+                      const matchingDay = grammar.entities.day.find(day =>
+                        ToLowerCase(day, lowercasedUserInput)
+                      );
+                      return matchingDay || null;
+                    },
                   }),
                 },  
             },
-          },
+          }, // done
           Full_Answer_Day_State: {
             entry: ({ context }) => {
               context.spstRef.send({
                 type: "SPEAK",
-                value: {utterance: `Okay, I will book the tickets from ${context.Origin} to ${context.Destination} on the upcoming ${context.Day}.`},
+                value: {utterance: `Okay, I will book the tickets from ${context.Origin} to ${context.Destination} for the upcoming ${context.Day}.`},
               });
             },
-          },
+          }, // done 
         },
-      },
+      }, // done
 
       GUI: {
         initial: "PageLoaded",
@@ -402,7 +535,7 @@ const dmMachine = createMachine(
       "speak.prompt": ({ context }) => {
         context.spstRef.send({
           type: "SPEAK",
-          value: { utterance: "Hi! What would you like to do?" },
+          value: { utterance: "Hi! I'm a virtual plane ticket booking assistant. If you wish me to book a trip for you then just provide me with the departure city, desired destination, and on which day you would like to fly! " },
         });
       },
       "gui.PageLoaded": ({}) => {
