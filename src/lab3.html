@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/xstate@4/dist/xstate.js"></script>
+    <title>Learning Languages</title>
+    <style>
+        .image-container {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+        }
+
+        div {
+          line-height: 100px;
+          font-size: xxx-large;
+          border: 2px solid white;
+          background-color: whitesmoke;
+          text-align: center;
+        }
+
+      .image-container:hover {
+        border: 5px solid rgb(228, 228, 148); 
+        cursor: wait;
+      }
+        
+        @keyframes shake {
+          10%, 90% {
+            transform: translate3d(-1px, 0, 0);
+          }
+  
+          20%, 80% {
+              transform: translate3d(2px, 0, 0);
+          }
+
+          30%, 50%, 70% {
+              transform: translate3d(-4px, 0, 0);
+          }
+
+          40%, 60% {
+              transform: translate3d(4px, 0, 0);
+          }
+          }
+
+      .shake-effect {
+          animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+          transform: translate3d(0, 0, 0);
+      }
+
+
+    </style>
+</head>
+<body>
+  <div style="text-align:center;">
+    <h1 id="word"></h1> <!-- word will be shown here -->
+
+    <!-- image-container for loop-->
+    <div class="image-container" data-option-index="0" onclick="checkAnswer(this)">
+        <span class="option"></span>
+    </div>
+    <div class="image-container" data-option-index="1" onclick="checkAnswer(this)">
+        <span class="option"></span>
+    </div>
+    <div class="image-container" data-option-index="2" onclick="checkAnswer(this)">
+        <span class="option"></span>
+    </div>
+    <div class="image-container" data-option-index="3" onclick="checkAnswer(this)">
+        <span class="option"></span>
+    </div>
+</div>
+<audio id="correctSound" src="correct.mp3"></audio>
+<audio id="wrongSound" src="wrong.mp3"></audio>
+
+    <script>
+      
+const { Machine, interpret } = XState;
+const pointAndHoldMachine = Machine({ //State machine defined using XState to handle the "point and hold" behavior.
+    id: 'pointAndHold',
+    initial: 'idle',
+    states: {
+        idle: {
+            on: {
+                MOUSE_ENTER: 'holding'
+            }
+        },
+        holding: {
+            after: {
+                1000: 'confirmed'
+            },
+            on: {
+                MOUSE_LEAVE: 'idle'
+            }
+        },
+        confirmed: {
+            on: {
+                RESET: 'idle'  // reset to idle state from confirmed state
+            }
+        }
+    }
+});
+const containers = document.querySelectorAll('.image-container'); // Grab all image container elements
+
+containers.forEach(container => {
+    let cursorTimeout; 
+    const service = interpret(pointAndHoldMachine)
+        .onTransition(state => { //// Update the container's data-canSelect attribute based on the state of the state machine.
+            if (state.value === 'confirmed') {
+                container.dataset.canSelect = 'true';
+            } else if (state.value === 'idle') { 
+                container.dataset.canSelect = 'false'; // 确保在idle状态时重置canSelect属性
+            }
+        })
+        .start();
+
+    container.addEventListener('mouseenter', event => { // Send MOUSE_ENTER event to the state machine when the mouse enters the container.
+        service.send('MOUSE_ENTER');
+        cursorTimeout = setTimeout(() => {
+            container.style.cursor = 'auto'; // After 1 second, cursor changes to default style.
+        }, 1000);
+    });
+
+    container.addEventListener('mouseleave', event => {
+        service.send('MOUSE_LEAVE');
+        clearTimeout(cursorTimeout); // Clear the timer to ensure cursor styling is correct.
+        container.style.cursor = 'wait';
+    });
+    container.service = service;  // Associate the state machine service with the container.
+});
+
+
+      let questionIndex = 0; // index For current question
+      const questions = [
+    {
+        word: "蛋糕 dàngāo",
+        options: ["📱", "🚪", "🪑", "🍰"],
+        answer: "🍰"
+    },
+    {
+        word: "树 shù",
+        options: ["🌲", "🦋", "🚗", "🦇"],
+        answer: "🌲"
+    },
+    {
+        word: "蝙蝠 biānfú",
+        options: ["🚗", "🦇", "📚", "🦜"],
+        answer: "🦇"
+    },
+    {
+        word: "彩虹 cǎihóng",
+        options: ["🦡", "🌈", "🍋", "💃🏻"],
+        answer: "🌈"
+    },
+    // ... more...
+];
+
+
+
+function loadQuestion() {
+    if(questionIndex >= questions.length) {
+        alert("All questions completed! Well done!💪🏻");
+        return;
+    }
+    const currentQuestion = questions[questionIndex];
+    document.getElementById('word').textContent = currentQuestion.word;
+
+    containers.forEach((container, index) => { //Iterate over each container, resetting their state and displayed content
+        container.service.send('RESET');
+        container.style.backgroundColor = 'whitesmoke';
+        const emojiSpan = container.querySelector('.option');
+        emojiSpan.textContent = currentQuestion.options[index];
+        container.setAttribute('data-word', currentQuestion.options[index]);
+    });
+}
+
+
+
+//Check if the user's answer is correct and provide feedback.
+function checkAnswer(container) {
+    const selectedEmoji = container.querySelector('.option').textContent;
+    if (container.dataset.canSelect !== 'true') return;
+
+
+    if(selectedEmoji === questions[questionIndex].answer) {
+        container.style.backgroundColor = 'rgb(150, 228, 150)'; // if correct, bgc becomes green
+        document.getElementById('correctSound').play(); //and correct sound effect
+
+        setTimeout(() => {
+            containers.forEach(con => {
+                con.service.send('RESET');
+            });
+          questionIndex++; // move to next question
+            loadQuestion();  // load new question
+        }, 2000); // load new question in 2s, let users see feedback 
+    } else {
+        container.style.backgroundColor = 'rgb(232, 145, 145)'; // if wrong, bgc becomes red
+        document.getElementById('wrongSound').play(); // and wrong sound effect
+        document.body.classList.add('shake-effect');  // and shake effect 
+        setTimeout(() => {
+            document.body.classList.remove('shake-effect');
+            containers.forEach(con => {
+                con.service.send('RESET');
+            });
+        }, 820); 
+    }
+}
+
+
+window.onload = loadQuestion;  // start the first question
+
+
+    </script>
+</body>
+</html>
