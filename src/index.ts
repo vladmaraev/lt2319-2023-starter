@@ -56,7 +56,7 @@ const listen =
 //  return wordsInSent.includes(targetWord);
 //};
 
-//const grammar2 = {
+//const grammar = {
 //    entities: {
 //      movie: "titanic",
 //      date: "friday",
