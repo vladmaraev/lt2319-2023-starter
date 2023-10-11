@@ -1,4 +1,4 @@
-import { createMachine, createActor, assign } from "xstate";
+import { createMachine, createActor, assign, fromPromise } from "xstate";
 import { speechstate, Settings, Hypothesis } from "speechstate";
 
 const azureCredentials = {
@@ -12,7 +12,7 @@ async function fetchFromChatGPT(prompt: string, max_tokens: number) {
   const myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
-    "Bearer <your_key_goes_here>",
+    "Bearer <>",
   );
   myHeaders.append("Content-Type", "application/json");
   const raw = JSON.stringify({
@@ -38,6 +38,11 @@ async function fetchFromChatGPT(prompt: string, max_tokens: number) {
 
   return response;
 }
+
+
+const data = fetchFromChatGPT("I would like to learn more about oxigen", 200);
+console.log(data)
+
 
 const settings: Settings = {
   azureCredentials: azureCredentials,
