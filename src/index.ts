@@ -52,7 +52,7 @@ async function fetchFromChatGPT(prompt: string, max_tokens: number) {
   const myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
-    "Bearer <key goes here>",
+    "Bearer <>",
   );
   myHeaders.append("Content-Type", "application/json");
   const raw = JSON.stringify({
@@ -193,18 +193,13 @@ function checkNoEnemyInfo (context, enemy, location){
 
 };
 
-// 0 shot
-// const myprompt: string = `Hey, GPT!  Could you please let me know if the following sentence request has any of these entities: Action: ${category.action}, Enemy: ${category.enemy}, Location: ${category.location} ?, this is the sentence: `;
-// 1 shot
-// const myprompt: string = `Hey, GPT!  Could you please let me know if the following sentence request has any of these entities: Action: ${category.action}, Enemy: ${category.enemy}, Location: ${category.location} ? Here's an example: Example sentence: "What can I get from skeletons?". Entities: Enemy: skeletons , Action: None, Location: None. This is the sentence: `;
-// 2 shot
-// const myprompt: string = `Hey, GPT!  Could you please let me know if the following sentence request has any of these entities: Action: ${category.action}, Enemy: ${category.enemy}, Location: ${category.location} ? Here's two examples: Example sentence 1: "What can I get from skeletons?". Entities for example 1: Enemy: skeletons , Action: None, Location: None. Example sentence 2: "What can I obtain from Gargoyles in the jungle?". Entities for example 2: Enemy: gargoyles , Action: None, Location: jungle. This is the sentence: `;
 
-// changed word Entities, not used in the prompt
-// const myprompt: string = `Hey, GPT!  Could you please let me know if the following sentence request has any of the words in the lists?: Action: ${category.action}, Enemy: ${category.enemy}, Location: ${category.location} ? Here's two examples: Example sentence 1: "What can I get from skeletons?". Matches for example 1: Enemy: skeletons , Action: None, Location: None. Example sentence 2: "What can I obtain from Gargoyles in the jungle?". Matches for example 2: Enemy: gargoyles , Action: None, Location: jungle. Give me a list for every category. This is the sentence: `;
-// asking for JSON object
-const myprompt: string = `Hey, GPT! Here's a JSON object: {"action": <action>, "enemy": <enemy>, "location": <location> }.  Could you please let me know if the following sentence request has any of the words in the lists?: Action: ${category.action}, Enemy: ${category.enemy}, Location: ${category.location} ? Here's two examples: Example sentence 1: "What can I get from skeletons?". Matches for example 1: Enemy: skeletons , Action: , Location: . Example sentence 2: "What can I obtain from Gargoyles in the jungle?". Matches for example 2: Enemy: gargoyles , Action: , Location: jungle. Put the categories in the JSON object. If there's no match, keep the category empty. This is the sentence: `;
-
+// INTENTS Get loot info, Check success strategy, Get bazaar or item info
+const ItemEnemyLootIntentsPrompt: string = `Hey, GPT! Here's a JSON object: {"intent": <intent> }. Could you please let me know if the following sentence request has any of the intents in the list?: Intents: Get loot info, Check success strategy, Get bazaar or item info ? Put the correct intent in the JSON object. This is the sentence: `;
+// ENTITIES Get action, enemy, location TUNE THIS
+const ActionEnemyLocationEntitiesPrompt: string = `Hey, GPT! Here's a JSON object: {"action": <action>, "enemy": <enemy>, "location": <location> }.  Could you please let me know if the following sentence request has any of the words in the lists?: Action: ${category.action}, Enemy: ${category.enemy}, Location: ${category.location} ? Here's two examples: Example sentence 1: "What can I get from skeletons?". Matches for example 1: Enemy: skeletons , Action: , Location: . Example sentence 2: "What can I obtain from Gargoyles in the jungle?". Matches for example 2: Enemy: gargoyles , Action: , Location: jungle. Put the categories in the JSON object. If there's no match, keep the category empty. This is the sentence: `;
+// INTENTS Decline question or go directly to new question/ if "yes + pause", confirm and go to new question
+const DeclineLootIntentPrompt: string = `Hey, GPT! Here's a JSON object: {"intent": <intent> }. Could you please let me know if the following sentence request has any of the intents in the list?: Intents: Get loot info, Check success strategy, Get bazaar or item info ? Put the intents in the JSON object. This is the sentence: `;
 
 
 // machine
@@ -270,25 +265,42 @@ const dmMachine = createMachine(
                 entry: ({context}) => console.log(context.lootinfo, category.enemy, context.lastResult),
                 invoke: {
                   src: fromPromise(async({ input })=> {
-                    const data = await fetchFromChatGPT(myprompt + input.lastResult, 400);
+                    const data = await fetchFromChatGPT(ItemEnemyLootIntentsPrompt + input.lastResult, 400);
                     return data;
                   }),
                   input: ({ context, event}) => ({
                     lastResult: context.lastResult,
                   }),
-                  onDone: {
-                    target: "Ask",
-                    actions: [
-                      ({ event }) => console.log(JSON.parse(event.output).enemy),
-                      assign({  
-                        ene: ({event}) => (JSON.parse(event.output).enemy) ,
-                        act: ({event}) => (JSON.parse(event.output).action) ,
-                        loc: ({event}) => (JSON.parse(event.output).location) ,
-                      })
-                    ],
-                  },
+                  onDone: [
+                    {
+                      //guard: ({ event }) => JSON.parse(event.output).intent,
+                      target: "GetLootInfo",
+                      actions: [
+                        ({ event }) => console.log(JSON.parse(event.output)),
+                        // assign({  
+                        //   ene: ({event}) => (JSON.parse(event.output).enemy) ,
+                        //   act: ({event}) => (JSON.parse(event.output).action) ,
+                        //   loc: ({event}) => (JSON.parse(event.output).location) ,
+                        // })
+                      ],
+                    },
+                    {
+                      target: "GetBazaarItemInfo",
+                      //guard: , 
+                    },
+                    {
+                      target: "CheckSuccessStrategy",
+                      //guard: ,
+                    },
+                  ],
                 },
               },
+              // if intent == null or length 0 or whatever, respond something quirky accordingly and say that it cannot help with stuff other than ff
+              // also show guide from FAQs
+
+              GetLootInfo: {},
+              GetBazaarItemInfo: {},
+              CheckSuccessStrategy: {},
 
               // SpeakGPToutput: {
               //   entry: ({event}) => say(`${event.output}`),
