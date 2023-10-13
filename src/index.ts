@@ -49,15 +49,6 @@ const grammar = {
       place: ["shelf", "table", "sofa", "bed"]
         },
       };
-
-const sentenceIncludesWord = (word: string, sentence: string) => {
-  console.log(word, sentence.toLowerCase().replace(/\.$/g, "").split(/\s+/))
-if (sentence.toLowerCase().replace(/\.$/g, "").split(/\s+/).includes(word)) {
-  return true}
-  else {
-    return false
-  }
-};
   
 // machine
 const dmMachine = createMachine(
