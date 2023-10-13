@@ -104,6 +104,9 @@ const grammar = {
   },
   "no": {
     entities: ["negative_entity"]
+  },
+  "what is it used for": {
+    entities: ["usage_entity"]
   }
   // The reason to have a list of entities was because I was trying
   //to handle several entities in a shot, as in:
@@ -171,7 +174,8 @@ const dmMachine = createMachine(
             initial: "HowCanIHelp",
             states: {
               HowCanIHelp: {
-                entry: say("Hi, Vlad! Tell me which chemical element you want to learn about and I will give you some info."),
+                //entry: say("Hi, amigo! Tell me which chemical element you want to learn about and I will give you some info."),
+                entry: say("Hi, blablabla"),
                 on: { SPEAK_COMPLETE: "Ask" },
               },
               Ask: {
@@ -191,7 +195,7 @@ const dmMachine = createMachine(
               AskChatGPT: {
                 invoke: {
                   src: fromPromise(async({ input }) => {
-                    const gptData = await fetchFromChatGPT(input.lastResult[0].utterance + "The information should be in JSON format, including the following entities: element_JSON (the name of the chemical element), atomicNumber_JSON, atomicWeight_JSON, meltingPoint_JSON, boilingPoint_JSON and electronConfig_JSON.", 210);
+                    const gptData = await fetchFromChatGPT(input.lastResult[0].utterance + "The information should be in JSON format, including the following entities: element_JSON (the name of the chemical element), atomicNumber_JSON, atomicWeight_JSON, meltingPoint_JSON, boilingPoint_JSON, electronConfig_JSON and usage_JSON (what is this chemical element used for).", 150);
                     return gptData;
                   }),
                   input: ({ context, event }) => ({
@@ -208,6 +212,7 @@ const dmMachine = createMachine(
                         meltingPoint_JSON: ({ event }) => JSON.parse(event.output).meltingPoint_JSON,
                         boilingPoint_JSON: ({ event }) => JSON.parse(event.output).boilingPoint_JSON,
                         electronConfig_JSON: ({ event }) => JSON.parse(event.output).electronConfig_JSON,
+                        usage_JSON: ({ event }) => JSON.parse(event.output).usage_JSON,
                       }),
                     ],
                   },
@@ -301,6 +306,19 @@ const dmMachine = createMachine(
                       },
                     }),
                   },
+                  {
+                    target: "usage",
+                    guard: ({ event }) => {
+                      //console.log('GUARD USAGE');
+                      return checkEntityInGrammar("usage_entity", event.value[0].utterance);
+                    },
+                    actions: assign ({
+                      usage:  ({ event }) => {
+                        //console.log("ACTIONS USAGE");
+                        return checkEntityInGrammar("usage_entity", event.value[0].utterance);
+                      },
+                    }),
+                  },
                 ],
                 },
               },
@@ -359,6 +377,16 @@ const dmMachine = createMachine(
                   context.spstRef.send({ 
                     type: "SPEAK", 
                     value:{ utterance: `${getRandomPhrase()}, the electron configuration is ${context.electronConfig_JSON}.`}
+                  });
+                  console.log("Index: ", getRandomIndex(0, randomPhrase.length));
+                },
+                on: { SPEAK_COMPLETE: "moreQuestions" },
+              },
+              usage: {
+                entry: ({ context}) => { 
+                  context.spstRef.send({ 
+                    type: "SPEAK", 
+                    value:{ utterance: `Well, ${context.usage_JSON}.`}
                   });
                   console.log("Index: ", getRandomIndex(0, randomPhrase.length));
                 },
