@@ -27,7 +27,7 @@ async function fetchFromChatGPT(prompt: string, max_tokens: number) {
   myHeaders.append(
     "Authorization",
     //"Bearer <it is a secret shhh>",
-    "Bearer ",
+    "Bearer "
   );
   myHeaders.append("Content-Type", "application/json");
   const raw = JSON.stringify({
@@ -55,26 +55,6 @@ async function fetchFromChatGPT(prompt: string, max_tokens: number) {
 }
 
 
-// Grammar
-//const grammar = {
-//  "the chemical element": {
-//    entities: {
-//      element_entity: "The element is"
-//      //element_entity: "i like oranges"
-//    },
-//  },
-//  "i want to know the atomic number": {
-//    entities: {
-//      atomicNumber_entity: "The atomic number is"
-//    },
-//  },
-//  "can you tell me the atomic number": {
-//    entities: {
-//      atomicNumber_entity: "The atomic number is"
-//    },
-//  }
-// }
-
 
 // helper functions
 const say =
@@ -93,20 +73,6 @@ const listen =
     });
 
 
-//const checkEntityInGrammar = (entity: string, inputSentence: string) => {
-//  const cleanedInput = inputSentence.toLowerCase().replace(/\?$/, '')
-//  console.log('Input Sentence: ', cleanedInput)
-//  if (cleanedInput in grammar) {
-//    if (entity in grammar[cleanedInput].entities) {
-//      console.log("GRAMMAR:", grammar[cleanedInput].entities[entity])
-//      console.log("TRUE")
-//      //return grammar[cleanedInput].entities[entity];
-//      return true;
-//  }
-//}
-//  console.log("FALSE")
-//  return false;
-//};
 
 const grammar = {
   "the chemical element": {
@@ -118,43 +84,53 @@ const grammar = {
   "can you tell me the atomic number": {
     entities: ["atomicNumber_entity"]
   },
-  "can you tell me the atomic number and the atomic weight": {
-    entities: ["atomicNumber_entity", "atomicWeight_entity"]
+  "the atomic number": {
+    entities: ["atomicNumber_entity"]
+  },
+  "the atomic weight": {
+    entities: ["atomicWeight_entity"]
+  },
+  "the melting point": {
+    entities: ["meltingPoint_entity"]
+  },
+  "the boiling point": {
+    entities: ["boilingPoint_entity"]
+  },
+  "the electron configuration": {
+    entities: ["electronConfig_entity"]
+  },
+  "yes": {
+    entities: ["affirmative_entity"]
+  },
+  "no": {
+    entities: ["negative_entity"]
   }
+  // The reason to have a list of entities was because I was trying
+  //to handle several entities in a shot, as in:
+  //"can you tell me the atomic number and the atomic weight": {
+  //  entities: ["atomicNumber_entity", "atomicWeight_entity"]
+  //}
 }
 
 // works well with grammar above
-//const checkEntityInGrammar = (entity: string, inputSentence: string) => {
-//  const cleanedInput = inputSentence.toLowerCase().replace(/\?$/, '');
-//  console.log('Input Sentence: ', cleanedInput);
-//  if (cleanedInput in grammar) {
-//    if (grammar[cleanedInput].entities.includes(entity)) {
-//      console.log("GRAMMAR:", grammar[cleanedInput].entities);
-//      console.log("TRUE");
-//      return true;
-//    }
-//  }
-//  console.log("FALSE");
-//  return false;
-//};
-
-
-//just testing
-const checkEntityInGrammar = (inputSentence: string) => {
+const checkEntityInGrammar = (entity: string, inputSentence: string) => {
   const cleanedInput = inputSentence.toLowerCase().replace(/\?$/, '');
   console.log('Input Sentence: ', cleanedInput);
   if (cleanedInput in grammar) {
-    console.log("GRAMMAR:", grammar[cleanedInput].entities);
-    console.log("TRUE");
-    return grammar[cleanedInput].entities;
-    //return true
+    //console.log('YES, SENT IN GRAMMAR')
+    if (grammar[cleanedInput].entities.includes(entity)) {
+      console.log("GRAMMAR:", grammar[cleanedInput].entities);
+      //console.log("TRUE");
+      return true;
+    }
   }
   console.log("FALSE");
-  return [];
+  //console.log("GRAMMAR FALSE:", grammar[cleanedInput].entities)
+  return false;
 };
 
 
-
+const randomPhrase = ["yes", "here you go", "ok", "wowa", "great", "sure", "fantastic", "alright"];
 
 // getting a random index for picking a random phrase
 const getRandomIndex = (min: number, max: number) => { // min and max included 
@@ -163,7 +139,7 @@ const getRandomIndex = (min: number, max: number) => { // min and max included
 
 // getting a random phrase when delivering the required data, so it doesn't get too repetitive
 const getRandomPhrase = () => {
-  const randomPhrase = ["Yes", "Here you go", "Ok", "Wowa"];
+  const index = randomPhrase[getRandomIndex(0, randomPhrase.length)]
   return randomPhrase[getRandomIndex(0, randomPhrase.length)];
 }
 
@@ -195,7 +171,7 @@ const dmMachine = createMachine(
             initial: "HowCanIHelp",
             states: {
               HowCanIHelp: {
-                entry: say("Hi there, amigo! How can I help you?"),
+                entry: say("Hi, Vlad! Tell me which chemical element you want to learn about and I will give you some info."),
                 on: { SPEAK_COMPLETE: "Ask" },
               },
               Ask: {
@@ -215,7 +191,7 @@ const dmMachine = createMachine(
               AskChatGPT: {
                 invoke: {
                   src: fromPromise(async({ input }) => {
-                    const gptData = await fetchFromChatGPT(input.lastResult[0].utterance + "The information should be in JSON format, including the following entities: element_JSON (the name of the chemical element), atomicNumber_JSON and atomicWeight_JSON.", 250);
+                    const gptData = await fetchFromChatGPT(input.lastResult[0].utterance + "The information should be in JSON format, including the following entities: element_JSON (the name of the chemical element), atomicNumber_JSON, atomicWeight_JSON, meltingPoint_JSON, boilingPoint_JSON and electronConfig_JSON.", 210);
                     return gptData;
                   }),
                   input: ({ context, event }) => ({
@@ -229,6 +205,9 @@ const dmMachine = createMachine(
                         element_JSON: ({ event }) => JSON.parse(event.output).element_JSON,
                         atomicNumber_JSON: ({ event }) => JSON.parse(event.output).atomicNumber_JSON,
                         atomicWeight_JSON: ({ event }) => JSON.parse(event.output).atomicWeight_JSON,
+                        meltingPoint_JSON: ({ event }) => JSON.parse(event.output).meltingPoint_JSON,
+                        boilingPoint_JSON: ({ event }) => JSON.parse(event.output).boilingPoint_JSON,
+                        electronConfig_JSON: ({ event }) => JSON.parse(event.output).electronConfig_JSON,
                       }),
                     ],
                   },
@@ -240,136 +219,90 @@ const dmMachine = createMachine(
                     type: "SPEAK",
                     value: { utterance: `${getRandomPhrase()}! What do you want to know about ${context.element_JSON}?` }
                   });
+                  console.log("Index: ", getRandomIndex(0, randomPhrase.length));
                 },
                 on: { SPEAK_COMPLETE: "Information" }
               },
               Information: {
                 entry: listen(),
                 on: {
-                  RECOGNISED: [
-                    {
-                      target: "checkEntities",
-                      actions: assign({
-                        entities: ({ event }) => {
-                          console.log("CHECK ENTITIES ACTIONS");
-                          console.log(checkEntityInGrammar(event.value[0].utterance));
-                          return checkEntityInGrammar(event.value[0].utterance);
-                          //checkEntityInGrammar(event.value[0].utterance);
-                        },
-                      }),
+                  RECOGNISED: [{
+                    target: "element",
+                    guard: ({ event }) => {
+                      //console.log('GUARD ELEMENT');
+                      return checkEntityInGrammar("element_entity", event.value[0].utterance);
                     },
-                  //  target: "element",
-                  //  guard: ({ event }) => {
-                  //    console.log('GUARD ELEMENT');
-                  //    return checkEntityInGrammar("element_entity", event.value[0].utterance);
-                  //  },
-                  //  actions: assign ({
-                  //    element: ({ event }) => checkEntityInGrammar("element_entity", event.value[0].utterance),
-                  //  }),
-                  //},
-                  //the guard and actions for each entity are now separate, and the checkEntityInGrammar function (latest version)
-                  //is called for each entity (no entity: string). 
-                  //The reason is that this allows me to handle each entity separately and 
-                  //to handle cases where multiple entities are present in the same input sentence
-                    {
-                      target: "element",
-                      guard: ({ event }) => {
-                        console.log('GUARD ELEMENT');
-                        const entities = checkEntityInGrammar(event.value[0].utterance);
-                        console.log('RETURN: ', entities.includes("element_entity"));
-                        return entities.includes("element_entity");
+                    actions: assign ({
+                      element: ({ event }) => checkEntityInGrammar("element_entity", event.value[0].utterance),
+                    }),
+                  },
+                  {
+                    target: "atomicNumber",
+                    guard: ({ event }) => {
+                      //console.log('GUARD ATOMIC NUMBER');
+                      return checkEntityInGrammar("atomicNumber_entity", event.value[0].utterance);
+                    },
+                    actions: assign ({
+                      atomicNumber: ({ event }) => {
+                        //console.log("ACTIONS ATOMIC NUMBER");
+                        return checkEntityInGrammar("atomicNumber_entity", event.value[0].utterance);
                       },
-                      actions: assign ({
-                        element: ({ event }) => {
-                          console.log("ACTIONS ELEMENT");
-                          console.log('RETURN: ', checkEntityInGrammar(event.value[0].utterance).includes("element_entity"));
-                          return checkEntityInGrammar(event.value[0].utterance).includes("element_entity");
-                        },
-                      }),
+                    }),
+                  },
+                  {
+                    target: "atomicWeight",
+                    guard: ({ event }) => {
+                      //console.log('GUARD ATOMIC WEIGHT');
+                      return checkEntityInGrammar("atomicWeight_entity", event.value[0].utterance);
                     },
-                    {
-                      target: "atomicNumber",
-                      guard: ({ event }) => {
-                        console.log('GUARD ATOMIC NUMBER');
-                        const entities = checkEntityInGrammar(event.value[0].utterance);
-                        console.log('RETURN: ', entities.includes("atomicNumber_entity"));
-                        return entities.includes("atomicNumber_entity");
+                    actions: assign ({
+                      atomicWeight:  ({ event }) => {
+                        //console.log("ACTIONS ATOMIC WEIGHT");
+                        return checkEntityInGrammar("atomicWeight_entity", event.value[0].utterance);
                       },
-                      actions: assign({
-                        atomicNumber: ({ event }) => {
-                          console.log("ACTIONS ATOMIC NUMBER");
-                          console.log('RETURN: ', checkEntityInGrammar(event.value[0].utterance).includes("atomicNumber_entity"));
-                          return checkEntityInGrammar(event.value[0].utterance).includes("atomicNumber_entity");
-                        },
-                      }),
+                    }),
+                  },
+                  {
+                    target: "meltingPoint",
+                    guard: ({ event }) => {
+                      //console.log('GUARD MELTING POINT');
+                      return checkEntityInGrammar("meltingPoint_entity", event.value[0].utterance);
                     },
-                    {
-                      target: "atomicWeight",
-                      guard: ({ event }) => {
-                        console.log('GUARD ATOMIC WEIGHT');
-                        const entities = checkEntityInGrammar(event.value[0].utterance);
-                        console.log('RETURN: ', entities.includes("atomicWeight_entity"));
-                        return entities.includes("atomicWeight_entity");
+                    actions: assign ({
+                      meltingPoint:  ({ event }) => {
+                        //console.log("ACTIONS MELTING POINT");
+                        return checkEntityInGrammar("meltingPoint_entity", event.value[0].utterance);
                       },
-                      actions: assign({
-                        atomicWeight: ({ event }) => {
-                          console.log("ACTIONS ATOMIC WEIGHT");
-                          console.log('RETURN: ', checkEntityInGrammar(event.value[0].utterance).includes("atomicWeight_entity"));
-                          return checkEntityInGrammar(event.value[0].utterance).includes("atomicWeight_entity");
-                        },
-                      }),
+                    }),
+                  },
+                  {
+                    target: "boilingPoint",
+                    guard: ({ event }) => {
+                      //console.log('GUARD BOILING POINT');
+                      return checkEntityInGrammar("boilingPoint_entity", event.value[0].utterance);
                     },
-                  //{
-                  //  target: "atomicNumber",
-                  //  guard: ({ event }) => {
-                  //    console.log('GUARD ATOMIC NUMBER');
-                  //    return checkEntityInGrammar("atomicNumber_entity", event.value[0].utterance);
-                  //  },
-                  //  actions: assign ({
-                  //    atomicNumber: ({ event }) => {
-                  //      console.log("ACTIONS ATOMIC NUMBER");
-                  //      return checkEntityInGrammar("atomicNumber_entity", event.value[0].utterance);
-                  //    },
-                  //  }),
-                  //},
-                  //{
-                  //  target: "atomicWeight",
-                  //  guard: ({ event }) => {
-                  //    console.log('GUARD ATOMIC WEIGHT');
-                  //    return checkEntityInGrammar("atomicWeight_entity", event.value[0].utterance);
-                  //  },
-                  //  actions: assign ({
-                  //    atomicWeight: ({ event }) => {
-                  //      console.log("ACTIONS ATOMIC WEIGHT");
-                  //      return checkEntityInGrammar("atomicWeight_entity", event.value[0].utterance);
-                  //    },
-                  //  }),
-                  //},
+                    actions: assign ({
+                      boilingPoint:  ({ event }) => {
+                        //console.log("ACTIONS BOILING POINT");
+                        return checkEntityInGrammar("boilingPoint_entity", event.value[0].utterance);
+                      },
+                    }),
+                  },
+                  {
+                    target: "electronConfig",
+                    guard: ({ event }) => {
+                      //console.log('GUARD ELECTRON CONF');
+                      return checkEntityInGrammar("electronConfig_entity", event.value[0].utterance);
+                    },
+                    actions: assign ({
+                      electronConfig:  ({ event }) => {
+                        //console.log("ACTIONS ELECTRON CONF");
+                        return checkEntityInGrammar("electronConfig_entity", event.value[0].utterance);
+                      },
+                    }),
+                  },
                 ],
                 },
-              },
-              checkEntities: {
-                  always: [
-                    {
-                      // should I have guards here?
-                      target: "atomicNumber",
-                      cond: ({ entities }) => {
-                        console.log('CHECKING ATOMIC NUMBER')
-                        entities.includes("atomicNumber_entity");
-                      }
-                    },
-                    {
-                      target: "atomicWeight",
-                      cond: ({ entities }) => entities.includes("atomicWeight_entity"),
-                    },
-                    {
-                      target: "atomicNumberAndWeight",
-                      cond: ({ entities }) =>
-                        entities.includes("atomicNumber_entity") &&
-                        entities.includes("atomicWeight_entity"),
-                    },
-                    // handling here other entities maybe
-                  ],
               },
               element: {
                 entry: ({ context}) => { 
@@ -377,74 +310,113 @@ const dmMachine = createMachine(
                     type: "SPEAK", 
                     value:{ utterance: `${getRandomPhrase()}, the name of the chemical element is ${context.element_JSON}`}
                   });
+                  console.log("Index: ", getRandomIndex(0, randomPhrase.length));
                 },
-                on: { SPEAK_COMPLETE: "ByeBye" },
-              },
-              atomicNumberAndWeight: {
-                entry: ({ context }) => {
-                  console.log('IN ATOMIC NUMBER AND WEIGHT SPEAK')
-                  const utterance = `${getRandomPhrase()}, the atomic number is ${context.atomicNumber_JSON} and the atomic weight is ${context.atomicWeight_JSON}`;
-                  context.spstRef.send({
-                    type: "SPEAK",
-                    value: { utterance }
-                  });
-                },
-                on: { SPEAK_COMPLETE: "ByeBye" },
+                on: { SPEAK_COMPLETE: "moreQuestions" },
               },
               atomicNumber: {
-                entry: ({ context}) => {
-                  console.log('IN ATOMIC NUMBER SPEAK')
+                entry: ({ context}) => { 
                   context.spstRef.send({ 
                     type: "SPEAK", 
                     value:{ utterance: `${getRandomPhrase()}, the atomic number is ${context.atomicNumber_JSON}`}
                   });
+                  console.log("Index: ", getRandomIndex(0, randomPhrase.length));
                 },
-                on: { SPEAK_COMPLETE: "ByeBye" },
+                on: { SPEAK_COMPLETE: "moreQuestions" },
               },
               atomicWeight: {
                 entry: ({ context}) => { 
-                  console.log('IN ATOMIC WEIGHT SPEAK')
                   context.spstRef.send({ 
                     type: "SPEAK", 
                     value:{ utterance: `${getRandomPhrase()}, the atomic weight is ${context.atomicWeight_JSON}`}
                   });
+                  console.log("Index: ", getRandomIndex(0, randomPhrase.length));
                 },
-                on: { SPEAK_COMPLETE: "ByeBye" },
-              },           
-              //atomicNumber: {
-              //  entry: ({ context }) => {
-              //    console.log('IN ATOMIC NUMBER SPEAK')
-              //    const utterance = context.atomicWeight
-              //      ? `${getRandomPhrase()}, the atomic number is ${context.atomicNumber_JSON} and the atomic weight is ${context.atomicWeight_JSON}`
-              //      : `${getRandomPhrase()}, the atomic number is ${context.atomicNumber_JSON}`;
-              //    context.spstRef.send({
-              //      type: "SPEAK",
-              //      value: { utterance }
-              //    });
-              //  },
-              //  on: { SPEAK_COMPLETE: "ByeBye" },
-              //},
-              //atomicWeight: {
-              //  entry: ({ context }) => {
-              //    console.log('IN ATOMIC WEIGHT SPEAK')
-              //    const utterance = context.atomicNumber
-              //      ? `${getRandomPhrase()}, the atomic number is ${context.atomicNumber_JSON} and the atomic weight is ${context.atomicWeight_JSON}`
-              //      : `${getRandomPhrase()}, the atomic weight is ${context.atomicWeight_JSON}`;
-              //    context.spstRef.send({
-              //      type: "SPEAK",
-              //      value: { utterance }
-              //    });
-              //  },
-              //  on: { SPEAK_COMPLETE: "ByeBye" },
-              //},
-              ByeBye: {
+                on: { SPEAK_COMPLETE: "moreQuestions" },
+              },
+              meltingPoint: {
+                entry: ({ context}) => { 
+                  context.spstRef.send({ 
+                    type: "SPEAK", 
+                    value:{ utterance: `${getRandomPhrase()}, the melting point is ${context.meltingPoint_JSON}ºC.`}
+                  });
+                  console.log("Index: ", getRandomIndex(0, randomPhrase.length));
+                },
+                on: { SPEAK_COMPLETE: "moreQuestions" },
+              },
+              boilingPoint: {
+                entry: ({ context}) => { 
+                  context.spstRef.send({ 
+                    type: "SPEAK", 
+                    value:{ utterance: `${getRandomPhrase()}, the boiling point is ${context.boilingPoint_JSON}ºC.`}
+                  });
+                  console.log("Index: ", getRandomIndex(0, randomPhrase.length));
+                },
+                on: { SPEAK_COMPLETE: "moreQuestions" },
+              },
+              electronConfig: {
+                entry: ({ context}) => { 
+                  context.spstRef.send({ 
+                    type: "SPEAK", 
+                    value:{ utterance: `${getRandomPhrase()}, the electron configuration is ${context.electronConfig_JSON}.`}
+                  });
+                  console.log("Index: ", getRandomIndex(0, randomPhrase.length));
+                },
+                on: { SPEAK_COMPLETE: "moreQuestions" },
+              },
+              moreQuestions: {
+                entry: ({ context}) => { 
+                  context.spstRef.send({ 
+                    type: "SPEAK", 
+                    value:{ utterance: `Anything else you want to know about ${context.element_JSON}? Say yes or no.`}
+                  });
+                },
+                on: { SPEAK_COMPLETE: "yesOrNo" },
+              },
+              yesOrNo: {
+                entry: listen(),
+                on: {
+                  RECOGNISED: [
+                    {
+                      target: "affirmative",
+                      guard: ({ event }) => checkEntityInGrammar("affirmative_entity", event.value[0].utterance),
+                    },
+                    {
+                      target: "negative",
+                      guard: ({ event }) => checkEntityInGrammar("negative_entity", event.value[0].utterance),
+                    },
+                  ],
+                },
+              },
+              affirmative: {
                 entry: ({ context }) => {
                   context.spstRef.send({
                     type: "SPEAK",
-                    value: { utterance: `Adios, besitos`}
+                    value: { utterance: `${getRandomPhrase()}, what else do you want to know?`}
+                  });
+                  console.log("Index: ", getRandomIndex(0, randomPhrase.length));
+                },
+                on: { SPEAK_COMPLETE: "Information" },
+              },
+              negative: {
+                entry: ({ context }) => {
+                  context.spstRef.send({
+                    type: "SPEAK",
+                    value: { utterance: `${getRandomPhrase()}, it was nice learning new stuff about ${context.element_JSON} with you!`}
+                  });
+                  console.log("Index: ", getRandomIndex(0, randomPhrase.length));
+                },
+                on: { SPEAK_COMPLETE: "byeBye" },
+              },
+              byeBye: {
+                entry: ({ context }) => {
+                  context.spstRef.send({
+                    type: "SPEAK",
+                    value: { utterance: `I hope your day is as bright as Neon, goodbye!`}
                   });
                 },
               },
+              //It'd be nice to add a "canYouRepeat" state
               //IdleEnd: {},
             },
           },
