@@ -38,19 +38,19 @@ const listen =
 
 interface Grammar {
     entities: {
-      [index: string]: string;
+      [index: string]: string[];
         };
       }
 
 const grammar = {
   entities: {
-      colour: "pink",
-      object: "lamp",
-      place: "shelf",
+      colour: ["pink", "blue", "red", "yellow", "purple", "black", "white", "gray", "brown"],
+      object: ["lamp", "book", "box", "bottle", "vase"],
+      place: ["shelf", "table", "sofa", "bed"]
         },
       };
 
-const modify = (word: string, sentence: string) => {
+const sentenceIncludesWord = (word: string, sentence: string) => {
   console.log(word, sentence.toLowerCase().replace(/\.$/g, "").split(/\s+/))
 if (sentence.toLowerCase().replace(/\.$/g, "").split(/\s+/).includes(word)) {
   return true}
@@ -94,60 +94,72 @@ const dmMachine = createMachine(
                 on: {
                   RECOGNISED: [{
                     target: "All",
-                    guard: ({ event }) => modify(grammar.entities.colour, event.value[0].utterance) && modify(grammar.entities.object, event.value[0].utterance) && modify(grammar.entities.place, event.value[0].utterance),
+                    guard: ({ event }) => grammar.entities.colour(colourElement => event.value[0].utterance.includes(colourElement)) && grammar.entities.object(objectElement => event.value[0].utterance.includes(objectElement)) && grammar.entities.place(placeElement => event.value[0].utterance.includes(placeElement)),
                     actions: assign({ 
-                      recognisedColour: ({ context }) =>
-                        (grammar.entities.colour),
-                        recognisedObject: ({ context }) =>
-                        (grammar.entities.object),
-                        recognisedPlace: ({ context }) =>
-                        (grammar.entities.place),
+                      recognisedColour: ({ context, event }) => {
+                      const colourElement = grammar.entities.colour.find(colour => event.value[0].utterance.includes(colour));
+                      return colourElement;
+                      },
+                        recognisedObject: ({ context, event }) => {
+                      const objectElement = grammar.entities.object.find(object => event.value[0].utterance.includes(object));
+                      return objectElement;
+                      },
+                        recognisedplace: ({ context, event }) => {
+                      const placeElement = grammar.entities.place.find(place => event.value[0].utterance.includes(place));
+                      return placeElement;
+                      },
                     }),
                   },
                   {
                     target: "NoColour",
-                    guard: ({ event }) => !modify(grammar.entities.colour, event.value[0].utterance),
+                    guard: ({ event }) => !grammar.entities.colour(colourElement => event.value[0].utterance.includes(colourElement)),
                     actions: assign({
                       recognisedObject: ({ event }) => {
-                        if (modify(grammar.entities.object, event.value[0].utterance)) {
-                          return grammar.entities.object
+                        if (grammar.entities.object(objectElement => event.value[0].utterance.includes(objectElement))) {
+                          const objectElement = grammar.entities.object.find(object => event.value[0].utterance.includes(object))
+                          return objectElement
                         }
                       },
                         recognisedPlace: ({ event }) => {
-                          if (modify(grammar.entities.place, event.value[0].utterance)) {
-                            return grammar.entities.place
+                          if (grammar.entities.place(placeElement => event.value[0].utterance.includes(placeElement))) {
+                            const placeElement = grammar.entities.place.find(place => event.value[0].utterance.includes(place))
+                            return placeElement
                           }
                         },
                     }),
                   },
                   {
                     target: "NoObject",
-                  guard: ({ event }) => !modify(grammar.entities.object, event.value[0].utterance),
+                  guard: ({ event }) => !grammar.entities.object(objectElement => event.value[0].utterance.includes(objectElement)),
                   actions: assign({
                     recognisedColour: ({ event }) => {
-                      if (modify(grammar.entities.colour, event.value[0].utterance)) {
-                        return grammar.entities.colour
+                      if (grammar.entities.colour(colourElement => event.value[0].utterance.includes(colourElement))) {
+                        const colourElement = grammar.entities.colour.find(colour => event.value[0].utterance.includes(colour))
+                        return colourElement
                       }
                     },
                       recognisedPlace: ({ event }) => {
-                        if (modify(grammar.entities.place, event.value[0].utterance)) {
-                          return grammar.entities.place
+                        if (grammar.entities.place(placeElement => event.value[0].utterance.includes(placeElement))) {
+                          const placeElement = grammar.entities.place.find(place => event.value[0].utterance.includes(place))
+                          return placeElement
                         }
                       },
                   }),
                 },
                 {
                   target: "NoPlace",
-                guard: ({ event }) => !modify(grammar.entities.place, event.value[0].utterance),
+                guard: ({ event }) => !grammar.entities.place(placeElement => event.value[0].utterance.includes(placeElement)),
                 actions: assign({
                   recognisedColour: ({ event }) => {
-                    if (modify(grammar.entities.colour, event.value[0].utterance)) {
-                      return grammar.entities.colour
+                    if (grammar.entities.colour(colourElement => event.value[0].utterance.includes(colourElement))) {
+                       const colourElement = grammar.entities.colour.find(colour => event.value[0].utterance.includes(colour))
+                        return colourElement
                     }
                   },
                     recognisedObject: ({ event }) => {
-                      if (modify(grammar.entities.object, event.value[0].utterance)) {
-                        return grammar.entities.object
+                      if (grammar.entities.object(objectElement => event.value[0].utterance.includes(objectElement))) {
+                          const objectElement = grammar.entities.object.find(object => event.value[0].utterance.includes(object))
+                          return objectElement
                       }
                     },
                 }),
@@ -188,45 +200,54 @@ const dmMachine = createMachine(
             entry: listen(),
             on: { RECOGNISED: [{
               target: "#root.DialogueManager.Form.All",
-            guard: ({ event, context }) => modify(grammar.entities.colour, event.value[0].utterance) && (!!context.recognisedObject ||  modify(grammar.entities.object, event.value[0].utterance)) && (!!context.recognisedPlace || modify(grammar.entities.place, event.value[0].utterance)),
+            guard: ({ event, context }) => grammar.entities.colour(colourElement => event.value[0].utterance.includes(colourElement)) && (!!context.recogniedObject ||  grammar.entities.object(objectElement => event.value[0].utterance.includes(objectElement))) && (!!context.recognisedPlace || grammar.entities.place(placeElement => event.value[0].utterance.includes(placeElement))),
             actions: assign({ 
-              recognisedColour: ({ context }) =>
-                (grammar.entities.colour),
+              recognisedColour: ({ context, event }) => {
+                      const colourElement = grammar.entities.colour.find(colour => event.value[0].utterance.includes(colour));
+                      return colourElement;
+                      },
                 recognisedObject: ({ event, context }) => {
                   if (context.recognisedObject) {
                     return context.recognisedObject;
-                  } else if (modify(grammar.entities.object, event.value[0].utterance)) {
-                    return grammar.entities.object;
+                  } else if (grammar.entities.object(objectElement => event.value[0].utterance.includes(objectElement))) {
+                    const objectElement = grammar.entities.object.find(object => event.value[0].utterance.includes(object));
+                      return objectElement;
                   };
                 },
                 recognisedPlace: ({ event, context }) => {
                   if (context.recognisedPlace) {
                     return context.recognisedPlace;
-                  } else if (modify(grammar.entities.place, event.value[0].utterance)) {
-                    return grammar.entities.place;
+                  } else if (grammar.entities.place(placeElement => event.value[0].utterance.includes(placeElement))) {
+                    const placeElement = grammar.entities.place.find(place => event.value[0].utterance.includes(place));
+                      return placeElement;
                   };
                 },
             }),
           },
           {
           target: "#root.SlotObject.Prompt",
-          guard: ({ event, context }) => modify(grammar.entities.colour, event.value[0].utterance) && !context.recognisedObject && !modify(grammar.entities.object, event.value[0].utterance),
+          guard: ({ event, context }) => grammar.entities.colour(colourElement => event.value[0].utterance.includes(colourElement)) && !context.recognisedObject && !grammar.entities.object(objectElement => event.value[0].utterance.includes(objectElement)),
           actions: assign({ 
-            recognisedColour: ({ context }) =>
-              (grammar.entities.colour),
+            recognisedColour: ({ context, event }) => {
+                      const colourElement = grammar.entities.colour.find(colour => event.value[0].utterance.includes(colour));
+                      return colourElement;
+                      },
           }),
         },
         {
           target: "#root.SlotPlace.Prompt",
-          guard: ({ event, context }) => modify(grammar.entities.colour, event.value[0].utterance) && !context.recognisedPlace,
+          guard: ({ event, context }) => grammar.entities.colour(colourElement => event.value[0].utterance.includes(colourElement)) && !context.recognisedPlace,
           actions: assign({ 
-            recognisedColour: ({ context }) =>
-              (grammar.entities.colour),
+            recognisedColour: ({ context, event }) => {
+                      const colourElement = grammar.entities.colour.find(colour => event.value[0].utterance.includes(colour));
+                      return colourElement;
+                      },
               recognisedObject: ({ event, context }) => {
                 if (context.recognisedObject) {
                   return context.recognisedObject;
-                } else if (modify(grammar.entities.object, event.value[0].utterance)) {
-                  return grammar.entities.object;
+                } else if (grammar.entities.object(objectElement => event.value[0].utterance.includes(objectElement))) {
+                    const objectElement = grammar.entities.object.find(object => event.value[0].utterance.includes(object));
+                      return objectElement;
                 };
               },
           }),
@@ -253,23 +274,30 @@ const dmMachine = createMachine(
         entry: listen(),
         on: { RECOGNISED: [{
           target: "#root.DialogueManager.Form.All",
-        guard: ({ event, context }) => modify(grammar.entities.object, event.value[0].utterance) && !!context.recognisedColour && (!!context.recognisedPlace || modify(grammar.entities.place, event.value[0].utterance)), 
+        guard: ({ event, context }) => grammar.entities.object(objectElement => event.value[0].utterance.includes(objectElement)) && !!context.recognisedColour && (!!context.recognisedPlace || grammar.entities.place(placeElement => event.value[0].utterance.includes(placeElement))), 
         actions: assign({
-          recognisedObject: ({ context }) => grammar.entities.object,
+          recognisedObject: ({ context, event }) => {
+                      const objectElement = grammar.entities.object.find(object => event.value[0].utterance.includes(object));
+                      return objectElement;
+                      },
           recognisedPlace: ({ event, context }) => {
             if (context.recognisedPlace) {
               return context.recognisedPlace;
-            } else if (modify(grammar.entities.place, event.value[0].utterance)) {
-              return grammar.entities.place;
+            } else if (grammar.entities.place(placeElement => event.value[0].utterance.includes(placeElement))) {
+                    const placeElement = grammar.entities.place.find(place => event.value[0].utterance.includes(place));
+                      return placeElement;
             };
             }
         }),
       },
       {
         target: "#root.SlotPlace.Prompt",
-      guard: ({ event }) => modify(grammar.entities.object, event.value[0].utterance) && !modify(grammar.entities.place, event.value[0].utterance), 
+      guard: ({ event }) => grammar.entities.object(objectElement => event.value[0].utterance.includes(objectElement)) && !grammar.entities.place(placeElement => event.value[0].utterance.includes(placeElement)), 
       actions: assign({
-        recognisedObject: ({ context }) => grammar.entities.object,
+        recognisedObject: ({ context, event }) => {
+                      const objectElement = grammar.entities.object.find(object => event.value[0].utterance.includes(object));
+                      return objectElement;
+                      },
       }),
     },
     ],
@@ -294,9 +322,12 @@ SlotPlace: {
       entry: listen(),
       on: { RECOGNISED: {
         target: "#root.DialogueManager.Form.All",
-      guard: ({ event, context }) => modify(grammar.entities.place, event.value[0].utterance) && !!context.recognisedColour && !!context.recognisedObject,
+      guard: ({ event, context }) => grammar.entities.object(objectElement => event.value[0].utterance.includes(objectElement)) && !!context.recognisedColour && !!context.recognisedObject,
       actions: assign({
-        recognisedPlace: ({ context }) => grammar.entities.place,
+        recognisedPlace: ({ context, event }) => {
+                      const placeElement = grammar.entities.place.find(place => event.value[0].utterance.includes(place));
+                      return placeElement;
+                      },
       }),
     },
   },
