@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SpeechState DM sandbox</title>
+    <meta charset="UTF-8" />
+    <style>
+      body {
+        /* Linear gradient background */
+        background: linear-gradient(to right, #ff5e62, #ff9966);
+        font-family: Arial, sans-serif;
+      }
+
+      #app {
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
+        height: 100vh; /* Take full viewport height */
+      }
+
+      button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #ffffff;
+        color: #ff5e62;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s; /* Smooth transition */
+      }
+
+      button:hover {
+        background-color: #f3f3f3; /* Change background on hover */
+      }
+
+      iframe[data-xstate] {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        border: 2px solid #ff5e62; /* Border color matches gradient */
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app"><button id="button"></button></div>
+    <iframe data-xstate></iframe>
+    <script type="module" src="src/index.ts"></script>
+  </body>
+</html>

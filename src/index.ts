@@ -1,4 +1,4 @@
-import { createMachine, createActor, assign,sendTo } from "xstate";
+import { fromPromise,createMachine, createActor, assign,sendTo } from "xstate";
 import { speechstate, Settings, Hypothesis } from "speechstate";
 
 const azureCredentials = {
@@ -15,9 +15,43 @@ const settings: Settings = {
   ttsDefaultVoice: "en-GB-RyanNeural",
 };
 
+async function fetchFromChatGPT(prompt: string, max_tokens: number) {
+  const myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    "Bearer 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",
+  );
+  myHeaders.append("Content-Type", "application/json");
+  const raw = JSON.stringify({
+    model: "gpt-3.5-turbo",
+    messages: [
+            {
+              role: "user",
+              content: prompt,
+            },
+            { role: "system", 
+            content: "You are a friendly assistant that needs to judge if the user is trying to book a flight, if yes, return intent 'booking', if not return intent 'other service'.The answer should just be a clean JSON object" },
+          ],
+    temperature: 0,
+    max_tokens: max_tokens,
+  });
+
+  const response = fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  })
+    .then((response) => response.json())
+    .then((response) => response.choices[0].message.content);
+
+  return response;
+}
+
 interface DMContext {
   spstRef?: any;
   lastResult?: Hypothesis[];
+  answer?:any;
 }
 
 // helper functions
@@ -187,7 +221,7 @@ const dmMachine = createMachine<DMContext>(
   {
     id: "root",
     type: "parallel",
-    context:{spstRef:'',lastResult:[]},
+    context:{spstRef:'',lastResult:[],answer:{}},
     states: {
       DialogueManager: {
         initial: "Prepare",
@@ -221,27 +255,75 @@ const dmMachine = createMachine<DMContext>(
               Ask: {
                 entry: listen(),
                 on: {
-                  RECOGNISED: [{
-                    target: "Booking",
-                    
-                    guard:({context,event }) => event.value[0].utterance.toLowerCase().includes('book'),
+                  RECOGNISED: {
+                    target: "Intents",
+                    // guard:({context,event }) => event.value[0].utterance.toLowerCase().includes('book'),
                     actions: [
                       ({ event }) => console.log(event),
+                      assign({
+                        lastResult: ({ event }) => event.value[0].utterance,
+                      }) 
                     ],
                   },
-                  {target:'Repeat',actions: [
-                    ({ event }) => console.log(event),
-                  ]}],
+                  
                 },
               },
-              Repeat: {
-                entry: ({ context }) => {
-                  context.spstRef.send({
-                    type: "SPEAK",
-                    value: { utterance: 'I did not understand you' },
-                  });
+              Intents:{
+                invoke: {
+                  id: "chatgpt",
+                  src: fromPromise(async({ input })=> {
+                    const data = await fetchFromChatGPT(input + "please judge if the user is trying to book a flight, if yes, return intent 'booking', if not return intent 'other service'.The answer should just be a clean JSON object", 200);
+                    return data;
+                  }),
+                  input: ({ context, event}) => ({
+                    lastResult: context.lastResult,
+                  }),
+                  onDone: {
+                      target: "menu",
+                      actions: [
+                        ({ event }) => console.log(event.output),
+                        assign({
+                          answer: ({ context,event }) => JSON.parse(event.output),
+                        }) 
+                      ]
+                  },
+                  onError: {
+                      target: "HowCanIHelp",
+                  },
+                }
+              },
+              menu:{
+                initial: "prompt",
+                on: {
+                    SPEAK_COMPLETE: [
+                      { target: "Booking", guard: ({ context }) => context.answer && context.answer.intent === "booking", 
+                      actions:[
+                        ({ context,event }) => console.log(context.answer.intent)
+                        
+                      ]},
+                        { target: "Other",
+                        actions:[
+                          ({ context,event }) => console.log(context.answer.intent)
+                          
+                        ] },
+                       
+                    ]
                 },
-                on: { SPEAK_COMPLETE: "hist" },
+                states: {
+                    prompt: {
+                        entry: ({ context }) => {
+                          context.spstRef.send({
+                            type: "SPEAK",
+                            value: { utterance: `I get you，you want a ${context.answer.intent}.` },
+                          });
+                    },
+                 },
+               }       
+            },
+
+              Other: {
+                entry: say('Other services will be available soon'),
+                on: { SPEAK_COMPLETE: "HowCanIHelp" },
               },
               Booking: { initial:'child',
               onDone:'#root.DialogueManager.Prepare',

@@ -587,6 +587,33 @@ const settings = {
     asrDefaultNoInputTimeout: 5000,
     ttsDefaultVoice: "en-GB-RyanNeural"
 };
+async function fetchFromChatGPT(prompt, max_tokens) {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer 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");
+    myHeaders.append("Content-Type", "application/json");
+    const raw = JSON.stringify({
+        model: "gpt-3.5-turbo",
+        messages: [
+            {
+                role: "user",
+                content: prompt
+            },
+            {
+                role: "system",
+                content: "You are a friendly assistant that needs to judge if the user is trying to book a flight, if yes, return intent 'booking', if not return intent 'other service'.The answer should just be a clean JSON object"
+            }
+        ],
+        temperature: 0,
+        max_tokens: max_tokens
+    });
+    const response = fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow"
+    }).then((response)=>response.json()).then((response)=>response.choices[0].message.content);
+    return response;
+}
 // helper functions
 const say = (text)=>({ context })=>{
         context.spstRef.send({
@@ -778,7 +805,8 @@ const dmMachine = (0, _xstate.createMachine)({
     type: "parallel",
     context: {
         spstRef: "",
-        lastResult: []
+        lastResult: [],
+        answer: {}
     },
     states: {
         DialogueManager: {
@@ -821,34 +849,78 @@ const dmMachine = (0, _xstate.createMachine)({
                         Ask: {
                             entry: listen(),
                             on: {
-                                RECOGNISED: [
+                                RECOGNISED: {
+                                    target: "Intents",
+                                    // guard:({context,event }) => event.value[0].utterance.toLowerCase().includes('book'),
+                                    actions: [
+                                        ({ event })=>console.log(event),
+                                        (0, _xstate.assign)({
+                                            lastResult: ({ event })=>event.value[0].utterance
+                                        })
+                                    ]
+                                }
+                            }
+                        },
+                        Intents: {
+                            invoke: {
+                                id: "chatgpt",
+                                src: (0, _xstate.fromPromise)(async ({ input })=>{
+                                    const data = await fetchFromChatGPT(input + "please judge if the user is trying to book a flight, if yes, return intent 'booking', if not return intent 'other service'.The answer should just be a clean JSON object", 200);
+                                    return data;
+                                }),
+                                input: ({ context, event })=>({
+                                        lastResult: context.lastResult
+                                    }),
+                                onDone: {
+                                    target: "menu",
+                                    actions: [
+                                        ({ event })=>console.log(event.output),
+                                        (0, _xstate.assign)({
+                                            answer: ({ context, event })=>JSON.parse(event.output)
+                                        })
+                                    ]
+                                },
+                                onError: {
+                                    target: "HowCanIHelp"
+                                }
+                            }
+                        },
+                        menu: {
+                            initial: "prompt",
+                            on: {
+                                SPEAK_COMPLETE: [
                                     {
                                         target: "Booking",
-                                        guard: ({ context, event })=>event.value[0].utterance.toLowerCase().includes("book"),
+                                        guard: ({ context })=>context.answer && context.answer.intent === "booking",
                                         actions: [
-                                            ({ event })=>console.log(event)
+                                            ({ context, event })=>console.log(context.answer.intent)
                                         ]
                                     },
                                     {
-                                        target: "Repeat",
+                                        target: "Other",
                                         actions: [
-                                            ({ event })=>console.log(event)
+                                            ({ context, event })=>console.log(context.answer.intent)
                                         ]
                                     }
                                 ]
+                            },
+                            states: {
+                                prompt: {
+                                    entry: ({ context })=>{
+                                        context.spstRef.send({
+                                            type: "SPEAK",
+                                            value: {
+                                                utterance: `I get you，you want a ${context.answer.intent}.`
+                                            }
+                                        });
+                                    }
+                                }
                             }
                         },
-                        Repeat: {
-                            entry: ({ context })=>{
-                                context.spstRef.send({
-                                    type: "SPEAK",
-                                    value: {
-                                        utterance: "I did not understand you"
-                                    }
-                                });
-                            },
+                        Other: {
+                            entry: say("Other services will be available soon"),
                             on: {
-                                SPEAK_COMPLETE: "hist"
+                                SPEAK_COMPLETE: "HowCanIHelp"
                             }
                         },
                         Booking: {
