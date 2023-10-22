@@ -597,10 +597,6 @@ async function fetchFromChatGPT(prompt, max_tokens) {
             {
                 role: "user",
                 content: prompt
-            },
-            {
-                role: "system",
-                content: "You are a friendly assistant that needs to judge if the user is trying to book a flight, if yes, return intent 'booking', if not return intent 'other service'.The answer should just be a clean JSON object"
             }
         ],
         temperature: 0,
@@ -881,7 +877,10 @@ const dmMachine = (0, _xstate.createMachine)({
                                     ]
                                 },
                                 onError: {
-                                    target: "HowCanIHelp"
+                                    target: "HowCanIHelp",
+                                    actions: [
+                                        ({ event })=>console.log(event.output)
+                                    ]
                                 }
                             }
                         },

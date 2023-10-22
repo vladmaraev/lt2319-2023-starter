@@ -25,9 +25,6 @@ async function fetchFromChatGPT(prompt: string, max_tokens: number) {
   const raw = JSON.stringify({
     model: "gpt-3.5-turbo",
     messages: [
-            { 
-              role: "system", 
-              content: "You are a friendly assistant that needs to judge if the user is trying to book a flight, if yes, return intent 'booking', if not return intent 'other service'.The answer should just be a clean JSON object" },
             {
               role: "user",
               content: prompt,
@@ -273,7 +270,7 @@ const dmMachine = createMachine<DMContext>(
                 invoke: {
                   id: "chatgpt",
                   src: fromPromise(async({ input })=> {
-                    const data = await fetchFromChatGPT(input, 200);
+                    const data = await fetchFromChatGPT(input+ "please judge if the user is trying to book a flight, if yes, return intent 'booking', if not return intent 'other service'.The answer should just be a clean JSON object", 200);
                     return data;
                   }),
                   input: ({ context, event}) => ({
