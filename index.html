@@ -1,14 +1,295 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>SpeechState DM sandbox</title>
-    <meta charset="UTF-8" />
-  </head>
+<html lang="en">
 
-  <body>
-    <div id="app"><button id="button"></button></div>
-    <iframe data-xstate style="position: absolute; height: 100%; width: 100%; border: 2px"></iframe>
-    <script type="module" src="src/index.ts"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Voice Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWh5eBR6ihrCSBbEk4Oe6rx2WrzbyZWTM&libraries=places&callback=initMap&language=en" async defer></script>
     
-  </body>
+</head>
+
+<body>
+    <!-- Top bar -->
+    <div class="top-bar">
+        <div class="user-info">
+            <!-- <img src="Jackie.png" alt="User Icon"> -->
+            Jackie
+        </div>
+        <span id="current-time">12:34</span>
+        <!-- Add other icons/info on the right if needed -->
+        <div>🔋 ᯤ</div>
+    </div>
+
+    
+    <!-- Map -->
+    <div id="map-container">
+        <button id="preferences-toggle-btn">+</button>
+        <div class="map" id="map-api"></div>
+        <div id="search-input">
+            <input class="search" id="autocomplete-input" type="text" placeholder="Search...">
+            <button id="close-btn">&times;</button>
+        </div>
+        <div id="next-step"></div>
+        <div id="preferences-container" style="display: none;">
+            <h3>Route Perference:</h3>
+            <div>
+                <input type="checkbox" id="avoid-highways" value="highways">
+                <label for="avoid-highways">Avoid highways</label>
+            </div>
+            <div>
+                <input type="checkbox" id="avoid-tolls" value="tolls">
+                <label for="avoid-tolls">Avoid tolls</label>
+            </div>
+        
+            <h3>Stopover:</h3>
+            <input type="text" id="waypoint" placeholder="add stopover...">
+            </div>
+    </div>
+    
+    
+    <!-- Music & Voice Interaction Container -->
+    <div class="music-voice-container">
+        <!-- <iframe width="100" height="100" src="https://www.youtube.com/embed/NFPGSZj9nqk?si=Khed8K31J-fRX11P"></iframe> -->
+      <!-- <div class="video-container"> -->
+          
+
+     <!-- dodie Fade  -->
+     <!-- <iframe id="dodie" width="560" height="315" src="https://www.youtube.com/embed/NFPGSZj9nqk?enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+         -->
+     <!-- lofi-->
+     <!-- <iframe id="lofi" width="560" height="315" src="https://www.youtube.com/embed/jfKfPfyJRdk?enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media"></iframe> -->
+   
+     <!-- jazz-->
+     <!-- <iframe id="jazz" width="560" height="315" src="https://www.youtube.com/embed/hPqQD7uyEMQ?enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media"></iframe> -->
+     <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/yJqBaZyMvXQ?si=eRo5cLY573_wH-bU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> --> 
+
+          <button id="button">🎙️</button>
+         <!-- <button onclick="togglePlayPause()">⏯️</button>   -->
+             <iframe id="lofi" width="560" height="315" src="https://www.youtube.com/embed/jfKfPfyJRdk?enablejsapi=1"  allow="autoplay;"></iframe>
+             <iframe id="fade" width="560" height="315" src="https://www.youtube.com/embed/NFPGSZj9nqk?enablejsapi=1"  allow="autoplay;"></iframe>
+             <iframe id="jazz" width="560" height="315" src="https://www.youtube.com/embed/yJqBaZyMvXQ?enablejsapi=1"  allow="autoplay;"></iframe>
+             <iframe id="funk" width="560" height="315" src="https://www.youtube.com/embed/fE2I7-50zPs?enablejsapi=1"  allow="autoplay;"></iframe>
+             
+             
+             <!-- </div> -->
+             
+                 
+              </script>
+        
+
+        
+          </div>
+    <div class="voice-interaction">Voice Interaction Content Here</div> 
+
+</div>
+</body>
+    
+
+
+
+    <!-- Bottom buttons -->
+    <!-- <div class="bottom-buttons">
+        <button id="left-seat"><img src="left.png" alt="Left Seat Heating"></button>
+        <button id="front-windshield"><img src="front.png" alt="front windshield fog"></button>
+        <button id="back-windshield"><img src="back.png" alt="back windshield fog"></button>
+        <button id="fan"><img src="fan.png" alt="air conditioner"></button>
+        <button id="tempreture"><img src="tem.png" alt="tempreture"></button>
+        <button id="function"><img src="function.png" alt="funtion"></button>
+        <button id="right-seat"><img src="right.png" alt="Right Seat Heating"></button>
+    </div> -->
+    
+    
+    <script>
+        // Add functionality for the user info
+        document.querySelector('.user-info').addEventListener('click', function() {
+            // Redirect or show the user selection interface
+        });
+        
+        // Example to toggle button states
+        document.querySelectorAll('.bottom-buttons .bottom-button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                btn.classList.toggle('active');
+            });
+        });
+        
+        // Update the real-time clock
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('current-time').innerText = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+        }
+        setInterval(updateTime, 1000);
+
+        var map;
+var directionsService;
+var directionsRenderer;
+var userMarker;
+var carIcon = { url: 'car.png',};
+var waypoints = [];
+
+function initMapWithCenter(center) {
+    directionsService = new google.maps.DirectionsService();
+    directionsRenderer = new google.maps.DirectionsRenderer();
+
+    map = new google.maps.Map(document.getElementById('map-api'), {
+        center: center,
+        zoom: 13,
+        disableDefaultUI: true,
+        mapTypeControl: false,
+        clickableIcons: false,
+    });
+
+    directionsRenderer.setMap(map);
+
+    var input = document.getElementById('autocomplete-input');
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.addListener('place_changed', function() {
+        var place = autocomplete.getPlace();
+        if (place.geometry) {
+            calculateAndDisplayRoute(center, place.geometry.location);
+        }
+    });
+
+    var waypointInput = document.getElementById('waypoint');
+var waypointAutocomplete = new google.maps.places.Autocomplete(waypointInput);
+waypointAutocomplete.addListener('place_changed', function() {
+    var place = waypointAutocomplete.getPlace();
+    if (place.geometry) {
+        waypoints.push({
+            location: place.geometry.location,
+            stopover: true
+        });
+        // 重新计算路线（需要为calculateAndDisplayRoute函数添加支持多个经停点的功能）
+        calculateAndDisplayRoute(map.getCenter(), waypoints);
+        waypointInput.value = '';  // 清除输入框内容
+    }
+});
+
+    map.addListener('bounds_changed', function() {
+        var bounds = map.getBounds();
+        autocomplete.setBounds(bounds);
+    });
+    map.addListener('click', function(e) {
+        calculateAndDisplayRoute(center, e.latLng);
+    });
+    // Watch the user's position
+    watchUserPosition();
+    document.getElementById('next-step').style.display = 'none';
+}
+
+function calculateAndDisplayRoute(start, end) {
+    directionsService.route({
+        origin: start,
+        destination: end,
+        travelMode: 'DRIVING'
+
+    }, function(response, status) {
+        if (status === 'OK') {
+    directionsRenderer.setDirections(response);
+    if (userMarker) {
+        userMarker.setMap(map);  // 重新渲染用户标记
+    }
+    if (response.routes[0] && response.routes[0].legs[0] && response.routes[0].legs[0].steps[0]) {
+    var firstStep = response.routes[0].legs[0].steps[0].instructions;
+
+    // 显示在你的界面上
+    document.getElementById('next-step').innerHTML = firstStep;
+    
+    // 显示next-step元素
+    document.getElementById('next-step').style.display = 'block';
+} else {
+    // 如果没有得到期望的路线信息，隐藏next-step元素
+    document.getElementById('next-step').style.display = 'none';
+}
+} else {
+    console.error('Directions request failed due to ' + status);
+}
+
+    });
+}
+
+function watchUserPosition() {
+    navigator.geolocation.watchPosition(function(position) {
+        var currentLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+        };
+
+        if (!userMarker) {
+            userMarker = new google.maps.Marker({
+                position: currentLocation,
+                map: map,
+                zIndex: 9999, 
+                icon: carIcon,
+            });
+        } else {
+            userMarker.setPosition(currentLocation);
+        }
+
+    }, function(error) {
+        console.error("Error occurred: " + error.message);
+    }, {
+        enableHighAccuracy: true,
+        maximumAge: 1000,
+        timeout: 5000
+    });
+}
+
+
+function initMap() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            initMapWithCenter(pos);
+        }, function() {
+            initMapWithCenter({lat: 57.7089, lng: 11.9746});  // 默认为哥德堡
+        });
+    } else {
+        initMapWithCenter({lat: 57.7089, lng: 11.9746});  // 浏览器不支持地理定位，使用哥德堡作为默认位置
+    }
+    
+}
+document.getElementById('close-btn').addEventListener('click', function() {
+    // 清除输入
+    document.getElementById('autocomplete-input').value = '';
+
+    // 退出导航
+    if(directionsRenderer) {
+        directionsRenderer.setDirections({routes: []});
+    }
+
+    // 隐藏"下一步"提示
+    document.getElementById('next-step').innerText = '';
+    document.getElementById('next-step').style.display = 'none';  // 隐藏next-step框
+});
+
+document.getElementById('preferences-toggle-btn').addEventListener('click', function() {
+    var container = document.getElementById('preferences-container');
+    if (container.style.display === 'none') {
+        container.style.display = 'block';
+    } else {
+        container.style.display = 'none';
+    }
+});
+document.getElementById('avoid-highways').addEventListener('change', function() {
+    calculateAndDisplayRoute(map.getCenter(), waypoints);
+});
+
+document.getElementById('avoid-tolls').addEventListener('change', function() {
+    calculateAndDisplayRoute(map.getCenter(), waypoints);
+});
+
+
+
+
+    </script>
+    <!-- <script type="module" src="src/index.ts"></script> -->
+    <!-- <script  src="music.js"></script> -->
+    <script type="module" src="airconditioner.ts"></script>
+    <!-- <script  src="music.ts"></script> -->
+
 </html>
