@@ -1,0 +1,289 @@
+
+body {
+    background-color: #F4E7FB; 
+    color: #fff; 
+  }
+  
+    #button:hover {
+      background-color: #C3C7F3;
+    }
+    #recommendationButton:hover {
+      background-color: #C3C7F3;
+    }
+    #get_artists_name_ask:hover {
+      background-color: #C3C7F3;
+    }
+    #my_songs:hover {
+      background-color: #C3C7F3;
+    }
+    #create_playlist:hover {
+      background-color: #C3C7F3;
+    }
+    #find_singer:hover {
+      background-color: #C3C7F3;
+    }
+    #erase_playlist:hover {
+      background-color: #C3C7F3;
+    }
+    #reconnect:hover {
+      background-color: #C3C7F3;
+    }
+    #another_playlist:hover {
+      background-color: #C3C7F3;
+    }
+
+
+    
+  
+    #square-container {
+      display: flex;
+      flex-grow: 1;
+      min-height: 100vh;
+      overflow-y: auto;
+      max-height: 80vh;
+      z-index: 1;
+      position: relative;
+    }
+    
+    #playlist_container {
+      width: 400px; 
+      min-height: 100vh;
+      border-radius: 2%;
+      overflow-y: auto;
+      background-color: #B7D1D3; 
+      z-index: 2; 
+      position: fixed; 
+      left: 0; 
+      top: 0; 
+    }
+    
+    #square {
+      width: 95%;
+      max-width: 1390px;
+      padding: 2%;
+      background-color: #F5BCBA;
+      border-radius: 20px;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      bottom: 0;
+      left: 6;
+      position: fixed;
+    }
+    #songplayback_container {
+      width: 400px;
+      height: 50px;
+      padding: 2%;
+      background-color: #701411;
+      border-radius: 20px;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      bottom: 0;
+      left: 5%;
+      position: flex;
+      display: flex;
+
+    }
+    
+    #songplayback_container img {
+      max-height: 200%;
+      margin-left: 340px;
+      margin-top: -5px;
+      border-radius: 5px;
+    }
+    
+    #songplayback_container p {
+      text-align: left; 
+      margin-left: 2px;
+      margin-top: -70px;
+      font-size: 20; 
+    }
+
+    #songplayback_container q {
+      text-align: left;
+      font-size: 10; 
+      margin-right: 310px;
+      font-size: 10;
+
+    }
+    
+    
+    
+    
+    
+
+    @media screen and (min-width: 1700px) {
+      #square {
+        width: 95%;
+        max-width: 1700px;
+        padding: 3%;
+      }
+    }
+    
+
+    button {
+      background-color: #E3AADD;
+      border-radius: 20px;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      position: absolute; 
+      bottom: 2px;
+      left: 80%;
+      transform: translateX(-50%); 
+    }
+
+    #recommendationButton {
+      position:relative; 
+      align-self: flex-end;
+      margin: 10px; 
+      bottom: 10px;
+    }
+    #get_artists_name_ask {
+      position:relative; 
+      align-self: flex-end;
+      margin: 10px;
+      bottom: 10px;
+    }
+    #my_songs {
+      position:relative; 
+      align-self: flex-end;
+      margin: 10px;
+      bottom: 10px;
+    }
+    #create_playlist {
+      position:relative; 
+      align-self: flex-end;
+      margin: 10px;
+      bottom: 10px;
+    }
+    #find_singer {
+      position:relative; 
+      align-self:flex-end;
+      margin:10px;
+      bottom: 10px;
+    }
+    #erase_playlist {
+      position:relative; 
+      align-self: flex-end;
+      margin: 10px;
+      bottom: 10px;
+    }
+    #reconnect {
+      position:relative; 
+      align-self: flex-end;
+      margin: 10px;
+      bottom: 10px;
+    }
+    #another_playlist {
+      position:relative; 
+      align-self: flex-end;
+      margin: 10px;
+      bottom: 10px;
+    }
+
+
+
+
+  #message-container {
+    padding: 10px; 
+  }
+  
+  .intro-text {
+    font-family: 'Protipo Italic', arial, helvetica, sans-serif;
+    animation: slideIn 0.7s ease-out; 
+    color: #ffffff;
+    font-size: large;
+    font-weight: bold;
+    max-width: 45%;
+  }
+  .intro-text_2 {
+    font-family: 'Protipo Italic', arial, helvetica, sans-serif;
+    animation: slideIn 0.7s ease-out; 
+    color: #ffffff;
+    font-size: large;
+    font-weight: bold;
+    max-width: 45%;
+  }
+  
+  .intro-text_3 {
+    font-family: 'Protipo Italic', arial, helvetica, sans-serif;
+    animation: slideIn 0.7s ease-out; 
+    color: #ffffff;
+    font-size: large;
+    font-weight: bold;
+    max-width: 45%;
+  }
+  
+  
+  .song {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    color: #000;
+    border-radius: 15px;
+    margin-top: 10px;
+    animation: slideIn 1s ease-out, colorChange 4s infinite alternate;
+    max-width: 40%;
+  }
+  
+  .song::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #747ee9; 
+    z-index: -1;
+    filter: blur(30px);
+  }
+  
+  .song img {
+    max-height: 100%;
+    margin-left: 10px;
+    border-radius: 10px;
+  }
+  
+  
+  @keyframes slideIn {
+    from {
+      transform: translateX(-100%); 
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes colorChange {
+    0% {
+      background-color: #F4E7FB;
+    }
+    50% {
+      background-color: #C3C7F3;
+    }
+    100% {
+      background-color: #c8c8c8; 
+    }
+  }
+  .custom-button {
+    background-color: #E3AADD;
+    color: #fff; 
+    padding: 10px 20px; 
+    border: none; 
+    cursor: pointer; 
+    margin: 10px; 
+    border-radius: 5px; 
+  }
+  
+  .custom-button:hover {
+    background-color: #C3C7F3; 
+  }
+  
+ 
