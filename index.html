@@ -1,14 +1,64 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>SpeechState DM sandbox</title>
+    <title>Draw Your Next Anime!</title>
     <meta charset="UTF-8" />
   </head>
-
   <body>
+    <div id="imageContainer">
+  <img id="animeImageElementId" src="./src/empty.png" alt="AnimeImage" class="img" />
+</div>
+<div id="characterImagesContainer">
+  <img id="character1ImageElement" src="./src/empty.png"/>
+  <img id="character2ImageElement" src="./src/empty.png"/>
+  <img id="character3ImageElement" src="./src/empty.png"/>
+</div>
+<div id="personImagesContainer">
+  <img id="person1ImageElement" src="./src/empty.png"/>
+  <img id="person2ImageElement" src="./src/empty.png"/>
+  <img id="person3ImageElement" src="./src/empty.png"/>
+</div>
+<div id="animeImagesContainer">
+  <img id="anime1ImageElement" src="./src/empty.png"/>
+  <img id="anime2ImageElement" src="./src/empty.png"/>
+  <img id="anime3ImageElement" src="./src/empty.png"/>
+</div>
+<h3 id="choices">Here's what you can ask about:<br><br>general information<br>characters<br>staff<br>similar anime<br>plot<br></h3>
+<h3 id="generalChoices">Here's what you can ask about:<br><br>release date<br>duration<br>number of episodes<br>main genre<br>popularity score<br>ranking<br>rating<br>score<br>status<br>type</h3>
+<button class="button2" id="generate">GENERATE NEW ANIME</button>
+  <h3 id="wouldYouLike">Would you like to know more about it?</h3>
+  <button class="button1" id="yes">YES</button>
+  <button class="button1" id="no">NO</button>
+    <img id="point" src="./src/point.gif" alt="point" class="gif1" />
+    <h1 id="h1">Draw Your Next Anime!</h1>
+    <h2 id="h2">次のアニメを描いて！</h2>
+    <h3 id="animeTitleElementId"></h3>
+    <h3 id="character1NameElement"></h3>
+    <h3 id="character2NameElement"></h3>
+    <h3 id="character3NameElement"></h3>
+    <h3 id="person1NameElement"></h3>
+    <h3 id="person2NameElement"></h3>
+    <h3 id="person3NameElement"></h3>
+    <h3 id="person1RoleElement"></h3>
+    <h3 id="person2RoleElement"></h3>
+    <h3 id="person3RoleElement"></h3>
+    <h3 id="anime1NameElement"></h3>
+    <h3 id="anime2NameElement"></h3>
+    <h3 id="anime3NameElement"></h3>
+    <h3 id="aired"></h3>
+    <h3 id="duration"></h3>
+    <h3 id="episodes"></h3>
+    <h3 id="genre"></h3>
+    <h3 id="popularity"></h3>
+    <h3 id="rank"></h3>
+    <h3 id="rating"></h3>
+    <h3 id="score"></h3>
+    <h3 id="status"></h3>
+    <h3 id="type"></h3>
+    <img id="sailor" src="./src/sailor.gif" alt="sailor" class="gif"></img>
     <div id="app"><button id="button"></button></div>
     <iframe data-xstate style="position: absolute; height: 100%; width: 100%; border: 2px"></iframe>
+    <link href="./src/styles.css" rel="stylesheet" />
     <script type="module" src="src/index.ts"></script>
-    
   </body>
 </html>
