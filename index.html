@@ -1,64 +1,107 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>grid</title>
+    <title>AleAdvisor</title>
     <meta charset="UTF-8" />
+
     <style>
-      .correct-click {
-    border-color: green !important;
+      .svg-container {
+    position: relative;
+    z-index: 2;
+    width: 720px; 
+    height: 600px;
 }
 
-  .incorrect-click {
-      border-color: red !important;
-  }
-      #container {
-        margin: 50px;
-        display: grid;
-        grid-template-columns: repeat(3, 100px);
-      }
-      #container.active > div:hover {
-        background-color: lightgoldenrodyellow;
-        cursor: cell;
-      }
-      #container > div {
-        line-height: 100px;
-        font-size: xxx-large;
-        border: 2px solid white;
-        background-color: whitesmoke;
-        text-align: center;
-      }
+.overlay-img {
+    position: absolute;
+    z-index: 1;
+    top: 115;
+    left: 9;
+    width: 720px; 
+    height: 600px;  
+}
+
+#left-eye-back, #right-eye-back {
+            fill: #fff;
+            stroke: #000;
+            stroke-width: 2;
+        }
+
+        #left-eye, #right-eye {
+            fill: #000;
+        }
+
+        circle {
+            fill: #f8b4f9;
+        }
+
+        path {
+            fill: none;
+            stroke: #000;
+            stroke-width: 3;
+        }
+
+        #mouth-bottom {
+            fill: #fff0;
+        }
+        #mouth-top {
+            fill: #fff0;
+        }
+        #button {
+    z-index: 10; 
+    position: relative; 
+}
+
     </style>
-  </head>
-  <body>
-    <script type="module" src="src/index2.ts"></script>
-    <div id="container" class="active">
-      <div data-grid-item="1">🦡</div>
-      <div data-grid-item="2">🍌</div>
-      <div data-grid-item="3">📖</div>
-      <div data-grid-item="4">🦋</div>
-      <div data-grid-item="5">🚌</div>
-      <div data-grid-item="6">💣</div>
-      <div data-grid-item="7">🐛</div>
-      <div data-grid-item="8">🦬</div>
-      <div data-grid-item="9">🦇</div>
-    </div>
+</head>
+
+
+<body>
+    <script type="module" src="src/AleAdvisor.ts"></script>
+
+    <div class="svg-container">
+    <!-- SVG Face -->
+    <svg width="720" height="600" xmlns="http://www.w3.org/2000/svg">
+      <!-- Group everything and apply the transform -->
+      <g transform="translate(300,90)">
+        <path d="M 120,-20 Q 95,0 100,20" fill="none" stroke="#000" stroke-width="3" />
+          <!-- Face Circle -->
+          <circle cx="100" cy="100" r="90" fill="#FFDAB9" stroke="#000" stroke-width="2" />
+          <!-- Left Eye Background -->
+          <circle id="left-eye-back" cx="70" cy="80" r="35" />
+          <!-- Right Eye Background -->
+          <circle id="right-eye-back" cx="130" cy="80" r="25" />
+          <!-- Left Eye -->
+          <circle id="left-eye" cx="70" cy="80" r="16" />
+          <!-- Right Eye -->
+          <circle id="right-eye" cx="130" cy="80" r="13" />
+          <!-- Mouth (top line) -->
+          <path id="mouth-top" d="M 60,138 Q 100,155 140,138"></path>
+          <!-- Mouth (bottom line) -->
+          <path id="mouth-bottom" d="M 60,138 Q 100,155 140,138" />
+
+          
+      </g>
+  </svg>
+
+  <img class="overlay-img" src="PIM.svg" />
+  
+</div>
+
+
     <div id="app"><button id="button"></button></div>
+
     <iframe data-xstate style="position: absolute; height: 100%; width: 100%; border: 2px"></iframe>
-    <script type = "module">
-      import service from './src/index2.ts';
+    
+
+    <script type="module">
+      import service from './src/AleAdvisor.ts';
       document.addEventListener('DOMContentLoaded', function() {
-        let gridItems = document.querySelectorAll('#container > div');
         
-        gridItems.forEach(item => {
-          item.addEventListener('click', function() {
-            //alert('You clicked on grid item ' + this.dataset.gridItem);
-            service.send({
-                type: 'GRID_ITEM_CLICKED',
-                gridItem: this.dataset.gridItem
-            });
-          });
-        });
       });
+
     </script>
+    
+
   </body>
 </html>
