@@ -1,0 +1,347 @@
+@import url('https://fonts.googleapis.com/css2?family=Sedgwick+Ave+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DotGothic16&display=swap');
+
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#anime1NameElement {
+  font-family: "Press Start 2P";
+  font-size: 10px;
+  position: fixed;
+  top: 180px;
+  left: 560px
+}
+
+#anime2NameElement {
+  font-family: "Press Start 2P";
+  font-size: 10px;
+  position: fixed;
+  top: 180px;
+  left: 765px
+}
+
+#anime3NameElement {
+  font-family: "Press Start 2P";
+  font-size: 10px;
+  position: fixed;
+  top: 180px;
+  left: 950px;
+}
+
+#anime1ImageElement, #anime2ImageElement, #anime3ImageElement {
+  width: 150px;
+  height: auto;
+}
+
+#animeImagesContainer {
+  display: none;
+  position: fixed;
+  top: 210px;
+  left: 560px;
+  gap: 50px;
+}
+
+
+#person1RoleElement {
+  font-family: "Press Start 2P";
+  font-size: 10px;
+  position: fixed;
+  top: 150px;
+  left: 560px
+}
+
+#person2RoleElement {
+  font-family: "Press Start 2P";
+  font-size: 10px;
+  position: fixed;
+  top: 150px;
+  left: 760px;
+}
+
+#person3RoleElement {
+  font-family: "Press Start 2P";
+  font-size: 10px;
+  position: fixed;
+  top: 150px;
+  left: 960px;
+}
+
+
+#person1NameElement {
+  font-family: "Press Start 2P";
+  font-size: 10px;
+  position: fixed;
+  top: 180px;
+  left: 560px;
+}
+
+#person2NameElement {
+  font-family: "Press Start 2P";
+  font-size: 10px;
+  position: fixed;
+  top: 180px;
+  left: 765px
+}
+
+#person3NameElement {
+  font-family: "Press Start 2P";
+  font-size: 10px;
+  position: fixed;
+  top: 180px;
+  left: 960px
+}
+
+#person1ImageElement, #person2ImageElement, #person3ImageElement {
+  width: 150px;
+  height: auto;
+}
+
+#personImagesContainer {
+  display: none;
+  position: fixed;
+  top: 210px;
+  left: 560px;
+  gap: 50px;
+}
+
+#character1NameElement {
+  font-family: "Press Start 2P";
+  font-size: 10px;
+  position: fixed;
+  top: 180px;
+  left: 560px
+}
+
+#character2NameElement {
+  font-family: "Press Start 2P";
+  font-size: 10px;
+  position: fixed;
+  top: 180px;
+  left: 765px
+}
+
+#character3NameElement {
+  font-family: "Press Start 2P";
+  font-size: 10px;
+  position: fixed;
+  top: 180px;
+  left: 960px
+}
+
+#character1ImageElement, #character2ImageElement, #character3ImageElement {
+  width: 150px;
+  height: auto;
+}
+
+#characterImagesContainer {
+  display: none;
+  position: fixed;
+  top: 210px;
+  left: 560px;
+  gap: 50px;
+}
+
+#generalChoices {
+  display: none;
+  font-size: 20px;
+  font-family: 'DotGothic16';
+  position: fixed;
+  top: 150px;
+  left: 680px;
+}
+
+#aired, #duration, #episodes, #genre, #popularity, #rank, #rating, #score, #status, #type {
+  display: none;
+  font-family: 'DotGothic16';
+  font-size: 25px;
+  position: fixed;
+  top: 125px;
+  left: 500px;
+}
+
+#choices {
+  display: none;
+  font-size: 25px;
+  font-family: 'DotGothic16';
+  position: fixed;
+  top: 150px;
+  left: 680px;
+}
+
+#generate {
+  cursor: pointer;
+  animation: none;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(45deg, #00ffff, hsl(298, 88%, 73%));
+  font-size: 25px;
+  border: 2px dashed linear-gradient(45deg, #00ffff, hsl(327, 88%, 73%));
+  font-family: 'DotGothic16';
+  position: fixed;
+  top: 10px;
+  left: 850px;
+  width: 300px;
+  height: 39px;
+  border-radius: 10%;
+  background-color: hsla(327, 85%, 66%, 0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+#wouldYouLike {
+  display: none;
+  font-family: 'DotGothic16';
+  position: fixed;
+  top: 200px;
+  left: 680px;
+}
+
+#yes {
+  cursor: pointer;
+  animation: none;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(45deg, #00ffff, hsl(298, 88%, 73%));
+  font-size: 25px;
+  border: 2px dashed linear-gradient(45deg, #00ffff, hsl(327, 88%, 73%));
+  font-family: 'DotGothic16';
+  position: fixed;
+  top: 280;
+  left: 700px;
+  width: 300px;
+  height: 39px;
+  border-radius: 10%;
+  background-color: hsla(327, 85%, 66%, 0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+#no {
+  cursor: pointer;
+  animation: none;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(45deg, #00ffff, hsl(298, 88%, 73%));
+  font-size: 25px;
+  border: 2px dashed linear-gradient(45deg, #00ffff, hsl(327, 88%, 73%));
+  font-family: 'DotGothic16';
+  position: fixed;
+  top: 330px;
+  left: 700px;
+  width: 300px;
+  height: 39px;
+  border-radius: 10%;
+  background-color: hsla(327, 85%, 66%, 0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.gif {
+  width: 300px;
+    height: auto;
+    position: fixed;
+    top: 15px;
+    left: 750px;
+    z-index: 4;
+}
+
+.gif1 {
+  width: 200px;
+  position: absolute;
+  top: 225px;
+  left: 500px;
+display: none;
+}
+
+.img {
+  top: 130px;
+  left: 120px;
+  width: 300px;
+  height: auto;
+  position: fixed;
+  z-index: 5;
+}
+
+html, body {
+  height: 100vh;
+  background: hsl(327, 88%, 73%);
+}
+
+@keyframes retroAnimation {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+button {
+  cursor: pointer;
+  animation: retroAnimation 2s infinite;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(45deg, #00ffff, hsl(298, 88%, 73%));
+  font-size: 30px;
+  border: 2px dashed linear-gradient(45deg, #00ffff, hsl(327, 88%, 73%));
+  font-family: 'DotGothic16';
+  position: fixed;
+  top: 250px;
+  left: 351px;
+  width: 370px;
+  height: 39px;
+  border-radius: 10%;
+  background-color: hsla(327, 85%, 66%, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+}
+
+h1 {
+  font-size: 50px;
+  display: flex;
+  font-family: 'Sedgwick Ave Display';
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2;
+}
+
+h2 {
+  font-size: 30px;
+  display: flex;
+  font-family: 'DotGothic16';
+  position: fixed;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 1;
+}
+
+#animeTitleElementId {
+  font-size: 30px;
+  font-family: 'Sedgwick Ave Display';
+  position: fixed;
+  top: 5%;
+  left: 5%;
+  z-index: 6;
+}
+
+[data-xstate] {
+  justify-self: stretch;
+  align-self: stretch;
+  border: none;
+}
