@@ -4,9 +4,9 @@ from flask import Flask, request
 import urllib.parse  
 
 # Spotify API credentials
-client_id = '94febbda162841f7b9130ba4568bc79b' #app client id
-client_secret = '77321b467db5465ba4378d0e0b368062' #put your client secret from the app here
-redirect_uri = 'http://localhost:8890/callback'  #put your callback url here
+client_id = '' #app client id
+client_secret = '' #put your client secret from the app here
+redirect_uri = ''  #put your callback url here
 
 
 scopes = 'user-top-read user-modify-playback-state user-read-currently-playing playlist-modify-public playlist-modify-private'  # Add  scopes as needed
