@@ -2,9 +2,9 @@ import base64
 import requests
 
 
-client_id = '94febbda162841f7b9130ba4568bc79b' #put your app client id here
-client_secret = '77321b467db5465ba4378d0e0b368062' #put your client secret here
-redirect_uri = 'http://localhost:8890/callback'  #put the same callback info as in the server.py
+client_id = '' #put your app client id here
+client_secret = '' #put your client secret here
+redirect_uri = ''  #put the same callback info as in the server.py
 
 # Specify the scopes you want as a space-separated string
 scopes = 'user-top-read user-modify-playback-state user-read-currently-playing playlist-modify-public playlist-modify-private'  
