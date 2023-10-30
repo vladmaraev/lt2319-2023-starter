@@ -87,7 +87,7 @@ const grammar: Grammar = {
       sentiment: "happy",
     },
   },
-  "can you tell me a bit more about the author?": {
+  "can you tell me a bit more about the author": {
     entities: {
       what: "author",
     },
@@ -102,7 +102,7 @@ const grammar: Grammar = {
       sentiment: "happy",
     },
   },
-  "sounds interesting. can you tell me about the author as well?": {
+  "sounds interesting. can you tell me about the author as well": {
     entities: {
       what: "author",
     },
@@ -142,7 +142,7 @@ const grammar: Grammar = {
       answer: "no"
     },
   },
-  "is there anything else?": {
+  "is there anything else": {
     entities: {
       what: "otherBook",
       answer: "no"
@@ -159,7 +159,7 @@ const grammar: Grammar = {
       what: "otherAuthor",
     },
   },
-  "is there another book by this author?": {
+  "is there another book by this author": {
     entities: {
       what: "otherBook",
     },
@@ -184,28 +184,28 @@ const grammar: Grammar = {
       what: "askAgain",
     },
   },
-  "what other books has this author written?": {
+  "what other books has this author written": {
     entities: {
       what: "otherBook",
     },
   },
-  "have they written anything else?": {
+  "have they written anything else": {
     entities: {
       what: "otherBook",
     },
   },
-  "what other books have they written?": {
+  "what other books have they written": {
     entities: {
       what: "otherBook",
       answer: "no"
     },
   },
-  "what other books has he written?": {
+  "what other books has he written": {
     entities: {
       what: "otherBook",
     },
   },
-  "what other books has she written?": {
+  "what other books has she written": {
     entities: {
       what: "otherBook",
       answer: "no"
@@ -240,7 +240,7 @@ const grammar: Grammar = {
       answer: "no"
     },
   },
-  "do you have something else?": {
+  "do you have something else": {
     entities: {
       what: "otherAuthor",
     },
@@ -261,6 +261,18 @@ const grammar: Grammar = {
     },
   },
   "none of these": {
+    entities: {
+      what: "otherAuthor",
+      answer: "no"
+    },
+  },
+  "none": {
+    entities: {
+      what: "otherAuthor",
+      answer: "no"
+    },
+  },
+  "something else": {
     entities: {
       what: "otherAuthor",
       answer: "no"
@@ -290,7 +302,7 @@ const grammar: Grammar = {
       answer: "no"
     },
   },
-  "any other options?": {
+  "any other options": {
     entities: {
       what: "otherAuthor",
     },
@@ -300,12 +312,12 @@ const grammar: Grammar = {
       what: "otherAuthor",
     },
   },
-  "can you suggest me something similar?": {
+  "can you suggest me something similar": {
     entities: {
       what: "otherAuthor",
     },
   },
-  "i have already read that, but is there something similar?": {
+  "i have already read that, but is there something similar": {
     entities: {
       what: "otherAuthor",
     },
@@ -316,31 +328,31 @@ const grammar: Grammar = {
       answer: "no"
     },
   },
-  "i love this author": {
-    entities: {
-      what: "author"
-    },
-  },
-  "can you tell me more about the author?": {
-    entities: {
-      what: "author"
-    },
-  },
-  "i would like to know about the author": {
-    entities: {
-      what: "author"
-    },
-  },
-  "i have never read anything by this author": {
-    entities: {
-      what: "author"
-    },
-  },
-  "i haven't heard of this author before": {
-    entities: {
-      what: "author"
-    },
-  },
+  // "i love this author": {
+  //   entities: {
+  //     what: "author"
+  //   },
+  // },
+  // "can you tell me more about the author?": {
+  //   entities: {
+  //     what: "author"
+  //   },
+  // },
+  // "i would like to know about the author": {
+  //   entities: {
+  //     what: "author"
+  //   },
+  // },
+  // "i have never read anything by this author": {
+  //   entities: {
+  //     what: "author"
+  //   },
+  // },
+  // "i haven't heard of this author before": {
+  //   entities: {
+  //     what: "author"
+  //   },
+  // },
   "i don't want to know about these things": {
     entities: {
       answer: "no"
@@ -401,6 +413,7 @@ const grammar: Grammar = {
   "ok": {
     entities: {
       answer: "yes",
+      sentiment: "happy"
     },
   },
   "sure": {
@@ -446,17 +459,17 @@ const grammar: Grammar = {
       what: "plot"
     },
   },
-  "what is it about?": {
+  "what is it about": {
     entities: {
       what: "plot"
     },
   },
-  "can you tell me what it is about?": {
+  "can you tell me what it is about": {
     entities: {
       what: "plot"
     },
   },
-  "what happens in this book?": {
+  "what happens in this book": {
     entities: {
       what: "plot"
     },
@@ -513,38 +526,44 @@ const grammar: Grammar = {
 
 export function displayTitles(bookNames: any) {
   const elem = document.getElementById("image");
-    if (elem) {
-      elem.innerHTML = '';
+  if (elem) {
+    elem.innerHTML = '';
+  }
+  const container = document.getElementById("container");
+  container.innerHTML = '';
+  if (container) {
+    for (let i = 0; i < bookNames.length; i++) {
+      const bookDiv = document.createElement("div");
+      console.log("Element created");
+      bookDiv.textContent = bookNames[i];
+      bookDiv.className = "book-image";
+      container.appendChild(bookDiv);
+      console.log(bookNames[i])
+      const title = bookNames[i]
+      bookDiv.onclick = () => actor.send({ type: "SELECTED", id: "book", name: bookNames[i] });
     }
-    const container = document.getElementById("container");
-    container.innerHTML = '';
-    if (container) {
-      for (let i = 0; i < bookNames.length; i++) {
-        const bookDiv = document.createElement("div");
-        console.log("Element created");
-        bookDiv.textContent = bookNames[i];
-        bookDiv.className = "book-image";
-        container.appendChild(bookDiv);
-        console.log(bookNames[i])
-        const title = bookNames[i]
-        bookDiv.onclick = () => raise(({ context, event }) => ({ type: 'SELECTED', id: "book", name: bookNames[i] }));
-      }
-    }
+    const bookDiv = document.createElement("div");
+    console.log("Element created");
+    bookDiv.textContent = "Something else ...";
+    bookDiv.className = "book-image";
+    container.appendChild(bookDiv);
+    bookDiv.onclick = () => actor.send({ type: "SELECTED", id: "book", name: "I want to read something else" });
+  }
 }
 
 export function getBookCover(isbn: any, size: any) {
-    const elem = document.getElementById("image");
-    const container = document.getElementById("container");
-    container.innerHTML = '';
-    if (elem) {
-      elem.innerHTML = '';
-      const img = elem.innerHTML = `<img src="https://covers.openlibrary.org/b/isbn/${isbn}-${size}.jpg" />`;
-      return img
-    }
+  const elem = document.getElementById("image");
+  const container = document.getElementById("container");
+  container.innerHTML = '';
+  if (elem) {
+    elem.innerHTML = '';
+    const img = elem.innerHTML = `<img src="https://covers.openlibrary.org/b/isbn/${isbn}-${size}.jpg" />`;
+    return img
   }
+}
 
 const lower = (sentence: string) => {
-  let u = sentence.toLowerCase().replace(/\.$/g, "");
+  let u = sentence.toLowerCase().replace(/[.,!?;:]+/g, "");
   return u
 }
 
@@ -569,7 +588,9 @@ const findWhichBook = (sent: any, otherBooks: any) => {
 export function extractWord(sent: any, word: any, secondWord?: any) {
   const lowercasedSentence = lower(sent);
   const words = lowercasedSentence.split(' ');
+  console.log('sentence :', words)
   if (words.includes(word)) {
+    console.log("true")
     return true
   } else {
     return false
@@ -593,18 +614,19 @@ const dmMachine = createMachine(
                   guard: ({ context, event }) => event.id === "book",
                   actions: assign({
                     book: ({ event }) => event.name,
-                    prompt: ({ context, event }) => `the book I want to read now is ${context.book}. Give me a json format with the entities bookName, bookAuthor, bookGenre, bookMood, bookISBN, bookPlot, and authorInfo.`,
+                    prompt: ({ context, event }) => `the book I want to read now is ${context.book}. Give me a json format with the entities bookName, bookAuthor, bookGenre, bookMood, bookISBN, bookPlot, and authorInfo. Also include a timesInState entity with the value "four"`,
+                    gptUtterance: ({ context }) => 'Interesting choice! I will fetch it from the back!'
                   }),
                 },
                 {
                   target: "openInfoPage",
-                  guard: ({ context, event }) => event.id === "image",
                 },
               ],
             },
           },
           openInfoPage: {
-            entry: ({ context }) => {
+            entry: ({ context, event }) => {
+              //context.bookISBN = event.id
               window.open(`https://openlibrary.org/isbn/${context.bookISBN}`);
             },
           }
@@ -656,19 +678,27 @@ const dmMachine = createMachine(
                           messages: ({ context, event }) => ["What are you in the mood for reading today?"],
                           prompt: ({ context }) => `the last utterance contains what I seek to read. 
                           Give me your suggestion of one book in a JSON file with entities like bookName, bookAuthor, bookGenre, bookMood, bookISBN, bookPlot, and authorInfo. The entity values can also be a list, but don't nest. bookISBN needs to be accurate and corresponding to the book you're giving
-                          Be diverse/unpredictable and give the JSON file straight away, don't answer if the utterance is a question`,
+                          Be diverse/unpredictable and give me only the JSON. Do not answer in any case`,
                           time: ({ context }) => 1,
+                          gptUtterance: ({ context }) => 'Haah! Ok, let me check my book collection'
                         }),
                       ],
                     }],
                 },
               },
               chatGPT: {
-                entry: "filler.pause",
+                entry: ({ context }) => {
+                  context.spstRef.send({
+                    type: "SPEAK",
+                    value: { utterance: `${context.gptUtterance}` },
+                  });
+                },
                 invoke: {
                   src: fromPromise(async ({ input }) => {
-                    const userInput = input.lastResult[0].utterance;
-                    input.messages.push(userInput);
+                    if (input.lastResult) {
+                      const userInput = input.lastResult[0].utterance;
+                      input.messages.push(userInput);
+                    }
                     const gptAnswer = await fetchFromChatGPT(`${input.messages}. ${input.prompt}`, 250);
                     return gptAnswer;
                   }),
@@ -710,27 +740,6 @@ const dmMachine = createMachine(
                     value: { utterance: `${assistantMessage}` },
                   });
                 },
-                // invoke: {
-                //   src: fromPromise(async ({ input }) => {
-                //     const title = input.bookName;
-                //     const data = await getBooks(title, input.author);
-                //     return data;
-                //   }),
-                //   input: ({ context, event}) => ({
-                //     bookName: context.bookName,
-                //     author: context.bookAuthor
-                //   }),
-                //   onDone: {
-                //     actions: [
-                //       ({ event }) => event.output,
-                //       assign({
-                //         bookPageCount: ({ context, event }) => event.output.items[0].volumeInfo.pageCount,
-                //         previewLink: ({  })
-                //       }),
-                //       ({ context }) => console.log("isbn from api: ", context.bookISBN),
-                //     ],
-                //   },
-                // },
                 on: {
                   SPEAK_COMPLETE: [{
                     target: "suggestion",
@@ -793,12 +802,33 @@ const dmMachine = createMachine(
                     value: { utterance: `${assistantMessage}` },
                   });
                 },
+                invoke: {
+                  src: fromPromise(async ({ input }) => {
+                    const title = input.bookName;
+                    const data = await getBooks(title, input.author);
+                    return data;
+                  }),
+                  input: ({ context, event }) => ({
+                    bookName: context.bookName,
+                    author: context.bookAuthor
+                  }),
+                  onDone: {
+                    actions: [
+                      ({ event }) => event.output,
+                      assign({
+                        bookPageCount: ({ context, event }) => event.output.items[0].volumeInfo.pageCount,
+                        previewLink: ({ context, event }) => event.output.items[0].volumeInfo.previewLink,
+                        thumbnail: ({ context, event }) => event.output.items[0].volumeInfo.imageLinks.thumbnail
+                      }),
+                      ({ context }) => console.log("isbn from api: ", context.bookISBN),
+                    ],
+                  },
+                },
                 on: { SPEAK_COMPLETE: "yesNo" }
               },
               booksByAuthor: {
                 entry: ({ context }) => {
-                  let titles = displayTitles(context.otherBooks)
-                  titles
+                  displayTitles(context.otherBooks)
                   let assistantMessage = `These are a couple of the other books ${context.bookAuthor} has written. ${context.otherBooks}. Which one would you like to read?`
                   context.messages.push(assistantMessage)
                   context.spstRef.send({
@@ -819,6 +849,27 @@ const dmMachine = createMachine(
                     value: { utterance: `${assistantMessage}` },
                   });
                 },
+                invoke: {
+                  src: fromPromise(async ({ input }) => {
+                    const title = input.bookName;
+                    const data = await getBooks(title, input.author);
+                    return data;
+                  }),
+                  input: ({ context, event }) => ({
+                    bookName: context.bookName,
+                    author: context.bookAuthor
+                  }),
+                  onDone: {
+                    actions: [
+                      ({ event }) => event.output,
+                      assign({
+                        bookPageCount: ({ context, event }) => event.output.items[0].volumeInfo.pageCount,
+                        previewLink: ({ context, event }) => event.output.items[0].volumeInfo.previewLink
+                      }),
+                      ({ context }) => console.log("isbn from api: ", context.bookISBN),
+                    ],
+                  },
+                },
                 on: { SPEAK_COMPLETE: "yesNo" }
               },
               whichBookFound: {
@@ -831,6 +882,28 @@ const dmMachine = createMachine(
                     type: "SPEAK",
                     value: { utterance: `${assistantMessage}` },
                   });
+                }, invoke: {
+                  src: fromPromise(async ({ input }) => {
+                    const title = input.bookName;
+                    const data = await getBooks(title, input.author);
+                    return data;
+                  }),
+                  input: ({ context, event }) => ({
+                    bookName: context.bookName,
+                    author: context.bookAuthor
+                  }),
+                  onDone: {
+                    actions: [
+                      ({ event }) => event.output,
+                      assign({
+                        bookPageCount: ({ context, event }) => event.output.items[0].volumeInfo.pageCount,
+                        previewLink: ({ context, event }) => event.output.items[0].volumeInfo.previewLink,
+                        bookISBN: ({ context, event }) => event.output.items[0].volumeInfo.industryIdentifiers.identifier,
+                        gptUtterance: ({ context }) => 'Interesting choice! I will fetch it from the back!'
+                      }),
+                      ({ context }) => console.log("isbn from api: ", context.bookISBN),
+                    ],
+                  },
                 },
                 on: { SPEAK_COMPLETE: "yesNo" }
               },
@@ -865,30 +938,42 @@ const dmMachine = createMachine(
                           target: "#root.DialogueManager.Ready.chatGPT",
                           guard: ({ context, event }) => {
                             const sent = lower(event.value[0].utterance);
-                            if (sent in grammar) {
-                              if (grammar[sent].entities.what == "otherBook" || extractWord(sent, "written", "else")) {
+                            if (extractWord(sent, "other", "books"), extractWord(sent, "written")) {
+                              context.prompt = `Please provide a JSON response that includes a list of only 3 books (entities: otherBooks) written by ${context.bookAuthor} (entities: bookAuthor) but exclude ${context.bookName}. Additionally, include the entity 'secondTimeInState' with the value 'second.' For the 'bookISBN' entity, I want a list of valid ISBNs corresponding to the books in the 'otherBooks' list. Please make sure to format this list without nesting. In case multiple ISBNs are found, place them in a single list`
+                              return true
+                            } else if (extractWord(sent, "similar"), extractWord(sent, "don't", "like")) {
+                              context.prompt = `I have already read ${context.bookName} by ${context.bookAuthor} or you suggested it too many times or I don't like the author. 
+                            Give me only one different one. Give the answer in a JSON format with the entities bookName, bookMood, bookGenre, bookAuthor, bookPlot, authorInfo, and bookISBN.
+                            Also an entity thirdTimeInState with the value "third"`
+                              return true
+                            } else if (sent in grammar) {
+                              if (grammar[sent].entities.what == "otherBook") {
                                 context.prompt = `Please provide a JSON response that includes a list of only 3 books (entities: otherBooks) written by ${context.bookAuthor} (entities: bookAuthor) but exclude ${context.bookName}. Additionally, include the entity 'secondTimeInState' with the value 'second.' For the 'bookISBN' entity, I want a list of valid ISBNs corresponding to the books in the 'otherBooks' list. Please make sure to format this list without nesting. In case multiple ISBNs are found, place them in a single list`
                                 return true
                               }
-                              else if (grammar[sent].entities.what == "otherAuthor" || extractWord(sent, "something", "similar") || extractWord(sent, "similar")) {
+                              else if (grammar[sent].entities.what == "otherAuthor") {
                                 context.prompt = `I have already read ${context.bookName} by ${context.bookAuthor} or you suggested it too many times or I don't like the author. 
                             Give me only one different one. Give the answer in a JSON format with the entities bookName, bookMood, bookGenre, bookAuthor, bookPlot, authorInfo, and bookISBN.
                             Also an entity thirdTimeInState with the value "third"`
                                 return true
                               }
                             }
-                            return false
+                            else
+                              return false
                           },
                           actions: [assign({
                             lastResult: ({ context, event }) => event.value,
-                            time: ({ context }) => 0
+                            time: ({ context }) => 0,
+                            gptUtterance: ({ context }) => 'Hmm ... Let me check my shelves again real quick'
                           })]
                         },
                         {
                           target: "#root.DialogueManager.Ready.plot",
                           guard: ({ context, event }) => {
                             const sent = lower(event.value[0].utterance);
-                            if (sent in grammar) {
+                            if (extractWord(sent, "plot")) {
+                              return true
+                            } else if (sent in grammar) {
                               if (grammar[sent].entities.what == "plot") {
                                 return true
                               }
@@ -903,10 +988,22 @@ const dmMachine = createMachine(
                           ]
                         },
                         {
+                          target: 'pages',
+                          guard: ({ context, event }) => {
+                            const sent = lower(event.value[0].utterance);
+                            if (extractWord(sent, "pages")) {
+                              return true
+                            }
+                            return false
+                          },
+                        },
+                        {
                           target: 'author',
                           guard: ({ context, event }) => {
                             const sent = lower(event.value[0].utterance);
-                            if (sent in grammar) {
+                            if (extractWord(sent, "author")) {
+                              return true
+                            } else if (sent in grammar) {
                               if (grammar[sent].entities.what == "author") {
                                 return true
                               }
@@ -918,6 +1015,9 @@ const dmMachine = createMachine(
                           target: 'prompt',
                           guard: ({ context, event }) => {
                             const sent = lower(event.value[0].utterance);
+                            if (extractWord(sent, "like")) {
+                              return true
+                            }
                             if (sent in grammar) {
                               if (grammar[sent].entities.sentiment == "happy") {
                                 return true
@@ -930,11 +1030,9 @@ const dmMachine = createMachine(
                           target: 'sayBoth',
                           guard: ({ context, event }) => {
                             const sent = lower(event.value[0].utterance);
-                            if (sent in grammar) {
-                              if (grammar[sent].entities.answer == "yes") {
+                            if (extractWord(sent, "yes")) {
                                 return true
                               }
-                            }
                             return false
                           },
                         },
@@ -942,8 +1040,11 @@ const dmMachine = createMachine(
                           target: "#root.DialogueManager.Ready.plot.goodbyeOrDifferentBook.DifferentBook",
                           guard: ({ context, event }) => {
                             const sent = lower(event.value[0].utterance);
-                            if (sent in grammar) {
-                              if (grammar[sent].entities.answer == "no" || grammar[sent].entities.sentiment == "notHappy") {
+                            if (extractWord(sent, "no")) {
+                              return true
+                            }
+                            else if (sent in grammar) {
+                              if (grammar[sent].entities.sentiment == "notHappy") {
                                 return true
                               }
                             }
@@ -1000,6 +1101,53 @@ const dmMachine = createMachine(
                       });
                     },
                     on: { SPEAK_COMPLETE: "#root.DialogueManager.Ready.plot.goodbyeOrDifferentBook" }
+                  },
+                  pages: {
+                    entry: ({ context }) => {
+                      let assistantMessage = `${context.bookName} has ${context.bookPageCount} pages.`
+                      context.messages.push(assistantMessage)
+                      context.spstRef.send({
+                        type: "SPEAK",
+                        value: { utterance: `${assistantMessage}` },
+                      });
+                    },
+                    on: { SPEAK_COMPLETE: "decideOnBook" }
+                  },
+                  decideOnBook: {
+                    initial: 'pages',
+                    states: {
+                      pages: {
+                        entry: listen(),
+                        after: {
+                          6000: {
+                            target: '#root.DialogueManager.Ready.yesNo.prompt',
+                          },
+                        },
+                        on: {
+                          RECOGNISED: [
+                            {
+                              target: "#root.DialogueManager.Ready.chatGPT",
+                              guard: ({ context, event }) => {
+                                const sent = lower(event.value[0].utterance);
+                                if (extractWord(sent, "long") || extractWord(sent, "shorter") || extractWord(sent, "short")) {
+                                  context.prompt = `Please provide a JSON response that includes a book suggestion (entity: bookName), the author of the book (entities: bookAuthor) but exclude ${context.bookName}. Additionally, include the entity 'thirdTimeInState' with the value 'third'. For the 'bookISBN' entity, add the ISBN corresponding to the book in the 'bookName' value. I also want a bookMood entity, a bookPlot, and bookGenre. Also if you can make sure that it's shorter than ${context.bookPageCount}`
+                                  return true
+                                }
+                                return false
+                              },
+                              actions: [assign({
+                                lastResult: ({ context, event }) => event.value,
+                                time: ({ context }) => 0,
+                                gptUtterance: ({ context }) => 'Ok. Let me find something shorter for you'
+                              })]
+                            },
+                            {
+                              target: '#root.DialogueManager.Ready.plot.goodbyeOrDifferentBook.prompt1'
+                            }
+                          ]
+                        },
+                      }
+                    }
                   }
                 },
               },
@@ -1011,7 +1159,9 @@ const dmMachine = createMachine(
                       target: "#root.DialogueManager.Ready.plot.goodbyeOrDifferentBook.DifferentBook",
                       guard: ({ context, event }) => {
                         const sent = lower(event.value[0].utterance);
-                        if (sent in grammar) {
+                        if (extractWord(sent, "something", "else")) {
+                          return true
+                        } else if (sent in grammar) {
                           if (grammar[sent].entities.what == "otherAuthor") {
                             return true
                           }
@@ -1034,6 +1184,7 @@ const dmMachine = createMachine(
                       actions: [assign({
                         lastResult: ({ event }) => event.value,
                         prompt: ({ context }) => `Please, reply to the last input. Return your answer in a JSON format with the entities bookName, bookAuthor, bookGenre, bookMood, bookISBN, bookPlot, and authorInfo. Return an entity timesInState with the value "four"`,
+                        gptUtterance: ({ context }) => 'Ok! Let me fetch it real quick!'
                       }),
                       ({ context }) => console.log("in state")]
                     },
@@ -1083,6 +1234,30 @@ const dmMachine = createMachine(
                         on: {
                           RECOGNISED: [
                             {
+                              target: 'goodbye',
+                              guard: ({ context, event }) => {
+                                const sent = lower(event.value[0].utterance);
+                                if (extractWord(sent, "yes")) {
+                                  return true;
+                                }
+                                return false;
+                              },
+                            },
+                            {
+                              target: "DifferentBook",
+                              guard: ({ context, event }) => {
+                                const sent = lower(event.value[0].utterance);
+                                if (extractWord(sent, "no"), extractWord(sent, "don't", "like")) {
+                                  return true
+                                } else if (sent in grammar) {
+                                  if (grammar[sent].entities.answer == "no" || grammar[sent].entities.sentiment == "notHappy") {
+                                    return true;
+                                  }
+                                  return false;
+                                }
+                              },
+                            },
+                            {
                               target: "#root.DialogueManager.Ready.chatGPT",
                               guard: ({ context, event }) => {
                                 const sent = lower(event.value[0].utterance);
@@ -1102,26 +1277,18 @@ const dmMachine = createMachine(
                               },
                               actions: [assign({
                                 lastResult: ({ context, event }) => event.value,
-                                time: ({ context }) => 0
+                                time: ({ context }) => 0,
+                                gptUtterance: ({ context }) => 'I see! Give me some time while I find another book for you'
                               })]
-                            },
-                            {
-                              target: "DifferentBook",
-                              guard: ({ context, event }) => {
-                                const sent = lower(event.value[0].utterance);
-                                if (sent in grammar) {
-                                  if (grammar[sent].entities.answer == "no" || grammar[sent].entities.sentiment == "notHappy") {
-                                    return true;
-                                  }
-                                  return false;
-                                }
-                              },
                             },
                             {
                               target: "#root.DialogueManager.Ready.plot",
                               guard: ({ context, event }) => {
                                 const sent = lower(event.value[0].utterance);
-                                if (sent in grammar) {
+                                if (extractWord(sent, "plot")) {
+                                  return true
+                                }
+                                else if (sent in grammar) {
                                   if (grammar[sent].entities.what == "plot") {
                                     return true;
                                   }
@@ -1133,12 +1300,25 @@ const dmMachine = createMachine(
                               target: "#root.DialogueManager.Ready.yesNo.author",
                               guard: ({ context, event }) => {
                                 const sent = lower(event.value[0].utterance);
-                                if (sent in grammar) {
+                                if (extractWord(sent, "author")) {
+                                  return true
+                                }
+                                else if (sent in grammar) {
                                   if (grammar[sent].entities.what == "author") {
                                     return true;
                                   }
                                   return false;
                                 };
+                              }
+                            },
+                            {
+                              target: "#root.DialogueManager.Ready.yesNo.pages",
+                              guard: ({ context, event }) => {
+                                const sent = lower(event.value[0].utterance);
+                                if (extractWord(sent, "pages")) {
+                                  return true
+                                }
+                                else return false;
                               }
                             },
                             {
@@ -1153,27 +1333,7 @@ const dmMachine = createMachine(
                                 };
                               },
                             },
-                            {
-                              target: 'goodbye',
-                              guard: ({ context, event }) => {
-                                const sent = lower(event.value[0].utterance);
-                                if (sent in grammar) {
-                                  if (grammar[sent].entities.answer == "yes") {
-                                    return true;
-                                  }
-                                  return false;
-                                };
-                              },
-                            },
-                            {
-                              target: "noEntiendo",
-                              actions: [
-                                ({ event }) => console.log(event),
-                                assign({
-                                  lastResult: ({ event }) => event.value,
-                                }),
-                              ],
-                            }]
+                          ]
                         }
                       },
                       noEntiendo: {
@@ -1203,6 +1363,29 @@ const dmMachine = createMachine(
                         on: {
                           RECOGNISED: [
                             {
+                              target: '#root.DialogueManager.Ready.chatGPT',
+                              guard: ({ context, event }) => {
+                                const sent = lower(event.value[0].utterance);
+                                if (extractWord(sent, "yes") == true || extractWord(sent, "yeah") == true || extractWord(sent, "similar") == true || extractWord(sent, "recommend")) {
+                                  context.prompt = `This list of messages is the current conversation. Suggest me only one book, but exclude ${context.bookName} by ${context.bookAuthor}. 
+                            Answer me in a JSON format with the entities bookName, bookMood, bookGenre, bookAuthor, bookPlot, authorInfo, and bookISBN.
+                            Also an entity thirdTimeInState with the value "third"`
+                                  return true;
+                                } else if (sent in grammar) {
+                                  if (grammar[sent].entities.what == "otherAuthor") {
+                                    return true
+                                  }
+                                }
+                                else
+                                  return false;
+                              },
+                              actions: [assign({
+                                lastResult: ({ context, event }) => event.value,
+                                time: ({ context }) => 0,
+                                gptUtterance: ({ context }) => 'Ok! I\'ll be right back with a different book!'
+                              })]
+                            },
+                            {
                               target: "goodbye",
                               guard: ({ context, event }) => {
                                 const sent = lower(event.value[0].utterance);
@@ -1224,19 +1407,6 @@ const dmMachine = createMachine(
                                   }
                                   return false;
                                 }
-                              },
-                            },
-                            {
-                              target: '#root.DialogueManager.Ready.chatGPT',
-                              guard: ({ context, event }) => {
-                                const sent = lower(event.value[0].utterance);
-                                if (extractWord(sent, "yes") == true || extractWord(sent, "similar") == true || extractWord(sent, "recommend")) {
-                                  context.prompt = `This list of messages is the current conversation. Suggest me only one book, but exclude ${context.bookName} by ${context.bookAuthor}. 
-                            Answer me in a JSON format with the entities bookName, bookMood, bookGenre, bookAuthor, bookPlot, authorInfo, and bookISBN.
-                            Also an entity thirdTimeInState with the value "third"`
-                                  return true;
-                                }
-                                return false;
                               },
                             },
                             {
@@ -1270,8 +1440,9 @@ const dmMachine = createMachine(
                         entry: ({ context }) => {
                           context.spstRef.send({
                             type: "SPEAK",
-                            value: { utterance: `Hope this information makes you more excited about reading this book! If you're looking for more recommendations, feel free to ask! Happy reading!` },
+                            value: { utterance: `Hope this information makes you more excited about reading this book! If you're looking for more recommendations, feel free to ask! Here's a preview of the book. Happy reading!` },
                           });
+                          window.open(context.previewLink)
                         },
                       },
                     },
@@ -1321,14 +1492,9 @@ const dmMachine = createMachine(
       "speak.greeting": ({ context }) => {
         context.spstRef.send({
           type: "SPEAK",
-          value: { utterance: "Hello!" }, //I am here to help you find your next read! After that we can talk about the author, their books or I will help you find something similar." },
+          value: { utterance: "Hello! I am The Book Guru! Here to help you find your next read!" },
         });
       },
-      "filler.pause": ({ context }) =>
-        context.spstRef.send({
-          type: "SPEAK",
-          value: { utterance: 'Haah! Ok, let me check my book collection' },
-        }),
       "speak.how-can-I-help": ({ context }) =>
         context.spstRef.send({
           type: "SPEAK",
@@ -1363,13 +1529,9 @@ actor.subscribe((state) => {
 });
 
 async function getBooks(titleText: any, author: any) {
-  //const response = fetch(`http://openlibrary.org/search.json?q=${titleText}`)
-  const response = fetch(`https://www.googleapis.com/books/v1/volumes?q=${titleText}+inauthor${author}&printType=books&langRestrict=english`)
+  const response = fetch(`https://www.googleapis.com/books/v1/volumes?q=${titleText}&printType=books&langRestrict=english&region=GB`)
     .then(response => response.json())
-  // .then(response => {
-  //   response.docs[0].isbn[0]
-  // })
-  console.log(response)//, response.)
+  console.log(response)
   return response
 };
 
@@ -1377,7 +1539,7 @@ async function fetchFromChatGPT(prompt: string, max_tokens: number) {
   const myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
-    "Bearer <key>",
+    "Bearer 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",
   );
   myHeaders.append("Content-Type", "application/json");
   const raw = JSON.stringify({
