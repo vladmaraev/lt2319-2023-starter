@@ -1,9 +1,6 @@
 import { createMachine, createActor, assign, fromPromise } from "xstate";
 import { speechstate, Settings, Hypothesis } from "speechstate";
 
-
-
-
 const azureCredentials = {
   endpoint:
     "https://northeurope.api.cognitive.microsoft.com/sts/v1.0/issuetoken",
@@ -18,15 +15,11 @@ const settings: Settings = {
   ttsDefaultVoice: "en-GB-RyanNeural",
 };
 
-
-
 interface DMContext {
   spstRef?: any;
   lastResult?: Hypothesis[];
   singer?: string ; 
-  song?: string; 
-  singerinfo?: string;
-  
+  info?: string; 
 }; 
 
 
@@ -51,7 +44,7 @@ const listen =
       const myHeaders = new Headers();
       myHeaders.append(
         "Authorization",
-        "Bearer  ",
+        "Bearer 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 ",
       ),
       myHeaders.append("Content-Type", "application/json");
       const raw = JSON.stringify({
@@ -77,46 +70,9 @@ const listen =
     
       return response;
     }
-    const ToLowerCase = (object: string) => {
-      return object.toLowerCase().replace(/\.$/g, "");
-        };
 
-
-
-
-
-        
-        interface Grammar {
-          [index: string]: {
-            intent: string;
-            entities: {
-              [index: string]: string;
-            };
-          };
-        }
     
-        const grammar: Grammar = {
-          "who is Michael Jackson": {
-            intent: "None",
-            entities: { singer: "Michael Jackson" },
-          },
-          "who is Taylor Swift": {
-            intent: "None",
-            entities: { singer: "Taylor Swift" },
-          },
-          "who is Elton John": {
-            intent: "None",
-            entities: { singer: "Elton John" },
-          },
-          "who is Madonna": {
-            intent: "None",
-            entities: { singer: "Madonna" },
-          },
-          "who is Britney Spears": {
-            intent: "None",
-            entities: { singer: "Britney Spears" },
-          },
-        };
+
 
 
 
@@ -154,33 +110,20 @@ const dmMachine = createMachine (
             entry: listen(),
             on: {
               RECOGNISED: {
-                target: "AskChatGPT",
+                target: "AskGPT",
                 actions: [
                   assign({
                     lastResult: ({ event }) => event.value,
                   }),
                 ],
-              },
-              // RECOGNISED: [
-              //   {
-              //     target: "AskChatGPTAboutSinger",
-              //     guard: ({ context, event }) => {
-              //       const userInput = ToLowerCase(event.value[0].utterance);
-              //       return (
-              //         userInput.includes("who") ||
-              //         userInput.includes("question") ||
-              //         userInput.includes("singer")
-              //       );
-              //     },
-              //   },
-              // ],              
+              },            
             },
           },             
-          AskChatGPT:{
+          AskGPT:{
             invoke: {
               src: fromPromise(async({input}) => {
                   const data = await fetchFromChatGPT(
-                    input.lastResult[0].utterance + "reply in a json format with entity: singer. If I don't mention any of them, leave it empty.",40,
+                    input.lastResult[0].utterance + "reply in a json format with entities singer and info. If I don't mention any of them, leave it empty.",500,
                     );
                     return data;
                 }),
@@ -189,11 +132,13 @@ const dmMachine = createMachine (
                 }),
                 onDone: {
                   actions: [
-                    ({ event }) => console.log(JSON.parse(event.output)),
+                    ({ event }) => console.log((event.output)),
                     assign({
-                      singer: ({ event }) => JSON.parse(event.output).singer,  
+                      singer: ({ event }) => JSON.parse(event.output).singer, 
+                      info: ({ event }) => JSON.parse(event.output).info, 
                     }),
                   ],
+                  target: 'SayBack'
                 }
                   }
                 },
@@ -201,55 +146,15 @@ const dmMachine = createMachine (
             entry: ({ context }) => {
               context.spstRef.send({
                 type: "SPEAK",
-                value: { utterance: `Okay. Here is the information about ${context.singer}` },
+                value: { utterance: `Okay. ${context.singer}. ${context.info}` },
               });
             },
+            target: '#root.DialogueManager.Prepare.Start'
           },
-            // on: {
-            //   SPEAK_COMPLETE: "" // Replace "SomeOtherState" with the appropriate state to transition to.
-            // },
-          
-          
-        // SayChatGPTResponse: {
-        //   entry: ({ context }) => {
-        //     context.spstRef.send({
-        //         type: "SPEAK",
-        //         value: { utterance: "" },
-        //     });
-        // },
-        // on: { SPEAK_COMPLETE: "AskAboutSinger" },
-        // }, 
-        // AskAboutSinger: {
-        //   entry: "",
-        //   on: {
-        //     SPEAK_COMPLETE: "ListenForSinger",
-        //   },
-        // },
-        // ListenForSinger: {
-        //   entry: listen(),
-        //   on: {
-        //     RECOGNISED: [
-        //       {
-        //         target: "AskChatGPTAboutSinger",
-        //         guard: ({ event }) => {
-        //           const userInput = ToLowerCase(event.value[0].utterance);
-        //           // Check if the user's input indicates a question about a singer
-        //           return userInput.includes("singer");
-        //         },
-        //       },
-        //       {
-        //         target: "AskChatGPTAboutSinger", // Handle other queries about music here
-        //       },
-        //     ],
-        //   },
-        // },
       },   
     }, 
   },   
-},            
-              
-          
-                  
+},                        
 
       GUI: {
         initial: "PageLoaded",
@@ -278,11 +183,6 @@ const dmMachine = createMachine (
     },
   },
   
-
-
-
-  
-  
     {
 
     actions: {
@@ -294,16 +194,11 @@ const dmMachine = createMachine (
       "speak.greeting": ({ context }) => {
         context.spstRef.send({
           type: "SPEAK",
-          value: { utterance: "Let's start by asking a question about a celebrity" },
+          value: { utterance: "Hello! Ask me anything. For example what is X famous for. Whereas X is a singer" },
         });
       },
 
-        // "speak.singerinfo": ({ context }) => 
-        // context.spstRef.send({
-        //   type: "SPEAK",
-        //   value: { utterance: `Here you go ${context.singerinfo}` },
-        // }),
-        
+    
       
           
         "gui.PageLoaded": ({ }) => {
