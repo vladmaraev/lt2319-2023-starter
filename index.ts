@@ -54,8 +54,8 @@ interface Grammar {
   }
 
 // I changed the grammar a bit, as well as the utterances what is being said by the system 
-// it's stark with saying which function one can choose from, and strats then with "Let's start with mode", there one can say "cool", or warm
-// then it goes direction there one can say "legs" or "body", for the temperature one can say "high" or "low", and lastly for the intensity
+// it's start with saying which function one can choose from, and starts then with "Let's start with mode", there one can say "cool", or "warm"
+// then it goes to direction there one can say "legs" or "body", for the temperature one can say "high" or "low", and lastly for the intensity
 // one can say "strong", "medium", or "weak". 
 
   const grammar = {
@@ -100,95 +100,104 @@ interface Grammar {
       Switch: "on",
       Intensity:"strong"
     },
-
-
+    "Hello": {
+      Switch: "on",
+      Intensity:"strong",
+   
+      Direction: "towards body",
+      Temperature: "increasing",
+    },
+    
 
 // here are longer sentences, it always starts with "Mode", so one has to start with an utterance which involves "Mode"
 
-   /* "Cool mode, strong intensity": {
+    "Cool mode, strong intensity": {
       Switch: "on",
       Mode:"cool",
       Intensity:"strong"
     },
-    "Turn the airconditioner off": {
+    "Turn off": {
       Switch: "off"
     },
-    "Set it to warm mode": {
-      Switch: "on",
-      Mode: "warm"
-    },
-    "Turn it to cool mode": {
+    "cool mode": {
       Switch: "on",
       Mode: "cool"
     },
-    "Turn the intensity to strong":{
+    "Strong Intensity":{
       Switch: "on",
       Intensity: "strong"
     },
-    "Turn the intensity to low":{
+    "Low intensity":{
       Switch: "on",
       Intensity: "waek"
     },
-    "Turn the intensity to medium":{
+    "Medium intensity":{
       Switch: "on",
       Intensity: "medium"
     },
-    "Turn the intensity to high":{
+    "high intensity":{
       Switch: "on",
       Intensity: "strong"
     },
-    "I want to raise the temperature": {
+    "raise the temperature": {
       Switch: "on",
       Temperature: "increasing"
     }, 
-    "I want to lower the temperature": {
+    "lower the temperature": {
       Switch: "on",
       Temperature: "decreasing"
     }, 
-    "Point the air-conditioner towards my legs ": { // legs = down
+    "Point towards my legs ": { // legs = down
       Switch: "on",  
       Direction: "towards legs"
     },
-    "Point the air-conditioner towards my body": { // body = middle 
+    "Point towards my body": { // body = middle 
       Switch: "on", 
       Direction: "middle"
     },
-    "Turn the air conditioner on to warm mode with strong intensity": {
+    "Turn to warm mode with strong intensity": {
       Switch: "on",
       Mode: "warm",
       Intensity: "strong"
     },
-    "I feel cold, raise the temperature, and lower the intensity": {
+    "lower the temperature, warm and strong intensity": {
       Switch: "on",
       Temperature: "increasing",
       Mode: "warm",
       Intensity: "weak"
     },
-    "Point the air-conditioner towards my body, cool air and medium intensity": {
+    "towards my body, cool air and medium intensity": {
       Switch: "on",
       Direction: "towards body",
       Mode: "cool",
       Intensity: "medium"
     },
-    "Turn the air conditioner off": {
+    "Turn it off": {
       Switch: "off"
     },
     "Make a loop":{
       Switch: "on",
       Direction: "loop"
     },
-    "Point the air-conditioner towards my legs, warm air and high intensity": {
+    "towards my legs, warm air and high intensity": {
       Switch: "on",
       Direction: "towards legs",
       Mode: "warm",
       Intensity: "strong"
     },
-    "I feel hot, lower the temperature, and increase the intensity": {
+    "lower the temperature, and increase the intensity": {
       Switch: "on",
       Temperature: "decreasing",
       Mode: "cool",
       Intensity: "strong"
-    },*/
+    },
+    "my favorite": {
+      Switch: "on",
+      Direction: "towards legs",
+      Mode: "cool",
+      Intensity: "strong",
+      Temperature: "high"
+    },
   }
 
   const ToLowerCase = (object: string) => {
@@ -230,7 +239,7 @@ const dmMachine = createMachine(
                 on: { SPEAK_COMPLETE: "help" },
               },
               help: {
-                entry: say("You can choose your preferred mode, intensity, temperature, and direction. Let's strat with choosing the mode."),
+                entry: say("You can choose your preferred mode, intensity, temperature, and direction. Let's start with choosing the mode."),
                 on: { SPEAK_COMPLETE: "Ask" },
               },
               Ask: {
@@ -258,7 +267,7 @@ const dmMachine = createMachine(
                           return lowerCaseGrammar[userInput]?.Direction || context.Direction;
                         },
                         Temperature: ({ context, event }) => {
-                          const userInput = ToLowerCase(event.value[0].utterance);
+                          const userInput = ToLowerCase(event.value[0].utterance);// Using toLowerCase instead of ToLowerCase
                           return lowerCaseGrammar[userInput]?.Temperature || context.Temperature;
                         },
                       }),
@@ -292,7 +301,7 @@ const dmMachine = createMachine(
                 on: { SPEAK_COMPLETE: 'Ask' }
               },
               AskIntensity: {
-                entry: say('Which Temperature would you like?'),
+                entry: say('Which Intensity would you like?'),
                 on: { SPEAK_COMPLETE: 'Ask' }
               },
               AskSwitch: {
@@ -368,19 +377,19 @@ const dmMachine = createMachine(
           value: { utterance: "" },
         }),
       "gui.PageLoaded": ({ }) => {
-        document.getElementById("button").innerText = "Click to start!";
+        document.getElementById("button")!.innerText = "Click to start!";
       },
       "gui.Inactive": ({ }) => {
-        document.getElementById("button").innerText = "Inactive";
+        document.getElementById("button")!.innerText = "Inactive";
       },
       "gui.Idle": ({ }) => {
-        document.getElementById("button").innerText = "Idle";
+        document.getElementById("button")!.innerText = "Idle";
       },
       "gui.Speaking": ({ }) => {
-        document.getElementById("button").innerText = "Speaking...";
+        document.getElementById("button")!.innerText = "Speaking...";
       },
       "gui.Listening": ({ }) => {
-        document.getElementById("button").innerText = "Listening...";
+        document.getElementById("button")!.innerText = "Listening...";
       },
       navigateFeedback: ({ context }) => {
         context.spstRef.send({
@@ -396,7 +405,7 @@ const dmMachine = createMachine(
 
 const actor = createActor(dmMachine).start();
 
-document.getElementById("button").onclick = () => actor.send({ type: "CLICK" });
+document.getElementById("button")!.onclick = () => actor.send({ type: "CLICK" });
 
 actor.subscribe((state) => {
   console.log(state.value);
