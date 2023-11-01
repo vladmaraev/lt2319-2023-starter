@@ -152,7 +152,7 @@ const dmMachine = createMachine (
             target: 'moreInfo'
           },
           moreInfo: {
-            entry: say("Switch is on. Do you want to change settings?"),
+            entry: say("Do you want to know something more?"),
             on: { SPEAK_COMPLETE: "decision" },
           }, 
           decision: {
@@ -160,14 +160,14 @@ const dmMachine = createMachine (
             on: {
               RECOGNISED: [
                 {
-                  target: "AskGPT",
+                  target: "#root.DialogueManager.Prepare",
                   guard: ({ context, event }) => {
                     const userInput = ToLowerCase(event.value[0].utterance)
                     return userInput === "no";
                   },
                 },    
                 {
-                  target: "#root.DialogueManager.Prepare",
+                  target: "AskGPT",
                   guard: ({ context, event }) => {
                     const userInput = ToLowerCase(event.value[0].utterance)
                     return userInput === "yes";
@@ -176,10 +176,6 @@ const dmMachine = createMachine (
               ],
             },
           },      
-
-
-
-
       },   
     }, 
   },   
