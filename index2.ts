@@ -149,8 +149,37 @@ const dmMachine = createMachine (
                 value: { utterance: `Okay. ${context.singer}. ${context.info}` },
               });
             },
-            target: '#root.DialogueManager.Prepare.Start'
+            target: 'moreInfo'
           },
+          moreInfo: {
+            entry: say("Switch is on. Do you want to change settings?"),
+            on: { SPEAK_COMPLETE: "decision" },
+          }, 
+          decision: {
+            entry: listen(),
+            on: {
+              RECOGNISED: [
+                {
+                  target: "AskGPT",
+                  guard: ({ context, event }) => {
+                    const userInput = ToLowerCase(event.value[0].utterance)
+                    return userInput === "no";
+                  },
+                },    
+                {
+                  target: "#root.DialogueManager.Prepare",
+                  guard: ({ context, event }) => {
+                    const userInput = ToLowerCase(event.value[0].utterance)
+                    return userInput === "yes";
+                  },
+                },               
+              ],
+            },
+          },      
+
+
+
+
       },   
     }, 
   },   
