@@ -1,14 +1,85 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>SpeechState DM sandbox</title>
-    <meta charset="UTF-8" />
-  </head>
 
-  <body>
-    <div id="app"><button id="button"></button></div>
-    <iframe data-xstate style="position: absolute; height: 100%; width: 100%; border: 2px"></iframe>
-    <script type="module" src="src/index.ts"></script>
-    
-  </body>
+<head>
+  <title>grid</title>
+  <meta charset="UTF-8" />
+  <style>
+    body {
+      background-image: url("huma-h-yardim-K8Cs2P_oUL4-unsplash.jpg");
+      background-color: transparent;
+      background-size: cover;
+      background-repeat: no-repeat;
+      margin: 0;
+      padding: 0;
+    }
+
+    #image {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    #image:hover {
+      background-color: #e6e47c;
+      cursor: pointer;
+    }
+
+    #button {
+      width: 170;
+      height: 60px;
+      background-color: rgb(240, 244, 245);
+      color: rgb(23, 22, 22);
+      font-size: large;
+      font-family: 'Times New Roman', Times, serif;
+      margin: 50px;
+      margin-left: 60px;
+    }
+
+    #button:hover {
+      background-color: #e48d30;
+    }
+
+    #container {
+      display: grid;
+      height: 50vh;
+      ;
+    }
+
+    .book-image:hover {
+      border: 1px solid rgb(221, 226, 84);
+      opacity: 0.8;
+    }
+
+    .book-image {
+      /* display: block; */
+      background-color: #492e01;
+      color: #fff;
+      font-size: xx-large;
+      line-height: normal;
+      padding: 10px 20px;
+      text-align: center;
+      border: 2px solid #935004;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 2px;
+    }
+  </style>
+</head>
+
+<body>
+  <script type="module" src="src/index.ts"></script>
+
+  <div id="app"><button id="button"></button></div>
+  <div id="image"></div>
+  <div id="container" class="active">
+    <div id="book1"></div>
+    <div id="book2"></div>
+    <div id="book3"></div>
+    <div id="book4"></div>
+  </div>
+  <iframe data-xstate style="position: absolute; height: 100%; width: 100%; border: 2px"></iframe>
+</body>
+
 </html>
