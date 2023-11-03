@@ -222,7 +222,7 @@ const dmMachine = createMachine(
                 invoke: {
                   src: fromPromise(async({input}) => {
                       const data = await fetchFromChatGPT(
-                        input.lastResult[0].utterance + "reply in a json format with entities: StartingPoint, Destination, RoutePreference, Stopover.If I don't mention at any entities, leave it as none.",40,
+                        input.lastResult[0].utterance + "reply in a json format with entities: StartingPoint, Destination, RoutePreference, Stopover.If I don't mention at any entities, leave it as none. Only if I mention where to start, otherwise Staringpoint is the current location",40,
                         );
                         return data;
                     }),
