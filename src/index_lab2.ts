@@ -1,4 +1,4 @@
-import { createMachine, createActor, assign } from "xstate";
+import { createMachine, createActor, assign, fromPromise } from "xstate";
 import { speechstate, Settings, Hypothesis } from "speechstate";
 
 const azureCredentials = {
@@ -11,9 +11,40 @@ const settings: Settings = {
   azureCredentials: azureCredentials,
   asrDefaultCompleteTimeout: 0,
   locale: "en-US",
-  asrDefaultNoInputTimeout: 5000,
+  asrDefaultNoInputTimeout: 10000,
   ttsDefaultVoice: "en-GB-RyanNeural",
 };
+
+async function fetchFromChatGPT(prompt: string, max_tokens: number) {
+  const myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    "Bearer ",
+  );
+  myHeaders.append("Content-Type", "application/json");
+  const raw = JSON.stringify({
+    model: "gpt-3.5-turbo",
+    messages: [
+            {
+              role: "user",
+              content: prompt,
+            },
+          ],
+    temperature: 0,
+    max_tokens: 50,
+  });
+
+  const response = fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  })
+    .then((response) => response.json())
+    .then((response) => response.choices[0].message.content);
+
+  return response;
+}
 
 interface DMContext {
   spstRef?: any;
@@ -24,6 +55,7 @@ interface DMContext {
   Stopover?: string;
   userInput?: string;
   recognisedData?: any;
+  userDialogs?: string[];
 }
 
 
@@ -107,6 +139,9 @@ const grammar = {
     RoutePreference: "avoid highways",
     Stopover: "Liseberg"
   },
+  "I have questions": {
+    Questions: "I have questions",
+  },
 };
 
 
@@ -168,72 +203,104 @@ const dmMachine = createMachine(
               },
               HowCanIHelp: {
                 entry: say("You can say where you want to go."),
-                on: { SPEAK_COMPLETE: "Ask" },
+                on: { SPEAK_COMPLETE: "Start" },
               },
-              Ask: {
+              Start: {
                 entry: listen(),
                 on: {
                   RECOGNISED: {
-                    actions: [
-                      ({ event }) => console.log(event),
+                    target: 'AskchatGPT',
+                    actions:[
                       assign({
-                        userInput: ({ event }) => event.value[0].utterance,
-                        Destination: ({ context, event }) => {
-                          const userInput = ToLowerCase(event.value[0].utterance);
-                          return lowerCaseGrammar[userInput]?.Destination || context.Destination;
-                        },
-                        StartingPoint: ({ context, event }) => {
-                          const userInput = ToLowerCase(event.value[0].utterance);
-                          return lowerCaseGrammar[userInput]?.StartingPoint || context.StartingPoint;
-                        },
-                        RoutePreference: ({ context, event }) => {
-                          const userInput = ToLowerCase(event.value[0].utterance);
-                          return lowerCaseGrammar[userInput]?.RoutePreference || context.RoutePreference;
-                        },
-                        Stopover: ({ context, event }) => {
-                          const userInput = ToLowerCase(event.value[0].utterance);
-                          return lowerCaseGrammar[userInput]?.Stopover || context.Stopover;
-                        },
-                      }),
-                      
+                        lastResult: ({ event }) => event.value,
+                      })
                     ],
-                    target: 'CheckSlots'
                   }
-                  
                 },
-              },  
+              },
+              AskchatGPT:{
+                invoke: {
+                  src: fromPromise(async({input}) => {
+                      const data = await fetchFromChatGPT(
+                        input.lastResult[0].utterance + "reply in a json format with entities: StartingPoint, Destination, RoutePreference, Stopover.If I don't mention at any entities, leave it as none. Only if I mention where to start, otherwise Staringpoint is the current location",40,
+                        );
+                        return data;
+                    }),
+                    input:({context,event}) => ({
+                      lastResult: context.lastResult,
+                    }),
+                    onDone: {
+                      actions: [
+                        ({ event }) => console.log(JSON.parse(event.output)),
+                        assign({
+                          StartingPoint: ({ event }) => JSON.parse(event.output).StartingPoint, 
+                          Destination: ({ event }) => JSON.parse(event.output).Destination,
+                          RoutePreference: ({ event }) => JSON.parse(event.output).RoutePreference,
+                          Stopover: ({ event }) => JSON.parse(event.output).Stopover, 
+                        }),
+                      ],
+                      target: 'CheckSlots'
+                    }
+                      }
+                    },
+              
+
+    
+              SayBack: {
+                entry: ({ context }) => {
+                    context.spstRef.send({
+                        type: "SPEAK",
+                        value: { utterance: "Great!" },
+                    });
+                },
+                on: { SPEAK_COMPLETE: "FeedbackAndRepeat" },
+              },
+
+
+
+
               CheckSlots: {
                 always: [
                   { target: 'AskStartingPoint', guard: 'isStartingPointMissing' },
                   { target: 'AskDestination', guard: 'isDestinationMissing' },
                   { target: 'AskRoutePreference', guard: 'isRoutePreferenceMissing' },
                   { target: 'AskStopover', guard: 'isStopoverMissing' },
-                  { target: 'FeedbackAndRepeat' }, // 如果用户提供了完整信息，仍然进入反馈状态
+                  { target: 'SayBack' },
                 ]
                 },
+
+           
+
               AskStartingPoint: {
                 entry: say('From where will you start your journey?'),
-                on:{ SPEAK_COMPLETE: 'Ask' }
+                on:{ SPEAK_COMPLETE: 'Start' }
               },
+           
+              
               AskDestination: {
                 entry: say('Where would you like to go?'),
-                on: { SPEAK_COMPLETE: 'Ask' }
+                on: { SPEAK_COMPLETE: 'Start' }
               },
+              
               AskRoutePreference: {
                 entry: say('Do you have any route preferences, like avoiding highways?'),
-                on: { SPEAK_COMPLETE: 'Ask' }
+                on: { SPEAK_COMPLETE: 'Start' }
               },
+              
               AskStopover: {
                 entry: say('Would you like to have a stopover somewhere? If yes, where?'),
-                on: { SPEAK_COMPLETE: 'Ask' }
+                on: { SPEAK_COMPLETE: 'Start' }
               },
+              
               FeedbackAndRepeat: {
                 entry: 'navigateFeedback',
                 on: {
                   SPEAK_COMPLETE: {actions: "prepare"}
                 }
               },
-            }
+            },
+
+            
           },
         },
       },
@@ -311,7 +378,7 @@ const dmMachine = createMachine(
       navigateFeedback: ({ context }) => {
         context.spstRef.send({
           type: "SPEAK",
-          value: { utterance: `Ok! Navigating from ${context.StartingPoint} to ${context.Destination} with preference: ${context.RoutePreference} and stopover at ${context.Stopover}.Have a safe journey` },
+          value: { utterance: `Navigating from ${context.StartingPoint} to ${context.Destination} with preference: ${context.RoutePreference} and stopover at ${context.Stopover}.Have a safe journey` },
         });
       },
     },

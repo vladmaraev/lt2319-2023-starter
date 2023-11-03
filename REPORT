@@ -1,0 +1,22 @@
+Lab2 State Machine Design for Processing User Travel Intentions
+
+In the Lab2 project, we aim to design a state machine to handle user travel intentions. This project involves user interaction, natural language processing (NLP), and interfacing with cloud computing services. The objective of the state machine is to parse user input for travel intentions that include a starting point, destination, stopovers, and route preferences. The state machine updates its state based on these parsed entities to provide final feedback. In the final project, the parsed entities will be used to calculate driving routes on Google Maps.
+
+Examples:
+    * User: I want to start from Gothenburg to Stockholm.
+    * JSON: Startingpoint: Gothenburg Destination: Stockholm Routepreference: None Stopover: None
+    * User: I want to start from Molndal to Backaplan, stopover at Nordstan, avoid highways.
+    * JSON: Startingpoint: Molndal Destination: Backaplan Routepreference: avoid high-way Stopover: Nordstan
+
+Challenge
+A challenge we encountered in parsing user inputs was the system’s requirement to accurately extract the starting point and other travel-related entities from the user’s input. However, when expressions such as “go to XX from YY” were used, GPT-3.5 Turbo failed to interpret “YY” as the starting point, instead assuming the current location as the starting point.
+Initial Solution Attempts
+Initial attempts to resolve the issue included adjusting the temperature setting of the GPT model, with the hope that reducing or increasing creativity might improve results. However, this did not significantly affect the outcomes.
+
+Adopted Approach
+Ultimately, we decided to continue using GPT-3.5 Turbo for processing user inputs. Despite facing consistency issues in parsing, it still provides sufficient accuracy and response time. We plan to further improve the state machine with the following steps:
+* 		Explicitly include instructive prompts in the context information provided to GPT to enhance the accuracy of entity parsing.
+* 		Improve the user interface to guide users to provide inputs in a more consistent manner.
+
+Conclusion
+Despite some challenges, the design of the state machine has proven to be effective in parsing user travel intentions and interacting with GPT-3.5 Turbo. To increase the reliability of the system further, we intend to implement the above strategies.
