@@ -38,13 +38,16 @@ const listen =
     context.spstRef.send({
       type: "LISTEN",
     });
-
+    const ToLowerCase = (object: string) => {
+      return object.toLowerCase().replace(/\.$/g, "");
+        };
+  
 
     async function fetchFromChatGPT(prompt: string, max_tokens: number) {
       const myHeaders = new Headers();
       myHeaders.append(
         "Authorization",
-        "Bearer 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 ",
+        "Bearer  ",
       ),
       myHeaders.append("Content-Type", "application/json");
       const raw = JSON.stringify({
@@ -149,7 +152,7 @@ const dmMachine = createMachine (
                 value: { utterance: `Okay. ${context.singer}. ${context.info}` },
               });
             },
-            target: 'moreInfo'
+            on: { SPEAK_COMPLETE: "moreInfo" }
           },
           moreInfo: {
             entry: say("Do you want to know something more?"),
@@ -167,7 +170,7 @@ const dmMachine = createMachine (
                   },
                 },    
                 {
-                  target: "AskGPT",
+                  target: "#root.DialogueManager.Start",
                   guard: ({ context, event }) => {
                     const userInput = ToLowerCase(event.value[0].utterance)
                     return userInput === "yes";
@@ -219,7 +222,7 @@ const dmMachine = createMachine (
       "speak.greeting": ({ context }) => {
         context.spstRef.send({
           type: "SPEAK",
-          value: { utterance: "Hello! Ask me anything. For example what is X famous for. Whereas X is a singer" },
+          value: { utterance: "Hi and welcome. I'm your personal and individual chatbot version. Ask me anything. For example what is X famous for. Whereas X is a singer" },
         });
       },
 
