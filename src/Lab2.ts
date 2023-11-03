@@ -1,4 +1,4 @@
-import { createMachine, createActor, assign } from "xstate";
+import { createMachine, createActor, assign, fromPromise } from "xstate";
 import { speechstate, Settings, Hypothesis } from "speechstate";
 
 const azureCredentials = {
@@ -11,9 +11,40 @@ const settings: Settings = {
   azureCredentials: azureCredentials,
   asrDefaultCompleteTimeout: 0,
   locale: "en-US",
-  asrDefaultNoInputTimeout: 5000,
+  asrDefaultNoInputTimeout: 10000,
   ttsDefaultVoice: "en-GB-RyanNeural",
 };
+
+async function fetchFromChatGPT(prompt: string, max_tokens: number) {
+  const myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    "Bearer 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",
+  );
+  myHeaders.append("Content-Type", "application/json");
+  const raw = JSON.stringify({
+    model: "gpt-3.5-turbo",
+    messages: [
+            {
+              role: "user",
+              content: prompt,
+            },
+          ],
+    temperature: 0,
+    max_tokens: 1000,
+  });
+
+  const response = fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  })
+    .then((response) => response.json())
+    .then((response) => response.choices[0].message.content);
+
+  return response;
+}
 
 interface DMContext {
   spstRef?: any;
@@ -22,6 +53,7 @@ interface DMContext {
   StartingPoint?: string;
   RoutePreference?: string;
   Stopover?: string;
+  Questions?: string;
   userInput?: string;
   recognisedData?: any;
 }
@@ -106,6 +138,9 @@ const grammar = {
     Destination: "Backa",
     RoutePreference: "avoid highways",
     Stopover: "Liseberg"
+  },
+  "I have questions": {
+    Questions: "I have questions",
   },
 };
 
@@ -193,6 +228,10 @@ const dmMachine = createMachine(
                         Stopover: ({ context, event }) => {
                           const userInput = ToLowerCase(event.value[0].utterance);
                           return lowerCaseGrammar[userInput]?.Stopover || context.Stopover;
+                        },     
+                        Questions: ({ context, event }) => {
+                          const userInput = ToLowerCase(event.value[0].utterance);
+                          return lowerCaseGrammar[userInput]?.Questions || context.Questions;
                         },
                       }),
                       
@@ -202,13 +241,54 @@ const dmMachine = createMachine(
                   
                 },
               },  
+              getquestions: {
+                entry: listen(),
+                on: { 
+                  RECOGNISED: {
+                    target: 'GPTanswer',
+                    actions:[
+                      assign({
+                        lastResult: ({ event }) => event.value,
+                      }),
+                    ],
+                 }
+              },
+              },
+              GPTanswer:{
+                invoke: {
+                  src: fromPromise(async({input}) => {
+                    const data = await fetchFromChatGPT(
+                      input.lastResult[0].utterance,40,
+                      );
+                      return data;
+                  }),
+                  input:({context,event}) => ({
+                    lastResult: context.lastResult,
+                  }),
+                  onDone: {
+                    target: "SayBack",
+                    actions: assign({SayBack:({ event}) => event.output }),
+                    }
+                  }
+              },
+              SayBack: {
+                entry: ({ context }) => {
+                    context.spstRef.send({
+                        type: "SPEAK",
+                        value: { utterance: context.SayBack },
+                    });
+                },
+                on: { SPEAK_COMPLETE: "..Ready" },
+              },
+
               CheckSlots: {
                 always: [
+                  { target: 'AnswerQuestions', guard:'haveQuestions' }, 
                   { target: 'AskStartingPoint', guard: 'isStartingPointMissing' },
                   { target: 'AskDestination', guard: 'isDestinationMissing' },
                   { target: 'AskRoutePreference', guard: 'isRoutePreferenceMissing' },
                   { target: 'AskStopover', guard: 'isStopoverMissing' },
-                  { target: 'FeedbackAndRepeat' }, // 如果用户提供了完整信息，仍然进入反馈状态
+                  { target: 'FeedbackAndRepeat' },
                 ]
                 },
               AskStartingPoint: {
@@ -233,7 +313,15 @@ const dmMachine = createMachine(
                   SPEAK_COMPLETE: {actions: "prepare"}
                 }
               },
-            }
+              AnswerQuestions: {
+                entry: say('I will try to answer your questions.'),
+                on: { 
+                  SPEAK_COMPLETE: {target: 'getquestions'}
+                }
+              },
+            },
+
+            
           },
         },
       },
@@ -269,6 +357,7 @@ const dmMachine = createMachine(
 
   {
     guards: {
+      haveQuestions: ({ context }) => context.Questions,
       isStartingPointMissing: ({ context }) => !context.StartingPoint,
       isDestinationMissing: ({ context }) => !context.Destination,
       isRoutePreferenceMissing: ({ context }) => !context.RoutePreference,
