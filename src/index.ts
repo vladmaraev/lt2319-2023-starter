@@ -174,8 +174,8 @@ const dmMachine = createMachine(
             initial: "HowCanIHelp",
             states: {
               HowCanIHelp: {
-                //entry: say("Hi, amigo! Tell me which chemical element you want to learn about and I will give you some info."),
-                entry: say("Hi, blablabla"),
+                entry: say("Hi, amigo! Tell me which chemical element you want to learn about and I will give you some info."),
+                //entry: say("Hi, blablabla"),
                 on: { SPEAK_COMPLETE: "Ask" },
               },
               Ask: {
