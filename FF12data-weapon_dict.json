@@ -1,0 +1,542 @@
+{
+    "Aevis Killer": {
+        "info": "  Stats: Attack: 25                                     Critical Chance: 5%  License: Bows 2  Where to find it:  Drops From: Slaven  Shops:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Targe\u2019s Arms in Bhujerba - Travica Way                                     Tetran aboard the Dreadnought Leviathan - Brig No. 1   "
+    },
+    "Aldebaran": {
+        "info": "  Stats: Attack: 33                                     Evade: 10                                     Critical Chance: 5%  License: Guns 4  Where to find it:  Drops From:                                     Bangaa Pirate  Purchased From:                                     The \u201cVendor of Goods\u201d in the Phon Coast - Hunter\u2019s Camp                                     Vint\u2019s Armaments in Archades - Nilbasse  Treasure:                                     Phon Coast - The Hakawea Shore                                     Tchita Uplands - The Lost Way                                     Trial Mode - Stage 74   "
+    },
+    "Altair": {
+        "info": "  Stats: Attack: 6                                     Evade: 10                                     Critical Chance: 5%  License: Guns 1  Where to find it:  Balthier comes equipped with this gun when he joins your party.  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Arjie\u2019s Shop in Giza Plains - Nomad Village (Dry Season)                                     Burrogh in the Barheim Passage - The Lightworks  Treasure:                                     Garamsythe Waterway - East Waterway Control   "
+    },
+    "Ame-no-Murakumo": {
+        "info": "  Stats: Attack: 96                                     Evade: 29                                     Combo Chance: 20%                                     Wind-based damage.  License: Katana 4  Where to find it:  Bazaar:                                     Samurai\u2019s Katana  Purchased From:                                     Beruny\u2019s Armaments in Balfonheim Port - Quayside Court  Side Quest:                                     Hunt Club  Stolen From:                                     Etherian  Treasure:                                     The Pharos - Subterra   "
+    },
+    "Ancient Sword": {
+        "info": "  Stats: Attack: 35                                     Evade: 5                                     Combo Chance: 5%                                     Petrify Chance: 15%  License: Swords 3  Where to find it:  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Targe\u2019s Arms in Bhujerba - Travica Way                                     Lohen in Dalmasca Westersand - The Great Divide                                     Dyce in the Nam-Yensa Sandsea - Trail of Fading Warmth                                     Dyce after he moves to the Tomb of King Raithwall - Valley of the Dead                                     Dyce after he moves to Balfonheim Port - Sea Breeze Lane  Stolen From:                                     Urutan Eater  Treasure:                                     Ogir-Yensa Sandsea - Platform 1 - Refinery   "
+    },
+    "Antares": {
+        "info": "  Stats: Attack: 41                                     Evade: 10                                     Critical Chance: 5%  License: Guns 5  Where to find it:  Drops From:                                     Deidar  Treasure:                                     Cerobi Steppe - Old Elanise Road                                     The Pharos - Third Ascent - Spire Ravel - 1st Flight   "
+    },
+    "Arc Scale": {
+        "info": "  Stats: Attack: 10                                     Evade: 35                                     On-Hit:  Shell (50%)  License: Measures 2  Where to find it:  Treasure:                                     Barheim Passage - Special Op Sector 5                                     Cerobi Steppe - South Liavell Hills   "
+    },
+    "Arcturus": {
+        "info": "  Stats: Attack: 45                                     Evade: 10                                     Critical Chance: 5%  License: Guns 6  Where to find it:  Bazaar:                                     Late-model Rifle  Treasure:                                     Lhusu Mines - Site 5                                     Cerobi Steppe - North Liavell Hills   "
+    },
+    "Artemis Bow": {
+        "info": "  Stats: Attack: 94                                     Critical Chance: 5%  License: Bows 7  Where to find it:  Bazaar:                                     Bow of the Moon Goddess  Side Quest:                                     Hunt Club  Stolen From:                                     Tyrant during Trial Mode - Stage 55  Treasure:                                     Cerobi Steppe - Old Elanise Road                                     The Great Crystal - Uldobi Phullam Pratii'dii   "
+    },
+    "Ashura": {
+        "info": "  Stats: Attack: 72                                     Evade: 10                                     Combo Chance: 12%                                     Blind Chance: 5%  License: Ninja Swords 1  Where to find it:  Poached From:                                     Aeros  Treasure:                                     The Stilshrine of Miriam - Walk of Reason                                     Cerobi Steppe - South Liavell Hills   "
+    },
+    "Assassin's Dagger": {
+        "info": "  Stats: Attack: 31                                     Evade: 5                                     Combo Chance: 12%                                     KO Chance: 5%  License: Daggers 2  Where to find it:  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Targe\u2019s Arms in Bhujerba - Travica Way                                     Tetran in Dreadnought Leviathan - Brig No. 1  Stolen From:                                     Tiamat during Trial Mode - Stage 13  Treasure:                                     Lhusu Mines - Site 2   "
+    },
+    "Avenger": {
+        "info": "  Stats: Attack: 66                                     Evade: 5                                     Combo Chance: 12%                                     Berserk Chance: 10%  License: Daggers 4  Where to find it:  Purchased From:                                     Luccio in the Mosphoran Highwaste - Babbling Vale                                     The \u201cVendor of Goods\u201d in Phon Coast - Hunter\u2019s Camp  Treasure:                                     Mosphoran Highwaste - Rays of Ashen Light                                     Tchita Uplands - Realm of the Elder Dream   "
+    },
+    "Bastard Sword": {
+        "info": "  Stats: Attack: 67                                     Evade: 5                                     Combo Chance: 5%  License: Swords 6  Where to find it:  Drops From:                                     Skulwyrm  Purchased From:                                     Luccio in the Mosphoran Highwaste - Babbling Vale                                     The \u201cVendor of Goods\u201d in the Phon Coast - Hunter\u2019s Camp  Treasure:                                     The Salikawood - Diverging Way                                     Tchita Uplands - Garden of Life\u2019s Circle   "
+    },
+    "Battle Bamboo": {
+        "info": "  Stats: Attack: 34                                     Evade: 30                                     Combo Chance: 15%  License: Poles 2  Where to find it:  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Targe\u2019s Arms in Bhujerba - Travica Way                                     Tetran aboard the Dreadnought Leviathan - Brig No. 1  Treasure:                                     Lhusu Mines - Site 2   "
+    },
+    "Betelgeuse": {
+        "info": "  Stats: Attack: 22                                     Evade: 10                                     Critical Chance: 5%  License: Guns 3  Where to find it:  Drops From:                                     Barmuu  Purchased From:                                     Tetran in Eruyt Village - Road of Verdant Praise                                     The Traveling Merchant in the Mt Bur-Omisace - Sand-strewn Pass  Treasure:                                     Paramina Rift - Karydine Glacier                                     Tchita Uplands - Uazcuff Hills                                     Trial Mode - Stage 47   "
+    },
+    "Bhuj": {
+        "info": "  Stats: Attack: 34                                     Evade: 4                                     Combo Chance: 5%  License: Maces 2  Where to find it:  Poached From:                                     Treant  Purchased From:  Jahara, Mt Bur-Omisace and Rabanastre                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Targe\u2019s Arms in Bhujerba - Travica Way                                     Lohen in Dalmasca Westersand - The Great Divide                                     Dyce in the Nam-Yensa Sandsea - Trail of Fading Warmth                                     Dyce after he moves to the Tomb of King Raithwall - Valley of the Dead                                     Dyce after he moves to Balfonheim Port - Sea Breeze Lane  Treasure:                                     Ogir-Yensa Sandsea - Platform 1 - East Tanks                                     Ogir-Yensa Sandsea - Platform 1 - South Tanks   "
+    },
+    "Blood Sword": {
+        "info": "  Stats: Attack: 38                                     Evade: 5                                     Combo Chance: 5%                                     Sap Chance: 100%  License: Blood Sword  Where to find it:  Drops From:                                     Seeker  Treasure:                                     Tomb of King Raithwall - Cloister of Flame                                     Mosphoran Highwaste - Rays of Ashen Light                                     Cerobi Steppe - Old Elanise Road   "
+    },
+    "Bone of Byblos": {
+        "info": "  Stats: Attack: 100                                     Evade: 10                                     Combo Chance: 5%  License: Maces 5  Where to find it:  Stolen From:                                     Yiazmat                                     Ba\u2019Gamnan during Trial Mode - Stage 59  Treasure:                                     Lhusu Mines - Site 5                                     Cerobi Steppe - The Northsward   "
+    },
+    "Bonebreaker": {
+        "info": "  Stats: Attack: 10                                     Evade: 30                                     Combo Chance: 10%                                     Disease Chance: 100%                                     Sap Chance: 100%  License: (None)  Where to find it:  Drops From:                                     Omega Mark XII  Stolen From:                                     Omega Mark XII during Trial Mode - Stage 99  Treasure:                                     Cerobi Steppe - Feddik River   "
+    },
+    "Bowgun": {
+        "info": "  Stats: Attack: 21                                     Evade: 5                                     Critical Chance: 7%  License: Crossbows 1  Where to find it:  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Weapons of War shop in Nalbina Town - West Ward                                     Burrogh in the Barheim Passage - The Lightworks  Stolen From:                                     Alraune  Treasure:                                     Garamsythe Waterway - No. 10 Channel   "
+    },
+    "Broadaxe": {
+        "info": "  Stats: Attack: 36                                     Evade: 6                                     Combo Chance: 6%  License: Axes & Hammers 2  Where to find it:  Drops From:                                     Tallow  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Targe\u2019s Arms in Bhujerba - Travica Way                                     Tetran in Dreadnought Leviathan - Brig No. 1  Stolen From:                                     Earth Tyrant during Trial Mode - Stage 19   "
+    },
+    "Broadsword": {
+        "info": "  Stats: Attack: 14                                     Evade: 5                                     Combo Chance: 5%  License: Swords 1  Where to find it:  Drops From:                                     Sleipnir  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Arjie\u2019s Shop in Giza Plains - Nomad Village (Dry Season)                                     Burrogh in the Barheim Passage - The Lightworks  Stolen from:                                     Cactite and Cactoid  Treasure:                                     Dalmasca Westersand - Corridor of Sand                                     Garamsythe Waterway - Northern Sluiceway   "
+    },
+    "Bronze Mace": {
+        "info": "  Stats: Attack: 24                                     Evade: 4                                     Combo Chance: 5%  License: Maces 1  Where to find it:  Drops From: Mesmenir  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Targe\u2019s Arms in Bhujerba - Travica Way                                     Tetran in Dreadnought Leviathan - Brig No. 1  Treasure:                                     Lhusu Mines - Shaft Entry   "
+    },
+    "Burning Bow": {
+        "info": "  Stats: Attack: 77                                     Critical Chance: 5%                                     Increased damage from Fire-type Magick spells cast.  License: Bows 5  Where to find it:  Drops From:                                     Dive Talon  Hunt Reward:                                     Hunt 06: Lost in the Pudding (White Mousse)  Purchased From:                                     Vint\u2019s Armaments in Archades - Nilbasse                                     Beruny\u2019s Armaments in Balfonheim Port - Quayside Court  Treasure:                                     Tchita Uplands - Garden of Life\u2019s Circle                                     Necrohol of Nabudis - Cloister of Distant Song                                     Trial Mode - Stage 86   "
+    },
+    "Caldera": {
+        "info": "  Stats: Attack: 83  License: Hand-bombs 3  Where to find it:  Bazaar:                                     Devastating Incendiaries  Drops From:                                     Cataract Aevis  Stolen From:                                     Ba\u2019Gamnan during Trial Mode - Stage 59  Treasure:                                     Cerobi Steppe - North Liavell Hills                                     The Great Crystal - Dhebon Jilaam Avaapratii   "
+    },
+    "Caliper": {
+        "info": "  Stats: Attack: 19                                     Evade: 35                                     Inflicts Wind-type Magick damage                                     On-Hit:  Haste (50%)  License: Measures 3  Where to find it:  Hunt Reward:                                     Hunt 19: Rodeo to the Death (Braegh)  Stolen From:                                     Reaper  Treasure:                                     Cerobi Steppe - North Liavell Hills                                     The Great Crystal - Sirhru Phullam Praa   "
+    },
+    "Capella": {
+        "info": "  Stats: Attack: 8                                     Evade: 10                                     Critical Chance: 5%  License: Guns 2  Where to find it:  Bazaar:                                     Marksman\u2019s Delight  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Weapons of War shop in Nalbina Town - West Ward                                     Burrogh in the Barheim Passage - The Lightworks  Treasure:                                     Barheim Passage - Sub-control Room   "
+    },
+    "Chaos Mace": {
+        "info": "  Stats: Attack: 69                                     Evade: 4                                     Combo Chance: 5%                                     Confuse Chance: 15%  License: Maces 3  Where to find it:  Drops From:                                     Cubus during Trial Mode - Stage 28  Purchased From:                                     Luccio in the Mosphoran Highwaste - Babbling Vale                                     The \u201cVendor of Goods\u201d in the Phon Coast - Hunter\u2019s Camp  Stolen From:                                     Charybterix  Treasure:                                     The Salikawood - Trunkwall Road                                     Tchita Uplands - The Skytrail   "
+    },
+    "Cherry Staff": {
+        "info": "  Stats: Attack: 20                                     Evade: 8                                     Magick Power: 3                                     Increases damage from Wind-type Magick spells.  License: Staves 2  Where to find it:  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Targe\u2019s Arms in Bhujerba - Travica Way                                     Tetran in Dreadnought Leviathan - Brig No. 1  Treasure:                                     Barheim Passage - The Zeviah Subterrane   "
+    },
+    "Chopper": {
+        "info": "  Stats: Attack: 40                                     Evade: 5                                     Combo Chance: 12%                                     Sap Chance: 10%  License: Daggers 3  Where to find it:  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Dyce in the Nam-Yensa Sandsea - Trail of Fading Warmth                                     Dyce after he moves to the Tomb of King Raithwall - Valley of the Dead                                     The Garif Trader in Jahara - Lull of the Land                                     Dyce after he moves to Balfonheim Port - Sea Breeze Lane  Treasure:                                     Nam-Yensa Sandsea - Simoon Bluff                                     Ozmone Plain - The Switchback   "
+    },
+    "Claymore": {
+        "info": "  Stats: Attack: 83                                     Evade: 20                                     Combo Chance: 8%  License: Greatswords 1  Where to find it:  Poached From:                                     Spee  Treasure:                                     Draklor Laboratory - Floor 67 - Room 6711 West                                     Cerobi Steppe - South Liavell Hills                                     Cerobi Steppe - Feddik River     "
+    },
+    "Cloud Staff": {
+        "info": "  Stats: Attack: 49                                     Evade: 8                                     Magick Power: 7                                     Increases damage when using Thunder, Wind and Water-type Magick spells.  License: Staves 5  Where to find it:  Bazaar:                                     Mystic Staff  Stolen From:                                     Dheed during Trial Mode - Stage 67  Treasure:                                     Cerobi Steppe - North Liabell Hills                                     The Great Crystal - Kabonii Jilaam Pratii'vaa   "
+    },
+    "Cross Scale": {
+        "info": "  Stats: Attack: 16                                     Evade: 35                                     Inflicts Thunder-type Magick damage                                     On-Hit:  Vanish (50%)  License: Measures 3  Where to find it:  Stolen From:                                     Alraune King  Treasure:                                     Cerobi Steppe - South Liavell Hills                                     Nabreus Deadlands - Field of the Fallen Lord   "
+    },
+    "Crossbow": {
+        "info": "  Stats: Attack: 31                                     Evade: 5                                     Critical Chance: 7%  License: Crossbows 1  Where to find it:  Bazaar:                                     Ranger\u2019s Crossbow  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Targe\u2019s Arms in Bhujerba - Travica Way                                     Tetran aboard the Dreadnought Leviathan  Treasure:                                     Dreadnought Leviathan - Port Section   "
+    },
+    "Cypress Pole": {
+        "info": "  Stats: Attack: 22                                     Evade: 30                                     Combo Chance: 15%                                     Earth-type damage.  License: Poles 2  Where to find it:  Bazaar:                                     Wooden Pole  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Weapons of War shop in Nalbina Town - West Ward                                     Burrogh in the Barheim Passage - The Lightworks  Treasure:                                     Barheim Passage - The Zeviah Subterrane   "
+    },
+    "Dagger": {
+        "info": "  Stats: Attack: 14                                     Evade: 5                                     Combo Chance: 12%  License: Daggers 1  Where to find it:  Comes initially equipped onVaan and Penelo when they join the party.  Drops From:                                     Seeq Thief  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Arjie\u2019s Shop in Giza Plains - Nomad Village (Dry Season)                                     Burrogh in the Barheim Passage - The Lightworks  Treasure:                                     Giza Plains - Gizas South Bank (Dry Season)   "
+    },
+    "Deathbringer": {
+        "info": "  Stats: Attack: 78                                     Evade: 5                                     Combo Chance: 5%                                     KO Chance: 10%  License: Swords 8  Where to find it:  Bazaar:                                     The Leering Blade  Purchased From:                                     Beruny\u2019s Armaments in Balfonheim Port - Quayside Court  Side Quest:                                     Hunt Club  Stolen From:                                     Ithuno  Treasure:                                     The Feywood - The Edge of Reason   "
+    },
+    "Defender": {
+        "info": "  Stats: Attack: 90                                     Evade: 37                                     Combo Chance: 5%  License: Greatswords 2  Where to find it:  Drops From:                                     Leynir  Side Quest:                                     Cockatrice Round-Up  Stolen From:                                     Orthros during Trial Mode - Stage 41  Treasure:                                     Cerobi Steppe - Old Elanise Road                                     The Feywood - The Edge of Reason     "
+    },
+    "Demonsbane": {
+        "info": "  Stats: Attack: 51                                     Evade: 5                                     Combo Chance: 5%  License: Swords 5  Where to find it:  Drops From:                                     Yeti  Purchased From:                                     Tetran in Eruyt Village - Road of Verdant Praise                                     The Traveling Merchant in Mt Bur-Omisace - Sand-strewn Pass  Treasure:                                     Dalmasca Estersand - The Yoma                                     Paramina Rift - Icebound Flow                                     Trial Mode - Stage 50   "
+    },
+    "Dhanusha": {
+        "info": "  Stats: Attack: 109                                     Evade: 10                                     Combo Chance: 20%  License: Dhanusha  Where to find it:  Bazaar:                                     Silver Bow  Stolen From:                                     Krjn during Trial Mode - Stage 71   "
+    },
+    "Diamond Sword": {
+        "info": "  Stats: Attack: 73                                     Evade: 5                                     Combo Chance: 5%  License: Swords 7  Where to find it:  Bazaar:                                     Warped Blade  Purchased From:                                     The \u201cVendor of Goods\u201d\u00a0in the Phon Coast - Hunter\u2019s Camp                                     Vint\u2019s Armaments in Archades - Nilbasse  Treasure:                                      Phon Coast - Caima Hills                                     Tchita Uplands - Garden of Life\u2019s Circle   "
+    },
+    "Doom Mace": {
+        "info": "  Stats: Attack: 75                                     Evade: 4                                     Combo Chance: 5%                                     Doom Chance: 15%  License: Maces 4  Where to find it:  Drops From:                                     Gargoyle Baron  Purchased From:                                     Vint\u2019s Armaments in Archades - Nilbasse                                     Beruny\u2019s Armaments in Balfonheim Port - Quayside Court  Stolen From:                                     Zalera during Trial Mode - Stage 32  Treasure:                                     Tchita Uplands - Oliphzak Rise                                     Necrohol of Nabudis - Hall of Slumbering Might                                     Trial Mode - Stage 83   "
+    },
+    "Dragon Whisker": {
+        "info": "  Stats: Attack: 100                                     Evade: 8                                     Combo Chance: 4%                                     Disable Chance: 10%  License: Dragon Whisker  Where to find it:  Stolen From:                                     War-chief Supinelu during Trial Mode - Stage 53                                     Diabolos during Trial Mode - Stage 72  Treasure:                                     Lhusu Mines - Lasche Span                                     Cerobi Steppe - Feddik River   "
+    },
+    "Durandal": {
+        "info": "  Stats: Attack: 99                                     Evade: 5                                     Combo Chance: 5%  License: Swords 9  Where to find it:  Drops From:                                     Velelu  Stolen From:                                     Rikken during Trial Mode - Stage 86  Treasure:                                     Cerobi Steppe - The Terraced Bank   "
+    },
+    "Eight-fluted Pole": {
+        "info": "  Stats: Attack: 91                                     Evade: 30                                     Combo Chance: 15%  License: Poles 6  Where to find it:  Drop From:                                     Etherian  Side Quest:                                     Hunt Club  Stolen From:                                     Abelisk  Treasure:                                     Cerobi Steppe - North Liavell Hills   "
+    },
+    "Elfin Bow": {
+        "info": "  Stats: Attack: 54                                     Critical Chance: 5%  License: Bows 4  Where to find it:  Hunt Rewards:                                     Hunt 08: A Scream from the Sky (Wyvern Lord)  Purchased From:                                     Tetran in Eruyt Village - Road of Verdant Praise                                     The Traveling Merchant in Mt Bur-Omisace - Sand-strewn Pass  Stolen From:                                     Malboro  Treasure:                                     Paramina Rift - Frozen Brook                                     Trial Mode - Stage 48   "
+    },
+    "Empyrean Rod": {
+        "info": "  Stats: Attack: 60                                     Evade: 6                                     Magick Power: +2  License: Rods 3  Where to find it:  Purchased From:                                     The \u201cVendor of Goods\u201d\u00a0in the Phon Coast - Hunter\u2019s Camp                                     Vint\u2019s Armaments in Archades - Nilbasse  Stolen From:                                     Apsara  Treasure:                                     Phon Coast - Pora-Pora Sands                                     Tchita Uplands - Realm of the Elder Dream                                     Trial Mode - Stage 70   "
+    },
+    "Euclid's Sextant": {
+        "info": "  Stats: Attack: 24                                     Evade: 35                                     Inflicts Holy-type Magick damage                                     On-Hit:  Bubble (50%) [Does not inflict damage when Bubble takes effect]  License: Measures 4  Where to find it:  Hunt Reward:                                     Hunt 29 \u2013 A Wild Stench (Wild Malboro \u2013 Rank VI)  Stolen From:                                     Crystal Knight during Trial Mode - Stage 82  Treasure:                                     Cerobi Steppe - Crossfield   "
+    },
+    "Excalibur": {
+        "info": "  Stats: Attack: 127                                     Evade: 25                                     Combo Chance: 8%                                     Holy Damage.  License: Excalibur  Where to find it:  Stolen From:                                     Humbaba Mistant during Trial Mode - Stage 64                                     Helly Wyrm during Trial Mode - Stage 87  Treasure:                                     The Great Crystal - Crystal Peak     "
+    },
+    "Excalipur": {
+        "info": "  Stats: Attack: 1                                     Evade: 20                                     Combo Chance: 0%                                     Effect: -  Notes: This is a joke weapon included in the game that looks like the Excalibur but doesn nearly 0 damage.  License: - Where to find it:  Hunt Reward:                                     Hunt 40: Battle on the Big Bridge (Gilgamesh)  Stolen From:                                     Omega Mark XII during Trial Mode - Stage 99   "
+    },
+    "Flame Staff": {
+        "info": "  Stats: Attack: 34                                     Evade: 8                                     Magick Power: 4                                     Increases damage when using Fire-type Magick spells.  License: Staves 3  Where to find it:  Drops From:                                     Dustia  Purchased From:                                     The Garif Trader in Jahara - Lull of the Land                                     The Traveling Merchant in Mt Bur-Omisace - Sand-strewn Pass  Treasure:                                     Tomb of King Raithwall - Northfall Passage   "
+    },
+    "Flametongue": {
+        "info": "  Stats: Attack: 45                                     Evade: 5                                     Combo Chance: 5%                                     Fire-type damage.  License: Swords 4  Where to find it:  Bazaar:                                     Burning Blade  Poached From:                                     Jelly  Purchased From:                                     The Garif Trader in Jahara - Lull of the Land                                     The Traveling Merchant in Mt Bur-Omisace - Sand-strewn Pass  Stolen From:                                     King Bomb during Trial Mode - Stage 21  Treasure:                                     Giza Plains - Tracks of the Beast (Rainy Season)                                     Zertinan Caverns - Halls of Ardent Darkness                                     Ozmone Plain - The Shred                                     Tchita Uplands - Uazcuff Hills     "
+    },
+    "Fomalhaut": {
+        "info": "  Stats: Attack: 52                                     Evade: 10                                     Critical Chance: 5%  License: Guns 6  Where to find it:  Stolen From:                                     Elza during Trial Mode - Stage 86  Treasure:                                     Henne Mines - Phase 2 Dig                                     Cerobi Steppe - Feddik River   "
+    },
+    "Francisca": {
+        "info": "  Stats: Attack: 88                                     Evade: 6                                     Combo Chance: 6%  License: Axes & Hammers 5  Where to find it:  Bazaar:                                     War Axe  Drops From:                                     Mimeo                                     Cerberus  Purchased From:                                     The \u201cVendor of Goods\u201d\u00a0in the Phon Coast - Hunter\u2019s Camp                                     Vint\u2019s Armaments in Archades - Nilbasse  Treasure:                                     Phon Coast - Limatra Hills                                     Tchita Uplands - The Highlands                                     Trial Mode - Stage 72   "
+    },
+    "Fumarole": {
+        "info": "  Stats: Attack: 71                                     Increases damage when using Water-type Magick spells.  License: Hand-bombs 2  Where to find it:  Bazaar:                                     Noisome Incendiaries  Stolen From:                                     Archaeosaur  Treasure:                                     Barheim Passage - West Annex                                     Cerobi Steppe - South Liavell Hills   "
+    },
+    "Gaia Rod": {
+        "info": "  Stats: Attack: 43                                     Evade: 6                                     Magick Power: 2                                     Earth-type damage.  License: Rods 2  Where to find it:  Hunt Reward:                                     Hunt 17: Trouble in the Hills (Atomos \u2013 Rank III)  Purchased From:                                     Tetran in Eruyt Village - Road of Verdant Praise                                     The Traveling Merchant in Mt Bur-Omisace - Sand-strewn Pass  Treasure:                                     Paramina Rift - Karydine Glacier                                     Trial Mode - Stage 50   "
+    },
+    "Gastrophetes": {
+        "info": "  Stats: Attack: 84                                     Evade: 5                                     Critical Chance: 7%  License: Crossbows 4  Where to find it:  Stolen From:                                     Pallicant                                     Tyrant during Trial Mode - Stage 55  Treasure:                                     Cerobi Steppe - Old Elanise Road   "
+    },
+    "Giant Stonebow": {
+        "info": "  Stats: Attack: 73                                     Critical Chance: 5%  License: Bows 5  Where to find it:  Purchased From:                                     Luccio in the Mosphoran Highwaste - Babbling Vale                                     The \u201cVendor of Goods\u201d in the Phon Coast - Hunter\u2019s Camp  Treasure:                                     Mosphoran Highwaste - Northern Skirts                                     Tchita Uplands - The Skytrail   "
+    },
+    "Gilt Measure": {
+        "info": "  Stats: Attack: 5                                     Evade: 35                                     On-Hit:  Protect (50%)  License: Measures 1  Where to find it:  Drops From:                                     Gargoyle  Treasure:                                     Garamsythe Waterway - No. 11 Channel                                     Cerobi Steppe - Old Elanise Road   "
+    },
+    "Glacial Staff": {
+        "info": "  Stats: Attack: 38                                     Evade: 8                                     Magick Power: 5                                     Increases damage when using Ice-type Magick spells.  License: Staves 4  Where to find it:  Drops From:                                     Baritine Croc  Purchased From:                                     The Traveling Merchant in Mt Bur-Omisce - Sand-strewn Pass  Treasure:                                     Barheim Passage - Special Op Sector 5                                     Paramina Rift - Pithead Junction B   "
+    },
+    "Gladius": {
+        "info": "  Stats: Attack: 56                                     Evade: 5                                     Combo Chance: 12%                                     Wind-type damage.  License: Daggers 4  Where to find it:  Purchased From:                                     The Traveling Merchant in Mt Bur-Omisace - Sand-strewn Pass  Stolen From:                                     Lindbur Wolf  Treasure:                                     Dalmasca Estersand - The Yoma                                     Paramina Rift - Silverflow\u2019s End   "
+    },
+    "Gokuu Pole": {
+        "info": "  Stats: Attack: 72                                     Evade: 30                                     Combo Chance: 15%  License: Poles 4  Where to find it:  Purchased From:                                     Luccio in the Mosphoran Highwaste - Babbling Vale                                     The \u201cVendor of Goods\u201d in the Phon Coast - Hunter\u2019s Camp  Stolen From:                                     Wendigo  Treasure:                                     The Salikawood - Trunkwall Road                                     Tchita Uplands - The Skytrail   "
+    },
+    "Golden Axe": {
+        "info": "  Stats: Attack: 120                                     Evade: 6                                     Combo Chance: 6%  License: Axes & Hammers 6  Where to find it:  Bazaar:                                     Golden Battle Axe  Stolen From:                                     Reaver                                     Catoblepas  Treasure:                                     Cerobi Steppe - The Terraced Bank                                     Necrohol of Nabudis - Cloister of Reason     "
+    },
+    "Golden Staff": {
+        "info": "  Stats: Attack: 42                                     Evade: 8                                     Magick Power: 6  License: Staves 4  Where to find it:  Drops From:                                     Oiling  Purchased From:                                     Luccio in the Mosphoran Highwaste - Babbling Vale                                     The \u201cVendor of Goods\u201d in the Phon Coast - Hunter\u2019s Camp  Treasure:                                     The Stilshrine of Miriam - Walk of Reason                                     Mosphoran Highwaste - Summit Path   "
+    },
+    "Grand Mace": {
+        "info": "  Stats: Attack: 81                                     Evade: 4                                     Combo Chance: 5%  License: Maces 5  Where to find it:  Hunt Reward:                                     Hunt 32: Who\u2019s The Strongest!? (Pylraster \u2013 Rank VII)  Treasure:                                     Cerobi Steppe - Feddik River   "
+    },
+    "Great Trango (Invisible Weapon)": {
+        "info": "  Stats: Attack: 153                                     Evade: 0                                     Combo Chance: 30%  License: -  Where to find it:  Stolen From:                                     Zodiark  Treasure:                                     The Pharos - Subterra (Abyssal South)   "
+    },
+    "Greataxe": {
+        "info": "  Stats: Attack: 110                                     Evade: 6                                     Combo Chance: 6%  License: Axes & Hammers 5  Where to find it:  Drops From:                                     Gemhorn  Poached From:                                     Reaver during Trial Mode - Stage 49  Purchased From:                                     Beruny\u2019s Armaments in Balfonheim Port - Quayside Court  Treasure:                                     Ridorana Cataract - Colosseum   "
+    },
+    "Gungnir": {
+        "info": "  Stats: Attack: 95                                     Evade: 8                                     Combo Chance: 4%                                     Disable Chance: 10%                                     Fire-type damage.  License: Spears 5  Where to find it:  Bazaar:                                     Engraved Spear  Drops From:                                     Bune  Treasure:                                     The Pharos - First Ascent     "
+    },
+    "Halberd": {
+        "info": "  Stats: Attack: 75                                     Evade: 8                                     Combo Chance: 4%  License: Spears 4  Where to find it:  Hunt Reward:                                     Hunt 21 \u2013 Get My Stuff Back! (Vyraal \u2013 Rank V)  Purchasing From:                                     The \u201cVendor of Goods\u201d in the Phon Coast - Hunter\u2019s Camp                                     Vint\u2019s Armaments in Archades - Nilbasse  Stolen From:                                     Cubus during Trial Mode - Stage 28  Treasure:                                     Phon Coast - Cape Tialan                                     Tchita Uplands - Oliphzak Rise                                     Trial Mode - Stage 81   "
+    },
+    "Hammerhead": {
+        "info": "  Stats: Attack: 81                                     Evade: 6                                     Combo Chance: 6%  License: Axes & Hammers 4  Where to find it:  Drops From:                                     Gorgimera  Purchased From:                                     The Traveling Merchant in Mt Bur-Omisace - Sand-strewn Pass                                     Luccio in the Mosphoran Highwaste - Babbling Vale  Stolen From:                                     Gorgimera                                     Behemoth during Trial Mode - Stage 37   "
+    },
+    "Handaxe": {
+        "info": "  Stats: Attack: 17                                     Evade: 6                                     Combo Chance: 6%  License: Axes & Hammers 1  Where to find it:  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Arjie\u2019s Shop in Giza Plains - Nomad Village (Dry Season)                                     Burrogh in the Barheim Passage - The Lightworks  Stolen From:                                     Steeling  Treasure:                                     Dalmasca Estersand - Banks of the Nebra   "
+    },
+    "Healing Rod": {
+        "info": "  Stats: Attack: 7                                     Evade: 6                                     Magick Power: 2                                     On-Hit:  Regen (100%)  License: Rods 2  Where to find it:  Poached From:                                     Wild Onion  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Dyce in the Nam-Yensa Sandsea - Trail of Fading Warmth                                     Dyce after he moves to the Tomb of King Raithwall - Valley of the Dead                                     The Garif Trader in Jahara - Lull of the Land                                     Dyce after he moves to Balfonheim Port - Sea Breeze Lane   "
+    },
+    "Heavy Lance": {
+        "info": "  Stats: Attack: 42                                     Evade: 8                                     Combo Chance: 4%                                     Slow Chance: 10%  License: Spears 2  Where to find it:  Drops From:                                     Fideliant  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Dyce in the Nam-Yensa Sandsea - Trail of Fading Warmth                                     Dyce after he moves to the Tomb of King Raithwall - Valley of the Dead                                     The Garif Trader in Jahara - Lull of the Land                                     Drce after he moves to Balfonheim Port - Sea Breeze Lane  Treasure:                                     Nam-Yensa Sandsea - The Urutan-Yensa Sea                                     Ozmone Plain - Field of Fallen Wings   "
+    },
+    "Holy Lance": {
+        "info": "  Stats: Attack: 91                                     Evade: 8                                     Combo Chance: 4%                                     Holy-type Magick damage.  License: Spears 5  Where to find it:  Poached From:                                     Gizamaluk  Purchased From:                                     Beruny\u2019s Armaments in Balfonheim Port - Quayside Court  Side Quest:                                     Hunt Club  Treasure:                                     The Ridorana Cataract - Colosseum   "
+    },
+    "Holy Rod": {
+        "info": "  Stats: Attack: 63                                     Evade: 6                                     Magick Power: 4                                     Holy-type damage and increases effect of using Holy-type Magick.  License: Rods 4  Where to find it:  Treasure:                                     Cerobi Steppe - Old Elanise Road                                     Great Crystal - Bhrum Pis Avaa   "
+    },
+    "Hornito": {
+        "info": "  Stats: Attack: 66  License: Hand-bombs 1  Where to find it:  Drops From:                                     Emperor Aevis  Stolen From:                                     Earth Tyrant during Trial Mode - Stage 19  Treasure:                                     Garamsythe Waterway - No. 10 Channel                                     Cerobi Steppe - South Liavell Hills   "
+    },
+    "Hunting Crossbow": {
+        "info": "  Stats: Attack: 70                                     Evade: 5                                     Critical Chance: 7%  License: Crossbows 3  Where to find it:  Bazaar:                                     Blindflight Quarrels  Hunt Reward:                                     Hunt 13: Befoulment of the Beast (Feral Retriever)  Purchased From:                                     The Traveling Merchant in Mt Bur-Omisace - Sand-strewn Pass                                     Luccio in the Mosphoran Highwaste - Babbling Value  Side Quest:                                     Ktjn side quest  Stolen From:                                     Tarasque                                     Zalera during Trial Mode - Stage 32  Treasure:                                     Paramina Rift - Silverflow\u2019s End                                     The Stilshrine of Miriam - Walk of Reason   "
+    },
+    "Icebrand": {
+        "info": "  Stats: Attack: 55                                     Evade: 5                                     Combo Chance: 5%                                     Ice-type Damage.  License: Swords 5  Where to find it:  Drops From:                                     Zombie Warrior  Hunt Reward:                                     Hunt 07: For Whom the Wyrm Tolls (Ring Wyrm \u2013 Rank III)  Purchased From:                                     The Traveling Merchant in Mt Bur-Omisace - Sand-strewn Pass  Stolen From:                                     Mateus during Trial Mode - Stage 16  Treasure:                                     Barheim Passage - The Zeviah Span                                     Paramina Rift - Silverflow\u2019s End   "
+    },
+    "Iga Blade": {
+        "info": "  Stats: Attack: 87                                     Evade: 15                                     Combo Chance: 22%                                     Water-type Damage.  License: Ninja Sword 2  Where to find it:  Drops From:                                     Bogey  Treasure:                                     Lhusu Mines - Site 9                                     Cerobi Steppe - The Terraced Bank   "
+    },
+    "Iron Hammer": {
+        "info": "  Stats: Attack: 24                                     Evade: 2                                     Combo Chance: 8%  License: Axes & Hammers 2  Where to find it:  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Weapons of War shop in Nalbina Town - West Ward                                     Burrogh in the Barheim Passage - The Lightworks  Treasure:                                     Barheim Passage - The Zeviah Subterrane   "
+    },
+    "Iron Pole": {
+        "info": "  Stats: Attack: 46                                     Evade: 30                                     Combo Chance: 15%                                     Slow Chance: 10%  License: Poles 3  Where to find it:  Bazaar:                                     Iron-forged Pole  Drops From:                                     Great Malboro                                     Clay Golem  Purchased From:                                     The Garif Trader at Jahara - Lull of the Land                                     The Traveling Merchant at Mt Bur-Omisace - Sand-strewn Pass  Treasure:                                     Great Plains - Gizas North Bank (Rainy Season)                                     Zertinan Caverns - Halls of Ardent Darkness                                     Trial Mode - Stage 43   "
+    },
+    "Iron Sword": {
+        "info": "  Stats: Attack: 25                                     Evade: 5                                     Combo Chance: 5%  License: Swords 2  Where to find it:  Bazaar:                                     Iron-forged Blade  Drops From:                                     Razorfin  Purchased From:                                     Targe\u2019s Arms in Bhujerba - Travica Way                                     Lohen in Dalmasca Westersand - The Western Divide                                     Tetran in Dreadnought Leviathan - Brig No. 1  Stolen From:                                     Mimic                                     Seeker  Treasure:                                     Dreadnought Leviathan - Starboard Section   "
+    },
+    "Ivory Pole": {
+        "info": "  Stats: Attack: 83                                     Evade: 30                                     Combo Chance: 15%                                     Wind-type damage.  License: Poles 5  Where to find it:  Bazaar:                                     Elegant Pole  Drops From:                                     Et\u00e9m  Purchased From:                                     Beruny\u2019s Armaments in Balfonheim Port - Quayside Court  Treasure:                                     The Feywood - The Edge of Reason   "
+    },
+    "Javelin": {
+        "info": "  Stats: Attack: 16                                     Evade: 8                                     Combo Chance: 4%  License: Spears 1  Where to find it:  Bazaar:                                     Light Spear  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Arjie\u2019s Shop in the Giza Plains - Nomad Village (Dry Season)                                     Burrogh in the Barheim Passage - The Lightworks  Treasure:                                     Garamsythe Waterway - North Spur Sluiceway   "
+    },
+    "Judicer's Staff": {
+        "info": "  Stats: Attack: 48                                     Evade: 8                                     Magick Power: 7                                     On-Hit Chance:  Slow (15%)  License: Staves 6  Where to find it:  Purchased From:                                     The \u201cVendor of Goods\u201d\u00a0in the Phon Coast - Hunter\u2019s Camp                                     Vint\u2019s Armaments in Archades - Nilbasse  Stolen From:                                     Golem                                     Vishno during Trial Mode - Stage 45  Treasure:                                     Phon Coast - Limatra Hills                                     Tchita Uplands - Garden of Life\u2019s Circle                                     Trial Mode - Stage 68   "
+    },
+    "Kagenui": {
+        "info": "  Stats: Attack: 81                                     Evade: 13                                     Combo Chance: 18%                                     Slow Chance: 10%                                     Causes Dark-type damage.  License: Ninja Swords 1  Where to find it:  Bazaar:                                     Jag-tooth Ninja Sword  Drops From:                                     Striker  Treasure:                                     Barheim Passage - The Zeviah Span                                     Cerobi Steppe - North Liavell Hills   "
+    },
+    "Kanya": {
+        "info": "  Stats: Attack: 112                                     Evade: 35                                     Combo Chance: 35%                                     Immobilize Chance: 10%  License: Kanya  Where to find it:  Bazaar:                                     Whisker of the Beast  Stolen From:                                     Diabolos during Trial Mode - Stage 72   "
+    },
+    "Karkata": {
+        "info": "  Stats: Attack: 92                                     Evade: 16                                     Combo Chance: 7%                                     Confuse Chance: 100%  License: Karkata  Where to find it:  Bazaar:                                     Crimson Blade  Stolen From:                                     Flowering Cactoid during Trial Mode - Stage 3   "
+    },
+    "Kiku-ichimonji": {
+        "info": "  Stats: Attack: 71                                     Evade: 25                                     Combo Chance: 20%  License: Katana 3  Where to find it:  Drops From:                                     Scythe Mantis  Purchased From:                                     Luccio in the Mosphoran Highwaste - Babbling Vale                                     The \u201cVendor of Goods\u201d in the Phon Coast - Hunter\u2019s Camp  Side Quest:                                     Hunt Club  Treasure:                                     Stilshrine of Miriam - Walk of Reason                                     Mosphoran Highwaste - Summit Path                                     Tchita Uplands - Garden of Life\u2019s Circle   "
+    },
+    "Killer Bow": {
+        "info": "  Stats: Attack: 36                                     Critical Chance: 5%  License: Bows 3  Where to find it:  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Targe\u2019s Arms in Bhujerba - Travica Way                                     Lohen in Dalmasca Westersand - The Great Divide                                     Dyce in the Nam-Yensa Sandsea - Trail of Fading Warmth                                     Dyce after he moves to the Tomb of King Raithwall - Valley of the Dead                                     Dyce after he moves to Balfonheim Port - Sea Breeze Lane  Stolen From:                                     Imdugud during Trial Mode - Stage 8  Treasure:                                     Ogir-Yensa Sandsea - Platform 1 - Refinery  Received as a reward from Supinelu in Jahara.   "
+    },
+    "Koga Blade": {
+        "info": "  Stats: Attack: 87                                     Evade: 15                                     Combo Chance: 22%                                     Earth-type damage.  License: Ninja Swords 3  Where to find it:  Drops From:                                     Ash Wyrm  Side Quest:                                     Cockatrice Round-Up  Treasure:                                     Lhusu Mines - Site 3                                     Cerobi Steppe - Feddik River     "
+    },
+    "Kogarasumaru": {
+        "info": "  Stats: Attack: 40                                     Evade: 19                                     Combo Chance: 20%  License: Katana 2  Where to find it:  Drops From:                                     Wu  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Burrogh in the Barheim Passage - The Lightworks                                     Lohen in the Dalmasca Westersand - The Western Divide                                     Dyce in the Nam-Yensa Sandsea - Trail of Fading Warmth                                     Dyce after he moves to the Tomb of King Raithwall - Valley of the Dead                                     Dyce after he moves to Balfonheim Port - Sea Breeze Lane  Treasure:                                     Ogir-Yensa Sandsea - East Junction                                     Ogir-Yensa Sandsea - Platform 1 - South Tanks   "
+    },
+    "Kotetsu": {
+        "info": "  Stats: Attack: 16                                     Evade: 15                                     Combo Chance: 20%  License: Katana 1  Where to find it:  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Arjie\u2019s Shop in the Giza Plains - Nomad Village (Dry Season)                                     Burrogh in the Barheim Passage - The Lightworks  Stolen From:                                     Steeling  Treasure:                                     Garamsythe Waterway - No. 11 Channel   "
+    },
+    "Kumbha": {
+        "info": "  Stats: Attack: 117                                     Evade: 40                                     Combo Chance: 35%  License: Kumbha  Where to find it:  Bazaar:                                     Master-crafted Blade  Stolen From:                                     Gilgamesh during Trial Mode - Stage 94   "
+    },
+    "Lohengrin": {
+        "info": "  Stats: Attack: 40                                     Evade: 5                                     Combo Chance: 5%  License: Swords 4  Where to find it:  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Dyce in the Nam-Yensa Sandsea - Trail of Fading Warmth                                     Dyce after he moves to the Tomb of King Raithwall - Valley of the Dead                                     The Garif Trader in Jahara - Lull of the Land                                     Dyce after he moves to Balfonheim Port - Sea Breeze Lane  Treasure:                                     Nam-Yensa Sandsea - Simoon Bluff   "
+    },
+    "Longbow": {
+        "info": "  Stats: Attack: 48                                     Critical Chance: 0%  License: Bows 3  Where to find it:  Bazaar:                                     Arrows Alight  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Dyce in the Nam-Yensa Sandsea - Trail of Fading Warmth                                     Dyce after he moves to the Tomb of King Raithwall - Valley of the Dead                                     The Garif Trader in Jahara - Lull of the Land                                     Dyce after he moves to Balfonheim Port - Sea Breeze Lane   "
+    },
+    "Longsword": {
+        "info": "  Stats: Attack: 20                                     Evade: 5                                     Combo Chance: 5%  License: Swords 2  Where to find it:  Ashe comes equipped with this sword when she first joins your party.  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Weapons of War shop in Nalbina Town - West Ward                                     Burrogh in the Barheim Passage - The Lightworks  Stolen From:                                     Flowering Cactoid during Trial Mode - Stage 3  Treasure:                                     Garamsythe Waterway - No. 10 Channel   "
+    },
+    "Loxley Bow": {
+        "info": "  Stats: Attack: 60                                     Critical Chance: 5%  License: Bows 4  Where to find it:  Bazaar:                                     Hollow-shaft Arrows  Drops From:                                     Wyrdhare  Purchased From:                                     The Traveling Merchant in the Mt Bur-Omisace - Sand-strewn Pass                                     Luccio in the Mosphoran Highwaste - Babbling Vale  Side Quest:                                     Viera Matchmaking  Stolen From:                                     Cultsworn Lich  Treasure:                                     Paramina Rift - Silverflow\u2019s End                                     The Stilshrine of Miriam - Walk of Reason   "
+    },
+    "Mace": {
+        "info": "  Stats: Attack: 17                                     Evade: 4                                     Combo Chance: 5%  License: Maces 1  Where to find it:  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Weapons of War shop in Nalbina Town - West Ward                                     Burrogh in the Barheim Passage - The Lightworks  Treasure:                                     Garamsythe Waterway - No. 10 Channel   "
+    },
+    "Mage Masher": {
+        "info": "  Stats: Attack: 18                                     Evade: 5                                     Combo Chance: 12%                                     Silence Chance: 15%  License: Daggers 2  Where to find it:  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Weapons of War shop in Nalbina Town - West Ward                                     Burrogh in the Barheim Passage - The Lightworks  Treasure:                                     Barheim Passage - Op Sector 37   "
+    },
+    "Magoroku": {
+        "info": "  Stats: Attack: 50                                     Evade: 21                                     Combo Chance: 20%  License: Katana 2  Where to find it:  Drops From:                                     Urutan Exile  Purchased From:                                     Garif Trader in Jahara - Lull of the Land                                     Traveling Merchant in the Mt Bur-Omisace - Sand-strewn Pass   "
+    },
+    "Main Gauche": {
+        "info": "  Stats: Attack: 46                                     Evade: 50                                     Combo Chance: 5%  License: Daggers 3  Where to find it:  Poached From:                                     Lesser Chimera  Purchased From:                                     The Garif Trader in Jahara - Lull of the Land                                     The Traveling Merchant in Mt Bur-Omisace - Sand-strewn Pass  Treasure:                                     Giza Plains - Tracks of the Beast (Rainy Season)                                     Zertinan Caverns - Halls of Ardent Darkness                                     Trial Mode - Stage 39   "
+    },
+    "Makara": {
+        "info": "  Stats: Attack: 96  License: Makara  Where to find it:  Treasure:                                     Henne Mines - Phase 2 Dig                                     Henne Mines - Phase 2 Shaft   "
+    },
+    "Masamune": {
+        "info": "  Stats: Attack: 111                                     Evade: 31                                     Combo Chance: 30%  License: Masamune  Where to find it:  Side Quest:                                     Hunt Club  Stolen From:                                     Avenger during Trial Mode - Stage 72                                     Gilgamesh during Trial Mode - Stage 94   "
+    },
+    "Mesa": {
+        "info": "  Stats: Attack: 102                                     Evade: 32                                     Combo Chance: 32%                                     Poison Chance: 20%  License: Yagyu Darkblade & Mesa  Where to find it:  Bazaar:                                     Serpent Blade  Stolen From:                                     Yiazmat during Trial Mode - Stage 98   "
+    },
+    "Mina": {
+        "info": "  Stats: Attack: 104                                     Evade: 25                                     Combo Chance: 15%                                     KO Chance: 70%  License: Shikari Nagasa & Mina  Where to find it:  Drops From:                                     Larva Eater  Poached From:                                     Overlord during Trial Mode - Stage 72   "
+    },
+    "Miter": {
+        "info": "  Stats: Attack: 42                                     Evade: 4                                     Combo Chance: 5%                                     Causes Water-type Magick damage.  License: Maces 2  Where to find it:  Purchased From:                                     The Garif Trader in Jahara - Lull of the Land                                     The Traveling Merchant in Mt Bur-Omisace - Sand-strewn Pass  Stolen From:                                     Rain Dancer  Treasure:                                     Zertinan Caverns - Hourglass Basin                                     Zertinan Caverns - Halls of Ardent Darkness   "
+    },
+    "Mithuna": {
+        "info": "  Stats: Attack: 66                                     Evade: 25                                     Combo Chance: 10%  License: Mithuna  Where to find it:  Bazaar:                                     Mudslinger  Stolen From:                                     Elza during Trial Mode - Stage 86   "
+    },
+    "Morning Star": {
+        "info": "  Stats: Attack: 100                                     Evade: 2                                     Combo Chance: 8%  License: Axes & Hammers 5  Where to find it:  Drops From:                                     Ose  Purchased From:                                     Beruny\u2019s Armaments in Balfonheim Port - Quayside Court  Treasure:                                     The Feywood - The Edge of Reason   "
+    },
+    "Multiscale": {
+        "info": "  Stats: Attack: 13                                     Evade: 35                                     Inflicts Fire-type Magick damage                                     On-Hit:  Bravery (50%)  License: Measures 2  Where to find it:  Stolen From:                                     Bagoly                                     Apsara during Trial Mode - Stage 31  Treasure:                                     Lhusu Mines - Site 3                                     Cerobi Steppe - South Liavell Hills   "
+    },
+    "Muramasa": {
+        "info": "  Stats: Attack: 104                                     Evade: 31                                     Combo Chance: 20%  License: Katana 4  Where to find it:  Drops From:                                     Crypt Bunny  Stolen From:                                     Avenger during Trial Mode - Stage 72  Treasure:                                     The Pharos - Second Ascent - The Bounds of Truth                                     Cerobi Steppe - The Terraced Bank   "
+    },
+    "Murasame": {
+        "info": "  Stats: Attack: 62                                     Evade: 23                                     Combo Chance: 20%                                     Water-type damage.  License: Katana 3  Where to find it:  Poached From:                                     Pyrolisk  Purchased From:                                     The Traveling Merchant at Mt Bur-Omisace - Sand-strewn Pass  Treasure:                                     Barheim Passage - West Annex                                     Paramina Rift - Karydine Glacier   "
+    },
+    "Musk Stick": {
+        "info": "  Stats: Attack: 39                                     Evade: 30                                     Combo Chance: 15%  License: Poles 3  Where to find it:  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Targe\u2019s Arms in Bhujerba - Travica Way                                     Lohen in Dalmasca Westersand - The Great Divide                                     Dyce in the Nam-Yensa Sandsea - Trail of Fading Warmth                                     Dyce after he moves to the Tomb of King Raithwall - Valley of the Dead                                     Dyce after he moves to Balfonheim Port - Sea Breeze Lane  Treasure:                                     Ogir-Yensa Sandsea - Primary Tank Complex                                     Ogir-Yensa Sandsea - Platform 1 - South Tanks   "
+    },
+    "Mythril Blade": {
+        "info": "  Stats: Attack: 23                                     Evade: 5                                     Combo Chance: 5%  License: -  Where to find it:  Initially equipped to Basch and the only one that you can obtain in the game.  Stolen From:                                     Flowering Cactoid during Trial Mode - Stage 3  Treasure From:                                     Cerobi Steppe - Feddik River                                     Necrohol of Nabudis - The Slumbermead   "
+    },
+    "Mythril Sword": {
+        "info": "  Stats: Attack: 13                                     Evade: 5                                     Combo Chance: 5%  License: Smallswords  Where to find it:  Reks and Vaan both come initially equipped with this sword.  Treasure:                                     Henne Mines - Phase 2 Dig                                     Cerobi Steppe - Crossfield   "
+    },
+    "Oak Staff": {
+        "info": "  Stats: Attack: 15                                     Evade: 8                                     Magick Power: 2  License: Staves 1  Where to find it:  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Weapons of War shop in Nalbina Town - West Ward                                     Burrogh in the Barheim Passage - The Lightworks  Treasure:                                     Barheim Passage - Op Sector 37   "
+    },
+    "Oaken Pole": {
+        "info": "  Stats: Attack: 15                                     Evade: 30                                     Combo Chance: 15%  License: Poles 1  Where to find it:  Drops From:                                     Specter  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Arjie\u2019s Shop in the Giza Plains - Nomad Village (Dry Season)                                     Burrogh in the Barheim Passage - The Lightworks  Treasure:                                     Garamsythe Waterway - No. 11 Channel   "
+    },
+    "Obelisk": {
+        "info": "  Stats: Attack: 68                                     Evade: 8                                     Combo Chance: 4%  License: Spears 3  Where to find it:  Drops From:                                     Anchag  Purchased From:                                     The Traveling Merchant in Mt Bur-Omisace - Sand-strewn Pass                                     Luccio in the Mosphoran Highwaste - Babbling Vale  Treasure:                                     Dalmasca Estersand - Broken Sands                                     The Stilshrine of Miriam - Walk of Reason   "
+    },
+    "Orichalcum Dirk": {
+        "info": "  Stats: Attack: 79                                     Evade: 5                                     Combo Chance: 12%                                     Slow Chance: 10%  License: Daggers 5  Where to find it:  Purchased From:                                     Vint\u2019s Armaments in Archades - Nilbasse                                     Beruny\u2019s Armaments in Balfonheim Port - Quayside Court  Stolen From:                                     Feral Croc  Treasure:                                     Tchita Uplands - The Highlands                                     Necrohol of Nabudis - Hall of the Ivory Covenant                                     Trial Mode - Stage 85   "
+    },
+    "Orochi": {
+        "info": "  Stats: Attack: 94                                     Evade: 18                                     Combo Chance: 25%                                     Disable Chance: 10%                                     Dark-type damage.  License: Ninja Swords 1  Where to find it:  Side Quest:                                     Hunt Club  Stolen From:                                     Biding Mantis during Trial Mode - Stage 62  Treasure:                                     Lhusu Mines - Site 11                                     Cerobi Steppe - The Northsward   "
+    },
+    "Osafune": {
+        "info": "  Stats: Attack: 26                                     Evade: 17                                     Combo Chance: 20%  License: Katana 1  Where to find it:  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Targe\u2019s Arms in Bhujerba - Travica Way                                     Tetran aboard the Dreadnought Leviathan  Treasure:                                     Lhusu Mines   "
+    },
+    "Paramina Crossbow": {
+        "info": "  Stats: Attack: 42                                     Evade: 5                                     Critical Chance: 7%  License: Crossbows 2  Where to find it:  Purchased From:                                      Amal\u2019s Weaponry in Rabanastre - East End                                     Dyce in the Nam-Yensa Sandsea - Trail of Fading Warmth                                     Dyce after he moves to the Tomb of King Raithwall - Valley of the Dead                                     The Garif Trader in Jahara - Lull of the Land                                     Dyce after he moves to Balfonheim Port - Sea Breeze Lane  Stolen From:                                     White Wolf                                     Ghast                                     Imdugud during Trial Mode - Stage 8  Treasure:                                     Ogir-Yensa Sandsea - Central Junction                                     Tomb of King Raithwall - Southfall Passage     "
+    },
+    "Partisan": {
+        "info": "  Stats: Attack: 34                                     Evade: 8                                     Combo Chance: 4%  License: Spears 2  Where to find it:  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Targe\u2019s Arms in Bhujerba - Travica Way                                     Tetran aboard the Dreadnought Leviathan - Brig No. 1  Treasure:                                     Dreadnought Leviathan - Port Section   "
+    },
+    "Penetrator Crossbow": {
+        "info": "  Stats: Attack: 79                                     Evade: 5                                     Critical Chance: 7%  License: Crossbows 3  Where to find it:  Bazaar:                                     Scout\u2019s Crossbow  Drops From:                                     Pallicant during Trial Mode - Stage 43  Purchased From:                                     Vint\u2019s Armaments in Archades - Nilbasse                                     Beruny\u2019s Armaments in Balfonheim Port - Quayside Court  Treasure:                                     Tchita Uplands - The Skytrail                                     Nabreus Deadlands - Hall of Effulgent Light                                     Trial Mode - Stage 82   "
+    },
+    "Perseus Bow": {
+        "info": "  Stats: Attack: 92                                     Critical Chance: 5%  License: Bows 7  Where to find it:  Bazaar:                                     Permafrost Bow & Quiver  Drops From:                                     Bug  Treasure:                                     Cerobi Steppe - South Liavell Hills                                     The Pharos - First Ascent - Wellspring Ravel - 2nd Flight     "
+    },
+    "Platinum Dagger": {
+        "info": "  Stats: Attack: 83                                     Evade: 5                                     Combo Chance: 12%                                     Immobilize Chance: 10%  License: Daggers 5  Where to find it:  Drops From:                                     Shambling Corpse  Purchased From:                                     Beruny\u2019s Armaments in Balfonheim Port - Quayside Court  Side Quest:                                     Cockatrice Round-Up  Treasure:                                     The Feywood - The Edge of Reason   "
+    },
+    "Platinum Sword": {
+        "info": "  Stats: Attack: 61                                     Evade: 5                                     Combo Chance: 5%  License: Swords 6  Where to find it:  Drops From:                                     Mandragora  Purchased From:                                     The Traveling Merchant in the Mt Bur-Omisace - Sand-strewn Pass                                     Luccio in the Mosphoran Highwaste - Babbling Vale  Stolen From:                                     Twintania  Treasure:                                     Stilshrine of Miriam - Walk of Reason   "
+    },
+    "Power Rod": {
+        "info": "  Stats: Attack: 56                                     Evade: 6                                     Magick Power: 3  License: Rods 3  Where to find it:  Drops From:                                     Focalor  Purchased From:                                     The Traveling Merchant in the Mt Bur-Omisace - Sand-strewn Pass                                     Luccio in the Mosphoran Highwaste - Babbling Vale  Stolen From:                                     Apsara during Trial Mode - Stage 31  Treasure:                                     Paramina Rift - Karydine Glacier                                     The Stilshrine of Miriam - Walk of Reason   "
+    },
+    "Ragnarok": {
+        "info": "  Stats: Attack: 117                                     Evade: 20                                     Combo Chance: 8%                                     Immobilize Chance: 25%  License: Greatswords 4  Where to find it:  Hunt Reward:                                     Hunt 43 \u2013 Fishy Dreams (Ixion \u2013 Rank VI)   "
+    },
+    "Ras Algethi": {
+        "info": "  Stats: Attack: 29                                     Evade: 10                                     Critical Chance: 5%  License: Guns 4  Where to find it:  Poached From:                                     Phyllo  Purchased From:                                     The Traveling Merchant in Mt Bur-Omisace - Sand-strewn Pass                                     Luccio in the Mosphoran Highwaste - Babbling Vale  Stolen From:                                     Adrammelech during Trial Mode - Stage 35  Treasure:                                     The Stilshrine of Miriam - Walk of Reason                                     The Salikawood - Diverging Way   "
+    },
+    "Recurve Crossbow": {
+        "info": "  Stats: Attack: 57                                     Evade: 5                                     Critical Chance: 7%  License: Crossbows 2  Where to find it:  Bazaar:                                     Huntman\u2019s Crossbow  Purchased From:                                     Tetran in Eruyt Village - Road of Verdant Praise                                     The Traveling Merchant in Mt Bur-Omisace - Sand-strewn Pass  Reward:                                     During the visit to Jahara from Supinelu.  Stolen From:                                     Balloon  Treasure:                                     Paramina Rift - Icebound Flow                                     Trial Mode - Stage 46   "
+    },
+    "Rod": {
+        "info": "  Stats: Attack: 16                                     Evade: 6                                     Magick Power: 2  License: Rods 1  Where to find it:  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Weapons of War shop in Nalbina Town - West Ward                                     Burrogh in the Barheim Passage - The Lightworks  Treasure:                                     Barheim Passage - Op Sector 36   "
+    },
+    "Rod of Faith": {
+        "info": "  Stats: Attack: 21                                     Evade: 6                                     Magick Power: 6                                     On-hit:  Faith (60%)  License: Rod of Faith  Where to find it:  Hunt Reward:                                     Hunt 42: Truth Shrouded in Mist (Behemoth King \u2013 Rank VII)  Stolen From:                                     Exodus during Trial Mode - Stage 68  Treasure:                                     Cerobi Steppe - The Terraced Bank   "
+    },
+    "Runeblade": {
+        "info": "  Stats: Attack: 78                                     Evade: 5                                     Combo Chance: 5%  License: Swords 7  Where to find it:  Drops From:                                     Babil  Poached From:                                     Brainpan during Trial Mode - Stage 45  Purchased From:                                     The \u201cVendor of Goods\u201d\u00a0in the Phon Coast - Hunter\u2019s Camp                                     Dyce in Balfonheim Port - Sea Breeze Lane  Side Quest:                                     Hunt Club  Treasure:                                     Tchita Uplands - Uazcuff Hills                                     Necrohol of Nabudis - Cloister of the Highborn                                     Trial Mode - Stage 90     "
+    },
+    "Sagittarius": {
+        "info": "  Stats: Attack: 97                                     Critical Chance: 5%  License: Sagittarius  Where to find it:  Stolen From:                                     Luxollid during Trial Mode - Stage 70  Treasure:                                     Cerobi Steppe - Crossfield   "
+    },
+    "Sakura-saezuri": {
+        "info": "  Stats: Attack: 77                                     Evade: 12                                     Combo Chance: 15%                                     Slow Chance: 8%                                     Causes Dark-type damage.  License: Ninja Swords 1  Where to find it:  Drops From:                                     Midgardsormr  Treasure:                                     Sochen Cave Palace - Falls of Time                                     Cerobi Steppe - South Liavell Hills   "
+    },
+    "Save the Queen": {
+        "info": "  Stats: Attack: 92                                     Evade: 20                                     Combo Chance: 8%  License: Greatswords 2  Where to find it:  Bazaar:                                     Attenuated Greatsword  Hunt Reward:                                     Hunt 24 - The Creature Collector (Goliath)  Purchased From:                                     Beruny\u2019s Armaments in Balfonheim Port - Quayside Court  Treasure:                                     The Ridorana Cataract - Colosseum   "
+    },
+    "Scorpion Tail": {
+        "info": "  Stats: Attack: 124                                     Evade: 2                                     Combo Chance: 8%  License: Axes & Hammers 7  Where to find it:  Drops From:                                     Glaring Eye  Treasure:                                     Cerobi Steppe - Crossfield   "
+    },
+    "Seitengrat": {
+        "info": "  Stats: Attack: 224                                     Evade: 75                                     Combo Chance: 25%  License: -  Where to find it:  Treasure:                                     Aboard the Skyferry - Air Deck.                                    "
+    },
+    "Serpent Rod": {
+        "info": "  Stats: Attack: 25                                     Evade: 6                                     Ice-type damage                                     Magick Power: 2  License: Rods 1  Where to find it:  Drops From:                                     Viper  Hunt Reward:                                     Hunt 11: A Ring in the Rain (Croakadile \u2013 Rank II)  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Targe\u2019s Arms in Bhujerba - Travica Way                                     Tetran aboard the Dreadnought Leviathan - Brig No. 1  Treasure:                                     Lhusu Mines - Site 2   "
+    },
+    "Shikari Nagasa": {
+        "info": "  Stats: Attack: 90                                     Evade: 10                                     Combo Chance: 12% License: Shikari Nagasa & Mina  Where to find it:  Stolen From:                                     Vagrant Soul                                     Overlord during Trial Mode - Stage 72                                     Evil Spirit during Trial Mode - Stage 88  Treasure:                                     Cerobi Stappe - The Northsward   "
+    },
+    "Shortbow": {
+        "info": "  Stats: Attack: 175br>                                     Critical Chance: 5%  License: Bows 1  Where to find it:  Bazaar:                                     Bow & Bodkin  Drops From:                                     Slaven  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Arjie\u2019s Shop in the Giza Plains - Nomad Village (Dry Season)                                     Burrogh in the Barheim Passage - The Lightworks  Treasure:                                     Dalmasca Estersand - Banks of the Nebra  Comes initially equipped when Fran joins the party.   "
+    },
+    "Silver Bow": {
+        "info": "  Stats: Attack: 19                                     Critical Chance: 5%  License: Bows 2  Where to find it:  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Weapons of War shop in Nalbina Town - West Ward                                     Burrogh in the Barheim Passage - The Lightworks   "
+    },
+    "Simha": {
+        "info": "  Stats: Attack: 103                                     Evade: 15                                     Combo Chance: 10%  License: Swords 9  Where to find it:  Bazaar:                                     Well-forged Blade  Stolen From:                                     Rikken during Trial Mode - Stage 86   "
+    },
+    "Sirius": {
+        "info": "  Stats: Attack: 17                                     Evade: 10                                     Critical Chance: 5%  License: Guns 2  Where to find it:  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Dyce in the Nam-Yensa Sandsea - Trail of Fading Warmth                                     Dyce after he moves to the Tomb of King Raithwall - Valley of the Dead                                     The Garif Trader in Jahara - Lull of the Land                                     Dyce after he moves to Balfonheim Port - Sea Breeze Lane  Stolen From:                                     Wooly Gator  Treasure:                                     Ogir-Yensa Sandsea - Primary Tank Complex                                     Nam-Yensa Sandsea - Simoon Bluff   "
+    },
+    "Six-fluted Pole": {
+        "info": "  Stats: Attack: 59                                     Evade: 30                                     Combo Chance: 15%                                     Increases damage done by Water-type Magick spells.  License: Poles 4  Where to find it:  Drops From:                                     Seeq Cateran  Purchased From:                                     The Traveling Merchant in Mt Bur-Omisace - Sand-strewn Pass  Stolen From:                                     Cubus in Trial Mode - Stage 28  Treasure:                                     Barheim Passage - West Annex                                     Paramina Rift - Karydine Glacier   "
+    },
+    "Slasher": {
+        "info": "  Stats: Attack: 54                                     Evade: 6                                     Combo Chance: 6%  License: Axes & Hammers 3  Where to find it:  Drops From:                                     Werewolf  Purchased From:                                     The Garif Trader in Jahara - Lull of the Land                                     The Traveling Merchant in Mt Bur-Omisace - Sand-strewn Pass  Treasure:                                     Giza Plains - Gizas North Bank (Rainy Season)                                     Zertinan Caverns - Hourglass Basin                                     Zertinan Caverns - Halls of Ardent Darkness                                     Ozmone Plain - Field of Light Winds                                     Trial Mode - Stage 40   "
+    },
+    "Sledgehammer": {
+        "info": "  Stats: Attack: 66                                     Evade: 2                                     Combo Chance: 8%                                     Disable Chance: 20%  License: Axes & Hammers 4  Where to find it:  Drops From:                                     Humbaba                                     Tyranorox  Purhcased From:                                     Luccio in the Mosphoran Highwaste - Babbling Vale                                     The \u201cVendor of Goods\u201d in the Phon Coast - Hunter\u2019s Camp  Treasure:                                     Barheim Passage - The Zeviah Span                                     Paramina Rift - Silverflow\u2019s End   "
+    },
+    "Spear": {
+        "info": "  Stats: Attack: 26                                     Evade: 8                                     Combo Chance: 4%  License: Spears 1  Where to find it:  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Targe\u2019s Arms in Bhujerba - Travica Way                                     Tetran aboard the Dreadnought Leviathan - Brig No. 1   "
+    },
+    "Spica": {
+        "info": "  Stats: Attack: 38                                     Evade: 10                                     Critical Chance: 5%  License: Guns 5  Where to find it:  Bazaar:                                     Armor-piercing Shot  Poached From:                                     Shadonir  Purchased From:                                     Beruny\u2019s Armaments in Balfonheim Port - Quayside Court  Treasure:                                     Lhusu Mines   "
+    },
+    "Staff of the Magi": {
+        "info": "  Stats: Attack: 53                                     Evade: 8                                     Magick Power: 8                                     Increases damage when using Ice, Wind and Holy-type Magick spells.  License: Staff of the Magi  Where to find it:  Drops From:                                     Oversoul  Side Quest:                                     Hunt Club  Treasure:                                     Cerobi Steppe - Hunter\u2019s Camp                                     The Great Crystal - Sirhru Phullam Praa'vaa   "
+    },
+    "Stoneblade": {
+        "info": "  Stats: Attack: 95                                     Evade: 5                                     Combo Chance: 5%  License: Swords 8  Where to find it:  Bazaar:                                     Darksteel Blade  Side Quests:                                     Hunt Club  Treasure:                                     Cerobi Steppe - The Terraced Bank   "
+    },
+    "Storm Spear": {
+        "info": "  Stats: Attack: 53                                     Evade: 8                                     Combo Chance: 4%                                     Lightning-based damage.  License: Spears 3  Where to find it:  Drops From:                                     Garuda-Egi  Purchased From:                                     Tetran at the Eruyt Village - Road of Verdant Praise                                     The Traveling Merchant in Mt Bur-Omisace - Sand-strewn Pass  Treasure:                                     Paramina Rift - Icebound Flow                                     Tchita Uplands - Realm of the Elder Dream                                     Trial Mode - Stage 49   "
+    },
+    "Storm Staff": {
+        "info": "  Stats: Attack: 36                                     Evade: 8                                     Magick Power: 4                                     Increases damage when using Thunder-type Magick spells.  License: Staves 3  Where to find it:  Drops From:                                     Pineapple  Purchased From:                                     Tetran in Eruyt Village - Road of Verdant Praise                                     The Traveling Merchant in Mt Bur-Omisace - Sand-strewn Pass  Treasure:                                     Trial Mode - Stage 49   "
+    },
+    "Sweep": {
+        "info": "  Stats: Attack: 88                                     Evade: 30                                     Combo Chance: 15%  License: Poles 6  Where to find it:  Poached From:                                     Deidar during Trial Mode - Stage 45  Stolen From:                                     Skulwyrm  Treasure:                                     Cerobi Steppe - South Liavell Hills                                     The Ridorana Cataract - Path of Hidden Blessing   "
+    },
+    "Sword of Kings": {
+        "info": "  Stats: Attack: 53                                     Evade: 0                                     Combo Chance: 20%                                     Cannot be knocked-back.  License: -  Where to find it:  Obtained during a regular playthrough of the game in the Stilshrine of Miriam.  Stolen From: Belias during Trial Mode - Stage 10   "
+    },
+    "Thorned Mace": {
+        "info": "  Stats: Attack: 53                                     Evade: 4                                     Combo Chance: 5%                                     Poison Chance: 15%  License: Maces 3  Where to find it:  Poached From:                                     Malboro King  Purchased From:                                     The Traveling Merchant at Mt Bur-Omisace - Sand-strewn Pass  Treasure:                                     Barheim Passage - Special Op Sector 5                                     Paramina Rift - Karydine Glacier   "
+    },
+    "Tournesol": {
+        "info": "  Stats: Attack: 138                                     Evade: 30                                     Combo Chance: 10%  License: Tournesol  Where to find it:  Bazaar:                                     The Sunflower   "
+    },
+    "Traitor's Bow": {
+        "info": "  Stats: Attack: 82                                     Critical Chance: 5%  License: Bows 6  Where to find it:  Drops From:                                     Pumpkin Star  Purchased From:                                     The Feywood - The Edge of Reason  Stolen From:                                     Adrammelech during Trial Mode - Stage 35  Treasure:                                     The Feywood - The Edge of Reason   "
+    },
+    "Treaty-Blade": {
+        "info": "  Stats: Attack: 67                                     Evade: 30                                     Combo Chance: 25%                                     Cannot be knocked-back.  License: -  Where to find it:  Obtained during a regular playthrough of the game in the Ancient City of Giruvegan.      "
+    },
+    "Trident": {
+        "info": "  Stats: Attack: 85                                     Evade: 8                                     Combo Chance: 4%                                     Ice-type damage.  License: Spears 4  Where to find it:  Bazaar:                                     Forked Spear  Purchased From:                                     Beruny\u2019s Armaments in Balfonheim Port - Quayside Court  Stolen From:                                     Bangaa Thief  Treasure:                                     The Feywood - The Edge of Reason   "
+    },
+    "Tula": {
+        "info": "  Stats: Attack: 91                                     Evade: 5                                     Combo Chance: 7%  License: Crossbows 4  Where to find it:  Side Quest:                                     Hunt Club  Treasure:                                     The Pharos - Second Ascent - Station of Suffering   "
+    },
+    "Tumulus": {
+        "info": "  Stats: Attack: 76  License: Hand-bombs 2  Where to find it:  Bazaar:                                     Oil-soaked Incendiaries  Drops From:                                     Seeq Explorer  Side Quest:                                     Cockatrice Round-Up  Treasure:                                     Lhusu Mines - Site 3                                     Cerobi Steppe - Old Elanise Road     "
+    },
+    "Ultima Blade": {
+        "info": "  Stats: Attack: 109                                     Evade: 20                                     Combo Chance: 8%  License: Greatswords 3  Where to find it:  Bazaar:                                     Ultimate Blade  Side Quest:                                     Hunt Club  Stolen From:                                     Humbaba Mistant during Trial Mode - Stage 64  Treasure:                                     Cerobi Steppe - Crossfield                                     The Pharos - Third Ascent - Spire Ravel - 2nd Flight     "
+    },
+    "Vega": {
+        "info": "  Stats: Attack: 13                                     Evade: 10                                     Critical Chance: 5%  License: Guns 2  Where to find it:  Bazaar:                                     Rain of Tears  Drops From:                                     Axebeak  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Targe\u2019s Arms in Bhujerba - Travica Way                                     Tetran in Dreadnought Leviathan - Brig No. 1  Treasure:                                     Dreadnought Leviathan - Sub-control Room   "
+    },
+    "Volcano": {
+        "info": "  Stats: Attack: 90  License: Hand-bombs 3  Where to find it:  Hunt Reward:                                     Hunt 30 \u2013 Paying for the Past (Catoblepas \u2013 Rank VI)  Stolen From:                                     Wild Malboro during Trial Mode - Stage 69  Treasure:                                     Cerobi Steppe - The Northsward   "
+    },
+    "Vrsabha": {
+        "info": "  Stats: Attack: 108                                     Evade: 40                                     Combo Chance: 10%                                     Disable Chance: 50%  License: Vrsabha  Where to find it:  Drops From:                                     Evil Spirit   "
+    },
+    "Vrscika": {
+        "info": "  Stats: Attack: 133                                     Evade: 2                                     Combo Chance: 20%  License: Vrscika  Where to find it:  Bazaar:                                     The Scorpion   "
+    },
+    "War Hammer": {
+        "info": "  Stats: Attack: 42                                     Evade: 2                                     Combo Chance: 8%  License: Axes & Hammers 2  Where to find it:  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Targe\u2019s Arms in Bhujerba - Travica Way                                     Lohen in Dalmasca Westersand - The Great Divide                                     Dyce in the Nam-Yensa Sandsea - Trail of Fading Warmth                                     Dyce after he moves to the Tomb of King Raithwall - Valley of the Dead                                     Dyce after he moves to Balfonheim Port - Sea Breeze Lane  Stolen From:                                     Hybrid Gator  Treasure:                                     Ogir-Yensa Sandsea - East Junction                                     Phon Coast - The Vaddu Strand   "
+    },
+    "Whale Whisker": {
+        "info": "  Stats: Attack: 108                                     Evade: 30                                     Combo Chance: 15%  License: Whale Whisker  Where to find it:  Stolen From:                                     Master Joe during Trial Mode - Stage 66  Treasure:                                     Lhusu Mines - Site 6 North                                     Cerobi Steppe - Tsenoble   "
+    },
+    "Wizard's Staff": {
+        "info": "  Stats: Attack: 26                                     Evade: 8                                     Magick Power: 4  License: Staves 2  Where to find it:  Drops From:                                     Zu  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Targe\u2019s Arms in Bhujerba - Travica Way                                     Lohen in Dalmasca Westersand - The Great Divide                                     Dyce in the Nam-Yensa Sandsea - Trail of Fading Warmth                                     Dyce after he moves to the Tomb of King Raithwall - Valley of the Dead                                     Dyce after he moves to Balfonheim Port - Sea Breeze Lane  Treasure:                                     Ogir-Yensa Sandsea - Platform 1 - East Tanks   "
+    },
+    "Wyrmhero Blade": {
+        "info": "  Stats: Attack: 131                                     Evade: 50                                     Combo Chance: 80%                                     Holy-type Damage.                                     Casts  Bravery and  Faith on the character equipping it.  License: -  Where to find it:  Bazaar:                                     Dragon Crest  Stolen From:                                     Famfrit during Trial Mode - Stage 50                                     Gilgamesh during Trial Mode - Stage 94   "
+    },
+    "Yagyu Darkblade": {
+        "info": "  Stats: Attack: 98                                     Evade: 24                                     Combo Chance: 28%                                     Doom Chance: 20%                                     Dark-type damage.  License: Yagyu Darkblade & Mesa  Where to find it:  Drops From:                                     Bombshell  Stolen From:                                     Yiazmat during Trial Mode - Stage 98  Treasure:                                     Cerobi Steppe - Crossfield                                     The Great Crystal - Sirhru Jilaam Pratii'vaa     "
+    },
+    "Yakei": {
+        "info": "  Stats: Attack: 83                                     Evade: 27                                     Combo Chance: 20%                                     Poison Chance: 10%  License: Katana 4  Where to find it:  Drops From:                                     Baknamy  Purchased From:                                     Vint\u2019s Armaments in Archades - Nilbasse                                     Beruny\u2019s Armaments in Balfonheim Port - Quayside Court  Treasure:                                     Tchita Uplands - The Lost Way                                     Necrohol of Nabudis - Cloister of Distant Song                                     Trial Mode - Stage 89   "
+    },
+    "Yoichi Bow": {
+        "info": "  Stats: Attack: 89                                     Critical Chance: 5%  License: Bows 6  Where to find it:  Side Quest:                                     Cockatrice Round-Up  Purchased From:                                     Beruny\u2019s Armaments in Balfonheim Port - Quayside Court  Treasure:                                     The Ridorana Cataract - Colosseum     "
+    },
+    "Zephyr Pole": {
+        "info": "  Stats: Attack: 72                                     Evade: 30                                     Combo Chance: 15%                                     Wind-type damage.  License: Poles 5  Where to find it:  Poached From:                                     Bandercoeurl  Purchased From:                                     The \u201cVendor of Goods\u201d\u00a0in the Phon Coast - Hunter\u2019s Camp                                     Vint\u2019s Armaments in Archades - Nilbasse  Treasure:                                     Tchita Uplands - Sundered Earth                                     Necrohol of Nabudis - Hall of the Ivory Covenant                                     Trial Mode - Stage 88   "
+    },
+    "Zeus Mace": {
+        "info": "  Stats: Attack: 81                                     Evade: 4                                     Combo Chance: 5%                                     Increases damage done by Dark-type Magick spells.  License: Maces 4  Where to find it:  Drops From:                                     Mimeo                                     Minibug  Hunt Reward:                                     Hunt 27: The Child Snatcher (Diabolos \u2013 Rank VII)  Treasure:                                     Cerobi Steppe - The Terraced Bank                                     The Pharos - Second Ascent - Station of Suffering   "
+    },
+    "Zodiac Spear": {
+        "info": "  Stats: Attack: 141                                     Evade: 8                                     Combo Chance: 4%  License: Zodiac Spear  Where to find it:  Side Quest:                                     Hunt Club  Stolen From:                                     Biding Mantis during Trial Mode - Stage 62  PlayStation 2 Version:                                     Check out the Zodiac Spear side quest page for more information.                                    "
+    },
+    "Zwill Blade": {
+        "info": "  Stats: Attack: 30                                     Evade: 5                                     Combo Chance: 5%  License: Swords 3  Where to find it:  Purchased From:                                     Amal\u2019s Weaponry in Rabanastre - East End                                     Targe\u2019s Arms in Bhujerba - Travica Way                                     Tetran in Dreadnought Leviathan - Brig No. 1  Treasure From:                                     Dreadnought Leviathan - Sub-control Room   "
+    },
+    "Zwill Crossblade": {
+        "info": "  Stats: Attack: 87                                     Evade: 10                                     Combo Chance: 12%                                     Wind-type Damage.  License: Daggers 6  Where to find it:  Bazaar:                                     Double-bladed Knife  Drops From:                                     Vampyr  Stolen From:                                     Deathclaw                                     Overlord during Trial Mode - Stage 72  Treasure:                                     Lhusu Mines - Site 11                                     Cerobi Steppe - North Liavell Hills   "
+    }
+}

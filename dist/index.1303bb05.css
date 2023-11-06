@@ -1,37 +1,53 @@
 html, body {
+  background-color: #f9e1c1;
   height: 100%;
   margin: 0;
 }
 
 table1, th, td {
   border: 1px solid;
-  width: 100px;
+  width: 50%;
   padding: 4px;
 }
 
 .image-style1 {
-  width: 800px;
+  width: 90%;
 }
 
 .text-style1 {
-  width: 800px;
+  width: 90%;
   font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+}
+
+.text-style2 {
+  width: 90%;
+  padding-top: 1%;
+  font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+  font-size: 50px;
 }
 
 #app {
   float: left;
-  width: 10%;
+  width: 15%;
+  padding: 60px 20px 20px;
 }
 
 button {
-  width: 80px;
+  color: #fff;
+  background-color: #f9e1c1;
+  background-image: url("blue_crystal.c83a3e3e.webp");
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: none;
+  width: 100%;
   height: 400px;
-  top: 50px;
-  left: 2px;
+  font-family: Gill Sans, Gill Sans MT, Calibri, Trebuchet MS, sans-serif;
+  font-size: 16px;
 }
 
 .GeneralContainer {
-  width: 90%;
+  vertical-align: top;
+  width: 50%;
   display: inline-block;
 }
 
@@ -40,14 +56,14 @@ button {
 }
 
 .TableContainer {
-  width: 840px;
+  width: 100%;
   display: flex;
 }
 
 #table1 {
   border-spacing: 1px;
   border-collapse: separate;
-  width: 600px;
+  width: 50%;
   padding: 20px;
   font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
 }
@@ -55,14 +71,23 @@ button {
 #table2 {
   border-spacing: 1px;
   border-collapse: fixed;
-  width: 400px;
+  width: 50%;
   padding: 20px;
   font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
 }
 
 #picture {
   position: center;
-  padding: 20px;
+}
+
+#img-container {
+  width: 30%;
+  display: inline-block;
+}
+
+#sorbet-img {
+  vertical-align: super;
+  width: 100%;
 }
 
 /*# sourceMappingURL=index.1303bb05.css.map */

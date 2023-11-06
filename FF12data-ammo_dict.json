@@ -1,0 +1,98 @@
+{
+    "Aqua Shot": {
+        "info": "  Attack: +3  Element: Water  On-Hit: -  Where to find it:   Bazaar:                                         Rain of Tears  Purchased From:                                         Necrohol of Nabudis (Baknamy Merchant)  Stolen From:                                         Croakadile during Trial Mode - Stage 24  Treasure:                                         Nabreus Deadlands - Lifeless Strand                                         Trial Mode - Stage 24    "
+    },
+    "Artemis Arrows": {
+        "info": "  Attack: +5 Element: Earth On-Hit: - Where to find it:  Bazaar:                                     Arrows of the Moon Goddess  Side Quest:                                     Hunt Club  Stolen From:                                     Krjn in Trial Mode - Stage 71  Treasure:                                     Cerobi Steppe - The Northsward   "
+    },
+    "Assassin's Arrows": {
+        "info": "  Attack: +3  Element: -  On-Hit: KO (25%)  Where to find it:  Hunt Reward: Hunt 31: Wyrm Wrath\u2019s Renewal (Fafnir)  Stolen From:                                     Tower in Trial Mode - Stage 48  Treasure:                                     Henne Mines - Phase 2 Shaft                                     The Pharos - Subterra                                     Trial Mode - Stage 60   "
+    },
+    "Bamboo Arrows": {
+        "info": "  Attack: +2  Element: -  On-Hit: Poison (25%)  Where to find it:  Bazaar:                                     Hollow-shaft Arrows  Purchased From:                                     Necrohol of Nabudis (Baknamy Merchant)  Treasure:                                     Pharos - Second Ascent - Station of Ascension   "
+    },
+    "Black Bolts": {
+        "info": "  Attack: +2  Element: -  On-Hit: Blind (25%)  Where to find it:  Bazaar:                                     Blindflight Quarrels  Stolen From:                                     Wendice in Trial Mode - Stage 28  Treasure:                                     Henne Mines - Special Charter Shaft                                     Trial Mode - Stage 54   "
+    },
+    "Castellanos": {
+        "info": "  Attack: +6  Element: -  On-Hit: -  Where to find it:   Bazaar:                                         Devastating Incendiaries  Stolen From:                                         Dheed during Trial Mode - Stage 67    "
+    },
+    "Chaos Bombs": {
+        "info": "  Attack: +4  Element: -  On-Hit: Confuse (25%)  Where to find it:   Bazaar:                                         Befuddling Incendiaries  Stolen From:                                         Helvinek during Trial Mode - Stage 51  Treasure:                                         Henne Mines - Crossover C                                         The Pharos - Subterra                                         Trial Mode - Stage 58    "
+    },
+    "Dark Shot": {
+        "info": "  Attack: +4  Element: Dark  On-Hit: -  Where to find it:   Hunt Reward:                                         Hunt 28: The Black Sorcerer (Piscodaemon)  Stolen From:                                         Helvinek and Trial Mode - Stage 51  Treasure:                                         Cerobi Steppe - South Liabell Hills                                         Pharos - Subterra    "
+    },
+    "Fiery Arrows": {
+        "info": "  Attack: +1  Element: Fire  On-Hit: -  Where to find it:  Bazaar:                                     Arrows Alight  Purchased From:                                     Necrohol of Nabudis (Baknamy Merchant)  Stolen From:                                     Croakadile in Trial Mode - Stage 11  Treasure:                                     Barheim Passage - East-West Bypass                                     Nabreus Deadlands - The Slumbermead                                     Tchita Uplands - Uazcuff Hills                                     Trial Mode - Stage 19   "
+    },
+    "Grand Bolts": {
+        "info": "  Attack: +4  Element: -  On-Hit: -  Where to find it:  Bazaar:                                     Piercing Bolts  Side Quest:                                     Hunt Club  Stolen From:                                     Helvinek in Trial Mode - Stage 51  Treasure:                                     Cerobi Steppe - Crossfield   "
+    },
+    "Icecloud Arrows": {
+        "info": "  Attack: +4  Element: Ice  On-Hit: -  Where to find it:  Bazaar:                                     Permafrost Bow & Quiver  Treasure:                                     Henne Mines - Phase 2 Shaft                                     Pharos - Subterra                                     Trial Mode - Stage 60   "
+    },
+    "Lead Bolts": {
+        "info": "  Attack: +2  Element: -  On-Hit: Immobilize (25%)  Where to find it:  Hunt Reward:                                     Hunt 20: Shelled Obstruction (Darksteel)  Purchased From:                                     Necrohol of Nabudis (Baknamy Merchant)  Treasure:                                     Lhusu Mines - Site 5                                     Pharos - Second Ascent                                     Trial Mode - Stage 30   "
+    },
+    "Lightning Arrows": {
+        "info": "  Attack: +2  Element: Lightning  On-Hit: -  Where to find it:  Hunt:                                     Hunt 14: A Chase Through the Woods (Vorpal Bunny)  Stolen From:                                     Wendice in Trial Mode - Stage 28  Treasure:                                     Trial Mode - Stage 52   "
+    },
+    "Long Bolts": {
+        "info": "  Attack: +1  Element: -  On-Hit: Slow (25%)  Where to find it:  Bazaar:                                     Ranger\u2019s Crossbow  Purchased From:                                     Necrohol of Nabudis (Baknamy Merchant)  Stolen From:                                     Croakadile in Trial Mode - Stage 11  Treasure:                                     Garamsythe Waterway - No. 11 Channel                                     Ozmone Plain - The Shred                                     Paramina Rift - Frozen Brook                                     Phon Coast - Limatra Hills                                     Tchita Uplands - The Lost Way                                     Trial Mode - Stage 14   "
+    },
+    "Mud Shot": {
+        "info": "  Attack: +2  Element: Earth  On-Hit: Blind (25%)  Where to find it:   Bazaar:                                         Mudslinger  Treasure:                                         Henne Mines - Special Charter Shaft                                         Trial Mode - Stage 55    "
+    },
+    "Oil Bombs": {
+        "info": "  Attack: +3  Element: -  On-Hit: Oil (25%)  Where to find it:   Bazaar:                                         Oil-soaked Incendiaries  Purchased From:                                         Necrohol of Nabudis (Baknamy Merchant)  Stolen from:                                         King Bomb during Trial Mode - Stage 21  Treasure:                                         Lhusu Mines - Site 11                                         The Pharos - Second Ascent - Station of Ascension                                         Trial Mode - Stage 35    "
+    },
+    "Onion Arrows": {
+        "info": "  Attack: +1  Element: -  On-Hit: -  Where to find it:  Fran comes pre-equipped with these arrows.  Purchased From:                                     All shops.  Reward:                                     Selling the Jaya Stick in Jahara.  Treasure:                                     Dalmasca Estersand - Banks of the Nebra                                     Dalmasca Westersand - Corridor of Sand                                     Trial Mode - Stage 4   "
+    },
+    "Onion Bolts": {
+        "info": "  Attack: +1  Element: -  On-Hit: -  Where to find it:  Purchased From:                                     All shops.  Reward:                                     Selling the Jaya Stick in Jahara.  Treasure:                                     Dalmasca Westersand - Windtrace Dunes                                     Trial Mode - Stage 6     "
+    },
+    "Onion Bombs": {
+        "info": "  Attack: +1  Element: -  On-Hit: -  Where to find it:   Purchased From:                                         All shops.  Stolen From:                                         King Bomb during Trial Mode - Stage 21  Treasure:                                         Lhusu Mines - Oltam Span                                         Trial Mode - Stage 9    "
+    },
+    "Onion Shot": {
+        "info": "  Attack: +1  Element: -  On-Hit: -  Where to find it:  Initially equipped to Balthier.  Purchased From:                                     All shops.  Treasure:                                     Cerobi Steppe - Crossfield                                     Trial Mode - Stage 8   "
+    },
+    "Parallel Arrows": {
+        "info": "  Attack: +2  Element: -  On-Hit: -  Where to find it:  Bazaar:                                     Bow & Bodkin.  Purchased from:                                     Necrohol of Nabudis (Baknamy Merchant)  Treasure:                                     Ozmone Plain - Haulo Greens                                     Paramina Rift - Frozen Brook                                     Phon Coast - Cape Uahuk                                     Tchita Uplands - Sundered Earth   "
+    },
+    "Poison Bombs": {
+        "info": "  Attack: +2  Element: -  On-Hit: Poison (25%)  Where to find it:   Bazaar:                                         Noisome Incendiaries  Purchased From:                                         Necrohol of Nabudis (Baknamy Merchant)  Treasure:                                         Ozmone Plain - The Switchback                                         Phon Coast - The Reseta Strand                                         Tchita Uplands - Fields of Eternity    "
+    },
+    "Sapping Bolts": {
+        "info": "  Attack: +3  Element: -  On-Hit: Sap (25%)  Where to find it:  Reward:                                     Hunt 43: Fishy Dreams (Ixion)  Treasure:                                     Cerobi Steppe - South Liabell Hills                                     Pharos Subterra - Umbra (South)   "
+    },
+    "Silent Shot": {
+        "info": "  Attack: +1  Element: -  On-Hit: Silence (25%)  Where to find it:  Bazaar:                                     Marksman\u2019s Delight  Purchased From:                                     Necrohol of Nabudis (Baknamy Merchant)  Treasure:                                     Garamsythe Waterway - No. 10 Channel                                     Ozmone Plain - Haulo Greens                                     Phon Coast - The Mauleia Strand                                     Tchita Uplands - Realm of the Elder Dream                                     Trial Mode - Stage 15   "
+    },
+    "Stink Bombs": {
+        "info": "  Attack: +2  Element: -  On-Hit: Sap (25%)  Where to find it:   Hunt Reward:                                         Hunt 39: Carrot Stalk (Carrot)  Treasure:                                         Cerobi Steppe - Old Elanise Road                                         The Pharos - Subterra                                         Trial Mode - Stage 67    "
+    },
+    "Stone Bolts": {
+        "info": "  Attack: +1  Element: -  On-Hit: Disable (25%)  Where to find it:  Bazaar:                                     Huntman\u2019s Crossbow  Purchased From:                                     Necrohol of Nabudis (Baknamy Merchant)  Treasure:                                     Nabreus Deadlands - The Slumbermead                                     Tchita Uplands - The Lost Way                                     Trial Mode - Stage 20   "
+    },
+    "Stone Shot": {
+        "info": "  Attack: +3  Element: -  On-Hit: Petrify (25%)  Where to find it:   Bazaar:                                         Stone Shot  Treasure:                                         Cerobi Steppe - The Terraced Bank    "
+    },
+    "Stun Bombs": {
+        "info": "  Attack: +2  Element: -  On-Hit: Stop (25%)  Where to find it:   Hunt Reward:                                         Hunt 16: The Deserter\u2019s Revenge (Bloodwing)  Purchased From:                                         Necrohol of Nabudis (Baknamy Merchant)  Stolen From:                                         Wendice during Trial Mode - Stage 28  Treasure:                                         Nabreus Deadlands - Echoes of the Past                                         Tchita Uplands - The Highlands                                         Trial Mode - Stage 28    "
+    },
+    "Time Bolts": {
+        "info": "  Attack: +2  Element: -  On-Hit: Doom (25%)  Where to find it:  Bazaar:                                     Scout\u2019s Crossbow  Stolen From:                                     Zalera in Trial Mode - Stage 32  Treasure:                                     Pharos - Subterra                                     Trial Mode - Stage 61   "
+    },
+    "Water Bombs": {
+        "info": "  Attack: +2  Element: Water  On-Hit: -  Where to find it:   Bazaar                                         Water-drop Munitions  Treasure:                                         Cerobi Steppe - North Liavell Hills                                         Trial Mode - Stage 94    "
+    },
+    "Windslicer Shot": {
+        "info": "  Attack: +4  Element: Wind  On-Hit: -  Where to find it:   Bazaar:                                         Armor-piercing Shot  Treasure:                                         The Pharos - Subterra    "
+    },
+    "Wyrmfire Shot": {
+        "info": "  Attack: +3  Element: Fire  On-Hit: -  Where to find it:   Purchased From:                                         Necrohol of Nabudis (Baknamy Merchant)  Side Quest:                                         Lost Cactoid  Stolen From:                                         Orthros during Trial Mode - Stage 41  Treasure:                                         Lhusu Mines                                         The Pharos: Third Ascent - Spire Ravel - 1st Flight    "
+    }
+}

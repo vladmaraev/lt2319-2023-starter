@@ -1,0 +1,1376 @@
+{
+    "Adamantite": {
+        "Description:": "\u201cThe strongest material known to exist in nature. Mention of this metal in the oldest records of Ivalice attests to its long-established uses.\u201d",
+        "Sell Value:": "1,479 gil",
+        "Used in Bazaar Recipe:": "Ultimate Blade  Chain-link Belt ",
+        "Where to find it:": " Grimoire/Monograph:                             Adamantite  Stolen From:                             Thalassinon  Poached From:                             Adamantite  Reward From:                             Hunt 20: Shelled Obstruction (Darksteel) "
+    },
+    "Aged Turtle Shell": {
+        "Description:": "\u201cA slightly worn shell. Considered antiques, the value of these pieces varies with the pattern of the cracks and pit-marks on the surface.\u201d",
+        "Sell Value:": "1,075 gil",
+        "Used in Bazaar Recipe:": " Forbidding Shield",
+        "Where to find it:": " Drops From:                             Adamantitan                             Emeralditan                             Silicon Tortoise  Stolen From:                             Adamantitan                             Darksteel                             Emeralditan                             Rocktoise                             Silicon Tortoise  Poached From:                             Adamantitan                             Emeralditan "
+    },
+    "Ambrosia": {
+        "Description:": "\u201cA blessed nectar limned in numinous light. A drop on the tongue causes such exhilaration that all pain and suffering is forgotten.\u201d",
+        "Sell Value:": "1,682 gil",
+        "Used in Bazaar Recipe:": " Saint\u2019s Draught",
+        "Where to find it:": " Grimoire/Monograph:                             Necrophobe  Stolen From:                             Glaring Eye  Poached From:                             Necrophobe "
+    },
+    "Ancient Bone": {
+        "Description:": "\u201cThese battle-scarred bones belonged to a race of humanoids who warred in ancient times, though no one knows who they fought, or why.\u201d",
+        "Sell Value:": "2,115 gil",
+        "Used in Bazaar Recipe:": " Scout\u2019s Crossbow",
+        "Where to find it:": " Grimoire/Monograph:                             Dead Bones  Stolen From:                             Dead Bones "
+    },
+    "Ancient Turtle Shell": {
+        "Description:": "\u201cThis shell is faded in color, but of remarkable durability and quality. These are prized by artificers for use in all manner of craft.\u201d",
+        "Sell Value:": "1,337 gil",
+        "Used in Bazaar Recipe:": " Brilliant Shield",
+        "Where to find it:": " Drops From:                             Adamantitan  Stolen From:                             Darksteel                             Pandamonium  Poached From:                             Silicon Tortoise "
+    },
+    "Antarctic Wind": {
+        "Description:": "\u201cA cold wind swirls in endless circles inside this perfect sphere. Merely touching it with your bare hands sends a penetrating chill through your bones.\u201d",
+        "Sell Value:": "1,689 gil",
+        "Used in Bazaar Recipe:": " Permafrost Bow and Quiver",
+        "Where to find it:": " Grimoire/Monograph:                             Feral Croc  Stolen From:                             Gavial  Poached From:                             Feral Croc "
+    },
+    "Aquarius Gem": {
+        "Description:": "\u201cA yellow gemstone bearing the name \u201cAquarius\u201d. Represents the forces of regeneration and regrowth.\u201d",
+        "Sell Value:": "150 gil",
+        "Used in Bazaar Recipe:": "Whisker of the Beast",
+        "Where to find it:": " Drops From:                             Brainpan                             Deidar                             Golem                             Mythril Golem  Stolen From:                             Deidar                             Facer                             Famfrit                             Golem                             Treant  Poached From:                             Facer "
+    },
+    "Arcana": {
+        "Description:": "\u201cA jewel containing a creature\u2019s soul. Only when its soul its released will the creature find true peace.\u201d",
+        "Sell Value:": "10 gil",
+        "Used in Bazaar Recipe:": "Wind Walkers  Life Crystal ",
+        "Where to find it:": " Drops From:                             All enemies after you obtain the Morbid Urn  Reward From:                             Montblanc in the Clan Hall for obtaining your first Esper. "
+    },
+    "Arctic Wind": {
+        "Description:": "\u201cA slender cylinder with hollow ends, made of raging arctic winds. Gives off a constant chilling aura of magickal potency.\u201d",
+        "Sell Value:": "1,179 gil",
+        "Used in Bazaar Recipe:": " Feathered Boots",
+        "Where to find it:": " Grimoire/Monograph:                             Yeti  Poached From:                             Yeti  Reward From:                             Hunt 30: Paying for the Past (Catoblepas)  "
+    },
+    "Aries Gem": {
+        "Description:": "\u201cA yellow gemstone bearing the name \u201cAries\u201d. Represents the ideals that live in Man\u2019s heart.\u201d",
+        "Sell Value:": "150 gil",
+        "Used in Bazaar Recipe:": " Devastating Incendiaries",
+        "Where to find it:": " Drops From:                             Abaddon                             Adamantitan                             Bagoly                             Emeralditan                             Feral Croc                             Iguion                             Mirrorknight                             Mu                             Serpent                             Shadonir                             Silicon Tortoise                             Speartongue                             Wyrdhare  Stolen From:                             Abaddon                             Basilisk                             Belias                             Croakadile                             Feral Croc                             Fury                             Great Tortoise                             Grey Molter                             Hybrid Gator                             Iguion                             Leynir                             Mesmenir                             Mirrorknight                             Mu                             Nidhogg                             Pandaemonium                             Serpent                             Shadonir                             Silicon Tortoise                             Viper                             Wu                             Wyrdhare "
+    },
+    "Bat Fang": {
+        "Description:": "\u201cThis fang\u2019s sharp tip is perfect for rending flesh and sucking blood. Small serrations down the side of the tooth complete the carnage.\u201d",
+        "Sell Value:": "105 gil",
+        "Used in Bazaar Recipe:": "Bow & Bodkin  Hollow-shaft Arrows",
+        "Where to find it:": " Drops From:                             Aerieel                             Phyllo                             Steeling  Stolen From:                             Bloodwing                             Steeling  Poached From:                             Steeling "
+    },
+    "Bat Wing": {
+        "Description:": "\u201cA bat wing covered in gorgeous white fur. Prized for collectors for its outstanding beauty.\u201d",
+        "Sell Value:": "647 gil",
+        "Used in Bazaar Recipe:": " Mysterious Substance",
+        "Where to find it:": " Stolen From:                             Aerieel  Poached From:                             Seeker "
+    },
+    "Battlewyrm Carapace": {
+        "Description:": "\u201cA carapace hewn from an aggressive, spiteful wyrm. Somewhat softer than a typical wyrm carapace, but exceedingly light. These are often used by armorers.\u201d",
+        "Sell Value:": "871 gil",
+        "Used in Bazaar Recipe:": " Chain-link Belt",
+        "Where to find it:": " Drops From:                             Archaeoaevis                             Skulwyrm  Stolen From:                             Archaeoaevis  Poached From:                             Archaeoaevis                             Emperor Aevis "
+    },
+    "Beastlord Hide": {
+        "Description:": "\u201cA supple, majestic hide. As they are easily marred, only small sections are suitable for use, making them all the more valuable.\u201d",
+        "Sell Value:": "1,499 gil",
+        "Used in Bazaar Recipe:": " White Vestments",
+        "Where to find it:": " Drops From:                             High Reaver                             Reaver  Stolen From:                             Enkidu                             Fenrir                             High Reaver                             Humbaba Mistant                             Reaver  Poached From:                             High Reaver                             Reaver "
+    },
+    "Beastlord Horn": {
+        "Description:": "\u201cSign by which one knows the true king of the beasts. Towering toward the heavens, the horn seems to challenge the gods themselves.\u201d",
+        "Sell Value:": "1,334 gil",
+        "Used in Bazaar Recipe:": " Silver Bow",
+        "Where to find it:": " Grimoire/Monograph:                             Humbaba  Stolen From:                             Catoblepas                             Fenrir                             Humbaba Mistant "
+    },
+    "Behemoth Steak": {
+        "Description:": "\u201cA chewy, invigorating cut of steak, t-bone and all. Best eaten by holding the bone with two hands and gnawing at the meat with great, primitive enthusiasm.\u201d",
+        "Sell Value:": "1,671 gil",
+        "Used in Bazaar Recipe:": " X-Potion Pack",
+        "Where to find it:": " Grimoire/Monograph:                             Behemoth  Stolen From:                             Alteci                             Behemoth King                             Fenrir                             Humbaba Mistant  Poached From:                             Behemoth "
+    },
+    "Bent Staff": {
+        "Description:": "\u201cA staff bent beyond all usefulness. It is like its former bearer\u2019s life ended in violence that left him as bent and useless as his favorite weapon.\u201d",
+        "Sell Value:": "1,194 gil",
+        "Used in Bazaar Recipe:": " Large Gloves",
+        "Where to find it:": " Grimoire/Monograph:                             Bagoly  Poached From:                             Bagoly "
+    },
+    "Bhujerban Madhu": {
+        "Description:": "\u201cA local spirit made in the Skycity of Bhujerba. So strong, a single sip is enough to warm a man on even the coldest nights in the clouds.\u201d",
+        "Sell Value:": "250 gil",
+        "Used in Bazaar Recipe:": "-",
+        "Where to find it:": "                            These items can be picked up in Bhujerba and are part of the Bhujerba Madhu side quest.                          "
+    },
+    "Black Orb": {
+        "Description:": "\u201cVery rarely, when a certain creature is slain, the lost life force coalesces into a tiny black orb. Some magickal devices are said to draw on this energy.\u201d",
+        "Sell Value:": "1 gil",
+        "Used in Bazaar Recipe:": "-",
+        "Where to find it:": "                            Picked up in the Pharos - First Ascent and the in the Subterra and are used in pedestals to open up doorways.                          "
+    },
+    "Blood Wool": {
+        "Description:": "\u201cThe wool is of exceedingly high quality, and, as such, is the privilege only of nobles and landed gentry.\u201d",
+        "Sell Value:": "871 gil",
+        "Used in Bazaar Recipe:": "Black Vestments  White Vestments ",
+        "Where to find it:": " Drops From:                             Baritine Croc                             Feral Croc                             Greeden                             Mu                             Spee  Stolen From:                             Bull Croc                             Fury                             Vorpal Bunny "
+    },
+    "Blood-darkened Bone": {
+        "Description:": "\u201cBelonging to one who lived a life steeped in others\u2019 blood, this bone is stained black with magicks and beyond purification. Used in magicks and alchemy.\u201d",
+        "Sell Value:": "1,435 gil",
+        "Used in Bazaar Recipe:": " Elegant Pole",
+        "Where to find it:": " Drops From:                             Crusader                             Dark Lord                             Dead Bones  Poached From:                             Grave Lord "
+    },
+    "Blood-stained Necklace": {
+        "Description:": "\u201cA necklace stained black with spattered blood. The dull light it exudes suggests that it was once a piece of surpassing beauty.\u201d",
+        "Sell Value:": "1,663 gil",
+        "Used in Bazaar Recipe:": " Cursed Necklace",
+        "Where to find it:": " Grimoire/Monograph:                             Shambling Corpse  Stolen From:                             Shambling Corpse "
+    },
+    "Bomb Ashes": {
+        "Description:": "\u201cThe remains of a blasted-out bomb. They are still quite volatile and must be handled with care. Some lands require a license for their handling.\u201d",
+        "Sell Value:": "200 gil",
+        "Used in Bazaar Recipe:": " Oil-soaked Incendiaries",
+        "Where to find it:": " Drops From:                             Balloon                             Bomb                             Bombshell                             Matriarch Bomb                             Megabomb                             Pineapple  Stolen From:                             Bomb "
+    },
+    "Bomb Fragment": {
+        "Description:": "\u201cThe remains of a detonated bomb. Even now, the pieces smolder and glow.\u201d",
+        "Sell Value:": "1,911 gil",
+        "Used in Bazaar Recipe:": " Devastating Incendiaries",
+        "Where to find it:": " Drops From:                             Bomb  Grimoire/Monograph:                             Grenade  Stolen From:                             Bomb                             King Bomb                             Megabomb  Poached From:                             Matriach Bomb                             Pineapple "
+    },
+    "Bomb Shell": {
+        "Description:": "\u201cThe remains of a detonated bomb. Still contains fragments of unexploded material. Wiser folks leave these well alone.\u201d",
+        "Sell Value:": "896 gil",
+        "Used in Bazaar Recipe:": "Befuddling Incendiaries  Noisome Incendiaries  Shell-worked Collar ",
+        "Where to find it:": " Drops From:                             Bomb                             Grenade                             Matriarch Bomb                             Megabomb                             Mom Bomb                             Purobolos  Stolen From:                             King Bomb                             Mom Bomb                             Pineapple                             Purobolos  Poached From:                             Grenade                             Mom Bomb                             Purobolos "
+    },
+    "Bone Fragment": {
+        "Description:": "\u201cThis fragment is too small to identify the type of bone it once formed a part of. Some lands prohibit their use outright, others require prior ablution with holy water.\u201d",
+        "Sell Value:": "193 gil",
+        "Used in Bazaar Recipe:": " Wooden Pole",
+        "Where to find it:": " Drops From:                             Fideliant                             Grave Lord                             Lost Soul                             Skeleton                             Skull Defender                             Skull Warrior  Stolen From:                             Skeleton                             Skull Defender                             Skull Warrior  Poached From:                             Skeleton                             Skull Defender                             Skull Warrior "
+    },
+    "Book of Orgain": {
+        "Description:": "\u201cA time-worn book of tales. The book is popular for the tragic fates that befall all of its characters.\u201d",
+        "Sell Value:": "532 gil",
+        "Used in Bazaar Recipe:": "Magick Shard  Oil-soaked Incendiaries  Water-drop Munitions ",
+        "Where to find it:": " Drops From:                             Dustia                             Gespenst                             Negalmuur  Stolen From:                             Deathscythe  "
+    },
+    "Book of Orgain-Cent": {
+        "Description:": "\u201cA time-worn book of tales. This book tells the story of a commoner who became a knight. Every child loves the part where the hero single-handedly defeats a great army.\u201d",
+        "Sell Value:": "924 gil",
+        "Used in Bazaar Recipe:": "Befuddling Incendiaries  Magick Shard ",
+        "Where to find it:": " Drops From:                             Reaper  Stolen From:                             Reaper "
+    },
+    "Book of Orgain-Mille": {
+        "Description:": "\u201cA time-worn book of tales. This book charts the course of history, following the births and deaths of hundreds, and the ripples their lives cause throughout the world.\u201d",
+        "Sell Value:": "1,477 gil",
+        "Used in Bazaar Recipe:": " Magick Shard 1",
+        "Where to find it:": " Drops From:                             Et\u00e9m                             Nightwalker  Stolen From:                             Deathscythe                             Dustia                             Et\u00e9m                             Gazer                             Ixtab                             Nightwalker  Poached From:                             Negalmuur "
+    },
+    "Braid Wool": {
+        "Description:": "\u201cHighly absorptive wool, widely used for fashioning garments for everyday wear.\u201d",
+        "Sell Value:": "465 gil",
+        "Used in Bazaar Recipe:": " Traveler\u2019s Garb",
+        "Where to find it:": " Drops From:                             Bull Croc                             Greeden                             Hybrid Gator                             Ozmone Hare                             Wooly Gator  Stolen From:                             Bull Croc                             Wooly Gator  Poached From:                             Greeden                             Hybrid Gator                             Ozmone Hare                             Wooly Gator "
+    },
+    "Broken Greataxe": {
+        "Description:": "\u201cThe haft of this greataxe is broken, and the blade notched. The quantity of dried gore on the shaft suggests that its bearer met with a most unfortunate end.\u201d",
+        "Sell Value:": "1,762 gil",
+        "Used in Bazaar Recipe:": " Golden Battle Axe",
+        "Where to find it:": " Grimoire/Monograph:                             Giruveganus  Stolen From:                             Giruveganus  "
+    },
+    "Broken Spear": {
+        "Description:": "\u201cA broken-shafted spear, thrust deep into the ground. Perhaps it marked the grave of its former wielder.\u201d",
+        "Sell Value:": "617 gil",
+        "Used in Bazaar Recipe:": " Engraved Spear",
+        "Where to find it:": " Grimoire/Monograph:                             Skull Warrior  Poached From:                             Fideliant                             Skull Warrior "
+    },
+    "Broken Sword": {
+        "Description:": "\u201cA sword with a jagged break halfway down the blade. One can only imagine what grisly fate its former owner must have met.\u201d",
+        "Sell Value:": "1,099 gil",
+        "Used in Bazaar Recipe:": " Feathered Boots",
+        "Where to find it:": " Grimoire/Monograph:                             Baritine Croc  Poached From:                             Baritine Croc                             Bull Croc "
+    },
+    "Bundle of Feathers": {
+        "Description:": "\u201cSeveral feathers tied into a single bunch. These are used for clothing, though the technique for fixing them to fabric requires patience and no little skill.\u201d",
+        "Sell Value:": "833 gil",
+        "Used in Bazaar Recipe:": "Soul of the Fire-bird  Warped Blade ",
+        "Where to find it:": " Drops From:                             Bagoly                             Gorgimera                             Pyrolisk                             Sprinter                             Vulture  Stolen From:                             Bagoly                             Pyrolisk                             Sprinter                             Vulture  Poached From:                             Bagoly                             Dive Talon                             Gorgimera                             Pyrolisk                             Sprinter                             Vulture "
+    },
+    "Bundle of Needles": {
+        "Description:": "\u201cA bundle of 1000 needles. Frustrated merchants and impatient buyers arguing over the precise count of needles in a given bundle is a common market sight.\u201d",
+        "Sell Value:": "92 gil",
+        "Used in Bazaar Recipe:": " Huntman\u2019s Crossbow",
+        "Where to find it:": " Grimoire/Monograph:                             Cactite                             Cactoid  Poached From:                             Cactite                             Cactoid  Reward From:                             During the Desert Patient side quest. "
+    },
+    "Cactus Fruit": {
+        "Description:": "\u201cThese dense desert fruits are slightly sweet and surprisingly juicy. Valued as a treat for children.\u201d",
+        "Sell Value:": "59 gil",
+        "Used in Bazaar Recipe:": " Potion Pack",
+        "Where to find it:": " Drops From:                             Cactite                             Cactoid  Stolen From:                             Cactite                             Cactoid                             Flowering Cactoid  Poached From:                             Cactite                             Cactoid  "
+    },
+    "Cancer Gem": {
+        "Description:": "\u201cA yellow gemstones bearing the name \u201cCancer\u201d. Represents the forces of restoration and renewal.\u201d",
+        "Sell Value:": "150 gil",
+        "Used in Bazaar Recipe:": " Serpent Blade",
+        "Where to find it:": " Drops From:                             Deathclaw                             Killer Mantis                             Mimeo                             Pandora                             Preying Mantis  Stolen From:                             Antlion                             Mimeo                             Preying Mantis                             Scythe Mantis                             Thunderbug                             Zeromus  Poached From:                             Deathclaw "
+    },
+    "Capricorn Gem": {
+        "Description:": "\u201cA yellow gemstones bearing the name \u201cCapricorn\u201d. Represents the forces of order and rule.\u201d",
+        "Sell Value:": "150 gil",
+        "Used in Bazaar Recipe:": " Piercing Bolts",
+        "Where to find it:": " Drops From:                             Crusader                             Dark Lord                             Forbidden                             Gazer                             Gespenst                             Necrofiend                             Necrophobe                             Nightwalker                             Reaper                             Zombie Knight                             Zombie Walock  Stolen From:                             Adrammelech                             Bogey                             Crusader                             Dark Skeleton                             Deathscythe                             Et\u00e9m                             Fideliant                             Ghoul                             Negalmuur                             Nightwalker                             Oversoul                             Skull Knight                             Velelu                             Zombie Warlock                             Zombie Warrior  Poached From:                             Dustia                             Zombie Knight "
+    },
+    "Caramel": {
+        "Description:": "\u201cA viscous sauce sweet enough to cause dizziness. Dilute with water before cooking.\u201d",
+        "Sell Value:": "276 gil",
+        "Used in Bazaar Recipe:": " Flask of Oily Liquid",
+        "Where to find it:": " Stolen From:                             Flan                             Orthros  "
+    },
+    "Charged Gizzard": {
+        "Description:": "\u201cA long, stringy object made of a special kind of metal. Holds an electrical charge that can be released at will.\u201d",
+        "Sell Value:": "150 gil",
+        "Used in Bazaar Recipe:": " The Scorpion",
+        "Where to find it:": " Grimoire/Monograph:                             Thunderbug  Poached From:                             Thunderbug  "
+    },
+    "Charger Barding": {
+        "Description:": "\u201cThis barding is the perfect balance of lightweight construction and protection. Its iron alloy composition makes it prone to rust if not properly maintained.\u201d",
+        "Sell Value:": "1,154 gil",
+        "Used in Bazaar Recipe:": "Magepower Helm  Sturdy Battle Gear ",
+        "Where to find it:": " Drops From:                             Cataract Aevis                             Deathclaw                             Dragon Lich                             Gizamaluk                             Shadonir                             Skulwyrm  Stolen From:                             Antlion                             Cataract Aevis                             Deathclaw                             Deathgaze                             Dragon Lich                             Gizamaluk                             Shadonir                             Skullash                             Skulwyrm  Poached From:                             Cataract Aevis                             Deathclaw                             Gizamaluk                             Shadonir "
+    },
+    "Chimera Head": {
+        "Description:": "\u201cThis head was chopped off a chimera. Chimera heads are prized as an ingredient in alchemy, and only rarely appear on the open market.\u201d",
+        "Sell Value:": "2,026 gil",
+        "Used in Bazaar Recipe:": "Darksteel Blade  Magepower Helm ",
+        "Where to find it:": " Grimoire/Monograph:                             Chimera Brain  Poached From:                             Chimera Brain "
+    },
+    "Chocobo Feather": {
+        "Description:": "\u201cA feather the size of a butcher\u2019s knife. These are sturdier than they might appear, and suitable for use in armor, though they smell a mite foul.\u201d",
+        "Sell Value:": "480 gil",
+        "Used in Bazaar Recipe:": " Eye Openers",
+        "Where to find it:": " Drops From:                             Chocobo (all colors)  Stolen From:                             Chocobo (all colors)  Poached From:                             Chocobo (all colors) "
+    },
+    "Coeurl Pelt": {
+        "Description:": "\u201cA fine pelt with fur rising in a distinctive wave-like pattern. Its insulating qualities make it an excellent choice for cold-weather gear.\u201d",
+        "Sell Value:": "454 gil",
+        "Used in Bazaar Recipe:": "Matching Reds  Monk\u2019s Garb ",
+        "Where to find it:": " Drops From:                             Coeurl                             Panther  Stolen From:                             Panther  Poached From:                             Coeurl                             Panther "
+    },
+    "Coeurl Whisker": {
+        "Description:": "\u201cSomething about this whip-like whisker speaks of intelligence beyond animal cunning. Used in magicks, and also a popular collector\u2019s item.\u201d",
+        "Sell Value:": "2,076 gil",
+        "Used in Bazaar Recipe:": " Serpent Blade",
+        "Where to find it:": " Grimoire/Monograph:                             Ose  Stolen From:                             Grimalkin  Poached From:                             Ose "
+    },
+    "Common Fish": {
+        "Description:": "\u201cA small fish found in the River Nebra. Edible, but not very tasty.\u201d",
+        "Sell Value:": "10 gil",
+        "Used in Bazaar Recipe:": "-",
+        "Where to find it:": "                            Obtained while fishing during the Fishing side quest.                          "
+    },
+    "Corpse Fly": {
+        "Description:": "\u201cA livid-hued fly that feeds on the corpses of men. They appear as if by magick wherever there is death, and leave nothing but bleached bones behind.\u201d",
+        "Sell Value:": "1,798 gil",
+        "Used in Bazaar Recipe:": " Whisker of the Beast",
+        "Where to find it:": " Grimoire/Monograph:                             Dragon Lich  Stolen From:                             Dragon Lich                             Hydro "
+    },
+    "Crooked Fang": {
+        "Description:": "\u201cThis claw-like fang is designed for biting and ripping, though it lacks penetrating force.\u201d",
+        "Sell Value:": "287 gil",
+        "Used in Bazaar Recipe:": "Arrows Alight  Ranger\u2019s Crossbow ",
+        "Where to find it:": " Drops From:                             Aeros                             Bellwyvern                             Redmaw                             Seeker                             Wyvern  Stolen From:                             Redmaw                             Wyvern  Poached From:                             Bellwyvern                             Redmaw                             Seeker                             Wyvern "
+    },
+    "Damascus Steel": {
+        "Description:": "\u201cThis steel bears a unique pattern like the rings of a tree. It is sometimes said that victory in battle is determined by how many soldiers wear this matchless metal.\u201d",
+        "Sell Value:": "2,188 gil",
+        "Used in Bazaar Recipe:": " Matchless Steel",
+        "Where to find it:": " Grimoire/Monograph:                             Bune  Stolen From:                             Anchag                             Bluesang                             Daedalus                             Vinuskar  Poached From:                             Bune "
+    },
+    "Dark Crystal": {
+        "Description:": "\u201cA crystallization of potent dark magicks, said to contain the divine power of the full moon. The source of a leamonde entite\u2019s energy.\u201d",
+        "Sell Value:": "160 gil",
+        "Used in Bazaar Recipe:": "Black Vestments  Blindflight Quarrels  Gigas Gear  The Leering Blade ",
+        "Where to find it:": " Drops From:                             Abaddon                             Abysteel                             Banshee                             Bogey                             Brainpan                             Chimera Brain                             Crusader                             Dark Elemental                             Dark Lord                             Dead Bones                             Deidar                             Dragon Lich                             Foobar                             Forbidden                             Gazer                             Gespenst                             Leamonde Entite                             Malboro Overking                             Necrophobe                             Nightwalker                             Ose                             Oversoul                             Preying Mantis                             Purobolos                             Reaper                             Shambling Corpse                             Tartarus                             Vampyr                             Vivian                             Zombie Warlock  Stolen From:                             Banshee                             Brainpan                             Carrot                             Dark Elemental                             Dead Bones                             Deidar                             Gazer                             Gespenst                             Hell Wyrm                             Ixtab                             Leamonde Entite                             Nightwalker                             Oversoul                             Preying Mantis                             Purobolos                             Reaper                             Shambling Corpse                             Tartarus                             Vampyr                             Vivian                             Zombie Warlock  Poached From:                             Ghost "
+    },
+    "Dark Magicite": {
+        "Description:": "\u201cA stone infused with dark magicks. Placed in the proper locations, these protect a home from evil spirits.\u201d",
+        "Sell Value:": "80 gil",
+        "Used in Bazaar Recipe:": "Golden Garb  Jag-tooth Ninja Sword  Matching Reds ",
+        "Where to find it:": " Drops From:                             Black Chocobo                             Dark Elemental                             Dark Skeleton                             Darkmare                             Ghast                             Ghost                             Malboro King                             Malboro Overking                             Nightmare                             Skull Knight                             Specter                             Viper                             Zombie                             Zombie Knight                             Zombie Warrior  Stolen From:                             Black Chocobo                             Dark Elemental                             Dark Skeleton                             Darkmare                             Gazer                             Hell Wyrm                             Malboro                             Malboro Overking                             Nightmare                             Viper                             Wraith                             Zombie "
+    },
+    "Dark Stone": {
+        "Description:": "\u201cA stone infused with a dark power. It looks like an ordinary stone, yet casts and eerily twisted shadow.\u201d",
+        "Sell Value:": "35 gil",
+        "Used in Bazaar Recipe:": "Assorted Leathers  Bow & Bodkin  Crimson Blade  Marksman\u2019s Delight ",
+        "Where to find it:": " Drops From:                             Dark Skeleton                             Ghost                             Lich                             Lost Soul                             Skeleton                             Skull Defender                             Skull Warrior                             Specter                             Zombie                             Zombie Mage  Stolen From:                             Dark Elemental                             Dark Skeleton                             Hell Wyrm                             Lich                             Lost Soul                             Oversoul                             Skull Warrior                             Specter                             Zombie                             Zombie Mage "
+    },
+    "Death Powder": {
+        "Description:": "\u201cA powder so black it seems to suck in all light and life. Artists have been known to use it in compositions to effect deep, rich shadows.\u201d",
+        "Sell Value:": "1,323 gil",
+        "Used in Bazaar Recipe:": " Ultimate Blade",
+        "Where to find it:": " Grimoire/Monograph:                             Bogey  Stolen From:                             Ahriman  Poached From:                             Bogey                             Cultsworn Lich "
+    },
+    "Death's-Head": {
+        "Description:": "\u201cThe perfectly preserved head of a skeleton, blessed and burned to give the owner\u2019s spirit rest. The teeth are known to chatter in the deep watches of the night.\u201d",
+        "Sell Value:": "653 gil",
+        "Used in Bazaar Recipe:": " Cursed Necklace",
+        "Where to find it:": " Grimoire/Monograph:                             Dark Skeleton  Stolen From:                             Grave Lord  Poached From:                             Dark Skeleton "
+    },
+    "Deimos Clay": {
+        "Description:": "\u201cClay used for building gaols, said to imprison not only the flesh and blood, but the soul as well.\u201d",
+        "Sell Value:": "1,000 gil",
+        "Used in Bazaar Recipe:": " Morbid Urn",
+        "Where to find it:": " Reward From:                             Hunt 37: Paramina Run (Trickster) "
+    },
+    "Delicious Fish": {
+        "Description:": "\u201cA small fish found in the River Nebra. Tastes best fried.\u201d",
+        "Sell Value:": "25 gil",
+        "Used in Bazaar Recipe:": "-",
+        "Where to find it:": "                            Obtained during the Fishing side quest.                          "
+    },
+    "Demon Drink": {
+        "Description:": "\u201cOnly demons know the recipe for concocting this heady brew. Many are the lords who have fallen victim to its lure, selling all they have for one more drop.\u201d",
+        "Sell Value:": "1,863 gil",
+        "Used in Bazaar Recipe:": " Saint\u2019s Draught",
+        "Where to find it:": " Grimoire/Monograph:                             Elvoret  Poached From:                             Elvoret "
+    },
+    "Demon Eyeball": {
+        "Description:": "\u201cA foul, fiendish being\u2019s eyeball, reeking of dark magicks. It seems to be watching, searching you for a weakness born of small misdeed.\u201d",
+        "Sell Value:": "123 gil",
+        "Used in Bazaar Recipe:": "Eye Drop Set  Iron-forged Pole ",
+        "Where to find it:": " Drops From:                             Elvoret                             Garchimacera                             Gargoyle                             Larva Eater  Stolen From:                             Elvoret                             Garchimacera                             Gargoyle  Poached From:                             Elvoret                             Garchimacera                             Gargoyle "
+    },
+    "Demon Feather": {
+        "Description:": "\u201cA deeply magicked feather, torn from the wing of something genuinely horrible. The feather\u2019s magicks aid the finding of air currents for flight.\u201d",
+        "Sell Value:": "910 gil",
+        "Used in Bazaar Recipe:": "Elegant Pole  Mystic Staff ",
+        "Where to find it:": " Drops From:                             Garchimacera                             Imp                             Pit Fiend  Stolen From:                             Garchimacera  Poached From:                             Imp                             Pit Fiend "
+    },
+    "Demon Tail": {
+        "Description:": "\u201cThe magicked tail of a demon. It is said the only true gauge of a demon\u2019s temper is its tail, so practiced are they at hiding their evil natures.\u201d",
+        "Sell Value:": "1,203 gil",
+        "Used in Bazaar Recipe:": " The Leering Blade",
+        "Where to find it:": " Drops From:                             Buer                             Gargoyle Baron  Stolen From:                             Gargyole Baron  Poached From:                             Buer                             Garchimacera                             Gargoyle Baron                             Pit Fiend "
+    },
+    "Demon's Sigh": {
+        "Description:": "\u201cA brooch so exquisite, even demons are said to sigh at its beauty and come to steal it, after which another sigh can be heard: that of the brooch\u2019s former owner.\u201d",
+        "Sell Value:": "1,704 gil",
+        "Used in Bazaar Recipe:": " Vaccine Pack",
+        "Where to find it:": " Grimoire/Monograph:                             Buer  Stolen From:                             Diabolos  Poached From:                             Buer "
+    },
+    "Destrier Barding": {
+        "Description:": "\u201cA set of equestrian armor meant only to be worn by a knight\u2019s steed. Valued more for its style than its substance.\u201d",
+        "Sell Value:": "1,214 gil",
+        "Used in Bazaar Recipe:": "Forbidding Shield ",
+        "Where to find it:": " Drops From:                             Leynir "
+    },
+    "Destrier Mane": {
+        "Description:": "\u201cThis steel mane covering tapers to a sharp point, designed to impale unwary foes with a fatal lunge. Even those who shun war use these in the casting of magicks.\u201d",
+        "Sell Value:": "808 gil",
+        "Used in Bazaar Recipe:": "Shoes of the Dead ",
+        "Where to find it:": " Grimoire/Monograph:                             Mesmenir  Stolen From:                             Mesmenir  Poached From:                             Mesmenir "
+    },
+    "Dewdrop Pebble": {
+        "Description:": "\u201cA small stone in the shape of a drop of dew, formed when water touches the sal-tree of Eruyt Village. The stones come in a variety of colors.\u201d",
+        "Sell Value:": "-",
+        "Used in Bazaar Recipe:": "                           -                         ",
+        "Where to find it:": "                            These are picked up during the Eruyt Village portion of the Cockatrice Round-Up.                          "
+    },
+    "Diakon Halcyon": {
+        "Description:": "\u201cBrilliant light shines from this alabast jewel engraved with an exquisite depiction of a diakon entite.\u201d",
+        "Sell Value:": "808 gil",
+        "Used in Bazaar Recipe:": "Magick Shard ",
+        "Where to find it:": " Drops From:                             Diakon Entite  Stolen From:                             Diakon Entite "
+    },
+    "Dorsal Fin": {
+        "Description:": "\u201cThese fins graced the back of one of the largest fish in the sea. Considered a delicacy in lands where seafood is an important part of the diet.\u201d",
+        "Sell Value:": "1,577 gil",
+        "Used in Bazaar Recipe:": "Arrows of the Moon Goddess ",
+        "Where to find it:": " Grimoire/Monograph:                             Focalor  Poached From:                             Apsara                             Focalor                             Rain Dancer "
+    },
+    "Drab Wool": {
+        "Description:": "\u201cUnattractive, inexpensive wool, suitable only for stitching in places not like to be seen, lest it cheapen the garment\u2019s appearance.\u201d",
+        "Sell Value:": "63 gil",
+        "Used in Bazaar Recipe:": "Antidote Set ",
+        "Where to find it:": " Drops From:                             Crypt Bunny                             Giza Rabbit                             Spee  Stolen From:                             Giza Bunny                             Vorpal Bunny  Poached From:                             Giza Rabbit "
+    },
+    "Earth Crystal": {
+        "Description:": "\u201cA crystallization of potent earth magicks, said to contain the divine power of pure logic. The source of a gnoma entite\u2019s energy.\u201d",
+        "Sell Value:": "160 gil",
+        "Used in Bazaar Recipe:": "Mudslinger ",
+        "Where to find it:": " Drops From:                             Adamantitan                             Alraune King                             Bug                             Cassie                             Elvoret                             Emeralditan                             Gnoma Entite                             Golem                             Headless                             Killer Mantis                             Malboro                             Mallicant                             Shield Wyrm                             Wild Saurian  Stolen From:                             Bug                             Gnoma Entite                             Headless                             Killer Mantis "
+    },
+    "Earth Magicite": {
+        "Description:": "\u201cA stone infused with earth magicks. Many plant these in the soil to encourage a rich harvest.\u201d",
+        "Sell Value:": "80 gil",
+        "Used in Bazaar Recipe:": "Burnished Protectives ",
+        "Where to find it:": " Drops From:                             Antares                             Blood Gigas                             Brown Chocobo                             Clay Golem                             Diresaur                             Facer                             Great Malboro                             Malboro                             Slaven Wilder                             Striker                             Treant                             Tyranorox                             Urutan-Yensa                             Wu                             Zaghnal  Stolen From:                             Antares                             Blood Gigas                             Clay Golem                             Diresaur                             Enkelados                             Facer                             Great Malboro                             Malboro                             Striker                             Treant                             Tyranorox                             Zaghnal "
+    },
+    "Earth Stone": {
+        "Description:": "\u201cA stone infused with the power of earth. It looks like an ordinary stone, but is surprisingly heavy.\u201d",
+        "Sell Value:": "35 gil",
+        "Used in Bazaar Recipe:": "Iron-forged Blade  Unassuming Surcoat  Wooden Pole ",
+        "Where to find it:": " Drops From:                             Alraune                             Bull Yensa                             Cactite                             Cactoid                             Mimic                             Ragoh                             Slaven                             Tiny Bug                             Tiny Mimic                             Urstrix                             Urutan Exile                             Urutan-Yensa                             Werewolf                             Yensa  Stolen From:                             Cactite                             Cactoid                             Flowering Cactoid                             Ragoh                             Slaven                             Tiny Bug                             Tiny Mimic                             Urstrix "
+    },
+    "Einherjarium": {
+        "Description:": "\u201cThis metal contains veins of pure cloudstone, giving it an almost weightless feel. Made into armor, it promises passage into paradise, be it in this life or the next.\u201d",
+        "Sell Value:": "1,682 gil",
+        "Used in Bazaar Recipe:": " Comfy Headgear",
+        "Where to find it:": " Grimoire/Monograph:                             Babil  Stolen From:                             Babil                             Tower  Reward From:                             Hunt 24: The Creature Collector (Goliath)  "
+    },
+    "Electrum": {
+        "Description:": "\u201cThis whitish, natural allow of silver and gold is sometimes called \u201caurargentium\u201d by alchemists.\u201d",
+        "Sell Value:": "3,563 gil",
+        "Used in Bazaar Recipe:": "Golden Battle Axe ",
+        "Where to find it:": " Grimoire/Monograph:                             Diakon Entite                             Gnoma Entite                             Leamonde Entite                             Leshach Entite                             Mardu Entite                             Salamand Entite                             Sylphi Entite                             Undin Entite  Reward From:                             Montblanc in the Clan Hall after you defeat the Demon Wall in the Tomb of King Raithwall.                              "
+    },
+    "Emperor Scale": {
+        "Description:": "\u201cScale from a primordial wyrm that has lived for centuries. The mere sight of one of these scales strikes fear into the hearts of those upon whom the wyrms prey.\u201d",
+        "Sell Value:": "1,395 gil",
+        "Used in Bazaar Recipe:": "Well-forged Blade ",
+        "Where to find it:": " Grimoire/Monograph:                             Archaeoaevis  Stolen From:                             Deathgaze                             Elder Wyrm  Poached From:                             Archaeoaevis "
+    },
+    "Empty Bottle": {
+        "Description:": "\u201cAn empty bottle found on the banks of the Nebra. The discarded refuse of a town further upstream.\u201d",
+        "Sell Value:": "1 gil",
+        "Used in Bazaar Recipe:": "                           -                         ",
+        "Where to find it:": "                            Obtained during the Fishing side quest.                          "
+    },
+    "Empyreal Soul": {
+        "Description:": "\u201cAll the souls of the world are contained in this single sphere. Small enough to fit in a hand, but its power extends beyond the limits of knowledge.\u201d",
+        "Sell Value:": "2,000 gil",
+        "Used in Bazaar Recipe:": "The Sunflower ",
+        "Where to find it:": " Crafted in the Bazaar:  Jewel of Creation  Stolen From:                             Lv.99 Red Chocobo  Reward From:                             Montblanc in the Clan Hall after you reach the rank of High Guardian.                              "
+    },
+    "Eye of the Hawk": {
+        "Description:": "\u201cHawks\u2019 eyes are specially developed to spot prey from high in the air. Used as an aid to vision in folk medicine, though the effects are questionable.\u201d",
+        "Sell Value:": "989 gil",
+        "Used in Bazaar Recipe:": "Chronos Tear Pack ",
+        "Where to find it:": " Grimoire/Monograph:                             Vulture  Stolen From:                             Phoenix  Poached From:                             Vulture "
+    },
+    "Festering Flesh": {
+        "Description:": "\u201cIt is difficult to tell what part of what animal is represented by this oozing lump of meat. Used in dark magicks and alchemy.\u201d",
+        "Sell Value:": "542 gil",
+        "Used in Bazaar Recipe:": "Huntman\u2019s Crossbow  Jag-tooth Ninja Sword  Magick Shard ",
+        "Where to find it:": " Drops From:                             Anchag                             Banshee                             Blood Gigas                             Ghast                             Ghoul                             Headless                             Zombie Warrior  Stolen From:                             Banshee                             Cerberus                             Ghast                             Hyena  Poached From:                             Blood Gigas                             Dullahan                             Ghast                             Ghoul                             Headless                             Hyena                             Zombie                             Zombie Warrior "
+    },
+    "Feystone": {
+        "Description:": "\u201cThis chunk of stone, filled with the power of nature, gives off a wan light. These stones lend form to elementals and entites.\u201d",
+        "Sell Value:": "1,000 gil",
+        "Used in Bazaar Recipe:": "Life Crystal  Magepower Helm ",
+        "Where to find it:": " Drops From:                             Air Elemental                             Bangaa Thief                             Dark Elemental                             Diakon Entite                             Earth Elemental                             Fire Elemental                             Gnoma Entite                             Holy Elemental                             Ice Elemental                             Leamonde Entite                             Leshach Entite                             Mardu Entite                             Salamand Entite                             Storm Elemental                             Sylphi Elemental                             Undin Entite                             Water Elemental  Stolen From:                             Air Elemental                             Crystalbug                             Dark Elemental                             Diakon Entite                             Earth Elemental                             Elder Wyrm                             Fire Elemental                             Gnoma Entite                             Holy Elemental                             Ice Elemental                             Leamonde Entite                             Leshach Entite                             Mardu Entite                             Salamand Entite                             Storm Elemental                             Sylphi Entite                             Undin Entite                             Water Elemental "
+    },
+    "Fine Wool": {
+        "Description:": "\u201cThis highly absorptive wool is quite soft, and well-suited to use in bedding. Try a fine wool quilt once and the thought of anything else will give you nightmares.\u201d",
+        "Sell Value:": "619 gil",
+        "Used in Bazaar Recipe:": "Alluring Finery  Ninja Garb ",
+        "Where to find it:": " Drops From:                             Baritine Croc                             Hybrid Gator                             Wyrdhare  Poached From:                             Baritine Croc                             Hybrid Gator                             Wooly Gator                             Wyrdhare "
+    },
+    "Fire Crystal": {
+        "Description:": "\u201cA crystallization of potent fire magicks, said to contain the divine power of creation. The source of a salamand entite\u2019s energy.\u201d",
+        "Sell Value:": "160 gil",
+        "Used in Bazaar Recipe:": "Befuddling Incendiaries  Embolding Arms  Nature\u2019s Armory  Noisome Incendiaries  Oil-soaked Incendiaries ",
+        "Where to find it:": " Drops From:                             Bangaa Thief                             Bellwyvern                             Bune                             Cerberus                             Deadly Nightshade                             Dullahan                             Fire Chaosjet                             Fire Elemental                             Garchimacera                             Grenade                             Lizard                             Mom Bomb                             Mu                             Mythril Golem                             Salamand Entite                             Scythe Mantis                             Topstalk  Stolen From:                             Cerberus                             Deadly Nightshade                             Diabolos                             Dullahan                             Fire Chaosjet                             Fire Elemental                             Grenade                             King Bomb                             Marilith                             Mythril Golem                             Overlord                             Roblon                             Salamand Entite                             Scythe Mantis "
+    },
+    "Fire Magicite": {
+        "Description:": "\u201cA stone infused with fire magicks. Thrown into a flame, its power is said to multiply in the blink of an eye.\u201d",
+        "Sell Value:": "80 gil",
+        "Used in Bazaar Recipe:": "Iron-forged Pole  Ninja Garb  Warped Blade ",
+        "Where to find it:": " Drops From:                             Alpha Worgen                             Balloon                             Bomb                             Dullahan                             Fire Chaosjet                             Fire Elemental                             Garchimacera                             Gorgimera                             Hellhound                             Hybrid Gator                             Lab Rat                             Lizard                             Red Chocobo                             Slaven Warder                             Sprinter                             Worgen  Stolen From:                             Alpha Worgen                             Bomb                             Dullahan                             Fire Chaosjet                             Fire Elemental                             Gorgimera                             Lizard                             Oiling                             Red Chocobo                             Worgen "
+    },
+    "Fire Stone": {
+        "Description:": "\u201cA stone infused with the power of fire. It looks like an ordinary stone, but is faintly warm to the touch.\u201d",
+        "Sell Value:": "35 gil",
+        "Used in Bazaar Recipe:": "Arrows Alight  Burning Blade  Gilt-Shield ",
+        "Where to find it:": " Drops From:                             Alpha Hyena                             Axebeak                             Bangaa Pirate                             Bellwyvern                             Bomb                             Brown Chocobo                             Cockatrice                             Dire Rate                             Fire Choasjet                             Fire Elemental                             Garchimacera                             Hyena                             Lesser Chimera                             Tallow                             Wyvern  Stolen From:                             Alpha Hyena                             Axebeak                             Bellwyvern                             Bomb                             Brown Chocobo                             Dire Rat                             Hyena                             Lesser Chimera                             Marilith                             Roblon                             Rogue Tomato                             Tallow                             Wyvern "
+    },
+    "Fish Scale": {
+        "Description:": "\u201cThe oily surface of this scale gives off a peculiar sheen. Both the scale and its oil are known to find buyers at market.\u201d",
+        "Sell Value:": "151 gil",
+        "Used in Bazaar Recipe:": "Marksman\u2019s Delight ",
+        "Where to find it:": " Drops From:                             Apsara                             Bull Danbania                             Danbania                             Ichthon                             Rain Dancer                             Razorfin  Stolen From:                             Bull Danbania                             Danbania                             Ichthon  Poached From:                             Bull Danbania                             Danbania                             Ichthon "
+    },
+    "Forbidden Flesh": {
+        "Description:": "\u201cAny creature of this world foolish enough to consume this flesh is assured an eternity of agonizing pain. Used mainly in high sorcery.\u201d",
+        "Sell Value:": "1,397 gil",
+        "Used in Bazaar Recipe:": "Nature\u2019s Armory ",
+        "Where to find it:": " Drops From:                             Bune                             Dullahan                             Forbidden                             Headless                             Zombie Warlock  Stolen From:                             Ancbolder                             Bune                             Daedalus                             Drowned                             Overlord                             Shadowseer                             Wendigo  Poached From:                             Anchag                             Bune                             Dullahan                             Headless                             Zombie Warlock "
+    },
+    "Foul Flesh": {
+        "Description:": "\u201cCarrion flesh of the kind often eaten by hyenas and their ilk. Used in magicks and alchemy.\u201d",
+        "Sell Value:": "143 gil",
+        "Used in Bazaar Recipe:": "Iron-forged Blade  Light Spear ",
+        "Where to find it:": " Drops From:                             Drowned                             Shambling Corpse                             Velelu                             Zombie                             Zombie Mage  Stolen From:                             Headless                             Shadowseer                             Shambling Corpse                             Zombie                             Zombie Mage  Poached From:                             Ghast                             Ghoul                             Zombie                             Zombie Mage                             Zombie Warrior "
+    },
+    "Foul Liquid": {
+        "Description:": "\u201cA nasty-smelling froth culled from the maw of a malboro. Dipped in this, the freshest fruit goes rotten in moments. The cause of the malboro\u2019s bad breath.\u201d",
+        "Sell Value:": "703 gil",
+        "Used in Bazaar Recipe:": "Flask of Viscous Liquid ",
+        "Where to find it:": " Grimoire/Monograph:                             Great Malboro  Stolen From:                             Carrot  Poached From:                             Great Malboro                             Wild Malboro "
+    },
+    "Four-leaf Clover": {
+        "Description:": "\u201cA rare sprig of clover with four symmetrical leaves. They say that finding one of these brings good luck.\u201d",
+        "Sell Value:": "1,969 gil",
+        "Used in Bazaar Recipe:": "Shell-worked Collar ",
+        "Where to find it:": " Grimoire/Monograph:                             Mandragora Prince  Poached From:                             Mandragora Prince                             Ripe Rampager "
+    },
+    "Frogspawn": {
+        "Description:": "\u201cA gelatinous sac-like clump of countless tiny frog eggs. Watch closely and, every now and then, you can spy their contents moving.\u201d",
+        "Sell Value:": "761 gil",
+        "Used in Bazaar Recipe:": "Exquisite Ring ",
+        "Where to find it:": " Grimoire/Monograph:                             Iguion  Poached From:                             Iguion                             Wood Toad "
+    },
+    "Frog Oil": {
+        "Description:": "\u201cGreat amphibians exude this oil from their warty skin. Widely used as an ingredient in salves and ointments.\u201d",
+        "Sell Value:": "1,826 gil",
+        "Used in Bazaar Recipe:": "Devastating Incendiaries ",
+        "Where to find it:": " Grimoire/Monograph:                             Speartongue  Poached From:                             Speartongue                             Tarasque "
+    },
+    "Gemini Gem": {
+        "Description:": "\u201cA yellow gemstone bearing the name \u201cGemini\u201d. Said to portend assassination.\u201d",
+        "Sell Value:": "150 gil",
+        "Used in Bazaar Recipe:": "Arrows of the Moon Goddess ",
+        "Where to find it:": " Drops From:                             Behemoth                             Blood Gigas                             Bune                             Dullahan                             High Reaver                             Reaver                             Slaven Wilder                             Wendigo  Stolen From:                             Atomos                             Behemoth                             Blood Gigas                             Bune                             Catoblepas                             Humbaba                             Overlord                             Reaver                             Slaven Warder                             Slaven Wilder                             Striker                             Wendice                             Werewolf                             Zaghnal                             Zalera  Poached From:                             High Reaver                             Reaver                             Striker "
+    },
+    "Gemsteel": {
+        "Description:": "\u201cA metal alloy impervious to breakage or blemish. Knowledge of its working was passed down the ages by a guild of jewelers, and it remains their secret.\u201d",
+        "Sell Value:": "150 gil",
+        "Used in Bazaar Recipe:": "Master-crafted Blade  The Sunflower ",
+        "Where to find it:": " Crafted in the Bazaar:  Matchless Metal  Grimoire/Monograph:                             Lv.99 Red Chocobo  Reward From:                             Montblanc in the Clan Hall after obtaining 8 Espers. "
+    },
+    "Giant Feather": {
+        "Description:": "\u201cA feather large enough to conceal a moogle. Quite sturdy, these are used to reinforce all manner of tools and garments. Surprisingly heavy.\u201d",
+        "Sell Value:": "686 gil",
+        "Used in Bazaar Recipe:": "Jag-tooth Ninja Sword  Triage Kit ",
+        "Where to find it:": " Drops From:                             Dive Talon                             Vulture  Stolen From:                             Garuda Egi  Poached From:                             Dive Talon                             Vulture                             Zu "
+    },
+    "Gimble Stalk": {
+        "Description:": "\u201cA conical protuberance that gyres and gimbles. Used for making holes in extremely hard objects and wares. A favorite of children everywhere.\u201d",
+        "Sell Value:": "1,647 gil",
+        "Used in Bazaar Recipe:": "Brawler\u2019s Fetish ",
+        "Where to find it:": " Grimoire/Monograph:                             Alraune King  Stolen From:                             Alraune King  Poached From:                             Alraune King "
+    },
+    "Glass Jewel": {
+        "Description:": "\u201cA foggy, dull glass bead. It is said that when a soul leaves its mortal frame, its former burdens remain in this world as the crystallized tears of clouds.\u201d",
+        "Sell Value:": "115 gil",
+        "Used in Bazaar Recipe:": "Crimson Blade  Magick Shard ",
+        "Where to find it:": " Drops From:                             Cultsworn Lich                             Evil Spirit                             Ghost                             Glaring Eye                             Lich                             Specter                             Wraith  Stolen From:                             Ghost                             Lich                             Specter  Poached From:                             Ghost                             Lich                             Specter "
+    },
+    "Gnoma Halcyon": {
+        "Description:": "\u201cRenderings of cracked, broken earth adorn this umber jewel engraved with an exquisite depiction of a gnoma entite.\u201d",
+        "Sell Value:": "1,500 gil",
+        "Used in Bazaar Recipe:": "Ultimate Blade ",
+        "Where to find it:": " Drops From:                             Gnoma Entite  Stolen From:                             Gnoma Entite "
+    },
+    "Godslayer's Badge": {
+        "Description:": "\u201cBadge awarded for slaying the most powerful creature of all time, the great Wyrmgod, Yiazmat. The mark of a true knight of Ivalice.\u201d",
+        "Sell Value:": "1 gil",
+        "Used in Bazaar Recipe:": "Dragon Crest ",
+        "Where to find it:": " Reward From:                             Hunt 45: Farewell to a Legend (Yiazmat)  "
+    },
+    "Great Serpent's Fang": {
+        "Description:": "\u201cThese fangs are thought to ward off evil spirits. Some hang them in doorways to keep misfortune from visiting a household.\u201d",
+        "Sell Value:": "994 gil",
+        "Used in Bazaar Recipe:": "Bow of the Moon Goddess ",
+        "Where to find it:": " Grimoire/Monograph:                             Python  Stolen From:                             Midgardsormr  Poached From:                             Python "
+    },
+    "Great Serpentskin": {
+        "Description:": "\u201cThe molted skin of the great serpent, the nidhogg. A single glance at its gargantuan span is enough to discourage most would-be hunters.\u201d                          You receive this item when you complete Hunt 05: Marauder in the Mines. It is used as part of the Desert Patient side quest. It is not required in order to complete the side quest but it does result in you receiving better rewards from Dantro\u2019s Wife at the end of the quest. Check out the Desert Patient side quest page for more information.",
+        "Sell Value:": "10 gil",
+        "Used in Bazaar Recipe:": "                           -                         ",
+        "Where to find it:": " Reward From:                             Hunt 05: Marauder in the Mines (Nidhogg)  "
+    },
+    "Green Liquid": {
+        "Description:": "\u201cA thick, virescent, sludgy goop that exudes a truly bile odor.\u201d",
+        "Sell Value:": "206 gil",
+        "Used in Bazaar Recipe:": "Marksman\u2019s Delight  Rain of Tears ",
+        "Where to find it:": " Drops From:                             Cubus                             Etherian                             Flan                             Slime                             Tallow  Stolen From:                             Flan                             Slime                             Tallow  Poached From:                             Flan                             Tallow "
+    },
+    "Grimoire Aidhed": {
+        "Description:": "\u201cA musty tome containing the words of a long-forgotten incantation in a language long dead. The diagrams suggest a magick capable of ending life.\u201d",
+        "Sell Value:": "1,005 gil",
+        "Used in Bazaar Recipe:": "Mysterious Substance ",
+        "Where to find it:": " Drops From:                             Mallicant                             Mistmare  Stolen From:                             Braegh                             Ixion                             Mallicant                             Mistmare  Poached From:                             Darkmare                             Mallicant                             Mistmare "
+    },
+    "Grimoire Togail": {
+        "Description:": "\u201cA musty tome containing the words of a long-forgotten incantation in a language long dead. The diagrams suggest a magick capable of destroying Ivalice.\u201d",
+        "Sell Value:": "475 gil",
+        "Used in Bazaar Recipe:": "Mysterious Substance ",
+        "Where to find it:": " Drops From:                             Darkmare                             Helvinek                             Nightmare                             Oversoul                             Pallicant  Stolen From:                             Darkmare                             Firemane                             Nightmare                             Oversoul  Poached From:                             Darkmare                             Nightmare "
+    },
+    "Gysahl Greens": {
+        "Description:": "\u201cA leafy vegetable favored by Chocobos. The taste is slightly bitter, but quite palatable, even for humes. Thought to give Chocobos a slight buzz.\u201d                              Gysahl Greens are required in order to mount and ride a Chocobo. You can purchase them while aboard the Skyferries that travel between the various towns and locations.                         ",
+        "Sell Value:": "54 gil",
+        "Used in Bazaar Recipe:": "Wind Walkers ",
+        "Where to find it:": " Drops From:                             Chocobo (all colors)  Stolen From:                             Trickster  Poached From:                             Chocobo (all colors) "
+    },
+    "Hell-Gate's Flame": {
+        "Description:": "\u201cA flame painful to look upon. Said to be a looking-glass into the inferno, where tortured souls can be seen writhing in ceaseless agony.\u201d",
+        "Sell Value:": "1,584 gil",
+        "Used in Bazaar Recipe:": "Matchless Metal ",
+        "Where to find it:": " Grimoire/Monograph:                             Cerberus  Stolen From:                             Enkidu  Poached From:                             Cerberus                             Wary Wolf "
+    },
+    "High Arcana": {
+        "Description:": "\u201cA jewel containing the souls of many creatures. Within can be seen the true forms of creatures rent from their natural fates and bound within.\u201d                          An extremely rare item in the game that is used in many of the more difficult to craft items. Be sure to check out the Bazaar page for more information on how to properly sell this loot so as not to waste any of them.                          One of the easiest way to farm High Arcana is by repeatedly defeating Etherians in the Cerobi Steppe.",
+        "Sell Value:": "20 gil",
+        "Used in Bazaar Recipe:": "Esoteric Draught  Jewel of Creation  Jewel of the Serpent  Saint\u2019s Draught ",
+        "Where to find it:": " Crafted in the Bazaar:  Life Crystal  Drops From:                             Dustia                             Ripe Rampager                             Helvinek  Stolen From:                             Adrammelech                             Belias                             Chaos                             C\u00fachulainn                             Exodus                             Famfrit                             Hashmal                             Mateus                             Shemhazai                             Ultima                             Zalera                             Zeromus                             Zodiark  Reward From:                             Montblanc in the Clan Hall after reaching the rank of Paragon of Justice.                              "
+    },
+    "Holy Crystal": {
+        "Description:": "\u201cA crystallization of potent holy magicks, said to contain the divine power of the sun. The source of a diakon entite\u2019s energy.\u201d",
+        "Sell Value:": "160 gil",
+        "Used in Bazaar Recipe:": "Attenuated Greatsword  Scout\u2019s Crossbow  White Vestments ",
+        "Where to find it:": " Drops From:                             Babil                             Diakon Entite                             Holy Elemental  Stolen From:                             Diakon Entite                             Goliath                             Holy Elemental                             Yiazmat "
+    },
+    "Holy Magicite": {
+        "Description:": "\u201cA stone infused with power most holy. It looks like an ordinary stone, but merely placing it in your hand gives you a feeling of tremendous peace.\u201d",
+        "Sell Value:": "80 gil",
+        "Used in Bazaar Recipe:": "-",
+        "Where to find it:": " Drops From:                             Garuda-Egi                             Holy Elemental  Stolen From:                             Goliath                             Holy Elemental                             Yiazmat "
+    },
+    "Holy Stone": {
+        "Description:": "\u201cA stone infused with power most holy. It looks like ordinary stone, but merely placing it in your hand gives you a feeling of tremendous peace.\u201d",
+        "Sell Value:": "35 gil",
+        "Used in Bazaar Recipe:": "-",
+        "Where to find it:": " Drops From:                             Holy Elemental  Stolen From:                             Babil                             Garuga-Egi                             Yiazmat "
+    },
+    "Horakhty's Flame": {
+        "Description:": "\u201cAn ever-burning tongue of flame that consumes all it is fed. At night it grows dark and cold as ice.\u201d",
+        "Sell Value:": "1,000 gil",
+        "Used in Bazaar Recipe:": "Morbid Urn ",
+        "Where to find it:": " Reward From:                             Hunt 35: Crime and Punishment (Orthros)  "
+    },
+    "Horn": {
+        "Description:": "\u201cA spiral horn. While the material of the horn is hard, its hollowness makes it prone to shattering. As such, these horns have lost favor among artificers of late.\u201d",
+        "Sell Value:": "120 gil",
+        "Used in Bazaar Recipe:": "Light Spear ",
+        "Where to find it:": " Drops From:                             Gigantoad                             Lizard                             Speartongue                             Suriander                             Tarasque                             Wood Toad  Stolen From:                             Croakadile                             Gigantoad                             Lizard                             Speartongue                             Suriander  Poached From:                             Gigantoad                             Speartongue                             Suriander "
+    },
+    "Ice Crystal": {
+        "Description:": "\u201cA crystallization of potent ice magicks, said to contain the divine power of sorcery. The source of a leshach entite\u2019s energy.\u201d",
+        "Sell Value:": "160 gil",
+        "Used in Bazaar Recipe:": "Permafrost Bow & Quiver ",
+        "Where to find it:": " Drops From:                             Aeronite                             Basilisk                             Buer                             Cataract Aevis                             Ice Azer                             Ice Elemental                             Leshach Entite                             Seeq Explorer                             Seeq Thief  Stolen From:                             Ice Azer                             Ice Elemental                             Leshach Entite "
+    },
+    "Ice Magicite": {
+        "Description:": "\u201cA stone infused with ice magicks. One of these placed in an icebox is enough to keep foodstuffs frozen for weeks.\u201d",
+        "Sell Value:": "80 gil",
+        "Used in Bazaar Recipe:": "Alluring Finery  Huntman\u2019s Crossbow  Mark\u2019s Garb ",
+        "Where to find it:": " Drops From:                             Emperor Aevis                             Garif Adventurer                             Ice Azer                                                                                                                                                 White Chocobo                             White Wolf                             Yeti  Stolen From:                             Ice Azer                             Ice Elemental                             Wendigo  Poached From:                             Twintania "
+    },
+    "Ice Stone": {
+        "Description:": "\u201cA stone infused with the power of ice. It looks like an ordinary stone, but is oddly cool to the touch.\u201d",
+        "Sell Value:": "35 gil",
+        "Used in Bazaar Recipe:": "Ranger\u2019s Crossbow ",
+        "Where to find it:": " Drops From:                             Ice Azer                             Ice Elemental                             Seeq Cateran  Stolen From:                             Buer                             Emperor Aevis                             Twintania                             White Wolf "
+    },
+    "Ichthon Scale": {
+        "Description:": "\u201cA scale from a fish as curious as it is fell. These are popular among those who favor their unusual patterning for use in crafts.\u201d",
+        "Sell Value:": "1,033 gil",
+        "Used in Bazaar Recipe:": "Mudslinger ",
+        "Where to find it:": " Drops From:                             Focalor                             Piranha                             Rain Dancer  Stolen From:                             Focalor  Poached From:                             Focalor                             Piranha                             Razorfin "
+    },
+    "Insect Husk": {
+        "Description:": "\u201cA thick insect carapace, hard as gemsteel. Only those from the largest insects have any value, and the price varies with the piece\u2019s luster.\u201d",
+        "Sell Value:": "680 gil",
+        "Used in Bazaar Recipe:": "Platinum Gear ",
+        "Where to find it:": " Drops From:                             Antares                             Killer Mantis                             Preying Mantis                             Scythe Mantis  Stolen From:                             Scythe Mantis  Poached From:                             Antares                             Killer Mantis                             Preying Mantis                             Scythe Mantis "
+    },
+    "Iron Carapace": {
+        "Description:": "\u201cArtificers have perfected a technique of extracting and rarefying the mineral content of these hard, iron-rich husks.\u201d",
+        "Sell Value:": "413 gil",
+        "Used in Bazaar Recipe:": "Golden Garb ",
+        "Where to find it:": " Drops From:                             Leynir                             Mesmenir                             Scythe Mantis  Stolen From:                             Leynir                             Mesmenir                             Scythe Mantis  Poached From:                             Leynir                             Mesmenir                             Scythe Mantis                             Sleipnir "
+    },
+    "Iron Ore": {
+        "Description:": "\u201cA chunk iron-rich ore. The iron is extracted and purified, though some lands forbid its use in the the making of arms and ammunition for warfare.\u201d",
+        "Sell Value:": "1,043 gil",
+        "Used in Bazaar Recipe:": "Samurai\u2019s Katana ",
+        "Where to find it:": " Drops From:                             Bug                             Ithuno                             Mimeo                             Molen                             Mythril Golem                             Pandora  Stolen From:                             Bug                             Mimeo                             Mythril Golem                             Goliath                             Pandora                             Roblon  Poached From:                             Bug                             Mimeo                             Pandora "
+    },
+    "Iron Scraps": {
+        "Description:": "\u201cDiscarded scraps of varying shapes and sizes. Great quantities are melted for reuse, but a large amount of impurities makes for low-quality metal.\u201d",
+        "Sell Value:": "183 gil",
+        "Used in Bazaar Recipe:": "Iron-forged Blade ",
+        "Where to find it:": " Drops From:                             Battery Mimic                             Bug                             Ithuno                             Mimic                             Thunderbug                             Tiny Bug                             Tiny Mimic  Stolen From:                             Mimic                             Thunderbug  Poached From:                             Battery Mimic                             Bug                             Mimic                             Thunderbug                             Tiny Bug                             Tiny Mimic "
+    },
+    "Jack-o'-Lantern": {
+        "Description:": "\u201cThis pumpkin has been hollowed out and fashioned into a lantern. Said to be a symbol of sagacity and erudition, and is thus favored by young scholars.\u201d",
+        "Sell Value:": "1,888 gil",
+        "Used in Bazaar Recipe:": "Fire-bird\u2019s Whisper ",
+        "Where to find it:": " Grimoire/Monograph:                             Pumpkin Star  Stolen From:                             Pumpkin Star  Poached From:                             Pumpkin Star "
+    },
+    "Jaya Stick": {
+        "Description:": "\u201cA fragrant stick of jaya wood, said to protect the bearer from evil spirits.\u201d",
+        "Sell Value:": "500 gil",
+        "Used in Bazaar Recipe:": "-",
+        "Where to find it:": "                            Obtained from High-chief Zayalu when you first travel to Jahara.                          "
+    },
+    "Ketu Board": {
+        "Description:": "\u201cA prayer board bearing the name of an ancient star written in strange glyphs. A divination tool and protective ward from the eastern kingdoms.\u201d",
+        "Sell Value:": "1,771 gil",
+        "Used in Bazaar Recipe:": "Engraved Spear ",
+        "Where to find it:": " Grimoire/Monograph:                             Cassie  Stolen From:                             Doctor Cid  Poached From:                             Cassie "
+    },
+    "Large Feather": {
+        "Description:": "\u201cA large feather. Its value is judged not only by the beauty of its pattern, but also by its fullness and suitability as a decorative material.\u201d",
+        "Sell Value:": "71 gil",
+        "Used in Bazaar Recipe:": "First-aid Kit ",
+        "Where to find it:": " Drops From:                             Bagoly                             Garuda-Egi                             Imdugud                             Urstrix                             Wu                             Zu  Stolen From:                             Bagoly                             Chickatrice                             Dive Talon                             Urstrix                             Wu                             Zu  Poached From:                             Bagoly                             Dive Talon                             Garuda-Egi                             Urstrix                             Wu                             Zu "
+    },
+    "Leamonde Halcyon": {
+        "Description:": "\u201cEddies of jet black darkness adorn this smoky jewel engraved with an exquisite depiction of a leamonde entite.\u201d",
+        "Sell Value:": "1,500 gil",
+        "Used in Bazaar Recipe:": "Forbidding Shield ",
+        "Where to find it:": " Drops From:                             Leamonde Entite  Stolen From:                             Leamonde Entite "
+    },
+    "Leo Gem": {
+        "Description:": "\u201cA yellow gemstone bearing the name \u201cLeo\u201d. Represents wild dreams and unspoken ambitions.\u201d",
+        "Sell Value:": "150 gil",
+        "Used in Bazaar Recipe:": "Cursed Necklace ",
+        "Where to find it:": " Drops From:                             Aeronite                             Archaeoaevis                             Archaeosaur                             Ash Wyrm                             Giruveganus                             Gizamaluk                             Shield Wyrm  Stolen From:                             Aeronite                             Archaeoaevis                             Ash Wyrm                             Bellwyvern                             Cataract Aevis                             Diresaur                             Dragon Aevis                             Emperor Aevis                             Hashmal                             Myath                             Tiamat                             Tyranorox                             Vyraal                             Wild Saurian  Poached From:                             Bellwyvern                             Cataract Aevis "
+    },
+    "Leshach Halcyon": {
+        "Description:": "\u201cDancing chill winds cold enough to freeze time itself adorn this niveous jewel carved with an exquisite engraving of a leshach entite.\u201d",
+        "Sell Value:": "1,500 gil",
+        "Used in Bazaar Recipe:": "Well-forged Blade ",
+        "Where to find it:": " Drops From:                             Leshach Entite  Stolen From:                             Leshach Entite "
+    },
+    "Libra Gem": {
+        "Description:": "\u201cA yellow gemstone bearing the name \u201cLibra\u201d. Represents success in negotiations.\u201d",
+        "Sell Value:": "150 gil",
+        "Used in Bazaar Recipe:": "Stone Shot ",
+        "Where to find it:": " Drops From:                             Alpha Worgen                             Bandercoeurl                             Cerberus                             Ose                             Silver Lobo                             Tartarus Worgen                             Worgen  Stolen From:                             Coeurl                             Dire Rat                             Exodus                             Lab Rat                             Panther                             Silver Lobo                             Tartarus  Poached From:                             Hellhound                             Lindbur Wolf "
+    },
+    "Lifewick": {
+        "Description:": "\u201cThe height of this candle\u2019s flame varies with the bearer. As long as someone holds it, the flame will never go out, the bearer\u2019s life force made manifest.\u201d",
+        "Sell Value:": "1,740 gil",
+        "Used in Bazaar Recipe:": "Well-forged Blade ",
+        "Where to find it:": " Grimoire/Monograph:                             Necrofiend  Stolen From:                             Necrofiend                             Evil Spirit "
+    },
+    "Lumber": {
+        "Description:": "\u201cWood popular with shipwrights, carpenters and builders.\u201d",
+        "Sell Value:": "483 gil",
+        "Used in Bazaar Recipe:": "Burning Blade ",
+        "Where to find it:": " Drops From:                             Juggernaut                             Treant  Stolen From:                             Treant  Poached From:                             Treant "
+    },
+    "Lu Shang's Badge": {
+        "Description:": "\u201cA badge said to be handed down from the great angler of legend, Lu Shang himself. The mark of a true fisherman of Ivalice.\u201d",
+        "Sell Value:": "1 gil",
+        "Used in Bazaar Recipe:": "Dragon Crest ",
+        "Where to find it:": " Reward From:                             The Fishing side quest.                              "
+    },
+    "Maggoty Flesh": {
+        "Description:": "\u201cThis lurid, decaying lump is assumed to be maggoty. No one has been able to look at it long enough to know for sure. Used in dark magicks and alchemy.\u201d",
+        "Sell Value:": "741 gil",
+        "Used in Bazaar Recipe:": "Forked Spear  Warped Blade ",
+        "Where to find it:": " Drops From:                             Striker                             Wendigo                             Zombie Knight  Stolen From:                             Hydro                             Shadowseer                             Striker                             Zombie Knight  Poached From:                             Striker                             Wendigo                             Zombie Knight                             Zombie Warlock "
+    },
+    "Magick Lamp": {
+        "Description:": "\u201cA thin wisp of smoke rises from the mouth of this golden lamp. Once used to entrap the souls of demons, bound into service upon their release.\u201d",
+        "Sell Value:": "1,753 gil",
+        "Used in Bazaar Recipe:": "Blush of Light ",
+        "Where to find it:": " Grimoire/Monograph:                             Mallicant  Stolen From:                             Helvinek                             Ixion  Poached From:                             Mallicant "
+    },
+    "Malboro Flower": {
+        "Description:": "\u201cThis beautiful yellow flower takes weeks to bloom, lasts a mere day, and wilts before the next dawn. Its cloying scent is chokingly sweet.\u201d",
+        "Sell Value:": "612 gil",
+        "Used in Bazaar Recipe:": "Double-bladed Knife  Phials & Philtres ",
+        "Where to find it:": " Drops From:                             Cassie                             Vivian  Stolen From:                             Cassie                             Malboro                             Malboro Overking                             Wild Malboro  Poached From:                             Cassie                             Malboro                             Vivian "
+    },
+    "Malboro Fruit": {
+        "Description:": "\u201cThis poisonous, rotten-smelling fruit is valued as a source of virulent toxin. If cooked for a very long time, they can be rendered harmless enough to eat, but why bother?\u201d",
+        "Sell Value:": "612 gil",
+        "Used in Bazaar Recipe:": "Survival Set  War Axe ",
+        "Where to find it:": " Drops From:                             Malboro                             Malboro King                             Malboro Overking  Stolen From:                             Malboro King                             Malboro Overking  Poached From:                             Malboro                             Malboro King                             Malboro Overking "
+    },
+    "Malboro Vine": {
+        "Description:": "\u201cA thin, highly elastic vine. Easily cut, these are excellent for various crafts. Bundles of such vines are a common sight at market.\u201d",
+        "Sell Value:": "433 gil-",
+        "Used in Bazaar Recipe:": "Burning Blade  Smelling Salts, & C. ",
+        "Where to find it:": " Drops From:                             Great Malboro                             Malboro  Stolen From:                             Great Malboro                             Malboro  Poached From:                             Great Malboro                             Malboro "
+    },
+    "Mallet": {
+        "Description:": "\u201cThis handy tool, called a gavel by some artificers, is said to have once been used to restore order in courtrooms in ancient times.\u201d",
+        "Sell Value:": "2,449 gil",
+        "Used in Bazaar Recipe:": "Master-crafted Blade ",
+        "Where to find it:": " Grimoire/Monograph:                             Purobolos  Stolen From:                             Bombshell  Poached From:                             Purobolos  Reward From:                             Montblanc in the Clan Hall after you have defeated King Bomb in the Salikawood.                              "
+    },
+    "Mardu Halcyon": {
+        "Description:": "\u201cSwirling thunderclouds adorn this cerulean jewel engraved with an exquisite depiction of a mardu entite.\u201d",
+        "Sell Value:": "1,500 gil",
+        "Used in Bazaar Recipe:": "Golden Battle Axe ",
+        "Where to find it:": " Drops From:                             Mardu Entite  Stolen From:                             Mardu Entite "
+    },
+    "Mirror Scale": {
+        "Description:": "\u201cThough it resembles thin glass, this scale is anything but fragile. It shines in the dimmest light, glowing brightly even on nights of the new moon.\u201d",
+        "Sell Value:": "1,952 gil",
+        "Used in Bazaar Recipe:": "Stone Shot ",
+        "Where to find it:": " Grimoire/Monograph:                             Mirrorknight  Stolen From:                             Dreadguard  Poached From:                             Mirrorknight "
+    },
+    "Molting": {
+        "Description:": "\u201cA brittle skin molted as its former occupant outgrew its compass. Abundant and cheap, there are often ground into powders for various uses.\u201d",
+        "Sell Value:": "74 gil",
+        "Used in Bazaar Recipe:": "Gilt Shield ",
+        "Where to find it:": " Drops From:                             Antares                             Sleipnir  Stolen From:                             Sleipnir  Poached From:                             Sleipnir "
+    },
+    "Moondust": {
+        "Description:": "\u201cEach grain of this dust looks like a tiny moon. Legend says that if you shape the dust into a large crescent, it will form a boat to carry you to the moon.\u201d",
+        "Sell Value:": "1,975 gil",
+        "Used in Bazaar Recipe:": "Bow of the Moon Goddess ",
+        "Where to find it:": " Grimoire/Monograph:                             Mu  Poached From:                             Mu "
+    },
+    "Moon Ring": {
+        "Description:": "\u201cA large metal disc, out of which the shape of a full moon has been carved. Rumored to be a device for the entrapment of spirits, or perhaps a protective charm.\u201d",
+        "Sell Value:": "1,647 gil",
+        "Used in Bazaar Recipe:": "Moon Ring ",
+        "Where to find it:": " Grimoire/Monograph:                             Ash Wyrm "
+    },
+    "Mystletainn": {
+        "Description:": "\u201cThis oddly organic metal seems to grown and change shape, though it hardens when tempered in the purest of holy waters.\u201d",
+        "Sell Value:": "1,725 gil",
+        "Used in Bazaar Recipe:": "Engraved Spear ",
+        "Where to find it:": " Grimoire/Monograph:                             Golem  Stolen From:                             Juggernaut  Poached From:                             Golem "
+    },
+    "Mythril": {
+        "Description:": "\u201cThis type of silver is laced with strong magicks, making it resistant to fire and the ill will of foes. A common material in quality arms and armor.\u201d",
+        "Sell Value:": "1,531 gil",
+        "Used in Bazaar Recipe:": "Whisker of the Beast ",
+        "Where to find it:": " Grimoire/Monograph:                             Mythril Golem  Stolen From:                             Molen                             Mythril Golem  Reward From:                             Hunt 18: Adding Insult to Injury (Roblon)  "
+    },
+    "Nebralim": {
+        "Description:": "\u201cA traditional salve used by the peoples living in the valley of the River Nebra. Effective on cuts, burns, and even bruises.\u201d",
+        "Sell Value:": "150 gil",
+        "Used in Bazaar Recipe:": "                           -                         ",
+        "Where to find it:": "                            In the Outpost of Dalmasca Esterand.                          "
+    },
+    "Nebra Succulent": {
+        "Description:": "\u201cA small fish found in the River Nebra. Best eaten fresh and raw, right after catching. A delicacy popular in Rabanastre markets.\u201d",
+        "Sell Value:": "100 gil",
+        "Used in Bazaar Recipe:": "                           -                         ",
+        "Where to find it:": "                            Obtained during the Fishing side quest.                          "
+    },
+    "Omega Badge": {
+        "Description:": "\u201cBadge awarded for felling the legendary weapon, the Omega Mark XII, the sign of a true hero of Ivalice.\u201d",
+        "Sell Value:": "1 gil",
+        "Used in Bazaar Recipe:": "Omega Badge ",
+        "Where to find it:": " Drops From:                             Omega Mark XII "
+    },
+    "Onion": {
+        "Description:": "\u201cThe onion: a humble bulb that, with the proper spices and seasonings, can change the world.\u201d",
+        "Sell Value:": "2,010 gil",
+        "Used in Bazaar Recipe:": "Esoteric Draught ",
+        "Where to find it:": " Grimoire/Monograph:                             Onion Queen  Stolen From:                             Onion Queen  Poached From:                             Onion Queen "
+    },
+    "Orichalcum": {
+        "Description:": "\u201cThis mysterious metal seems to waver and shine like a flame. Some believe it does not even truly exist, that it is the mere idea of the metal which lends protection.\u201d",
+        "Sell Value:": "1,777 gil",
+        "Used in Bazaar Recipe:": "Darksteel Blade  Master-crafted Blade ",
+        "Where to find it:": " Grimoire/Monograph:                             Deidar  Stolen From:                             Vishno  Poached From:                             Deidar "
+    },
+    "Pebble": {
+        "Description:": "\u201cA common, featureless stone with a pleasing color and shape; the kind treasured by small children.\u201d                          This is a useless item that can just be sold at will. They serve no purpose and are not used to craft any items.",
+        "Sell Value:": "2 gil",
+        "Used in Bazaar Recipe:": "                           -                         ",
+        "Where to find it:": " Drops From:                             Luxollid                             Ripe Rampager                             Vagrant Soul  Stolen From:                             Adrammelech                             Bloodwing                             Fafnir                             Feral Retriever                             Lindwyrm                             Mindflayer                             Rogue Tomato                             Seeq Cateran                             Thextera                             Tiny Battery                             Urutan-Yensa                             Zalera  Poached From:                             Aerieel                             Aeros                             Alpha Hyena                             Anchag                             Apsara                             Baknamy                             Bangaa Pirate                             Bangaa Thief                             Barmuu                             Bomb                             Bull Croc                             Cultsworn Lich                             Dustia                             Etherian                             Fideliant                             Grave Lord                             Greeden                             Grey Molter                             Hyena                             Imdugud                             Imperial                             Lindbur Wolf                             Malboro                             Matriarch Bomb                             Megabomb                             Midgardsormr                             Negalmuur                             Nekhbet                             Pallicant                             Phyllo                             Pineapple                             Rain Dancer                             Razorfin                             Ripe Rampager                             Seeq Cateran                             Seeq Thief                             Slime                             Spee                             Tarasque                             Tiny Battery                             Urutan Exile                             Urutan-Yensa                             Wary Wolf                             Wood Toad "
+    },
+    "Phobos Glaze": {
+        "Description:": "\u201cA legendary pottery glaze known only in the eastern kingdoms. Said to instantly and eternally fix the form of any creation to which it is applied.\u201d",
+        "Sell Value:": "1,000 gil",
+        "Used in Bazaar Recipe:": "Morbid Urn ",
+        "Where to find it:": " Reward From:                             Hunt 36: Paradise Risen (Gil Snapper)  "
+    },
+    "Pinewood Chop": {
+        "Description:": "\u201cA simple, carved tablet inlaid with silver. It is a mark of status held by ardents in the Imperial City of Archades.\u201d",
+        "Sell Value:": "0 gil",
+        "Used in Bazaar Recipe:": "                           -                         ",
+        "Where to find it:": "                            Obtained through a small side quest that takes place when you arrive in Archades.                          "
+    },
+    "Pisces Gem": {
+        "Description:": "\u201cA yellow gemstone bearing the name \u201cPisces\u201d. Represents the tangled weave of fate.\u201d",
+        "Sell Value:": "150 gil",
+        "Used in Bazaar Recipe:": "Sturdy Battle Gear ",
+        "Where to find it:": " Drops From:                             Apsara                             Focalor                             Piranha  Stolen From:                             Bull Yensa                             Focalor                             Mateus                             Slyt                             Yensa  Poached From:                             Piranha "
+    },
+    "Pointed Horn": {
+        "Description:": "\u201cA sharply pointed horn which is completely hollow, save for its tip. Often only the top few fingers are used for crafting.\u201d",
+        "Sell Value:": "706 gil",
+        "Used in Bazaar Recipe:": "Burning Fangs  Forked Spear  War Axe ",
+        "Where to find it:": " Drops From:                             Iguion                             Lizard                             Suriander  Stolen From:                             Croakadile                             Lizard                             Suriander  Poached From:                             Iguion                             Lizard                             Suriander "
+    },
+    "Prime Pelt": {
+        "Description:": "\u201cA thick pelt, luxuriant in its softness and warmth. The sheen of its fur screams quality. One look is all it takes to steal the heart of any seamstress.\u201d",
+        "Sell Value:": "1,124 gil",
+        "Used in Bazaar Recipe:": "Gigas Gear  Nature\u2019s Armor ",
+        "Where to find it:": " Drops From:                             Cerberus                             Lindbur Wolf                             Ose                             Tartarus  Stolen From:                             Bandercoeurl                             Cerberus                             Feral Retriever                             Ose                             Wary Wolf  Poached From:                             Cerberus                             Ose "
+    },
+    "Prime Tanned Hide": {
+        "Description:": "\u201cA high-quality tanned hide, used in making clothing, bags, and all manner of useful goods.\u201d",
+        "Sell Value:": "1,372 gil",
+        "Used in Bazaar Recipe:": "Black Vestments  Gigas Gear ",
+        "Where to find it:": " Drops From:                             Basilisk                             Behemoth                             Giruveganus                             Grey Molter  Stolen From:                             Giruveganus                             Marilith  Poached From:                             Archaeosaur                             Basilisk                             Behemoth                             Midgardsormr "
+    },
+    "Putrid Liquid": {
+        "Description:": "\u201cA liquid so rank, few dare handle it. A single whiff has been known to render men unconscious, and wake the dead from their sleep.\u201d",
+        "Sell Value:": "1,342 gil",
+        "Used in Bazaar Recipe:": "Water-drop Munitions ",
+        "Where to find it:": " Grimoire/Monograph:                             Malboro Overking  Stolen From:                             Carrot                             Kris                             Rafflesia  Poached From:                             Malboro Overking  Reward From:                             Hunt 39: Carrot Stalk (Carrot)  "
+    },
+    "Quality Hide": {
+        "Description:": "\u201cA hide with just the right combination of pliability and strength. Its pleasing hue only improves with use, making it suitable for crafting quality articles.\u201d",
+        "Sell Value:": "384 gil",
+        "Used in Bazaar Recipe:": "Burnished Protectives  Matching Reds ",
+        "Where to find it:": " Drops From:                             Python                             Serpent                             Viper                             Werewolf                             Zaghnal  Stolen From:                             Serpent                             Werewolf  Poached From:                             Serpent                             Werewolf                             Zaghnal "
+    },
+    "Quality Lumber": {
+        "Description:": "\u201cLong years in the primordial forests have infused the fibers of this lumber with Mist. Perfect for use in the crafting of fine furnishings and magick staves.\u201d",
+        "Sell Value:": "1,127 gil",
+        "Used in Bazaar Recipe:": "Mystic Staff ",
+        "Where to find it:": " Drops From:                             Golem  Stolen From:                             Golem  Poached From:                             Clay Golem                             Golem "
+    },
+    "Quality Pelt": {
+        "Description:": "\u201cSoft fur covers the surface of this fine pelt. Clothing made from one of these is a luxury item coveted by nobles and adventures alike.\u201d",
+        "Sell Value:": "1,425 gil",
+        "Used in Bazaar Recipe:": "Emboldening Arms ",
+        "Where to find it:": " Drops From:                             Alpha Worgen                             Bandercoeurl                             Coeurl                             Panther                             Silver Lobo                             White Wolf                             Worgen  Stolen From:                             Feral Retriever                             White Wolf  Poached From:                             Alpha Worgen                             Bandercoeurl                             Panther                             Silver Lobo                             White Wolf                             Worgen "
+    },
+    "Quality Stone": {
+        "Description:": "\u201cThese stones are chosen for their coloration as well as their usefulness as building materials. Used in construction of prominent buildings and temples.\u201d",
+        "Sell Value:": "1,425 gil",
+        "Used in Bazaar Recipe:": "Attenuated Greatsword  Memories of Yore ",
+        "Where to find it:": " Drops From:                             Babil                             Brainpan                             Deidar  Stolen From:                             Deidar                             Demon Wall  Poached From:                             Barmuu                             Brainpan                             Deidar "
+    },
+    "Rat Pelt": {
+        "Description:": "\u201cAn easily torn, yet very pliable small pelt. These suited to a variety of uses, but fetch a low price due to their availability.\u201d",
+        "Sell Value:": "35 gil",
+        "Used in Bazaar Recipe:": "Bow & Bodkin ",
+        "Where to find it:": " Drops From:                             Dire Rat                             Lab Rat  Stolen From:                             Dire Rat                             Lab Rat  Poached From:                             Dire Rat                             Lab Rat "
+    },
+    "Rat Tail": {
+        "Description:": "\u201cA common alchemical ingredient.\u00a0Rumored to be quite tasty when properly prepared.\u201d",
+        "Sell Value:": "224 gil",
+        "Used in Bazaar Recipe:": "Esoteric Draught ",
+        "Where to find it:": " Drops From:                             Lab Rat  Poached From:                             Dire Rat                             Lab Rat "
+    },
+    "Rainbow Egg": {
+        "Description:": "\u201cA large egg that scintillates with the colors of the rainbow as you walk around it. Used for decoration, cooking and as a reagent in medicine-making.\u201d",
+        "Sell Value:": "538 gil",
+        "Used in Bazaar Recipe:": "Hi-Potion Pack ",
+        "Where to find it:": " Grimoire/Monograph:                             Axebeak  Stolen From:                             Nekhbet  Poached From:                             Axebeak  Reward From:                             Hunt 33: Little Love on the Big Plains (Cluckatrice)  "
+    },
+    "Ring Wyrm Liver": {
+        "Description:": "\u201cA steaming ring wyrm liver. A recipe exists to turn one of these into a potent cure-all.\u201d",
+        "Sell Value:": "1,467 gil",
+        "Used in Bazaar Recipe:": "Brilliant Shield  Piercing Bolts ",
+        "Where to find it:": " Grimoire/Monograph:                             Shield Wyrm  Stolen From:                             Lindwyrm  Poached From:                             Shield Wyrm "
+    },
+    "Ring Wyrm Scale": {
+        "Description:": "\u201cThis impervious scale stands as proof of the mighty ring wyrm\u2019s existence. Few blades exists that can mark it, though many are the smiths, who have tried to make one that can.\u201d",
+        "Sell Value:": "1,285 gil",
+        "Used in Bazaar Recipe:": "Armor-piercing Shot ",
+        "Where to find it:": " Drops From:                             Ash Wyrm                             Shield Wyrm  Stolen From:                             Elder Wyrm                             Fafnir                             Lindwyrm                             Shield Wyrm                             Tiamat  Poached From:                             Shield Wyrm "
+    },
+    "Sagittarius Gem": {
+        "Description:": "\u201cA yellow gemstone bearing the name \u201cSagittarius\u201d. Represents the iron law of truth.\u201d",
+        "Sell Value:": "150 gil",
+        "Used in Bazaar Recipe:": "Silver Bow ",
+        "Where to find it:": " Drops From:                             Hecteyes  Stolen From:                             Flan                             Foobar                             Oiling                             Shemhazai                             Slime "
+    },
+    "Salamand Halcyon": {
+        "Description:": "\u201cSearing flames adorn this fiery jewel engraved with an exquisite depiction of a salamand entite.\u201d",
+        "Sell Value:": "1,500 gil",
+        "Used in Bazaar Recipe:": "Late-model Rifle ",
+        "Where to find it:": " Drops From:                             Salamand Entite  Stolen From:                             Salamand Entite "
+    },
+    "Sandalwood Chop": {
+        "Description:": "\u201cAn elegantly carved tablet inlaid with gold. It is a mark of status held by gentry in the Imperial City of Archades.\u201d",
+        "Sell Value:": "0 gil",
+        "Used in Bazaar Recipe:": "                           -                         ",
+        "Where to find it:": "                            Obtained after you obtain all of the Pinewood Chops when you reach Imperial City of Archades.                          "
+    },
+    "Scarletite": {
+        "Description:": "\u201cA legendary metal said to bestow divine protection. The product of a lost age, none now live who know the manner of its manufacting.\u201d",
+        "Sell Value:": "1,679 gil",
+        "Used in Bazaar Recipe:": "Matchless Metal ",
+        "Where to find it:": " Grimoire/Monograph:                             Emeralditan  Stolen From:                             Aspidochelon                             Pandaemonium  Poached From:                             Emeralditan "
+    },
+    "Scorpio Gem": {
+        "Description:": "\u201cA yellow gemstone bearing the name \u201cScorpio\u201d. Foretells the fruition of long-held plans.\u201d",
+        "Sell Value:": "150 gil",
+        "Used in Bazaar Recipe:": "The Scorpion ",
+        "Where to find it:": " Drops From:                             Balloon                             Gargoyle Baron                             Grenade                             Imp                             Mistmare                             Mom Bomb                             Pallicant                             Pit Fiend                             Purobolos  Stolen From:                             Buer                             C\u00fachulainn                             Darkmare                             Diabolos                             Grenade                             Larva Eater                             Mallicant                             Matriach Bomb                             Mom Bomb                             Pit Fiend  Poached From:                             Gargoyle Baron                             Megabomb                             Mom Bomb "
+    },
+    "Screamroot": {
+        "Description:": "\u201cAs their name suggests, these roots give off a horrible ear-piercing scream when yanked from their earthly beds, giving unwary foragers the fright of their lives.\u201d",
+        "Sell Value:": "1,350 gil",
+        "Used in Bazaar Recipe:": "Potion Crate  Samurai\u2019s Katana ",
+        "Where to find it:": " Drops From:                             Alraune King                             Mandragora Prince                             Onion Queen                             Pumpkin Star                             Topstalk  Stolen From:                             Alraune King                             Deadly Nightshade                             Mandragora Prince                             Onion Queen                             Pumpkin Head                             Pumpkin Star                             Rafflesia                             Ripe Rampager                             Topstalk  Poached From:                             Alraune King                             Mandragora Prince                             Onion Queen                             Pumpkin Star                             Topstalk "
+    },
+    "Semclam Shell": {
+        "Description:": "\u201cShell from a mollusk found in the River Nebra. Pulverized into a powder and taken as an alleviator of distress.\u201d",
+        "Sell Value:": "90 gil",
+        "Used in Bazaar Recipe:": "                           -                         ",
+        "Where to find it:": "                            Picked up in the Dalmasca Estersand during the Desert Patient side quest.                          "
+    },
+    "Serpent Eye": {
+        "Description:": "\u201cAn eye with the power to freeze prey in its tracks with fear. In antiquity it was said they could even turn flesh to stone, though that ability has since been lost.\u201d",
+        "Sell Value:": "1,440 gil",
+        "Used in Bazaar Recipe:": "Jewel of the Serpent ",
+        "Where to find it:": " Drops From:                             Basilisk  Grimoire/Monograph:                             Basilisk  Poached From:                             Basilisk                             Grey Molter  Reward From:                             Hunt 09: A Tingling Toast (Marilith)  "
+    },
+    "Serpentarius": {
+        "Description:": "\u201cA gemstone bearing the name \u201cSerpentarius\u201d. Said to portend great destruction and undoing.\u201d",
+        "Sell Value:": "2,000 gil",
+        "Used in Bazaar Recipe:": "The Sunflower ",
+        "Where to find it:": " Crafted in the Bazaar:  Jewel of the Serpent  Stolen From:                             Ultima                             Zodiark "
+    },
+    "Sickle Blade": {
+        "Description:": "\u201cAn incredibly thin blade, translucent as a moonbeam. So sharp, a man might be beheaded without knowing it until a gust of wind came to finish off the task.\u201d",
+        "Sell Value:": "1,878 gil",
+        "Used in Bazaar Recipe:": "Serpent Blade ",
+        "Where to find it:": " Grimoire/Monograph:                             Preying Mantis  Stolen From:                             Rageclaw  Poached From:                             Preying Mantis  Reward From:                             Hunt 38: Antlion Infestation (Antlion)  "
+    },
+    "Silver Liquid": {
+        "Description:": "\u201cAn ever-frothing, sulfurous liquid corrosive enough to melt metal into a plume of oily smoke. Exposure to air causes its distinctive coloration to fade.\u201d",
+        "Sell Value:": "1,379 gil",
+        "Used in Bazaar Recipe:": "Armor-piercing Shot  Blindflight Quarrels  Mudslinger ",
+        "Where to find it:": " Drops From:                             Foobar                             Hecteyes  Stolen From:                             Cubus  Poached From:                             Hecteyes                             Oiling "
+    },
+    "Sky Jewel": {
+        "Description:": "\u201cA translucent bead, thought to be the product of heavenly power. When a soul reaches heaven, it is said that the body left behind is transformed into one of these jewels.\u201d",
+        "Sell Value:": "980 gil",
+        "Used in Bazaar Recipe:": "Attenuated Greatsword  Magick Shard ",
+        "Where to find it:": " Drops From:                             Bogey                             Cultsworn Lich                             Ghost                             Necrofiend                             Necrophobe                             Specter  Stolen From:                             Ahriman                             Necrofiend                             Necrophobe                             Specter  Poached From:                             Bogey                             Ghost                             Necrophobe                             Specter "
+    },
+    "Slaven Harness": {
+        "Description:": "\u201cA leather harness used on slaven. Blood and tufts of fur stuck to the harness attest to the heavy loads the slaven must bear.\u201d",
+        "Sell Value:": "815 gil",
+        "Used in Bazaar Recipe:": "Ninja Footgear ",
+        "Where to find it:": " Grimoire/Monograph:                             Slaven Warder  Stolen From:                             Enkelados                             Gemhorn  Poached From:                             Slaven Warder "
+    },
+    "Slime Oil": {
+        "Description:": "\u201cA translucent, odorless oil. Becomes viscous and soupy when mixed with water. Valued as an ingredient in several medicines.\u201d",
+        "Sell Value:": "1,717 gil",
+        "Used in Bazaar Recipe:": "Flask of Viscous Liquid ",
+        "Where to find it:": " Stolen From:                             Orthros "
+    },
+    "Small Feather": {
+        "Description:": "\u201cA feather small enough to fit in one\u2019s palm. The perfect accent to a hat, accessory or other garment.\u201d",
+        "Sell Value:": "49 gil",
+        "Used in Bazaar Recipe:": "Tail of the Phoenix ",
+        "Where to find it:": " Drops From:                             Axebeak                             Cockatrice                             Lesser Chimera                             Nekhbet  Stolen From:                             Chickatrice                             Cockatrice                             Cluckatrice                             Nekhbet  Poached From:                             Axebeak                             Cockatrice                             Lesser Chimera "
+    },
+    "Small Package": {
+        "Description:": "\u201cPackage received from a bangaa merchant who wants it delivered to an associate at Eastgate.\u201d",
+        "Sell Value:": "150 gil",
+        "Used in Bazaar Recipe:": "                           -                         ",
+        "Where to find it:": "                            Given to Vaan during the first visit to Rabanastre from the Desert Merchant.                          "
+    },
+    "Snake Skin": {
+        "Description:": "\u201cA pliable skin that wears well. Garments made of snake skin last longer than those fashioned from inferior materials, though some dislike its eerie luster.\u201d",
+        "Sell Value:": "53 gil",
+        "Used in Bazaar Recipe:": "Jewel of the Serpent ",
+        "Where to find it:": " Drops From:                             Grey Molter                             Midgardsormr                               Stolen From:                             Wildsnake  Poached From:                             Wildsnake "
+    },
+    "Snowfly": {
+        "Description:": "\u201cA small, buzzing fly. Those who listen to the sound of their wings overlong are said to suffer bouts of disorientation and confusion.\u201d",
+        "Sell Value:": "982 gil",
+        "Used in Bazaar Recipe:": "Blush of Light ",
+        "Where to find it:": " Grimoire/Monograph:                             Nightmare  Poached From:                             Nightmare                             Pallicant "
+    },
+    "Solid Horn": {
+        "Description:": "\u201cA solid core makes this highly prized for crafting. The larger the horn, the greater the price it fetches, though the heaviest can be hard to carry home.\u201d",
+        "Sell Value:": "1,288 gil",
+        "Used in Bazaar Recipe:": "The Leering Blade ",
+        "Where to find it:": " Drops From:                             Abaddaon                             Bull Abaddon                             Tarasque  Stolen From:                             Abaddon                             Bull Abaddon                             Wood Toad  Poached From:                             Abaddon                             Bull Abaddon                             Suriander "
+    },
+    "Solid Stone": {
+        "Description:": "\u201cA rough-hewn block of ore-veined stone. A ready supply of these stones has led to recent advancements in masonry\u2026 and some sturdy buildings.\u201d",
+        "Sell Value:": "358 gil",
+        "Used in Bazaar Recipe:": "Crimson Blade ",
+        "Where to find it:": " Drops From:                             Barmuu                             Clay Golem                             Facer                             Ragoh                             Tower                             Vishno  Stolen From:                             Demon Wall  Poached From:                             Clay Golem                             Facer                             Ragoh "
+    },
+    "Soul of Thamasa": {
+        "Description:": "\u201cA coalescence of goodwill found buried deep inside a corrupt and evil heart. It glistens like an uncut gemstone.\u201d",
+        "Sell Value:": "1,856 gil",
+        "Used in Bazaar Recipe:": "Life Crystal ",
+        "Where to find it:": " Grimoire/Monograph:                             Oversoul  Stolen From:                             Ishteen  Reward From:                             Hunt 25: Dead City Watch (Deathscythe)  "
+    },
+    "Soul Powder": {
+        "Description:": "\u201cThe physical manifestation of a soul\u2019s lingering scent. Some bathe in this powder, believing the traces of soul within will draw off their ill fortunes.\u201d",
+        "Sell Value:": "2,241 gil",
+        "Used in Bazaar Recipe:": "Jewel of Creation ",
+        "Where to find it:": " Grimoire/Monograph:                             Et\u00e9m  Stolen From:                             Et\u00e9m                             Vorres  Reward From:                             Hunt 12: The Dead Ought Sleep Forever (Ixtab)  "
+    },
+    "Spiral Incisor": {
+        "Description:": "\u201cA large, spiral fang, possessing considering penetrating force - enough to pierce rock and even the hardest ore.\u201d",
+        "Sell Value:": "998 gil",
+        "Used in Bazaar Recipe:": "Blindflight Quarrels  Permafrost Bow & Quiver ",
+        "Where to find it:": " Drops From:                             Abysteel                             Bellwyvern                             Phyllo                             Vampyr  Stolen From:                             Abysteel                             Bellwyvern                             Bloodwing                             Vampyr                             Vyraal  Poached From:                             Bellwyvern "
+    },
+    "Split Armor": {
+        "Description:": "\u201cThis armor was sundered and broken in combat. Whoever wore it was surely brave, and is now just as surely dead.\u201d",
+        "Sell Value:": "1,968 gil",
+        "Used in Bazaar Recipe:": "Sturdy Battle Gear ",
+        "Where to find it:": " Grimoire/Monograph:                             Charybterix  Stolen From:                             Phoenix  Poached From:                             Charybterix "
+    },
+    "Stardust": {
+        "Description:": "\u201cA fine dust that glitters like stars in the night sky. Some natural philosophers believe the dust to have actually blown down to us from the stairs themselves.\u201d",
+        "Sell Value:": "1,505 gil",
+        "Used in Bazaar Recipe:": "Wing Cord ",
+        "Where to find it:": " Grimoire/Monograph:                             Wyrdhare  Stolen From:                             Spee  Poached From:                             Wyrdhare "
+    },
+    "Storm Crystal": {
+        "Description:": "\u201cA crystallization of potent lightning magicks, said to contain the divine power of destruction. The source of a mardu entite\u2019s energy.\u201d",
+        "Sell Value:": "160 gil",
+        "Used in Bazaar Recipe:": "Mystic Staff ",
+        "Where to find it:": " Drops From:                             Archaeoaevis                             Baknamy                             Bandercoeurl                             Behemoth                             Coeurl                             Deathclaw                             Focalor                             Gizamalik                             Hecteyes                             Leynir                             Mardu Entite                             Pandora                             Pumpkin Star                             Shadonir                             Storm Elemental  Stolen From:                             Bandercoeurl                             Behemoth                             Braegh                             Daedalus                             Imp                             Ixion                             Mardu Entite                             Shadonir                             Storm Elemental "
+    },
+    "Storm Magicite": {
+        "Description:": "\u201cA stone infused with lightning magicks. When shaken, these stones release an electrical charge sufficient to power a small airship.\u201d",
+        "Sell Value:": "80 gil",
+        "Used in Bazaar Recipe:": "Platinum Gear ",
+        "Where to find it:": " Drops From:                             Archaeosaur                             Baknamy                             Coerul                             Dragon Aevis                             Focalor                             Gargoyle                             Ghoul                             Humbaba                             Imp                             Mesmenir                             Panther                             Pumpkin Head                             Pyrolisk                             Storm Elemental                             Suriander                             Thunderbug  Stolen From:                             Archaeosaur                             Braegh                             Coeurl                             Gargoyle                             Ghoul                             Humbaba                             Mesmenir                             Mimic Queen                             Panther                             Pumpkin Head                             Storm Elemental                             Suriander                             Thunderbug "
+    },
+    "Storm Stone": {
+        "Description:": "\u201cA stone infused with the power of lightning. It looks like an ordinary stone, but tingles to the touch.\u201d",
+        "Sell Value:": "35 gil",
+        "Used in Bazaar Recipe:": "                           -                         ",
+        "Where to find it:": " Drops From:                             Battery Mimic                             Sleipnir                             Storm Elemental                             Suriander  Stolen From:                             Battery Mimic                             Coeurl                             Pandora                             Sleipnir                             Suriander  Poached From:                             Sleipnir "
+    },
+    "Sturdy Bone": {
+        "Description:": "\u201cA solid, well-preserved bone. Its natural strength makes it perfect for numerous applications, though a purification ceremony is often required.\u201d",
+        "Sell Value:": "428 gil",
+        "Used in Bazaar Recipe:": "Iron-forged Pole ",
+        "Where to find it:": " Drops From:                             Crusader                             Dark Skeleton                             Skull Knight  Stolen From:                             Crusader                             Dark Skeleton                             Dead Bones                             Skull Knight  Poached From:                             Dark Skeleton                             Skull Knight "
+    },
+    "Succulent Fruit": {
+        "Description:": "\u201cThese fruits are rather bitter when raw, but, when properly cooked, they become a delectable, mouth-wateringly sweet treat.\u201d",
+        "Sell Value:": "363 gil",
+        "Used in Bazaar Recipe:": "Tinctures & Tonics  Wooden Pole ",
+        "Where to find it:": " Drops From:                             Alraune                             Deadly Nightshade                             Mandragora                             Pumpkin Head                             Wild Onion  Stolen From:                             Alraune                             Deadly Nightshade                             Elder Wyrm                             Mandragora                             Wild Onion  Poached From:                             Alraune                             Deadly Nightshade                             Mandragora                             Pumpkin Head                             Wild Onion "
+    },
+    "Sylphi Halcyon": {
+        "Description:": "\u201cA wind of terrible destructive power adorns this azure jewel engraved with an exquisite depiction of a sylphi entite.\u201d",
+        "Sell Value:": "1,500 gil",
+        "Used in Bazaar Recipe:": "Bow of the Moon Goddess ",
+        "Where to find it:": " Drops From:                             Sylphi Entite  Stolen From:                             Sylphi Entite "
+    },
+    "Tanned Giantskin": {
+        "Description:": "\u201cThe tanned skin of a member of the race of giants. While of low quality, the feel of a giantskin garment cannot be matched. Neither, however can the stench.\u201d",
+        "Sell Value:": "672 gil",
+        "Used in Bazaar Recipe:": "Emboldening Arms  Platinum Gear ",
+        "Where to find it:": " Drops From:                             Humbaba                             Slaven Warder                             Slaven Wilder                             Yeti  Stolen From:                             Atomos                             Slaven Wilder                             Yeti  Poached From:                             Humbaba                             Slaven Warder                             Slaven Wilder                             Werewolf                             Yeti                             Zaghnal "
+    },
+    "Tanned Hide": {
+        "Description:": "\u201cA basic material in the fashioning of leather goods. The tanning process makes these hides softer and far more useful than raw hides.\u201d",
+        "Sell Value:": "77 gil",
+        "Used in Bazaar Recipe:": "Assorted Leathers  Golden Garb  Traveler\u2019s Garb ",
+        "Where to find it:": " Drops From:                             Gemhorn                             Hellhound                             Python                             Slaven                             Viper                             White Wolf                             Wild Saurian  Stolen From:                             Hellhound                             Nidhogg                             Slaven                             Wild Saurian  Poached From:                             Hellhound                             Python                             Slaven                             Viper                             White Wolf                             Wild Saurian                             Wildsnake "
+    },
+    "Tanned Tyrant Hide": {
+        "Description:": "\u201cThe tanned hide of a tyrant lizard. Highly elastic, but easily damaged by moisture.\u201d",
+        "Sell Value:": "802 gil",
+        "Used in Bazaar Recipe:": "Ninja Garb ",
+        "Where to find it:": " Drops From:                             Archaeosaur  Stolen From:                             Archaeosaur  Poached From:                             Archaeosaur                             Tyranorox "
+    },
+    "Tattered Garment": {
+        "Description:": "\u201cThis tattered and torn garment bears a chilling number of bloody puncture marks. Prayers for its former owner\u2019s well-being would doubtless be wasted.\u201d",
+        "Sell Value:": "1,470 gil",
+        "Used in Bazaar Recipe:": "Gilt Phylactery ",
+        "Where to find it:": " Grimoire/Monograph:                             Scythe Mantis  Stolen From:                             Biding Mantis  Poached From:                             Scythe Mantis "
+    },
+    "Taurus Gem": {
+        "Description:": "\u201cA yellow gemstone bearing the name \u201cTaurus\u201d. Portends conspiracy and dark rumor.\u201d",
+        "Sell Value:": "150 gil",
+        "Used in Bazaar Recipe:": "Darksteel Blade ",
+        "Where to find it:": " Drops From:                             Brown Chocobo                             Charybterix                             Chimera Brain                             Gorgimera                             Pyrolisk                             Red Chocobo  Stolen From:                             Brown Chocobo                             Chaos                             Charybterix                             Chimera Brain                             Dive Talon                             Garuda-Egi                             Gorgimera                             Green Chocobo                             Lesser Chimera                             Phyllo                             Red Chocobo                             Redmaw                             Seeker                             Sprinter                             Vampyr                             White Chocobo  Poached From:                             Aerieel                             Gorgimera                             Lizard "
+    },
+    "Teleport Stone": {
+        "Description:": "\u201cA stone allowing instantaneous transport between two gate crystals.\u201d                              Teleport Stones are used to travel between the Orange colored Save Crystals located throughout Ivalice. The easiest place to purchased them is from the Clan Provisioner in the Rabanastre \u2013 Muthru Bazaar after you have reached the rank of Vanguard. Check out the Clan Centurio side quest page for more information.                              You can also purchase them from the shops aboard the various Skyferries that travel between the towns for 200 gil.                         ",
+        "Sell Value:": "100 gil",
+        "Used in Bazaar Recipe:": "                           -                         ",
+        "Where to find it:": " Drops From:                             Bagoly                             Baknamy                             Dark Skeleton                             Emperor Aevis                             Gorgimera                             Oiling                             Silver Lobo                             Speartongue                             Urutan-Yensa                             Vivian                             Wildsnake                             Yeti  Stolen From:                             Abysteel                             Archaeoaevis                             Humbaba                             Steeling                             Werewolf  Reward From:                             Montblanc in the Clan Hall as a reward for various mini-quests and achievements. "
+    },
+    "Throat Wolf Blood": {
+        "Description:": "\u201cThe fresh blood of a wolf that died from starvation, called a throat wolf after the horrible gurgling noise it is said to make when it expires. A rare find.\u201d",
+        "Sell Value:": "1,360 gil",
+        "Used in Bazaar Recipe:": "Back Harness ",
+        "Where to find it:": " Grimoire/Monograph:                             Alpha Worgen                             Worgen  Stolen From:                             Enkidu                             Kaiser Wolf  Poached From:                             Alpha Worgen                             Worgen "
+    },
+    "Tomato Stalk": {
+        "Description:": "\u201cTomato stalks, when chewed, are said to produce drowsiness and listlessness. Adventurers and knife throwers be warned!\u201d",
+        "Sell Value:": "447 gil",
+        "Used in Bazaar Recipe:": "Blush of Light ",
+        "Where to find it:": " Grimoire/Monograph:                             Topstalk  Stolen From:                             Topstalk  Poached From:                             Topstalk "
+    },
+    "Turtle Shell": {
+        "Description:": "\u201cA tough shell. These are often used to craft crockery, armor, and other items of daily convenience.\u201d",
+        "Sell Value:": "447 gil",
+        "Used in Bazaar Recipe:": "-",
+        "Where to find it:": " Drops From:                             Adamantitan                             Great Tortoise  Stolen From:                             Rocktoise                             Urutan Eater  Poached From:                             Adamantitan                             Great Tortoise "
+    },
+    "Tyrant Bone": {
+        "Description:": "\u201cThis bone is as hard as iron. Struck against a metal object, it produces a pleasing tone.\u201d",
+        "Sell Value:": "1,233 gil",
+        "Used in Bazaar Recipe:": "Stone Shot ",
+        "Where to find it:": " Grimoire/Monograph:                             Wild Saurian  Stolen From:                             Earth Tyrant                             Pylraster  Poached From:                             Wild Saurian "
+    },
+    "Tyrant Hide": {
+        "Description:": "\u201cA tough hide, difficult to work with common tools. Sturdy armor can be made from strips of this material, though such armor is grindingly cumbersome.\u201d",
+        "Sell Value:": "549 gil",
+        "Used in Bazaar Recipe:": "Alluring Finery  Monk\u2019s Garb  Sipping Wine ",
+        "Where to find it:": " Drops From:                             Diresaur                             Tyranorox  Stolen From:                             Diresaur                             Earth Tyrant                             Pylraster  Poached From:                             Diresaur                             Tyranorox "
+    },
+    "Undin Halcyon": {
+        "Description:": "\u201cA great torrent, threatening to consume all, adorns this watery jewel engraved with an exquisite depiction of an undin entite.\u201d",
+        "Sell Value:": "1,500 gil",
+        "Used in Bazaar Recipe:": "Brilliant Shield ",
+        "Where to find it:": " Drops From:                             Undin Entite  Stolen From:                             Undin Entite "
+    },
+    "Unpurified Ether": {
+        "Description:": "\u201cThis liquid is lighter than air itself. Look at it from different angles and it changes hue from a scintillating crimson to a glowing azure.\u201d",
+        "Sell Value:": "1,783 gil",
+        "Used in Bazaar Recipe:": "Flask of Oily Liquid  Flask of Viscous Liquid ",
+        "Where to find it:": " Grimoire/Monograph:                             Hecteyes  Poached From:                             Etherian                             Hecteyes  Reward From:                             Hunt 35: Crime and Punishment (Orthros)  "
+    },
+    "Valeblossom Dew": {
+        "Description:": "\u201cDew harvested from a rare flower found only in the vales and defiles of the Dalmasca Estersand. Has the property of drawing out venom from poisoned wounds.\u201d",
+        "Sell Value:": "100 gil",
+        "Used in Bazaar Recipe:": "-",
+        "Where to find it:": "                            Picked up in the Dalmasca Estersand during the Desert Patient side quest.                          "
+    },
+    "Vampyr Fang": {
+        "Description:": "\u201cThis fang is riddled with holes so small they cannot be seen by the naked eye, connecting to vein-like tubes running up the fang that pulse red when drawing blood.\u201d",
+        "Sell Value:": "1,684 gil",
+        "Used in Bazaar Recipe:": "Arrows of the Moon Goddess ",
+        "Where to find it:": " Grimoire/Monograph:                             Abysteel  Stolen From:                             Anubys  Reward From:                             Hunt 16: The Deserter\u2019s Revenge (Bloodwing) "
+    },
+    "Virgo Gem": {
+        "Description:": "\u201cA yellow gemstone bearing the name \u201cVirgo\u201d. Said to portend reincarnation.\u201d",
+        "Sell Value:": "150 gil",
+        "Used in Bazaar Recipe:": "Comfy Headgear ",
+        "Where to find it:": " Drops From:                             Alraune King                             Cactite                             Cactoid                             Cassie                             Deadly Nightshade                             Malboro King                             Malboro Overking                             Mandragora Prince                             Onion Queen                             Pumpkin Star                             Topstalk                             Vivian  Stolen From:                             Alraune King                             Cassie                             Great Malboro                             Malboro King                             Malboro Overking                             Mandragora                             Pumpkin Star                             Topstalk                             Vivian                             Wild Malboro  Poached From:                             Mandragora "
+    },
+    "Wargod's Band": {
+        "Description:": "\u201cA strikingly simple but skillfully crafted accessory. Several of these bands may be linked together to form a chain.\u201d",
+        "Sell Value:": "2,214 gil",
+        "Used in Bazaar Recipe:": "Jewel of Creation ",
+        "Where to find it:": " Grimoire/Monograph:                             Leynir  Stolen From:                             Victanir  Poached From:                             Leynir "
+    },
+    "Water Crystal": {
+        "Description:": "\u201cA crystallization of potent water magicks, said to contain the divine power of regeneration. The source of an undin entite\u2019s energy.\u201d",
+        "Sell Value:": "160 gil",
+        "Used in Bazaar Recipe:": "Samurai\u2019s Katana  Water-drop Munitions ",
+        "Where to find it:": " Drops From:                             Mandragora Prince                             Mistmare                             Silicon Tortoise                             Undin Entite                             Water Elemental  Stolen From:                             Mandragora Prince                             Mistmare                             Razorfin                             Undin Entite                             Water Elemental "
+    },
+    "Water Magicite": {
+        "Description:": "\u201cA stone infused with water magicks. It is said one of these thrown into a brackish or foul pond will make it sweet as spring water.\u201d",
+        "Sell Value:": "80 gil",
+        "Used in Bazaar Recipe:": "Hollow-shaft Arrows ",
+        "Where to find it:": " Drops From:                             Adamantitan                             Great Tortoise                             Ichthon                             Jelly                             Mandragora                             Ozmone Hare                             Piranha                             Water Chaosjet                             Water Elemental                             Wyrdhare  Poached From:                             Jelly                             Mandragora                             Ozmone Hare                             Ring Wyrm                             Water Chaosjet                             Water Elemental                             Wyrdhare "
+    },
+    "Water Stone": {
+        "Description:": "\u201cA stone infused with the power of water. It looks like an ordinary stone, but gushes water when sundered.\u201d",
+        "Sell Value:": "35 gil",
+        "Used in Bazaar Recipe:": "Rain of Tears  Traveler\u2019s Garb ",
+        "Where to find it:": " Drops From:                             Adamantitan                             Bull Danbania                             Danbania                             Flan                             Gigantoad                             Giza Rabbit                             Great Tortoise                             Ichthon                             Speartongue                             Water Chaosjet                             Water Elemental  Stolen From:                             Adamanatitan                             Bull Danbania                             Danbania                             Flan                             Giza Rabbit                             Great Tortoise                             Speartongue "
+    },
+    "White Incense": {
+        "Description:": "\u201cShining powder gleaned from brilliantly glowing wings. Gives off a sublime, uplifting scent when burned, which is said to keep evil at bay.\u201d",
+        "Sell Value:": "881 gil",
+        "Used in Bazaar Recipe:": "Comfy Headgear ",
+        "Where to find it:": " Grimoire/Monograph:                             Garuda-Egi  Poached From:                             Garuda-Egi                             Imdugud "
+    },
+    "Wind Crystal": {
+        "Description:": "\u201cA crystallization of potent wind magicks, said to contain the divine power of protection. The source of an sylphi entite\u2019s energy.\u201d",
+        "Sell Value:": "160 gil",
+        "Used in Bazaar Recipe:": "Armor-piercing Shot  Double-bladed Knife  Elegant Pole ",
+        "Where to find it:": " Drops From:                             Air Chaosjet                             Air Elemental                             Ash Wyrm                             Baritine Croc                             Charybterix                             High Reaver                             Mirrorknight                             Onion Queen                             Reaver                             Sylphi Entite  Stolen From:                             Air Chaosjet                             Air Elemental                             Ash Wyrm                             Greeden                             Mirrorknight                             Onion Queen                             Sylphi Entite "
+    },
+    "Wind Magicite": {
+        "Description:": "\u201cA stone infused with wind magicks. Travelers carry these as charms to ensure safe passage with wind at their backs.\u201d",
+        "Sell Value:": "80 gil",
+        "Used in Bazaar Recipe:": "Forked Spear  War Axe ",
+        "Where to find it:": " Drops From:                             Air Chaosjet                             Air Elemental                             Baritine Croc                             Dive Talon                             Feral Croc                             Green Chocobo                             Pit Fiend                             Python                             Redmaw                             Serpent                             Silver Lobo                             Vulture                             Wild Onion                             Zu  Stolen From:                             Air Chaosjet                             Air Elemental                             Baritine Croc                             Green Chocobo                             Python                             Serpent                             Vulture                             Wild Onion                             Zu  Poached From:                             Bagoly "
+    },
+    "Wind Stone": {
+        "Description:": "\u201cA stone infused with the power of wind. It looks like an ordinary stone, but put it to your ear and you may hear the wind blowing.\u201d",
+        "Sell Value:": "35 gil",
+        "Used in Bazaar Recipe:": "Light Spear ",
+        "Where to find it:": " Drops From:                             Air Chaosjet                             Air Elemental                             Alpha Wolf                             Bagoly                             Seeker                             Slime                             Steeling                             Wildsnake                             Wolf                             Wooly Gator  Stolen From:                             Alpha Wolf                             Cluckatrice                             Seeker                             Slime                             Steeling                             Wildsnake                             Wolf "
+    },
+    "Windslicer Pinion": {
+        "Description:": "\u201cThis feather, resembling a finely honed blade, makes a slicing sound when swung through the air. Grown seeq have made known to weep at its suppleness.\u201d",
+        "Sell Value:": "1,148 gil",
+        "Used in Bazaar Recipe:": "Double-bladed Knife  Phoenix Flight ",
+        "Where to find it:": " Drops From:                             Charybterix                             Chimera Brain                             Imdugud                             Mirrorknight  Stolen From:                             Charybterix                             Phoenix  Poached From:                             Charybterix                             Chimera Brain                             Mirrorknight "
+    },
+    "Wolf Pelt": {
+        "Description:": "\u201cThis pelt is notable for its short, delicate hair that sheds heat and wears well in the sun. A popular clothing material in warmer climes.\u201d",
+        "Sell Value:": "41 gil",
+        "Used in Bazaar Recipe:": "Assorted Leathers  Unassuming Surcoat ",
+        "Where to find it:": " Drops From:                             Alpha Hyena                             Alpha Wolf                             Hyena                             Lindbur Wolf                             Wary Wolf                             Wolf  Stolen From:                             Alpha Hyena                             Alpha Wolf                             Enkidu                             Hyena                             Thextera                             Wolf  Poached From:                             Alpha Hyena                             Alpha Wolf                             Wolf "
+    },
+    "Wrath of the Gods": {
+        "Description:": "\u201cA strange object containing a sphere wrapped in thin metallic wire. Capable holding an electrical charge indefinitely.\u201d",
+        "Sell Value:": "2,214 gil",
+        "Used in Bazaar Recipe:": "Piercing Bolts ",
+        "Where to find it:": " Grimoire/Monograph:                             Pandora  Stolen From:                             Minibug  Poached From:                             Pandora "
+    },
+    "Wyrm Bone": {
+        "Description:": "\u201cBone from a slain wyrm. The powerful magicks encircling the bone are visible to the naked eye. Used in alchemy.\u201d",
+        "Sell Value:": "1,647 gil",
+        "Used in Bazaar Recipe:": "The Scorpion ",
+        "Where to find it:": " Grimoire/Monograph:                             Skulwyrm  Stolen From:                             Hydro                             Skulwyrm "
+    },
+    "Wyrm Carapace": {
+        "Description:": "\u201cA thick dragon-hide, like a sheath of iron. Countless are the blades that failed to pass its test and now lie sundered beneath the bleached bones of their owners.\u201d",
+        "Sell Value:": "739 gil",
+        "Used in Bazaar Recipe:": "Burnished Protectives ",
+        "Where to find it:": " Drops From:                             Dragon Aevis                             Emperor Aevis                             Shield Wyrm                             Twintania  Stolen From:                             Emperor Aevis                             Shield Wyrm  Poached From:                             Dragon Aevis                             Emperor Aevis                             Shield Wyrm                             Twintania "
+    },
+    "Wyvern Fang": {
+        "Description:": "\u201cA cruel fang, worthy of the mighty maw within which it once stood. These evolved not only to deliver crushing bites but also to withstand the wyvern\u2019s deadly breath.\u201d",
+        "Sell Value:": "1,274 gil",
+        "Used in Bazaar Recipe:": "Scout\u2019s Crossbow ",
+        "Where to find it:": " Drops From:                             Aeronite                             Aeros  Stolen From:                             Aeronite                             Aeros  Poached From:                             Aeronite "
+    },
+    "Wyvern Wing": {
+        "Description:": "\u201cA giant wing from a great wyrm. Shaped like a bow to catch the wind and support the wyrm\u2019s massive bulk -- a design copied by the first airship wrights.\u201d",
+        "Sell Value:": "1,873 gil",
+        "Used in Bazaar Recipe:": "Late-model Rifle ",
+        "Where to find it:": " Grimoire/Monograph:                             Aeronite  Stolen From:                             Aeros                             Wyvern Lord  Poached From:                             Aeronite "
+    },
+    "Yellow Liquid": {
+        "Description:": "\u201cAn ever-frothing, sulfurous liquid corrosive enough to melt metal into a plume of oily smoke. Exposure to air causes its distinctive coloration to fade.\u201d",
+        "Sell Value:": "531 gil",
+        "Used in Bazaar Recipe:": "Hollow-shaft Arrows  Ranger\u2019s Crossbow ",
+        "Where to find it:": " Drops From:                             Hecteyes                             Jelly                             Oiling  Stolen From:                             Jelly                             Oiling  Poached From:                             Jelly                             Oiling                             Slime "
+    },
+    "Yensa Fin": {
+        "Description:": "\u201cA find designed to cut through seas of sand. Extremely tough, and must be finely chopped for cooking. Used as a \u201csecret ingredient\u201d in any number of dishes.\u201d",
+        "Sell Value:": "409 gil",
+        "Used in Bazaar Recipe:": "Late-model Rifle ",
+        "Where to find it:": " Grimoire/Monograph:                             Bull Yensa                             Yensa  Stolen From:                             Slyt                             Urutan-Yensa  Poached From:                             Bull Yensa                             Yensa "
+    },
+    "Yensa Scale": {
+        "Description:": "\u201cTiny pores in these scales allow them to breathe, preventing excessive moisture loss while still offering excellent protection against desert heat.\u201d",
+        "Sell Value:": "208 gil",
+        "Used in Bazaar Recipe:": "Rain of Tears ",
+        "Where to find it:": " Drops From:                             Bull Yensa                             Yensa  Stolen From:                             Bull Yensa                             Slyt                             Wyvern Lord                             Yensa  Poached From:                             Bull Yensa                             Yensa "
+    },
+    "Zombie Powder": {
+        "Description:": "\u201cVital ingredient for making the secret elixir that causes zombification. Use on humes and their ilk is a crime due to its mentally debilitating effects.\u201d",
+        "Sell Value:": "1,975 gil",
+        "Used in Bazaar Recipe:": "Shoes of the Dead ",
+        "Where to find it:": " Grimoire/Monograph:                             Banshee  Stolen From:                             Banshee "
+    }
+}
