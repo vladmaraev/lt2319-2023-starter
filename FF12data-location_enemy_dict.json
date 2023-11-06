@@ -1,0 +1,735 @@
+{
+    "The Dalmasca Sands": {
+        "enemies": [
+            "Cactoid",
+            "Ichthon",
+            "Wolf",
+            "Wild Saurian",
+            "Cockatrice",
+            "Gnoma Entite",
+            "Dive Talon"
+        ],
+        "features": [
+            "desert"
+        ],
+        "connections": [
+            {
+                "Dalmasca Eastersand": [
+                    "Barheim Passage",
+                    "Mosphoran Highwaste",
+                    "Nalbina Fortress",
+                    "Rabanastre"
+                ],
+                "Dalmasca Westersand": [
+                    "Dalmasca Estersand",
+                    "Mosphoran Highwaste",
+                    "Nalbina Fortress",
+                    "Ogir-Yensa Sandsea",
+                    "Rabanastre",
+                    "Zertinan Caverns"
+                ]
+            }
+        ]
+    },
+    "Giza Plains": {
+        "enemies": [
+            "Hyena",
+            "Wooly Gator",
+            "Happy Bunny",
+            "Great Tortoise",
+            "Sleipnir",
+            "Silicon Tortoise",
+            "Wildsnake",
+            "Werewolf",
+            "Urstrix",
+            "Storm Elemental",
+            "Slaven",
+            "Mardu Entite"
+        ],
+        "features": [
+            "flat land",
+            "open area/plains",
+            "sun crystals",
+            "rainy season",
+            "dry season"
+        ],
+        "connections": [
+            "Dalmasca Estersand",
+            "Dalmasca Westersand",
+            "Ozmone Plain",
+            "Rabanastre"
+        ]
+    },
+    "Garamsythe Waterway": {
+        "enemies": [
+            "Dire Rat",
+            "Baritine Croc",
+            "Gigantoad",
+            "Malboro Overking",
+            "Garchimacera",
+            "Gespenst",
+            "Ghost",
+            "Water Elemental"
+        ],
+        "features": [
+            "underground"
+        ],
+        "connections": [
+            "Barheim Passage",
+            "Lowtown",
+            "Rabanastre"
+        ]
+    },
+    "Barheim Passage": {
+        "enemies": [
+            "Steeling",
+            "Suriander",
+            "Mimic",
+            "Zombie",
+            "Tiny Mimic",
+            "Skeleton",
+            "Battery Mimic",
+            "Specter",
+            "Tiny Battery",
+            "Mimeo",
+            "Flan",
+            "Skull Defender",
+            "Bomb",
+            "Dead Bones"
+        ],
+        "features": [
+            "underground",
+            "cart tracks",
+            "mine cart",
+            "electricity"
+        ],
+        "connections": [
+            "Dalmasca Estersand",
+            "Garamsythe Waterway"
+        ]
+    },
+    "Lhusu Mines": {
+        "enemies": [
+            "Vampyr",
+            "Headless",
+            "Killer Mantis",
+            "Dullahan",
+            "Bug",
+            "Dark Lord",
+            "Pandora",
+            "Gazer"
+        ],
+        "features": [
+            "cart tracks",
+            "floating mines"
+        ],
+        "connections": [
+            "Bhujerba"
+        ]
+    },
+    "Yensan Sandsea": {
+        "enemies": [
+            "Alraune",
+            "Danbania",
+            "Axebeak",
+            "Yensa",
+            "Wyvern",
+            "Salamand Entite"
+        ],
+        "features": [
+            "desert",
+            "oil rig",
+            "platform"
+        ],
+        "connections": [
+            "Tomb of Raithwall",
+            "Zertinan Caverns",
+            "Dalmasca Westersand"
+        ]
+    },
+    "Tomb of Raithwall": {
+        "enemies": [
+            "Seeker",
+            "Lost Soul",
+            "Lesser Chimera",
+            "Zombie Mage",
+            "Skull Warrior",
+            "Lich",
+            "Ragoh",
+            "Tallow"
+        ],
+        "features": [
+            "demon wall",
+            "building"
+        ],
+        "connections": [
+            "Yensan Sandsea"
+        ]
+    },
+    "Ozmone Plains": {
+        "enemies": [
+            "Mesmenir",
+            "Chocobo",
+            "Wu",
+            "Zu",
+            "Viper",
+            "Zaghnal",
+            "Hybrid Gator",
+            "Sylphi Entite"
+        ],
+        "features": [
+            "flat green land",
+            "open green plains"
+        ],
+        "connections": [
+            "Giza Plains",
+            "Zertinan Caverns",
+            "Jahara",
+            "Golmore Jungle",
+            "Henne Mines"
+        ]
+    },
+    "Golmore Jungle": {
+        "enemies": [
+            "Panther",
+            "Treant",
+            "Hellhound",
+            "Diresaur",
+            "Malboro",
+            "Gargoyle",
+            "Great Malboro"
+        ],
+        "features": [
+            "jungle",
+            "trees"
+        ],
+        "connections": [
+            "Eruyt Village",
+            "Feywood",
+            "Ozmone Plain",
+            "Paramina Rift"
+        ]
+    },
+    "Henne Mines": {
+        "enemies": [
+            "Thunderbug",
+            "Jelly",
+            "Tyranorox",
+            "Hecteyes",
+            "Gizamaluk",
+            "Et\u00e9m",
+            "Nightmare",
+            "Necrofiend"
+        ],
+        "features": [
+            "cart tracks",
+            "advanced mines"
+        ],
+        "connections": [
+            "Feywood",
+            "Ozmone Plain"
+        ]
+    },
+    "Paramina Rift": {
+        "enemies": [
+            "White Wolf",
+            "Twintania",
+            "Lizard",
+            "Emperor Aevis",
+            "Garuda-Egi",
+            "Dark Skeleton",
+            "Slaven Warder",
+            "Skull Knight",
+            "Yeti",
+            "Ice Elemental",
+            "Wild Onion",
+            "Leshach Entite"
+        ],
+        "features": [
+            "snow",
+            "snowy mountain",
+            "snow storm"
+        ],
+        "connections": [
+            "Feywood",
+            "Golmore Jungle",
+            "Mt Bur-Omisace",
+            "Stilshrine of Miriam"
+        ]
+    },
+    "Stilshrine of Miriam": {
+        "enemies": [
+            "Redmaw",
+            "Zombie Warrior",
+            "Blood Gigas",
+            "Nightwalker",
+            "Dragon Aevis",
+            "Ghoul",
+            "Darkmare",
+            "Facer",
+            "Balloon",
+            "Miriam Guardian",
+            "Oiling",
+            "Miriam Facer",
+            "Ghast",
+            "Crystalbug"
+        ],
+        "features": [
+            "bulding",
+            "teleport areas",
+            "stone guardians"
+        ],
+        "connections": [
+            "Paramina Rift"
+        ]
+    },
+    "Mosphoran Highwaste": {
+        "enemies": [
+            "Worgen",
+            "Humbaba",
+            "Python",
+            "Ash Wyrm",
+            "Vulture",
+            "Clay Golem",
+            "Slaven Wilder",
+            "Fire Elemental"
+        ],
+        "features": [
+            "mountains",
+            "occasional rain",
+            "floating",
+            "shrine"
+        ],
+        "connections": [
+            "Dalmasca Estersand",
+            "Nalbina Fortress",
+            "Rabanastre"
+        ]
+    },
+    "Salikawood": {
+        "enemies": [
+            "Wyrdhare",
+            "Pumpkin Head",
+            "Sprinter",
+            "Malboro King",
+            "Antares"
+        ],
+        "features": [
+            "forest",
+            "green trees",
+            "flowers"
+        ],
+        "connections": [
+            "Mosphoran Highwaste",
+            "Nabreus Deadlands",
+            "Necrohol of Nabudis",
+            "Phon Coast"
+        ]
+    },
+    "Phon Coast": {
+        "enemies": [
+            "Silver Lobo",
+            "Mandragora",
+            "Iguion",
+            "Archaeosaur",
+            "Pyrolisk",
+            "Piranha",
+            "Bagoly",
+            "Air Elemental"
+        ],
+        "features": [
+            "beach"
+        ],
+        "connections": [
+            "Salikawood",
+            "Tchita Uplands"
+        ]
+    },
+    "Tchita Uplands": {
+        "enemies": [
+            "Coeurl",
+            "Feral Croc",
+            "Serpent",
+            "Earth Elemental"
+        ],
+        "features": [
+            "green plains",
+            "clifs",
+            "ruins",
+            "palm trees"
+        ],
+        "connections": [
+            "Cerobi Steppe",
+            "Phon Coast",
+            "Sochen Cave Palace"
+        ]
+    },
+    "Sochen Cave Palace": {
+        "enemies": [
+            "Abysteel",
+            "Imp",
+            "Striker",
+            "Pit Fiend",
+            "Wendigo",
+            "Zombie Knight",
+            "Gorgimera",
+            "Focalor"
+        ],
+        "features": [
+            "ruined palace",
+            "underground palace"
+        ],
+        "connections": [
+            "Mosphoran Highwaste",
+            "Tchita Uplands",
+            "Archades"
+        ]
+    },
+    "The Feywood": {
+        "enemies": [
+            "Cerberus",
+            "Deadly Nightshade",
+            "Mu",
+            "Mandragora Prince",
+            "Basilisk",
+            "Alraune King",
+            "Behemoth",
+            "Onion Queen",
+            "Preying Mantis",
+            "Pumpkin Star",
+            "Golem",
+            "Topstalk",
+            "Mirrorknight",
+            "Holy Elemental",
+            "Tartarus"
+        ],
+        "features": [
+            "advanced foggy forest",
+            "magic forest",
+            "fog",
+            "snow"
+        ],
+        "connections": [
+            "Giruvegan",
+            "Golmore Jungle",
+            "Henne Mines",
+            "Paramina Rift"
+        ]
+    },
+    "Giruvegan": {
+        "enemies": [
+            "Ose",
+            "Shadonir",
+            "Giruveganus",
+            "Skulwyrm",
+            "Vivian",
+            "Forbidden",
+            "Gargoyle Baron",
+            "Reaper",
+            "Mom Bomb",
+            "Mythril Golem",
+            "Necrophobe",
+            "Diakon Entite"
+        ],
+        "features": [
+            "mysterious city",
+            "abandoned city",
+            "transparent platforms"
+        ],
+        "connections": [
+            "The Feywood"
+        ]
+    },
+    "Ridorana Cataract": {
+        "enemies": [
+            "Deathclaw",
+            "Cassie"
+        ],
+        "features": [
+            "high terrain island",
+            "high cliff",
+            "water"
+        ],
+        "connections": [
+            "The Pharos"
+        ]
+    },
+    "The Pharos": {
+        "enemies": [
+            "Abaddon",
+            "Chimera Brain",
+            "Bune",
+            "Magick Pot",
+            "Reaver",
+            "Crusader",
+            "Aeronite",
+            "Dragon Lich",
+            "Cataract Aevis",
+            "Brainpan",
+            "Purobolos",
+            "Deidar",
+            "Mistmare",
+            "Undin Entite"
+        ],
+        "features": [
+            "tower",
+            "many floors",
+            "tall tower",
+            "underground floors"
+        ],
+        "connections": [
+            "Ridorana Cataract"
+        ]
+    },
+    "Zertinan Caverns": {
+        "enemies": [
+            "Speartongue",
+            "Grenade",
+            "Scythe Mantis",
+            "Slime",
+            "Archaeoaevis",
+            "Bogey",
+            "Mallicant",
+            "Shambling Corpse",
+            "Buer"
+        ],
+        "features": [
+            "underground cave",
+            "cave with sand"
+        ],
+        "connections": [
+            "Dalmasca Westersand",
+            "Nam-Yensa Sandsea",
+            "Ogir-Yensa Sandsea",
+            "Ozmone Plain"
+        ]
+    },
+    "Cerobi Steppe": {
+        "enemies": [
+            "Adamantitan",
+            "Charybterix",
+            "Bandercoeurl",
+            "Shield Wyrm"
+        ],
+        "features": [
+            "green plains",
+            "occasional storms",
+            "windmills"
+        ],
+        "connections": [
+            "Balfonheim Port",
+            "Tchita Uplands"
+        ]
+    },
+    "Nabreus Deadlands": {
+        "enemies": [
+            "Emeralditan",
+            "Leynir",
+            "Banshee",
+            "Leamonde Entite",
+            "Foobar"
+        ],
+        "features": [
+            "bog",
+            "swamp",
+            "marshland",
+            "foggy"
+        ],
+        "connections": [
+            "Salikawood",
+            "Necrohol of Nabudis"
+        ]
+    },
+    "Necrohol of Nabudis": {
+        "enemies": [
+            "Oversoul",
+            "Babil",
+            "Elvoret",
+            "Dark Elemental",
+            "Zombie Warlock",
+            "Rogue Tomato",
+            "Atomos",
+            "Thextera",
+            "Roblon",
+            "Flowering Cactoid",
+            "Braegh",
+            "Wraith",
+            "Darksteel",
+            "Nidhogg",
+            "Vyraal",
+            "White Mousse",
+            "Lindwyrm",
+            "Ring Wyrm",
+            "Overlord",
+            "Wyvern Lord",
+            "Goliath",
+            "Marilith",
+            "Deathscythe",
+            "Enkelados",
+            "Deathgaze",
+            "Croakadile",
+            "Diabolos",
+            "Ixtab",
+            "Piscodaemon",
+            "Feral Retriever",
+            "Wild Malboro",
+            "Vorpal Bunny",
+            "Catoblepas",
+            "Mindflayer",
+            "Fafnir",
+            "Bloodwing",
+            "Pylraster",
+            "Chickatrice",
+            "Cluckatrice",
+            "Rocktoise",
+            "Orthros",
+            "Gil Snapper",
+            "Trickster",
+            "Antlion",
+            "Carrot",
+            "Gilgamesh",
+            "Enkidu",
+            "Behemoth King",
+            "Ixion",
+            "Pandaemonium",
+            "Slyt",
+            "Fenrir",
+            "Phoenix",
+            "Shadowseer",
+            "Yiazmat",
+            "Belias",
+            "Exodus",
+            "Chaos",
+            "C\u00fachulainn",
+            "Zalera",
+            "Shemhazai",
+            "Zeromus",
+            "Adrammelech",
+            "Hashmal",
+            "Famfrit",
+            "Ultima",
+            "Mateus",
+            "Zodiark",
+            "Firemane",
+            "Rafflesia",
+            "Mimic Queen",
+            "Daedalus",
+            "Ba'Gamnan",
+            "Tyrant",
+            "Demon Wall",
+            "Hydro",
+            "Tiamat",
+            "Earth Tyrant",
+            "Elder Wyrm",
+            "Fury",
+            "Vinuskar",
+            "Humbaba Mistant",
+            "King Bomb",
+            "Hell Wyrm",
+            "Ahriman",
+            "Omega Mark XII",
+            "Aspidochelon",
+            "Aerieel",
+            "Thalassinon",
+            "Anubys",
+            "Greeden",
+            "Barmuu",
+            "Bull Croc",
+            "Vishno",
+            "Gavial",
+            "Etherian",
+            "Wary Wolf",
+            "Melt",
+            "Kaiser Wolf",
+            "Cubus",
+            "Lindbur Wolf",
+            "Pineapple",
+            "Dreadguard",
+            "Bombshell",
+            "Crypt Bunny",
+            "Megabomb",
+            "Spee",
+            "Matriarch Bomb",
+            "Rain Dancer",
+            "Ripe Rampager",
+            "Razorfin",
+            "Killbug",
+            "Apsara",
+            "Minibug",
+            "Rageclaw",
+            "Ithuno",
+            "Biding Mantis",
+            "Kris",
+            "Wood Toad",
+            "Dheed",
+            "Tarasque",
+            "Aeros",
+            "Grimalkin",
+            "Terror Tyrant",
+            "Nekhbet",
+            "Abelisk",
+            "Glaring Eye",
+            "Dustia",
+            "Cultsworn Lich",
+            "Ishteen",
+            "Evil Spirit",
+            "Vorres",
+            "Juggernaut",
+            "Negalmuur",
+            "Molen",
+            "Larva Eater",
+            "Tower",
+            "Arioch",
+            "Grey Molter",
+            "Fideliant",
+            "Midgardsormr",
+            "Crystal Knight",
+            "Nazarnir",
+            "Grave Lord",
+            "Victanir",
+            "Zombie Lord",
+            "Gemhorn",
+            "Drowned",
+            "Luxollid",
+            "Velelu",
+            "Vagrant Soul",
+            "Disma",
+            "Imdugud",
+            "Ancbolder",
+            "Bull Chocobo",
+            "Wendice",
+            "Skullash",
+            "Anchag",
+            "Myath",
+            "Bluesang",
+            "Helvinek",
+            "Avenger",
+            "Pallicant",
+            "Alteci",
+            "Phyllo",
+            "Urutan Exile",
+            "Seeq",
+            "Urutan-Yensa",
+            "Garif",
+            "Baknamy",
+            "Bangaa",
+            "Imperial",
+            "Judge Ghis",
+            "Imperial Elite",
+            "Judge Bergan",
+            "Imperial Armament",
+            "Judge Gabranth",
+            "Doctor Cid"
+        ],
+        "features": [
+            "mist",
+            "ruined city",
+            "partly underwater",
+            "medallions"
+        ],
+        "connections": [
+            "Nabreus Deadlands",
+            "Salikawood"
+        ]
+    }
+}
