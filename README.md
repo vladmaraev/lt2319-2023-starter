@@ -1,15 +1,15 @@
-### System Summary
+# System Summary
 
-# Main Motivation:
+## Main Motivation:
 
 The motivation for developing this system comes from the need of players in JRPGs games such as Final Fantasy XII to look for information about items in the game. Items are essential for progress and players may need to constantly check for information inside the game menus or online to check how to obtain them. Online we also find information that cannot be found in the game.
 A helper dialogue system that can access this information can provide the player a better experience, since they will not have to look away from the screen.
 
-### System functionality
+# System functionality
 
 ## 1. Item information retrieval. Intent: "get bazaar or item info"
 
-# Name of the item/enemy
+### Name of the item/enemy
 Motivation: getting info of an item/enemy in a quick way is probably what we would like to do with the system.
 Just the name of the item/enemy will get information. 
 
@@ -27,7 +27,7 @@ Then, we give the info to GPT processes the info of the item and gives back an a
 If the name is not recognized easily, that might be because it was not fed to Custom Recognition.
 See all added items that were added to custom training in the file: FFXIINames.txt
 
-# Specific info about the item/enemy
+### Specific info about the item/enemy
 
 
 Here, the item/enemy is detected first and then the question itself is sent to GPT, which gives back an appropriate answer (although, again, not always).
@@ -43,7 +43,7 @@ Try any of these, also you can try reformulating the question:
 - Can you give me some information about the loot "Libra Gem"?
 
 
-# Setbacks:
+### Setbacks:
 To ask about loot, if we say something like: 
 "From what enemies can I obtain Libra Gem?" 
 the intent designed for item info retrieval may not be selected, and the one for enemy detection may be selected instead. 
@@ -73,7 +73,7 @@ This is a bit tricky sometimes, because GPT will have to look at all the enemies
 
 Taking advantage of this possibility of disambiguation also helps in avoiding further creation of files and JSON objects.
 
-# Setbacks: 
+### Setbacks: 
 The features for every enemy class were limited, and so the detection is limited. Also, there are some errors related to context and assignation of utterances to it.
 
 ## 3. Battle helper
@@ -97,10 +97,10 @@ The machine is accurate but takes a long time to develop.
 This part could constitute a whole project on its own.
 
 
-# Setbacks: 
+### Setbacks: 
 Short, limited, more options could be added so that the dialogue is much more fluent and natural.
 
-### Improvements
+# Improvements
 NOTES: 
 > I grossly underestimated the magnitude of this project. Now I see how it would have been better to select a small set of items, enemies and locations to work with.
 > Time spent on Web-scrapping was too long.
@@ -112,7 +112,7 @@ NOTES:
 - Sometimes, intent detection fails.
 - The system could have more fluidity overall.
 
-### Future work
+# Future work
 I would love to implement description for every single enemy with the assistance of a model that processes images. This way enemy detection would be much more accurate.
 
 Multimodality would benefit quickness at some points: if you have the enemy information and want to know something specific, a simple click would be faster than formulating the question. Such categories being displayed in the form of clickable elements on screen would be a good implementation.
