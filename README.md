@@ -50,7 +50,7 @@ the intent designed for item info retrieval may not be selected, and the one for
 Also, related to Custom Recognition, if we don't feed it names such as: "Hell Gate's Flame" (name of some loot), it will not recognize as we want it to (it will get: "hell gates flame". This specific example could be tackled with, for instance, some regex.
 
 
-## 2. Enemy detection "get loot info"
+## 2. Enemy detection. Intent: "get loot info"
 
 Motivation: names are difficult to pronounce sometimes or we don't remember them, but we might remember what the enemy looks like and where we last encountered it.
 
@@ -76,7 +76,7 @@ Taking advantage of this possibility of disambiguation also helps in avoiding fu
 ### Setbacks: 
 The features for every enemy class were limited, and so the detection is limited. Also, there are some errors related to context and assignation of utterances to it.
 
-## 3. Battle helper
+## 3. Battle helper. Intent: "check success strategy"
 
 Motivation: sometimes we forget all the options we can use to defeat an enemy and we want some sort of support.
 
@@ -108,7 +108,7 @@ NOTES:
 
 
 - Prompts could be reformulated to get better answers.
-- Working with context in this system may cause some errors. Concrete ERROR: going back after asking about concrete item/enemy information (!!).
+~~- Working with context in this system may cause some errors. Concrete ERROR: going back after asking about concrete item/enemy information (!!).~~
 - Sometimes, intent detection fails.
 - The system could have more fluidity overall.
 
