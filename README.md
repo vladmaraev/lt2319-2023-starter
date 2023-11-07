@@ -106,15 +106,17 @@ NOTES:
 > Time spent on Web-scrapping was too long.
 > Because of this, multimodality was off the table.
 
-
+- Please see __setbacks__ in every section.
 - Prompts could be reformulated to get better answers.
-~~- Working with context in this system may cause some errors. Concrete ERROR: going back after asking about concrete item/enemy information (!!).~~
+- ~~Working with context in this system may cause some errors. Concrete ERROR: going back after asking about concrete item/enemy information (!!).~~
 - Sometimes, intent detection fails.
 - The system could have more fluidity overall.
 
 # Future work
-I would love to implement description for every single enemy with the assistance of a model that processes images. This way enemy detection would be much more accurate.
+__Every enemy description with GPT4:__ I would love to implement description for every single enemy with the assistance of a model that processes images. This way enemy detection would be much more accurate.
 
-Multimodality would benefit quickness at some points: if you have the enemy information and want to know something specific, a simple click would be faster than formulating the question. Such categories being displayed in the form of clickable elements on screen would be a good implementation.
+__Multimodality:__ It benefit quickness at some points. For example, if you have the enemy information and want to know something specific, a simple click would be faster than formulating the question. Such categories being displayed in the form of clickable elements on screen would be a good implementation.
 
-_Thank you._
+__Negation:__ Configuring a detection system for negation would not be a "great" improvement, because in natural dialogue we do not communicate by saying what we _don't_ want to do, but it would be an interesting thing to add, it certainly would improve "understanding".
+
+_Thank you!_
