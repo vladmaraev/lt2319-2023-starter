@@ -92,7 +92,7 @@ async function fetchFromChatGPT(prompt: string, max_tokens: number) {
   const myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
-    "Bearer <>",
+    "Bearer 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",
   );
   myHeaders.append("Content-Type", "application/json");
   const raw = JSON.stringify({
@@ -147,7 +147,7 @@ const unsure = ["I don't know", "I'm not sure", "I'm unsure", "I don't think so"
 const nuancedNegation = ["I'm good", "That's all", "It's okay", "I'm fine",  "It's fine", "That's enough"]
 const thinking = ["hm", "hmm", "um", "umm", "uh", "uhh"]
 
-const goodBye = ["Okay, see ya!", "All right, see you!", "Got it, bye!", "Got it, see ya!", "Okay, bye!"]
+const goodBye = ["Okay, see ya!", "All right, see you!", "Got it, bye", "Got it, see ya!", "Okay, bye"]
 const firstOfAll = ["First of all, ", "For starters, ", "To start, ", "To begin with, ", "First, "]
 
 const understanding = ["I see, ", "Yeah, ", "Okay, ", "Right, ", "Sure, "]
@@ -166,9 +166,11 @@ const whyDontYouTry = ["Why don't you try ", "How about using ", "What about usi
 const letMeKnow = ["Okay, let me know how that goes", "Okay, go for it", "Great, see how that works", "Great, keep me posted"]
 const checkOnYou = ["I'll check on you in ", "I'll ask again in ", "Talk to you again in ", "Will ask you again in", "Be right back in "]
 
-const positiveFiller = ["...Okay...", "...Let's see...", "...Yes...", "...Right...", "...All right...", "...Huh..."]
+const positiveFiller = ["...Okay...", "...Let's see...", "...Understood...", "...Right...", "...All right..."]
 const fillerWords = ["...Umm...", "...Yeah...", "...Hmm...", "...So..."]
 const affirmativeFiller = ["Great!...", "Cool!...", "Awesome!..."]
+
+const askMeAnything = ["Ask me anything related to items, enemies or tell me if you need help in battle", "If you want any information about an item or enemy, or if you want help in battle, let me know", "Tell me about the information you want to know about an enemy, an item or let me know if you need help in battle", "Ask me about an enemy, an item, or tell me if you need help in battle"]
 
 const offTopic = ["Sorry, but I can only help with FF12 related stuff", "I don't think I can help with that", "If it's not FF12 related I don't know!", "Can't help with that, sorry!", "can't help, sorry", "don't know about that, sorry", "don't know about that one, sorry"];
 
@@ -302,6 +304,7 @@ Looking at the features for each "Location" entry, try to detect the place that 
 Sometimes the place will be explicitly given to you, and sometime you will have to infer it from the characteristics.
 Give you answer back in the form of a JSON object of the form: {"location" : <location>}. 
 If you can't detect any location, please, give back "unknown" as a value.
+If you detect that the sentences entails that they do "not want this information anymore",that they want to "go back", to "cancel", etc.,then, please, give back "cancel" as a value.
 This is the dictionary: ${JSON.stringify(location_enemy_dict)}.
 This is the sentence: 
 `;
@@ -315,7 +318,7 @@ Don't give back an "enemy" that is not in the "Location enemy list".
 Please, give you answer back in the form of a JSON object of the form: {"enemy" : <enemy>}. 
 If you can't detect any enemy, please give back "unknown" as a value.
 If you want to answer something like "Dreamhare" bear in mind that it would be the name of the class, and not a concrete enemy. Don't use Class (second level) but enemy (third level) values.
-This is the dictionary: ${JSON.stringify(genus_dict_nolinks).replace("{", "\n").replace("}", "\n").replace("\"", "")}
+This is the dictionary: ${JSON.stringify(genus_dict_nolinks).replace("{", "\n").replace("}", "\n").replace("\"", "").replace("\":\"", " : ").replace("\",\"", " , ") }
 `;
 
 //Difficult to recycle prompts
@@ -329,6 +332,7 @@ Please, start with the name of the weapon (at the beginning of the "Information"
 If you get information about the bazaar, for example: "Bazaar: The Sunflower", say something like: "The name of the bazaar PACKAGE is The Sunflower".
 If you are given a weapon, the value for "Stats: " include "Attack", "Evade", and "Combo Chance".
 JUST ANSWER THE QUESTION, DON'T GIVE ANY OTHER SENTENCES, PLEASE.
+If you detect that the sentences entails that they do "not want this information anymore",that they want to "go back", to "cancel", etc.,then, please, give back "cancel" as a value.
 If you consider the sentence to be unrelated, say: "Sorry, what information do you want to know about the item again?"
 Information: 
 `
@@ -341,6 +345,7 @@ However, in the case that I give you a "Sentence" requesting specific informatio
 It is possible that the sentence consists only of the name of the enemy, for example: "Pyrolisk", in that case, just stick to the initial instruction.
 If the sentence is asking "where", try to see if the question is asking for "Location".
 JUST ANSWER THE QUESTION, DON'T GIVE ANY OTHER SENTENCES, PLEASE. Also, you don't need to be too formal.
+If you detect that the sentences entails that they do "not want this information anymore",that they want to "go back", to "cancel", etc.,then, please, give back "cancel" as a value.
 If you consider the sentence to be unrelated, say: "Sorry, what information do you want to know about the enemy again?"
 Information: 
 `
@@ -411,8 +416,18 @@ const dmMachine = createMachine(
                 on: { SPEAK_COMPLETE: "AskMeAnything" },
               },
 
+              TransitionJustBecause: {
+                entry: say(`${getRandomItemFromArray(affirmation)}`),
+                on: { SPEAK_COMPLETE: "RecognizeEntities" },
+              },
+
+              BeforeAskMeAnything: {
+                entry: say(`${getRandomItemFromArray(positiveFiller)}`),
+                on: { SPEAK_COMPLETE: "AskMeAnything" },
+              },
+
               AskMeAnything: {
-                entry: say("Ask me about an enemy, an item, or tell me if you need help in battle"),
+                entry: say(`${getRandomItemFromArray(askMeAnything)}`),
                 on: { SPEAK_COMPLETE: "AskGPT" },
               },
               // Our utterance, LastResult, is defined here first
@@ -698,6 +713,10 @@ const dmMachine = createMachine(
                       }),
                       onDone: [
                         {
+                          guard: ({ event }) => JSON.parse(event.output).location == "cancel",
+                          target: "#root.DialogueManager.Ready.BeforeAskMeAnything"
+                        },
+                        {
                           guard: ({ event }) => JSON.parse(event.output).location == "unknown",
                           target: "AskLocation"
                         },
@@ -822,7 +841,7 @@ const dmMachine = createMachine(
                     { //check this
                       guard: ({ event}) => checkList(event.value[0].utterance.toLowerCase(), affirmation),
                       //target: "#root.DialogueManager.Ready.AskMeAnything", // no because context
-                      target: "#root.DialogueManager.Ready.Bye", 
+                      target: "#root.DialogueManager.Ready.AskMeAnything", 
                       // does this work?
                       // actions: assign({
                       //   location: ({context, event}) => "",
@@ -1007,7 +1026,7 @@ const dmMachine = createMachine(
                 on: {
                   SPEAK_COMPLETE:
                   {
-                    target: "ProcessGPT",
+                    target: "ProcessGPT.FilterInfoGPT",
                     actions: [({ context }) => console.log(context.item, armor_dict[context.item]["info"]),
                     assign({
                       info: ({ context }) => armor_dict[context.item]["info"].replace("Stats :", "Stats "),
@@ -1036,7 +1055,7 @@ const dmMachine = createMachine(
                 on: {
                   SPEAK_COMPLETE:
                   {
-                    target: "ProcessGPT",
+                    target: "ProcessGPT.FilterInfoGPT",
                     actions: [({ context }) => console.log(context.item, ammo_dict[context.item]["info"]),
                     assign({
                       info: ({ context }) => ammo_dict[context.item]["info"].replace("Stats :", "Stats "),
@@ -1065,7 +1084,7 @@ const dmMachine = createMachine(
                 on: {
                   SPEAK_COMPLETE:
                   {
-                    target: "ProcessGPT",
+                    target: "ProcessGPT.FilterInfoGPT",
                     actions: [({ context }) => console.log(context.item, accessory_dict[context.item]["info"]),
                     assign({
                       info: ({ context }) => accessory_dict[context.item]["info"].replace("Stats :", "Stats "),
@@ -1076,7 +1095,7 @@ const dmMachine = createMachine(
 
 
               GetItem: {
-                entry: say(`${getRandomItemFromArray(fillerWords)}, ${getRandomItemFromArray(particular)} accessory? `),
+                entry: say(`${getRandomItemFromArray(fillerWords)}, ${getRandomItemFromArray(particular)} item? `),
                 on: {
                   SPEAK_COMPLETE:
                   {
@@ -1094,7 +1113,7 @@ const dmMachine = createMachine(
                 on: {
                   SPEAK_COMPLETE:
                   {
-                    target: "ProcessGPT",
+                    target: "ProcessGPT.FilterInfoGPT",
                     actions: [({ context }) => console.log(context.item, item_dict[context.item]["info"]),
                     assign({
                       info: ({ context }) => item_dict[context.item]["info"].replace("Stats :", "Stats "),
@@ -1122,7 +1141,7 @@ const dmMachine = createMachine(
                 on: {
                   SPEAK_COMPLETE:
                   {
-                    target: "ProcessGPT",
+                    target: "ProcessGPT.FilterInfoGPT",
                     actions: [({ context }) => console.log(context.item, loot_dict[context.item]),
                     assign({
                       info: ({ context }) => JSON.stringify(loot_dict[context.item]), //.replace("{", "\n").replace("}", "\n").replace("\"", ""),
@@ -1149,6 +1168,7 @@ const dmMachine = createMachine(
               ProcessGPT: {
                 initial: "AskFilterGPT",
                 states: {
+
                   AnythingElseItem: {
                     entry: ({ event, context }) => {
                       context.spstRef.send({
@@ -1215,6 +1235,11 @@ const dmMachine = createMachine(
                         info: context.info,
                       }),
                       onDone: [
+                        // be careful here
+                        {
+                          guard: ({ event }) => event.output == "cancel",
+                          target: "#root.DialogueManager.Ready.BeforeAskMeAnything",
+                        },
                         {
                           target: "SpeakFilterOutput",
                           actions: [({ event, context }) => console.log(event.output, context.lastResult, context.info),
@@ -1299,6 +1324,11 @@ const dmMachine = createMachine(
                         enemy: context.item
                       }),
                       onDone: [
+                        // be careful here
+                        {
+                          guard: ({ event }) => event.output == "cancel",
+                          target: "#root.DialogueManager.Ready.BeforeAskMeAnything",
+                        },
                         {
                           target: "SpeakFilterOutput",
                           actions: [({ event, context }) => console.log("This is the name of the enemy: " + context.item + "\n" + context.info, event.output, context.lastResult),
@@ -1766,22 +1796,32 @@ const dmMachine = createMachine(
 
               AnythingElse: {
                 entry: say(`${getRandomItemFromArray(positiveFiller)} Is there anything else you want to check?`),
-                on: { SPEAK_COMPLETE: "ContinueOrNot" }
+                on: { SPEAK_COMPLETE: 
+                  {
+                    target: "ContinueOrNot",
+                  },
+               }
               },
 
               ContinueOrNot:{
                 entry: listen(),
-                on : {RECOGNISED: [
+                on : { RECOGNISED: [
+                  // error when reading AskGPT
                   {
-                    guard: ({event}) => checkList(event.value[0].utterance.toLowerCase(), affirmation) ,
-                    target: "AskGPT"
+                    guard: ({event, context}) => checkList(event.value[0].utterance.toLowerCase(), affirmation) && event.value[0].utterance.length < 15,
+                    target: "BeforeAskMeAnything",
+                    actions: ({event}) => console.log(event.value[0].utterance.length),
                   },
                   {
-                    guard: ({event}) => checkList(event.value[0].utterance.toLowerCase(), negation)  ,
-                    target: "OkaySeeYa"
+                    guard: ({event, context}) => checkList(event.value[0].utterance.toLowerCase(), negation) && event.value[0].utterance.length < 15,
+                    target: "OkaySeeYa",
+                    actions: ({event}) => console.log(event.value[0].utterance.length),
                   },
                   {
-                    target: "AskGPT"
+                    target: "TransitionJustBecause",
+                    actions: assign({
+                      lastResult: ({event}) => event.value[0].utterance,
+                    })
                   }
                 ] }
               },
@@ -1792,7 +1832,8 @@ const dmMachine = createMachine(
               },
 
               Bye: {
-                type: "final"
+                target: "#root"
+                // type: "final"
               },
 
             },
