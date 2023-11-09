@@ -3,7 +3,7 @@
 ## NOTES
 ### BASICS:
 You need to use the asr.ts file on speechstate to get custom speech.
-If you have problems with the txt files, try running the python script to get them again.
+If you have problems with the __JSON__ files, try running the python script to get them again.
 
 ### ON the process:
 A Python script was made to retrieve info. This was initially thought as a replacement for an API, but this was discarded and using the script to download the data was the final choice.
