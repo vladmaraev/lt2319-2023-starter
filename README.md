@@ -1,5 +1,14 @@
 # System Summary
 
+## NOTES
+### ON the process:
+A Python script was made to retrieve info. This was initially thought as a replacement for an API, but this was discarded and using the script to download the data was the final choice.
+
+### ON the last part:
+For the last part ("check success strategy") I uploaded a code closer to the finish product in "voice-assistant-ffxii-new". However, it gets stuck in listen(). I don't know if it will work in other machines, but in mine it worked once and then didn't work anymore. Regardless, the code here is not really what the final product should be, but it works... Please watch the demo to see an idea on how it was envisioned.
+
+> __Let me know if you have any ideas on how to fix that or those mistakes in "voice-assistant-ffxii-new" (because it's a shame that all that effort is lost).__
+
 ## Main Motivation:
 
 The motivation for developing this system comes from the need of players in JRPGs games such as Final Fantasy XII to look for information about items in the game. Items are essential for progress and players may need to constantly check for information inside the game menus or online to check how to obtain them. Online we also find information that cannot be found in the game.
