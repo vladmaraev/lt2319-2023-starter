@@ -73,7 +73,7 @@ Instead of giving the name, giving a description of the enemy and a description 
 
 Try describing the enemy and the place it is located in, and also try describing it but including the name of the specific location.
 
-> See the video files to experiment with this.
+> See the video files to experiment with this. __try_for_yourself.mov.zip__
 
 The logic for this part comes from the possibility of disambiguation between enemies thanks to the location, that is why the location is always required when we make the machine guess the enemy.
 This is also helpful when the machine does not understand a specific name.
